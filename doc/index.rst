@@ -9,7 +9,18 @@ Welcome to robotframework-ja's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+
+   BuiltIn
+   Collections
+   DateTime
+   Dialogs
+   OperatingSystem
+   Process
+   Screenshot
+   String
+   Telnet
+   XML
 
 
 
