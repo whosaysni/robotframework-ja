@@ -1,12 +1,13 @@
-.. _libindex:
+.. _index:
 
-ライブラリ
-===========
+============================================
+Robot Framework 和訳・日本語ドキュメント集
+============================================
 
 目次:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    userguide/RobotFrameworkUserGuide
    lib/index
