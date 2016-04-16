@@ -1,82 +1,85 @@
+=======================
 robot.libraries.BuiltIn
 =======================
 Version:          3.0
 Scope:            global
 Named arguments:  supported
 
-An always available standard library with often needed keywords.
+常に利用できる標準ライブラリです。よく使うキーワードが入っています。
 
-``BuiltIn`` is Robot Framework's standard library that provides a set
-of generic keywords needed often. It is imported automatically and
-thus always available. The provided keywords can be used, for example,
-for verifications (e.g. `Should Be Equal`, `Should Contain`),
-conversions (e.g. `Convert To Integer`) and for various other purposes
-(e.g. `Log`, `Sleep`, `Run Keyword If`, `Set Global Variable`).
+``BuiltIn`` は、使うことの多い汎用のキーワードセットを提供する標準ライブラリです。このライブラリは自動的にインポートされるので、いつでも使えます。キーワードの中には、検証に使えるもの (`Should Be Equal` 指定の値に等しいか検証、や `Should Contain`: 指定の値を含むか検証)、値の変換(`Convert To Integer`: 整数に変換) その他もろもろ (`Log`: ログ出力、 `Sleep`: スリープ、 `Run Keyword If`: 条件によって実行、 `Set Global Variable`: グローバル値の設定) があります。
 
-== Table of contents ==
 
-- `HTML error messages`
-- `Evaluating expressions`
-- `Boolean arguments`
-- `Multiline string comparisons`
-- `Shortcuts`
-- `Keywords`
+目次
+-----
 
-= HTML error messages =
+- `HTMLエラーメッセージ <HTML error messages>`_
+- `式の評価 <Evaluating expressions>`_
+- `ブール型の引数 <Boolean arguments>`_
+- `複数行にわたる文字列の比較 <Multiline string comparisons>`_
+- `キーワード <Keywords>`_
 
-Many of the keywords accept an optional error message to use if the keyword
-fails. Starting from Robot Framework 2.8, it is possible to use HTML in
-these messages by prefixing them with ``*HTML*``. See `Fail` keyword for
-a usage example. Notice that using HTML in messages is not limited to
-BuiltIn library but works with any error message.
 
-= Evaluating expressions =
+.. _HTML error messages:
 
-Many keywords, such as `Evaluate`, `Run Keyword If` and `Should Be True`,
-accept an expression that is evaluated in Python. These expressions are
-evaluated using Python's
-[https://docs.python.org/2/library/functions.html#eval|eval] function so
-that all Python built-ins like ``len()`` and ``int()`` are available.
-`Evaluate` allows configuring the execution namespace with custom modules,
-and other keywords have [https://docs.python.org/2/library/os.html|os]
-and [https://docs.python.org/2/library/sys.html|sys] modules available
-automatically.
+HTMLエラーメッセージ
+=====================
 
-Examples:
-| `Run Keyword If` | os.sep == '/' | Log                  | Not on Windows |
-| ${random int} =  | `Evaluate`    | random.randint(0, 5) | modules=random |
+キーワードの多くは、エラーメッセージのオプションを持っています。エラーメッセージは、キーワードの実行に失敗した際に使われます。 Robot Framework 2.8 からは、エラーメッセージの先頭に ``*HTML*`` を付けることで、 HTML 形式のエラーメッセージを使えるようになりました。使い方の例は `Fail` キーワードを参照してください。メッセージの HTML 化は、BuiltIn 以外のライブラリでも使えます。
 
-When a variable is used in the expressing using the normal ``${variable}``
-syntax, its value is replaces before the expression is evaluated. This
-means that the value used in the expression will be the string
-representation of the variable value, not the variable value itself.
-This is not a problem with numbers and other objects that have a string
-representation that can be evaluated directly, but with other objects
-the behavior depends on the string representation. Most importantly,
-strings must always be quoted, and if they can contain newlines, they must
-be triple quoted.
 
-Examples:
-| `Should Be True` | ${rc} < 10                | Return code greater than 10 |
-| `Run Keyword If` | '${status}' == 'PASS'     | Log | Passed                |
-| `Run Keyword If` | 'FAIL' in '''${output}''' | Log | Output contains FAIL  |
+.. _Evaluating expressions:
 
-Starting from Robot Framework 2.9, variables themselves are automatically
-available in the evaluation namespace. They can be accessed using special
-variable syntax without the curly braces like ``$variable``. These
-variables should never be quoted, and in fact they are not even replaced
-inside strings.
+式の評価
+=========
 
-Examples:
-| `Should Be True` | $rc < 10          | Return code greater than 10  |
-| `Run Keyword If` | $status == 'PASS' | `Log` | Passed               |
-| `Run Keyword If` | 'FAIL' in $output | `Log` | Output contains FAIL |
-| `Should Be True` | len($result) > 1 and $result[1] == 'OK' |
+`Evaluate` や `Run Keyword If` 、 `Should Be True` といったキーワードは、引数に式を指定でき、式は Python の `eval <https://docs.python.org/2/library/functions.html#eval>`_ で評価されます。そのため、 ``len()`` や ``int`` といった Python の組み込み関数を使えます。
+`Evaluate` では、自作のモジュールや実行に使う名前空間を設定できます。
+キーワードの中には、自動的に `os モジュール <https://docs.python.org/2/library/os.html>`_ や
+`sys モジュール <https://docs.python.org/2/library/sys.html>`_ を使えるものもあります。
+
+例:
+
+.. code:: robotframework
+
+   Run Keyword If  os.sep == '/'  Log  Not on Windows
+   ${random int} = Evaluate  random.randint(0, 5)  modules=random
+
+
+変数を、 ``${variable}`` のような通常の書式で使うと、その値は式の評価時に「置き換わり」ます。
+つまり、式の表す値は、変数値を文字列で表したもので、値そのものではないということです。
+このことは、数値のように、Pythonで文字列で表した時にそのまま値になる場合は問題にはなりませんが、他のオブジェクトでは、値が文字列でどう表現されるかによって、式の意味が変わってしまいます。
+とりわけ大事なことは、変数値を文字列と比較するには常にクオートする必要があること、そして改行を含む文字列は三重クオートせねばならないということです。
+
+例:
+
+.. code:: robotframework
+
+   | `Should Be True` | ${rc} < 10                | # リターンコードは 10 以上 |
+   | `Run Keyword If` | '${status}' == 'PASS'     | Log | # テストをパスした |
+   | `Run Keyword If` | 'FAIL' in '''${output}''' | Log | # 出力に文字列 FAIL を含む |
+
+Robot Framework 2.9 からは、変数自体を評価ネームスペース (evaluation namespace) の中で使えるようになりました。
+ネームスペース中の変数は、波括弧のない ``$variable`` のような特殊な変数の書き方で表わせます。
+この書き方にした変数はクオートする必要はなく、テストファイル中で一旦文字列に置き換えられたりもしません。
+
+例:
+
+.. code:: robotframework
+
+   | `Should Be True` | $rc < 10          | # リターンコードは 10 以上
+   | `Run Keyword If` | $status == 'PASS' | `Log` | Passed               |
+   | `Run Keyword If` | 'FAIL' in $output | `Log` | Output contains FAIL |
+   | `Should Be True` | len($result) > 1 and $result[1] == 'OK' |
 
 Notice that instead of creating complicated expressions, it is often better
 to move the logic into a test library.
 
-= Boolean arguments =
+
+.. _Boolean arguments:
+
+Boolean arguments
+===================
 
 Some keywords accept arguments that are handled as Boolean values true or
 false. If such an argument is given as a string, it is considered false if
@@ -89,61 +92,73 @@ argument types are tested using same
 as in Python].
 
 True examples:
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=True    | # Strings
-are generally true.    |
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=yes     | # Same as
-the above.             |
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=${TRUE} | # Python
-``True`` is true.       |
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=${42}   | # Numbers
-other than 0 are true. |
+
+.. code:: robotframework
+
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=True    | # Strings are generally true.    |
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=yes     | # Same as the above.             |
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${TRUE} | # Python ``True`` is true.       |
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${42}   | # Numbers other than 0 are true. |
 
 
 False examples:
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=False     | #
-String ``false`` is false.   |
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=no        | # Also
-string ``no`` is false. |
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=${EMPTY}  | # Empty
-string is false.       |
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=${FALSE}  | #
-Python ``False`` is false.   |
-| `Should Be Equal` | ${x} | ${y}  | Custom error | values=no values | # ``no
-values`` works with ``values`` argument |
+
+.. code:: robotframework
+
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=False     | # String ``false`` is false.   |
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=no        | # Also string ``no`` is false. |
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${EMPTY}  | # Empty string is false.       |
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${FALSE}  | # Python ``False`` is false.   |
+   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=no values | # ``no values`` works with ``values`` argument |
 
 Note that prior to Robot Framework 2.9 some keywords considered all
 non-empty strings, including ``false`` and ``no``, to be true.
 
-= Multiline string comparisons =
+
+.. _Multiline string comparisons:
+
+Multiline string comparisons
+=============================
 
 `Should Be Equal` and `Should Be Equal As Strings` report the failures using
 [https://en.wikipedia.org/wiki/Diff_utility#Unified_format|unified diff
 format] if both strings have more than two lines. New in Robot Framework
 2.9.1.
 
-Example:
-| ${first} =  | `Catenate` | SEPARATOR=\n | Not in second | Same | Differs |
-Same |
-| ${second} = | `Catenate` | SEPARATOR=\n | Same | Differs2 | Same | Not in
-first |
-| `Should Be Equal` | ${first} | ${second} |
+例:
+
+.. code:: robotframework
+
+   | ${first} =  | `Catenate` | SEPARATOR=\n | Not in second | Same | Differs | Same |
+   | ${second} = | `Catenate` | SEPARATOR=\n | Same | Differs2 | Same | Not in first |
+   | `Should Be Equal` | ${first} | ${second} |
 
 Results in the following error message:
 
-| Multiline strings are different:
-| --- first
-| +++ second
-| @@ -1,4 +1,4 @@
-| -Not in second
-|  Same
-| -Differs
-| +Differs2
-|  Same
-| +Not in first
+.. code:: robotframework
+
+   | Multiline strings are different:
+   | --- first
+   | +++ second
+   | @@ -1,4 +1,4 @@
+   | -Not in second
+   |  Same
+   | -Differs
+   | +Differs2
+   |  Same
+   | +Not in first
+
+
+.. _Keywords:
+
+キーワード
+===========
 
 Call Method
 -----------
-Arguments:  [object, method_name, *args, **kwargs]
+
+
+:Arguments:  [object, method_name, *args, **kwargs]
 
 Calls the named method of the given object with the provided arguments.
 
@@ -156,7 +171,9 @@ Support for ``**kwargs`` is new in Robot Framework 2.9. Since that
 possible equal signs in other arguments must be escaped with a
 backslash like ``\=``.
 
-Examples:
+例:
+
+
 | Call Method      | ${hashtable} | put          | myname  | myvalue |
 | ${isempty} =     | Call Method  | ${hashtable} | isEmpty |         |
 | Should Not Be True | ${isempty} |              |         |         |
@@ -167,7 +184,8 @@ Examples:
 
 Catenate
 --------
-Arguments:  [*items]
+
+:Arguments:  [*items]
 
 Catenates the given items together and returns the resulted string.
 
@@ -175,7 +193,9 @@ By default, items are catenated with spaces, but if the first item
 contains the string ``SEPARATOR=<sep>``, the separator ``<sep>`` is
 used instead. Items are converted into strings when necessary.
 
-Examples:
+例:
+
+
 | ${str1} = | Catenate | Hello         | world |       |
 | ${str2} = | Catenate | SEPARATOR=--- | Hello | world |
 | ${str3} = | Catenate | SEPARATOR=    | Hello | world |
@@ -186,7 +206,8 @@ Examples:
 
 Comment
 -------
-Arguments:  [*messages]
+
+:Arguments:  [*messages]
 
 Displays the given messages in the log file as keyword arguments.
 
@@ -198,7 +219,8 @@ values, you can use the `Log` or `Log Many` keywords.
 
 Continue For Loop
 -----------------
-Arguments:  []
+
+:Arguments:  []
 
 Skips the current for loop iteration and continues from the next.
 
@@ -206,7 +228,11 @@ Skips the remaining keywords in the current for loop iteration and
 continues from the next one. Can be used directly in a for loop or
 in a keyword that the loop uses.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | :FOR | ${var}         | IN                     | @{VALUES}         |
 |      | Run Keyword If | '${var}' == 'CONTINUE' | Continue For Loop |
 |      | Do Something   | ${var}                 |
@@ -218,7 +244,8 @@ New in Robot Framework 2.8.
 
 Continue For Loop If
 --------------------
-Arguments:  [condition]
+
+:Arguments:  [condition]
 
 Skips the current for loop iteration if the ``condition`` is true.
 
@@ -226,7 +253,11 @@ A wrapper for `Continue For Loop` to continue a for loop based on
 the given condition. The condition is evaluated using the same
 semantics as with `Should Be True` keyword.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | :FOR | ${var}               | IN                     | @{VALUES} |
 |      | Continue For Loop If | '${var}' == 'CONTINUE' |
 |      | Do Something         | ${var}                 |
@@ -235,7 +266,8 @@ New in Robot Framework 2.8.
 
 Convert To Binary
 -----------------
-Arguments:  [item, base=None, prefix=None, length=None]
+
+:Arguments:  [item, base=None, prefix=None, length=None]
 
 Converts the given item to a binary string.
 
@@ -249,7 +281,9 @@ required to be of minimum ``length`` (excluding the prefix and a
 possible minus sign). If the value is initially shorter than
 the required length, it is padded with zeros.
 
-Examples:
+例:
+
+
 | ${result} = | Convert To Binary | 10 |         |           | # Result is
 1010   |
 | ${result} = | Convert To Binary | F  | base=16 | prefix=0b | # Result is
@@ -261,7 +295,8 @@ See also `Convert To Integer`, `Convert To Octal` and `Convert To Hex`.
 
 Convert To Boolean
 ------------------
-Arguments:  [item]
+
+:Arguments:  [item]
 
 Converts the given item to Boolean true or false.
 
@@ -272,7 +307,8 @@ using Python's ``bool()`` method.
 
 Convert To Bytes
 ----------------
-Arguments:  [input, input_type=text]
+
+:Arguments:  [input, input_type=text]
 
 Converts the given ``input`` to bytes according to the ``input_type``.
 
@@ -321,7 +357,8 @@ New in Robot Framework 2.8.2.
 
 Convert To Hex
 --------------
-Arguments:  [item, base=None, prefix=None, length=None, lowercase=False]
+
+:Arguments:  [item, base=None, prefix=None, length=None, lowercase=False]
 
 Converts the given item to a hexadecimal string.
 
@@ -339,7 +376,9 @@ By default the value is returned as an upper case string, but the
 ``lowercase`` argument a true value (see `Boolean arguments`) turns
 the value (but not the given prefix) to lower case.
 
-Examples:
+例:
+
+
 | ${result} = | Convert To Hex | 255 |           |              | # Result is
 FF    |
 | ${result} = | Convert To Hex | -10 | prefix=0x | length=2     | # Result is
@@ -351,7 +390,8 @@ See also `Convert To Integer`, `Convert To Binary` and `Convert To Octal`.
 
 Convert To Integer
 ------------------
-Arguments:  [item, base=None]
+
+:Arguments:  [item, base=None]
 
 Converts the given item to an integer number.
 
@@ -367,7 +407,9 @@ integer in base 10. There are two ways to convert from other bases:
 
 The syntax is case-insensitive and possible spaces are ignored.
 
-Examples:
+例:
+
+
 | ${result} = | Convert To Integer | 100    |    | # Result is 100   |
 | ${result} = | Convert To Integer | FF AA  | 16 | # Result is 65450 |
 | ${result} = | Convert To Integer | 100    | 8  | # Result is 64    |
@@ -380,7 +422,8 @@ See also `Convert To Number`, `Convert To Binary`, `Convert To Octal`,
 
 Convert To Number
 -----------------
-Arguments:  [item, precision=None]
+
+:Arguments:  [item, precision=None]
 
 Converts the given item to a floating point number.
 
@@ -390,7 +433,9 @@ that the number is rounded to the closest multiple of 10 to the power
 of the absolute precision. If a number is equally close to a certain
 precision, it is always rounded away from zero.
 
-Examples:
+例:
+
+
 | ${result} = | Convert To Number | 42.512 |    | # Result is 42.512 |
 | ${result} = | Convert To Number | 42.512 | 1  | # Result is 42.5   |
 | ${result} = | Convert To Number | 42.512 | 0  | # Result is 43.0   |
@@ -409,7 +454,8 @@ If you need an integer number, use `Convert To Integer` instead.
 
 Convert To Octal
 ----------------
-Arguments:  [item, base=None, prefix=None, length=None]
+
+:Arguments:  [item, base=None, prefix=None, length=None]
 
 Converts the given item to an octal string.
 
@@ -423,7 +469,9 @@ required to be of minimum ``length`` (excluding the prefix and a
 possible minus sign). If the value is initially shorter than
 the required length, it is padded with zeros.
 
-Examples:
+例:
+
+
 | ${result} = | Convert To Octal | 10 |            |          | # Result is 12
 |
 | ${result} = | Convert To Octal | -F | base=16    | prefix=0 | # Result is
@@ -435,7 +483,8 @@ See also `Convert To Integer`, `Convert To Binary` and `Convert To Hex`.
 
 Convert To String
 -----------------
-Arguments:  [item]
+
+:Arguments:  [item]
 
 Converts the given item to a Unicode string.
 
@@ -449,7 +498,8 @@ want to create byte strings.
 
 Create Dictionary
 -----------------
-Arguments:  [*items]
+
+:Arguments:  [*items]
 
 Creates and returns a dictionary based on given items.
 
@@ -465,7 +515,9 @@ The returned dictionary is ordered, and values with strings as keys
 can also be accessed using convenient dot-access syntax like
 ``${dict.key}``.
 
-Examples:
+例:
+
+
 | &{dict} = | Create Dictionary | key=value | foo=bar |
 | Should Be True | ${dict} == {'key': 'value', 'foo': 'bar'} |
 | &{dict} = | Create Dictionary | ${1}=${2} | &{dict} | foo=new |
@@ -480,21 +532,25 @@ This keyword was changed in Robot Framework 2.9 in many ways:
 
 Create List
 -----------
-Arguments:  [*items]
+
+:Arguments:  [*items]
 
 Returns a list containing given items.
 
 The returned list can be assigned both to ``${scalar}`` and ``@{list}``
 variables.
 
-Examples:
+例:
+
+
 | @{list} =   | Create List | a    | b    | c    |
 | ${scalar} = | Create List | a    | b    | c    |
 | ${ints} =   | Create List | ${1} | ${2} | ${3} |
 
 Evaluate
 --------
-Arguments:  [expression, modules=None, namespace=None]
+
+:Arguments:  [expression, modules=None, namespace=None]
 
 Evaluates the given expression in Python and returns the results.
 
@@ -531,14 +587,19 @@ string representation |
 
 Exit For Loop
 -------------
-Arguments:  []
+
+:Arguments:  []
 
 Stops executing the enclosing for loop.
 
 Exits the enclosing for loop and continues execution after it.
 Can be used directly in a for loop or in a keyword that the loop uses.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | :FOR | ${var}         | IN                 | @{VALUES}     |
 |      | Run Keyword If | '${var}' == 'EXIT' | Exit For Loop |
 |      | Do Something   | ${var} |
@@ -548,7 +609,8 @@ using `Run Keyword If` or other wrapper keywords.
 
 Exit For Loop If
 ----------------
-Arguments:  [condition]
+
+:Arguments:  [condition]
 
 Stops executing the enclosing for loop if the ``condition`` is true.
 
@@ -556,7 +618,11 @@ A wrapper for `Exit For Loop` to exit a for loop based on
 the given condition. The condition is evaluated using the same
 semantics as with `Should Be True` keyword.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | :FOR | ${var}           | IN                 | @{VALUES} |
 |      | Exit For Loop If | '${var}' == 'EXIT' |
 |      | Do Something     | ${var}             |
@@ -565,7 +631,8 @@ New in Robot Framework 2.8.
 
 Fail
 ----
-Arguments:  [msg=None, *tags]
+
+:Arguments:  [msg=None, *tags]
 
 Fails the test with the given message and optionally alters its tags.
 
@@ -580,7 +647,9 @@ are removed and others added. Tags are modified using `Set Tags` and
 `Remove Tags` internally, and the semantics setting and removing them
 are the same as with these keywords.
 
-Examples:
+例:
+
+
 | Fail | Test not ready   |             | | # Fails with the given message.
 |
 | Fail | *HTML*<b>Test not ready</b> | | | # Fails using HTML in the message.
@@ -599,7 +668,8 @@ HTML message support in 2.8.
 
 Fatal Error
 -----------
-Arguments:  [msg=None]
+
+:Arguments:  [msg=None]
 
 Stops the whole test execution.
 
@@ -611,20 +681,26 @@ See `Fail` if you only want to stop one test case unconditionally.
 
 Get Count
 ---------
-Arguments:  [item1, item2]
+
+:Arguments:  [item1, item2]
 
 Returns and logs how many times ``item2`` is found from ``item1``.
 
 This keyword works with Python strings and lists and all objects
 that either have ``count`` method or can be converted to Python lists.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | ${count} = | Get Count | ${some item} | interesting value |
 | Should Be True | 5 < ${count} < 10 |
 
 Get Length
 ----------
-Arguments:  [item]
+
+:Arguments:  [item]
 
 Returns and logs the length of the given item as an integer.
 
@@ -636,7 +712,9 @@ possible ``length`` and ``size`` methods directly. The final attempt is
 trying to get the value of the item's ``length`` attribute. If all
 these attempts are unsuccessful, the keyword fails.
 
-Examples:
+例:
+
+
 | ${length} = | Get Length    | Hello, world! |        |
 | Should Be Equal As Integers | ${length}     | 13     |
 | @{list} =   | Create List   | Hello,        | world! |
@@ -648,7 +726,8 @@ Empty`.
 
 Get Library Instance
 --------------------
-Arguments:  [name=None, all=False]
+
+:Arguments:  [name=None, all=False]
 
 Returns the currently active instance of the specified test library.
 
@@ -674,12 +753,17 @@ If the optional argument ``all`` is given a true value, then a
 dictionary mapping all library names to instances will be returned.
 This feature is new in Robot Framework 2.9.2.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | &{all libs} = | Get library instance | all=True |
 
 Get Time
 --------
-Arguments:  [format=timestamp, time_=NOW]
+
+:Arguments:  [format=timestamp, time_=NOW]
 
 Returns the given time in the requested format.
 
@@ -774,7 +858,8 @@ work correctly until 2.7.7.
 
 Get Variable Value
 ------------------
-Arguments:  [name, default=None]
+
+:Arguments:  [name, default=None]
 
 Returns variable value or ``default`` if the variable does not exist.
 
@@ -782,7 +867,9 @@ The name of the variable can be given either as a normal variable name
 (e.g. ``${NAME}``) or in escaped format (e.g. ``\${NAME}``). Notice
 that the former has some limitations explained in `Set Suite Variable`.
 
-Examples:
+例:
+
+
 | ${x} = | Get Variable Value | ${a} | default |
 | ${y} = | Get Variable Value | ${a} | ${b}    |
 | ${z} = | Get Variable Value | ${z} |         |
@@ -795,7 +882,8 @@ See `Set Variable If` for another keyword to set variables dynamically.
 
 Get Variables
 -------------
-Arguments:  [no_decoration=False]
+
+:Arguments:  [no_decoration=False]
 
 Returns a dictionary containing all variables in the current scope.
 
@@ -813,7 +901,11 @@ arguments`) to the optional argument ``no_decoration`` will return
 the variables without the decoration. This option is new in Robot
 Framework 2.9.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | ${example_variable} =         | Set Variable | example value         |
 | ${variables} =                | Get Variables |                      |
 | Dictionary Should Contain Key | ${variables} | \${example_variable} |
@@ -828,7 +920,8 @@ a custom object that did not support all dictionary methods.
 
 Import Library
 --------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Imports a library with the given name and optional arguments.
 
@@ -850,14 +943,17 @@ It is possible to pass arguments to the imported library and also
 named argument syntax works if the library supports it. ``WITH NAME``
 syntax can be used to give a custom name to the imported library.
 
-Examples:
+例:
+
+
 | Import Library | MyLibrary |
 | Import Library | ${CURDIR}/../Library.py | arg1 | named=arg2 |
 | Import Library | ${LIBRARIES}/Lib.java | arg | WITH NAME | JavaLib |
 
 Import Resource
 ---------------
-Arguments:  [path]
+
+:Arguments:  [path]
 
 Imports a resource file with the given path.
 
@@ -871,14 +967,17 @@ The given path must be absolute or found from
 search path]. Forward slashes can be used as path separator regardless
 the operating system.
 
-Examples:
+例:
+
+
 | Import Resource | ${CURDIR}/resource.txt |
 | Import Resource | ${CURDIR}/../resources/resource.html |
 | Import Resource | found_from_pythonpath.robot |
 
 Import Variables
 ----------------
-Arguments:  [path, *args]
+
+:Arguments:  [path, *args]
 
 Imports a variable file with the given path and optional arguments.
 
@@ -894,14 +993,17 @@ The given path must be absolute or found from
 search path]. Forward slashes can be used as path separator regardless
 the operating system.
 
-Examples:
+例:
+
+
 | Import Variables | ${CURDIR}/variables.py   |      |      |
 | Import Variables | ${CURDIR}/../vars/env.py | arg1 | arg2 |
 | Import Variables | file_from_pythonpath.py  |      |      |
 
 Keyword Should Exist
 --------------------
-Arguments:  [name, msg=None]
+
+:Arguments:  [name, msg=None]
 
 Fails unless the given keyword exists in the current scope.
 
@@ -915,7 +1017,8 @@ See also `Variable Should Exist`.
 
 Length Should Be
 ----------------
-Arguments:  [item, length, msg=None]
+
+:Arguments:  [item, length, msg=None]
 
 Verifies that the length of the given item is correct.
 
@@ -924,7 +1027,8 @@ default error message can be overridden with the ``msg`` argument.
 
 Log
 ---
-Arguments:  [message, level=INFO, html=False, console=False, repr=False]
+
+:Arguments:  [message, level=INFO, html=False, console=False, repr=False]
 
 Logs the given message with the given level.
 
@@ -963,7 +1067,9 @@ structures. The custom version differs from the standard one so that it
 omits the ``u`` prefix from Unicode strings and adds ``b`` prefix to
 byte strings.
 
-Examples:
+例:
+
+
 | Log | Hello, world!        |          |   | # Normal INFO message.   |
 | Log | Warning, world!      | WARN     |   | # Warning.               |
 | Log | <b>Hello</b>, world! | html=yes |   | # INFO message as HTML.  |
@@ -984,13 +1090,16 @@ in Robot Framework 2.9.
 
 Log Many
 --------
-Arguments:  [*messages]
+
+:Arguments:  [*messages]
 
 Logs the given messages as separate entries using the INFO level.
 
 Supports also logging list and dictionary variable items individually.
 
-Examples:
+例:
+
+
 | Log Many | Hello   | ${var}  |
 | Log Many | @{list} | &{dict} |
 
@@ -999,7 +1108,8 @@ log levels, use HTML, or log to the console.
 
 Log To Console
 --------------
-Arguments:  [message, stream=STDOUT, no_newline=False]
+
+:Arguments:  [message, stream=STDOUT, no_newline=False]
 
 Logs the given message to the console.
 
@@ -1011,7 +1121,9 @@ By default appends a newline to the logged message. This can be
 disabled by giving the ``no_newline`` argument a true value (see
 `Boolean arguments`).
 
-Examples:
+例:
+
+
 | Log To Console | Hello, console!             |                 |
 | Log To Console | Hello, stderr!              | STDERR          |
 | Log To Console | Message starts here and is  | no_newline=true |
@@ -1024,19 +1136,22 @@ New in Robot Framework 2.8.2.
 
 Log Variables
 -------------
-Arguments:  [level=INFO]
+
+:Arguments:  [level=INFO]
 
 Logs all variables in the current scope with given log level.
 
 No Operation
 ------------
-Arguments:  []
+
+:Arguments:  []
 
 Does absolutely nothing.
 
 Pass Execution
 --------------
-Arguments:  [message, *tags]
+
+:Arguments:  [message, *tags]
 
 Skips rest of the current test, setup, or teardown with PASS status.
 
@@ -1063,7 +1178,9 @@ similarly as with `Fail` keyword. Tags starting with a hyphen
 using `Set Tags` and `Remove Tags` internally, and the semantics
 setting and removing them are the same as with these keywords.
 
-Examples:
+例:
+
+
 | Pass Execution | All features available in this version tested. |
 | Pass Execution | Deprecated test. | deprecated | -regression    |
 
@@ -1084,7 +1201,8 @@ New in Robot Framework 2.8.
 
 Pass Execution If
 -----------------
-Arguments:  [condition, message, *tags]
+
+:Arguments:  [condition, message, *tags]
 
 Conditionally skips rest of the current test, setup, or teardown with PASS
 status.
@@ -1094,7 +1212,11 @@ setup or teardown based the given ``condition``. The condition is
 evaluated similarly as with `Should Be True` keyword, and ``message``
 and ``*tags`` have same semantics as with `Pass Execution`.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | :FOR | ${var}            | IN                     | @{VALUES}
 |
 |      | Pass Execution If | '${var}' == 'EXPECTED' | Correct value was found
@@ -1105,7 +1227,8 @@ New in Robot Framework 2.8.
 
 Regexp Escape
 -------------
-Arguments:  [*patterns]
+
+:Arguments:  [*patterns]
 
 Returns each argument string escaped for use as a regular expression.
 
@@ -1114,13 +1237,16 @@ This keyword can be used to escape strings to be used with
 
 Escaping is done with Python's ``re.escape()`` function.
 
-Examples:
+例:
+
+
 | ${escaped} = | Regexp Escape | ${original} |
 | @{strings} = | Regexp Escape | @{strings}  |
 
 Reload Library
 --------------
-Arguments:  [name_or_instance]
+
+:Arguments:  [name_or_instance]
 
 Rechecks what keywords the specified library provides.
 
@@ -1135,7 +1261,8 @@ New in Robot Framework 2.9.
 
 Remove Tags
 -----------
-Arguments:  [*tags]
+
+:Arguments:  [*tags]
 
 Removes given ``tags`` from the current test or all tests in a suite.
 
@@ -1147,7 +1274,11 @@ test suite similarly as `Set Tags` keyword.
 
 The current tags are available as a built-in variable ``@{TEST TAGS}``.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | Remove Tags | mytag | something-* | ?ython |
 
 See `Set Tags` if you want to add certain tags and `Fail` if you want
@@ -1155,7 +1286,8 @@ to fail the test case after setting and/or removing tags.
 
 Repeat Keyword
 --------------
-Arguments:  [repeat, name, *args]
+
+:Arguments:  [repeat, name, *args]
 
 Executes the specified keyword multiple times.
 
@@ -1177,7 +1309,9 @@ If ``repeat`` is zero or negative, the keyword is not executed at
 all. This keyword fails immediately if any of the execution
 rounds fails.
 
-Examples:
+例:
+
+
 | Repeat Keyword | 5 times   | Go to Previous Page |
 | Repeat Keyword | ${var}    | Some Keyword | arg1 | arg2 |
 | Repeat Keyword | 2 minutes | Some Keyword | arg1 | arg2 |
@@ -1186,7 +1320,8 @@ Specifying ``repeat`` as a timeout is new in Robot Framework 3.0.
 
 Replace Variables
 -----------------
-Arguments:  [text]
+
+:Arguments:  [text]
 
 Replaces variables in the given text with their current values.
 
@@ -1195,7 +1330,11 @@ If the given ``text`` contains only a single variable, its value is
 returned as-is and it can be any object. Otherwise this keyword
 always returns a string.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 
 The file ``template.txt`` contains ``Hello ${NAME}!`` and variable
 ``${NAME}`` has the value ``Robot``.
@@ -1206,7 +1345,8 @@ The file ``template.txt`` contains ``Hello ${NAME}!`` and variable
 
 Return From Keyword
 -------------------
-Arguments:  [*return_values]
+
+:Arguments:  [*return_values]
 
 Returns from the enclosing user keyword.
 
@@ -1256,7 +1396,8 @@ See also `Run Keyword And Return` and `Run Keyword And Return If`.
 
 Return From Keyword If
 ----------------------
-Arguments:  [condition, *return_values]
+
+:Arguments:  [condition, *return_values]
 
 Returns from the enclosing user keyword if ``condition`` is true.
 
@@ -1282,7 +1423,8 @@ New in Robot Framework 2.8.
 
 Run Keyword
 -----------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Executes the given keyword with the given arguments.
 
@@ -1292,13 +1434,18 @@ another keyword or from the command line.
 
 Run Keyword And Continue On Failure
 -----------------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the keyword and continues execution even if a failure occurs.
 
 The keyword name and arguments work as with `Run Keyword`.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | Run Keyword And Continue On Failure | Fail | This is a stupid example |
 | Log | This keyword is executed |
 
@@ -1308,7 +1455,8 @@ Since Robot Framework 2.9, variable errors are caught by this keyword.
 
 Run Keyword And Expect Error
 ----------------------------
-Arguments:  [expected_error, name, *args]
+
+:Arguments:  [expected_error, name, *args]
 
 Runs the keyword and checks that the expected error occurred.
 
@@ -1322,7 +1470,9 @@ If the expected error occurs, the error message is returned and it can
 be further processed/tested, if needed. If there is no error, or the
 error does not match the expected error, this keyword fails.
 
-Examples:
+例:
+
+
 | Run Keyword And Expect Error | My error | Some Keyword | arg1 | arg2 |
 | ${msg} = | Run Keyword And Expect Error | * | My KW |
 | Should Start With | ${msg} | Once upon a time in |
@@ -1333,7 +1483,8 @@ Since Robot Framework 2.9, variable errors are caught by this keyword.
 
 Run Keyword And Ignore Error
 ----------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with the given arguments and ignores possible error.
 
@@ -1352,7 +1503,8 @@ Since Robot Framework 2.9, variable errors are caught by this keyword.
 
 Run Keyword And Return
 ----------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the specified keyword and returns from the enclosing user keyword.
 
@@ -1362,7 +1514,11 @@ enclosing user keyword and passes possible return value from the
 executed keyword further. Returning from a keyword has exactly same
 semantics as with `Return From Keyword`.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | `Run Keyword And Return`  | `My Keyword` | arg1 | arg2 |
 | # Above is equivalent to: |
 | ${result} =               | `My Keyword` | arg1 | arg2 |
@@ -1375,7 +1531,8 @@ New in Robot Framework 2.8.2.
 
 Run Keyword And Return If
 -------------------------
-Arguments:  [condition, name, *args]
+
+:Arguments:  [condition, name, *args]
 
 Runs the specified keyword and returns from the enclosing user keyword.
 
@@ -1383,7 +1540,11 @@ A wrapper for `Run Keyword And Return` to run and return based on
 the given ``condition``. The condition is evaluated using the same
 semantics as with `Should Be True` keyword.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | `Run Keyword And Return If` | ${rc} > 0 | `My Keyword` | arg1 | arg2 |
 | # Above is equivalent to:   |
 | `Run Keyword If`            | ${rc} > 0 | `Run Keyword And Return` | `My
@@ -1396,7 +1557,8 @@ New in Robot Framework 2.8.2.
 
 Run Keyword And Return Status
 -----------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with given arguments and returns the status as a
 Boolean value.
@@ -1408,7 +1570,11 @@ message or return value, use `Run Keyword And Ignore Error` instead.
 
 The keyword name and arguments work as in `Run Keyword`.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | ${passed} = | `Run Keyword And Return Status` | Keyword | args |
 | `Run Keyword If` | ${passed} | Another keyword |
 
@@ -1417,9 +1583,11 @@ caught by this keyword. Otherwise this keyword itself never fails.
 
 New in Robot Framework 2.7.6.
 
+
 Run Keyword If
 --------------
-Arguments:  [condition, name, *args]
+
+:Arguments:  [condition, name, *args]
 
 Runs the given keyword with the given arguments, if ``condition`` is true.
 
@@ -1442,7 +1610,11 @@ available in the evaluation namespace and can be accessed using special
 syntax ``$variable``. This is a new feature in Robot Framework 2.9
 and it is explained more thoroughly in `Evaluating expressions`.
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | `Run Keyword If` | $result is None or $result == 'FAIL' | `Keyword` |
 
 Starting from Robot version 2.7.4, this keyword supports also optional
@@ -1493,9 +1665,11 @@ Attributes they contain can thus be used in the condition:
 Keyword` |
 | ...              | ELSE          | `Windows Keyword`     |
 
+
 Run Keyword If All Critical Tests Passed
 ----------------------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with the given arguments, if all critical tests passed.
 
@@ -1505,9 +1679,11 @@ any other place will result in an error.
 Otherwise, this keyword works exactly like `Run Keyword`, see its
 documentation for more details.
 
+
 Run Keyword If All Tests Passed
 -------------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with the given arguments, if all tests passed.
 
@@ -1517,9 +1693,11 @@ anywhere else results in an error.
 Otherwise, this keyword works exactly like `Run Keyword`, see its
 documentation for more details.
 
+
 Run Keyword If Any Critical Tests Failed
 ----------------------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with the given arguments, if any critical tests failed.
 
@@ -1529,9 +1707,11 @@ anywhere else results in an error.
 Otherwise, this keyword works exactly like `Run Keyword`, see its
 documentation for more details.
 
+
 Run Keyword If Any Tests Failed
 -------------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with the given arguments, if one or more tests failed.
 
@@ -1541,9 +1721,11 @@ anywhere else results in an error.
 Otherwise, this keyword works exactly like `Run Keyword`, see its
 documentation for more details.
 
+
 Run Keyword If Test Failed
 --------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with the given arguments, if the test failed.
 
@@ -1556,9 +1738,11 @@ documentation for more details.
 Prior to Robot Framework 2.9 failures in test teardown itself were
 not detected by this keyword.
 
+
 Run Keyword If Test Passed
 --------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword with the given arguments, if the test passed.
 
@@ -1571,9 +1755,11 @@ documentation for more details.
 Prior to Robot Framework 2.9 failures in test teardown itself were
 not detected by this keyword.
 
+
 Run Keyword If Timeout Occurred
 -------------------------------
-Arguments:  [name, *args]
+
+:Arguments:  [name, *args]
 
 Runs the given keyword if either a test or a keyword timeout has occurred.
 
@@ -1583,17 +1769,21 @@ anywhere else results in an error.
 Otherwise, this keyword works exactly like `Run Keyword`, see its
 documentation for more details.
 
+
 Run Keyword Unless
 ------------------
-Arguments:  [condition, name, *args]
+
+:Arguments:  [condition, name, *args]
 
 Runs the given keyword with the given arguments, if ``condition`` is false.
 
 See `Run Keyword If` for more information and an example.
 
+
 Run Keywords
 ------------
-Arguments:  [*keywords]
+
+:Arguments:  [*keywords]
 
 Executes all the given keywords in a sequence.
 
@@ -1603,7 +1793,9 @@ keyword would be an overkill.
 
 By default all arguments are expected to be keywords to be executed.
 
-Examples:
+例:
+
+
 | Run Keywords | Initialize database | Start servers | Clear logs |
 | Run Keywords | ${KW 1} | ${KW 2} |
 | Run Keywords | @{KEYWORDS} |
@@ -1615,7 +1807,9 @@ keyword and proceeding arguments until the first ``AND`` are arguments
 to it. First argument after the first ``AND`` is the second keyword and
 proceeding arguments until the next ``AND`` are its arguments. And so on.
 
-Examples:
+例:
+
+
 | Run Keywords | Initialize database | db1 | AND | Start servers | server1 |
 server2 |
 | Run Keywords | Initialize database | ${DB NAME} | AND | Start servers |
@@ -1627,9 +1821,11 @@ cannot itself come from a variable. If you need to use literal ``AND``
 string as argument, you can either use variables or escape it with
 a backslash like ``\AND``.
 
+
 Set Global Variable
 -------------------
-Arguments:  [name, *values]
+
+:Arguments:  [name, *values]
 
 Makes a variable available globally in all tests and suites.
 
@@ -1641,9 +1837,11 @@ keyword can change variables everywhere, it should be used with care.
 
 See `Set Suite Variable` for more information and examples.
 
+
 Set Library Search Order
 ------------------------
-Arguments:  [*search_order]
+
+:Arguments:  [*search_order]
 
 Sets the resolution order to use when a name matches multiple keywords.
 
@@ -1683,9 +1881,11 @@ or extensions like:
 - Library and resource names in the search order are both case and space
   insensitive.
 
+
 Set Log Level
 -------------
-Arguments:  [level]
+
+:Arguments:  [level]
 
 Sets the log threshold to the specified level and returns the old level.
 
@@ -1696,9 +1896,11 @@ INFO, but it can be overridden with the command line option
 The available levels: TRACE, DEBUG, INFO (default), WARN, ERROR and NONE (no
 logging).
 
+
 Set Suite Documentation
 -----------------------
-Arguments:  [doc, append=False, top=False]
+
+:Arguments:  [doc, append=False, top=False]
 
 Sets documentation for the current test suite.
 
@@ -1717,9 +1919,11 @@ variable ``${SUITE DOCUMENTATION}``.
 New in Robot Framework 2.7. Support for ``append`` and ``top`` were
 added in 2.7.7.
 
+
 Set Suite Metadata
 ------------------
-Arguments:  [name, value, append=False, top=False]
+
+:Arguments:  [name, value, append=False, top=False]
 
 Sets metadata for the current test suite.
 
@@ -1738,9 +1942,11 @@ variable directly has no effect on the actual metadata the suite has.
 New in Robot Framework 2.7.4. Support for ``append`` and ``top`` were
 added in 2.7.7.
 
+
 Set Suite Variable
 ------------------
-Arguments:  [name, *values]
+
+:Arguments:  [name, *values]
 
 Makes a variable available everywhere within the scope of the current suite.
 
@@ -1766,7 +1972,9 @@ overwritten. Otherwise a new variable is created. If a variable already
 exists within the current scope, the value can be left empty and the
 variable within the new scope gets the value within the current scope.
 
-Examples:
+例:
+
+
 | Set Suite Variable | ${SCALAR} | Hello, world! |
 | Set Suite Variable | ${SCALAR} | Hello, world! | children=true |
 | Set Suite Variable | @{LIST}   | First item    | Second item   |
@@ -1784,7 +1992,11 @@ variables ``${EMPTY}``, ``@{EMPTY}`` or ``&{EMPTY}``:
 *NOTE:* If the variable has value which itself is a variable (escaped
 or not), you must always use the escaped format to set the variable:
 
-Example:
+例:
+
+.. code:: robotframework
+
+  
 | ${NAME} =          | Set Variable | \${var} |
 | Set Suite Variable | ${NAME}      | value | # Sets variable ${var}  |
 | Set Suite Variable | \${NAME}    | value | # Sets variable ${NAME} |
@@ -1793,9 +2005,11 @@ This limitation applies also to `Set Test Variable`, `Set Global
 Variable`, `Variable Should Exist`, `Variable Should Not Exist` and
 `Get Variable Value` keywords.
 
+
 Set Tags
 --------
-Arguments:  [*tags]
+
+:Arguments:  [*tags]
 
 Adds given ``tags`` for the current test or all tests in a suite.
 
@@ -1811,9 +2025,11 @@ The current tags are available as a built-in variable ``@{TEST TAGS}``.
 See `Remove Tags` if you want to remove certain tags and `Fail` if
 you want to fail the test case after setting and/or removing tags.
 
+
 Set Test Documentation
 ----------------------
-Arguments:  [doc, append=False]
+
+:Arguments:  [doc, append=False]
 
 Sets documentation for the current test case.
 
@@ -1827,9 +2043,11 @@ setup or suite teardown.
 
 New in Robot Framework 2.7. Support for ``append`` was added in 2.7.7.
 
+
 Set Test Message
 ----------------
-Arguments:  [message, append=False]
+
+:Arguments:  [message, append=False]
 
 Sets message for the current test case.
 
@@ -1845,7 +2063,9 @@ that in teardown the message is available as a built-in variable
 It is possible to use HTML format in the message by starting the message
 with ``*HTML*``.
 
-Examples:
+例:
+
+
 | Set Test Message | My message           |                          |
 | Set Test Message | is continued.        | append=yes               |
 | Should Be Equal  | ${TEST MESSAGE}      | My message is continued. |
@@ -1856,9 +2076,11 @@ This keyword can not be used in suite setup or suite teardown.
 Support for ``append`` was added in Robot Framework 2.7.7 and support
 for HTML format in 2.8.
 
+
 Set Test Variable
 -----------------
-Arguments:  [name, *values]
+
+:Arguments:  [name, *values]
 
 Makes a variable available everywhere within the scope of the current test.
 
@@ -1870,9 +2092,11 @@ test cases will not see variables set with this keyword.
 
 See `Set Suite Variable` for more information and examples.
 
+
 Set Variable
 ------------
-Arguments:  [*values]
+
+:Arguments:  [*values]
 
 Returns the given values which can then be assigned to a variables.
 
@@ -1881,7 +2105,9 @@ Additionally it can be used for converting a scalar variable
 containing a list to a list variable or to multiple scalar variables.
 It is recommended to use `Create List` when creating new lists.
 
-Examples:
+例:
+
+
 | ${hi} =   | Set Variable | Hello, world! |
 | ${hi2} =  | Set Variable | I said: ${hi} |
 | ${var1}   | ${var2} =    | Set Variable | Hello | world |
@@ -1893,9 +2119,11 @@ scope where they are created. See `Set Global Variable`,
 `Set Test Variable` and `Set Suite Variable` for information on how to
 set variables so that they are available also in a larger scope.
 
+
 Set Variable If
 ---------------
-Arguments:  [condition, *values]
+
+:Arguments:  [condition, *values]
 
 Sets variable based on the given condition.
 
@@ -1922,31 +2150,37 @@ evaluated and one of the values after it is returned based on
 its truth value. This can be continued by adding more
 conditions without a limit.
 
-| ${var} = | Set Variable If | ${rc} == 0        | zero           |
-| ...      | ${rc} > 0       | greater than zero | less then zero |
-|          |
-| ${var} = | Set Variable If |
-| ...      | ${rc} == 0      | zero              |
-| ...      | ${rc} == 1      | one               |
-| ...      | ${rc} == 2      | two               |
-| ...      | ${rc} > 2       | greater than two  |
-| ...      | ${rc} < 0       | less than zero    |
+.. code:: robotframework
+
+  | ${var} = | Set Variable If | ${rc} == 0        | zero           |
+  | ...      | ${rc} > 0       | greater than zero | less then zero |
+  |          |
+  | ${var} = | Set Variable If |
+  | ...      | ${rc} == 0      | zero              |
+  | ...      | ${rc} == 1      | one               |
+  | ...      | ${rc} == 2      | two               |
+  | ...      | ${rc} > 2       | greater than two  |
+  | ...      | ${rc} < 0       | less than zero    |
 
 Use `Get Variable Value` if you need to set variables
 dynamically based on whether a variable exist or not.
 
+
 Should Be Empty
 ---------------
-Arguments:  [item, msg=None]
+
+:Arguments:  [item, msg=None]
 
 Verifies that the given item is empty.
 
 The length of the item is got using the `Get Length` keyword. The
 default error message can be overridden with the ``msg`` argument.
 
+
 Should Be Equal
 ---------------
-Arguments:  [first, second, msg=None, values=True]
+
+:Arguments:  [first, second, msg=None, values=True]
 
 Fails if the given objects are unequal.
 
@@ -1966,9 +2200,11 @@ section for more details.
 If both arguments are multiline strings, the comparison is done using
 `multiline string comparisons`.
 
+
 Should Be Equal As Integers
 ---------------------------
-Arguments:  [first, second, msg=None, values=True, base=None]
+
+:Arguments:  [first, second, msg=None, values=True, base=None]
 
 Fails if objects are unequal after converting them to integers.
 
@@ -1978,21 +2214,27 @@ other bases than 10 using ``base`` argument or ``0b/0o/0x`` prefixes.
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
-Examples:
+例:
+
+
 | Should Be Equal As Integers | 42   | ${42} | Error message |
 | Should Be Equal As Integers | ABCD | abcd  | base=16 |
 | Should Be Equal As Integers | 0b1011 | 11  |
 
+
 Should Be Equal As Numbers
 --------------------------
-Arguments:  [first, second, msg=None, values=True, precision=6]
+
+:Arguments:  [first, second, msg=None, values=True, precision=6]
 
 Fails if objects are unequal after converting them to real numbers.
 
 The conversion is done with `Convert To Number` keyword using the
 given ``precision``.
 
-Examples:
+例:
+
+
 | Should Be Equal As Numbers | ${x} | 1.1 | | # Passes if ${x} is 1.1 |
 | Should Be Equal As Numbers | 1.123 | 1.1 | precision=1  | # Passes |
 | Should Be Equal As Numbers | 1.123 | 1.4 | precision=0  | # Passes |
@@ -2014,9 +2256,11 @@ See `Should Not Be Equal As Numbers` for a negative version of this
 keyword and `Should Be Equal` for an explanation on how to override
 the default error message with ``msg`` and ``values``.
 
+
 Should Be Equal As Strings
 --------------------------
-Arguments:  [first, second, msg=None, values=True]
+
+:Arguments:  [first, second, msg=None, values=True]
 
 Fails if objects are unequal after converting them to strings.
 
@@ -2026,9 +2270,11 @@ error message with ``msg`` and ``values``.
 If both arguments are multiline strings, the comparison is done using
 `multiline string comparisons`.
 
+
 Should Be True
 --------------
-Arguments:  [condition, msg=None]
+
+:Arguments:  [condition, msg=None]
 
 Fails if the given condition is not true.
 
@@ -2041,7 +2287,9 @@ given, the status is got directly from its
 The default error message (``<condition> should be true``) is not very
 informative, but it can be overridden with the ``msg`` argument.
 
-Examples:
+例:
+
+
 | Should Be True | ${rc} < 10            |
 | Should Be True | '${status}' == 'PASS' | # Strings must be quoted |
 | Should Be True | ${number}   | # Passes if ${number} is not zero |
@@ -2053,7 +2301,9 @@ available in the evaluation namespace and can be accessed using special
 syntax ``$variable``. This is a new feature in Robot Framework 2.9
 and it is explained more thoroughly in `Evaluating expressions`.
 
-Examples:
+例:
+
+
 | Should Be True | $rc < 10          |
 | Should Be True | $status == 'PASS' | # Expected string must be quoted |
 
@@ -2067,9 +2317,11 @@ several useful attributes:
 | Should Be True | sys.platform == 'darwin'        | # OS X    |
 | Should Be True | sys.platform.startswith('java') | # Jython  |
 
+
 Should Contain
 --------------
-Arguments:  [container, item, msg=None, values=True]
+
+:Arguments:  [container, item, msg=None, values=True]
 
 Fails if ``container`` does not contain ``item`` one or more times.
 
@@ -2077,13 +2329,17 @@ Works with strings, lists, and anything that supports Python's ``in``
 operator. See `Should Be Equal` for an explanation on how to override
 the default error message with ``msg`` and ``values``.
 
-Examples:
+例:
+
+
 | Should Contain | ${output}    | PASS  |
 | Should Contain | ${some list} | value |
 
+
 Should Contain X Times
 ----------------------
-Arguments:  [item1, item2, count, msg=None]
+
+:Arguments:  [item1, item2, count, msg=None]
 
 Fails if ``item1`` does not contain ``item2`` ``count`` times.
 
@@ -2091,22 +2347,28 @@ Works with strings, lists and all objects that `Get Count` works
 with. The default error message can be overridden with ``msg`` and
 the actual count is always logged.
 
-Examples:
+例:
+
+
 | Should Contain X Times | ${output}    | hello  | 2 |
 | Should Contain X Times | ${some list} | value  | 3 |
 
+
 Should End With
 ---------------
-Arguments:  [str1, str2, msg=None, values=True]
+
+:Arguments:  [str1, str2, msg=None, values=True]
 
 Fails if the string ``str1`` does not end with the string ``str2``.
 
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Match
 ------------
-Arguments:  [string, pattern, msg=None, values=True]
+
+:Arguments:  [string, pattern, msg=None, values=True]
 
 Fails unless the given ``string`` matches the given ``pattern``.
 
@@ -2117,9 +2379,11 @@ always case-sensitive. In the pattern, ``*`` matches to anything and
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Match Regexp
 -------------------
-Arguments:  [string, pattern, msg=None, values=True]
+
+:Arguments:  [string, pattern, msg=None, values=True]
 
 Fails if ``string`` does not match ``pattern`` as a regular expression.
 
@@ -2157,41 +2421,52 @@ returned.
 See the `Should Be Equal` keyword for an explanation on how to override
 the default error message with the ``msg`` and ``values`` arguments.
 
-Examples:
-| Should Match Regexp | ${output} | \\d{6}   | # Output contains six numbers
-|
-| Should Match Regexp | ${output} | ^\\d{6}$ | # Six numbers and nothing more
-|
-| ${ret} = | Should Match Regexp | Foo: 42 | (?i)foo: \\d+ |
-| ${match} | ${group1} | ${group2} = |
-| ...      | Should Match Regexp | Bar: 43 | (Foo|Bar): (\\d+) |
-=>
-| ${ret} = 'Foo: 42'
-| ${match} = 'Bar: 43'
-| ${group1} = 'Bar'
-| ${group2} = '43'
+例:
+
+
+
+.. code:: robotframework
+
+   | Should Match Regexp | ${output} | \\d{6}   | # Output contains six numbers
+   |
+   | Should Match Regexp | ${output} | ^\\d{6}$ | # Six numbers and nothing more
+   |
+   | ${ret} = | Should Match Regexp | Foo: 42 | (?i)foo: \\d+ |
+   | ${match} | ${group1} | ${group2} = |
+   | ...      | Should Match Regexp | Bar: 43 | (Foo|Bar): (\\d+) |
+   =>
+   | ${ret} = 'Foo: 42'
+   | ${match} = 'Bar: 43'
+   | ${group1} = 'Bar'
+   | ${group2} = '43'
+
 
 Should Not Be Empty
 -------------------
-Arguments:  [item, msg=None]
+
+:Arguments:  [item, msg=None]
 
 Verifies that the given item is not empty.
 
 The length of the item is got using the `Get Length` keyword. The
 default error message can be overridden with the ``msg`` argument.
 
+
 Should Not Be Equal
 -------------------
-Arguments:  [first, second, msg=None, values=True]
+
+:Arguments:  [first, second, msg=None, values=True]
 
 Fails if the given objects are equal.
 
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Not Be Equal As Integers
 -------------------------------
-Arguments:  [first, second, msg=None, values=True, base=None]
+
+:Arguments:  [first, second, msg=None, values=True, base=None]
 
 Fails if objects are equal after converting them to integers.
 
@@ -2203,9 +2478,11 @@ error message with ``msg`` and ``values``.
 
 See `Should Be Equal As Integers` for some usage examples.
 
+
 Should Not Be Equal As Numbers
 ------------------------------
-Arguments:  [first, second, msg=None, values=True, precision=6]
+
+:Arguments:  [first, second, msg=None, values=True, precision=6]
 
 Fails if objects are equal after converting them to real numbers.
 
@@ -2217,27 +2494,33 @@ See `Should Be Equal As Numbers` for examples on how to use
 `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Not Be Equal As Strings
 ------------------------------
-Arguments:  [first, second, msg=None, values=True]
+
+:Arguments:  [first, second, msg=None, values=True]
 
 Fails if objects are equal after converting them to strings.
 
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Not Be True
 ------------------
-Arguments:  [condition, msg=None]
+
+:Arguments:  [condition, msg=None]
 
 Fails if the given condition is true.
 
 See `Should Be True` for details about how ``condition`` is evaluated
 and how ``msg`` can be used to override the default error message.
 
+
 Should Not Contain
 ------------------
-Arguments:  [container, item, msg=None, values=True]
+
+:Arguments:  [container, item, msg=None, values=True]
 
 Fails if ``container`` contains ``item`` one or more times.
 
@@ -2245,22 +2528,31 @@ Works with strings, lists, and anything that supports Python's ``in``
 operator. See `Should Be Equal` for an explanation on how to override
 the default error message with ``msg`` and ``values``.
 
-Examples:
-| Should Not Contain | ${output}    | FAILED |
-| Should Not Contain | ${some list} | value  |
+例:
+
+
+
+.. code:: robotframework
+
+   | Should Not Contain | ${output}    | FAILED |
+   | Should Not Contain | ${some list} | value  |
+
 
 Should Not End With
 -------------------
-Arguments:  [str1, str2, msg=None, values=True]
+
+:Arguments:  [str1, str2, msg=None, values=True]
 
 Fails if the string ``str1`` ends with the string ``str2``.
 
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Not Match
 ----------------
-Arguments:  [string, pattern, msg=None, values=True]
+
+:Arguments:  [string, pattern, msg=None, values=True]
 
 Fails if the given ``string`` matches the given ``pattern``.
 
@@ -2271,35 +2563,43 @@ always case-sensitive. In the pattern ``*`` matches to anything and
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Not Match Regexp
 -----------------------
-Arguments:  [string, pattern, msg=None, values=True]
+
+:Arguments:  [string, pattern, msg=None, values=True]
 
 Fails if ``string`` matches ``pattern`` as a regular expression.
 
 See `Should Match Regexp` for more information about arguments.
 
+
 Should Not Start With
 ---------------------
-Arguments:  [str1, str2, msg=None, values=True]
+
+:Arguments:  [str1, str2, msg=None, values=True]
 
 Fails if the string ``str1`` starts with the string ``str2``.
 
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Should Start With
 -----------------
-Arguments:  [str1, str2, msg=None, values=True]
+
+:Arguments:  [str1, str2, msg=None, values=True]
 
 Fails if the string ``str1`` does not start with the string ``str2``.
 
 See `Should Be Equal` for an explanation on how to override the default
 error message with ``msg`` and ``values``.
 
+
 Sleep
 -----
-Arguments:  [time_, reason=None]
+
+:Arguments:  [time\_, reason=None]
 
 Pauses the test executed for the given time.
 
@@ -2309,15 +2609,20 @@ a format such as ``1 day 2 hours 3 minutes 4 seconds 5milliseconds`` or
 Robot Framework User Guide. Optional `reason` can be used to explain why
 sleeping is necessary. Both the time slept and the reason are logged.
 
-Examples:
-| Sleep | 42                   |
-| Sleep | 1.5                  |
-| Sleep | 2 minutes 10 seconds |
-| Sleep | 10s                  | Wait for a reply |
+例:
+
+.. code:: robotframework
+
+   | Sleep | 42                   |
+   | Sleep | 1.5                  |
+   | Sleep | 2 minutes 10 seconds |
+   | Sleep | 10s                  | Wait for a reply |
+
 
 Variable Should Exist
 ---------------------
-Arguments:  [name, msg=None]
+
+:Arguments:  [name, msg=None]
 
 Fails unless the given variable exists within the current scope.
 
@@ -2329,9 +2634,11 @@ The default error message can be overridden with the ``msg`` argument.
 
 See also `Variable Should Not Exist` and `Keyword Should Exist`.
 
+
 Variable Should Not Exist
 -------------------------
-Arguments:  [name, msg=None]
+
+:Arguments:  [name, msg=None]
 
 Fails if the given variable exists within the current scope.
 
@@ -2343,9 +2650,11 @@ The default error message can be overridden with the ``msg`` argument.
 
 See also `Variable Should Exist` and `Keyword Should Exist`.
 
+
 Wait Until Keyword Succeeds
 ---------------------------
-Arguments:  [retry, retry_interval, name, *args]
+
+:Arguments:  [retry, retry_interval, name, \*args]
 
 Runs the specified keyword and retries if it fails.
 
@@ -2365,7 +2674,9 @@ Robot Framework's time format.
 If the keyword does not succeed regardless of retries, this keyword
 fails. If the executed keyword passes, its return value is returned.
 
-Examples:
+例:
+
+
 | Wait Until Keyword Succeeds | 2 min | 5 sec | My keyword | argument |
 | ${result} = | Wait Until Keyword Succeeds | 3x | 200ms | My keyword |
 
