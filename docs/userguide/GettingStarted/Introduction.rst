@@ -1,53 +1,47 @@
-Introduction
-============
+.. _Introduction:
 
-Robot Framework is a Python-based, extensible keyword-driven test
-automation framework for end-to-end acceptance testing and
-acceptance-test-driven development (ATDD). It can be used for testing
-distributed, heterogeneous applications, where verification requires
-touching several technologies and interfaces.
+Robot Framework の紹介
+========================
+
+
+Robot Framework は、Python ベースの拡張可能なキーワード駆動型 (keyword-driven) テスト自動化フレームワークです。
+エンドツーエンドの受け入れテストや受け入れテスト駆動開発 (ATDD) に使えます。
+Robot Framework は、分散・機種混合環境で、様々な技術・インタフェースを使わねばならないアプリケーションのテストに利用できます。
 
 .. contents::
    :depth: 2
    :local:
 
-Why Robot Framework?
---------------------
+.. _Why Robot Framework?:
 
-- Enables easy-to-use tabular syntax for `creating test cases`_ in a uniform
-  way.
+Robot Framework を使う理由
+------------------------------
 
-- Provides ability to create reusable `higher-level keywords`_ from the
-  existing keywords.
+- 簡単なテーブル形式で、一貫した書き方で `テストを作成 <creating test cases>`_ できます。
 
-- Provides easy-to-read result reports_ and logs_ in HTML format.
+- 定義済みのキーワードを使って、再利用性の高い `高水準のキーワード <higher-level keywords>`_ を作れます。
 
-- Is platform and application independent.
+- 読みやすい HTML 形式の `結果レポート <reports>`_ と `ログ <logs>`_ を出力できます。
 
-- Provides a simple `library API`_ for creating customized test libraries
-  which can be implemented natively with either Python or Java.
+- 特定のプラットフォームやアプリケーションに依存しません。
 
-- Provides a `command line interface`__ and XML based `output files`_  for
-  integration into existing build infrastructure (continuous integration
-  systems).
+- Python や Java でテストライブラリを自作するための簡単な `ライブラリAPI <library API_>`_ を備えています。
 
-- Provides support for Selenium for web testing, Java GUI testing, running
-  processes, Telnet, SSH, and so on.
+- 既存の様々なビルドインフラ (CI: 継続開発システム) と連携できるよう、 `コマンドラインインタフェース <command line interface_>`__ を持ち、 XML ベースの `出力ファイル <output files_>`_ を生成します。
 
-- Supports creating `data-driven test cases`__.
+- Selenium を使った Web テスト、 Java の GUI テスト、プロセスの実行、 Telnet, SSH 操作などをサポートしています。
 
-- Has built-in support for variables_, practical particularly for testing in
-  different environments.
+- `データ駆動のテストケース <data-driven test cases_>`__ 開発をサポートしています。
 
-- Provides tagging__ to categorize and `select test cases`__ to be executed.
+- 様々な環境でテストを使う際に便利な `変数 <variables_>`_ を組み込みでサポートしています。
 
-- Enables easy integration with source control: `test suites`_ are just files
-  and directories that can be versioned with the production code.
+- テストに `タグ付け <tagging_>`__ して、 `テストを選択的に実行 <select test cases_>`__ できます。
 
-- Provides `test-case`__ and `test-suite`__ -level setup and teardown.
+- ソースコード管理との連携が容易: `テストスイート <test suites_>`_ はファイルとディレクトリだけで構成され、成果物のコードと一緒にバージョン管理できます。
 
-- The modular architecture supports creating tests even for applications with
-  several diverse interfaces.
+- `テストケース <test-case_>`__ と `テストスイート <test-suite_>`__ の両方のレベルでセットアップ・ティアダウンを実行できます。
+
+- モジュラーな構造をとっているため、全く違うインタフェースを複数持つようなアプリケーション向けにもテストを書けます。
 
 __ `Executing test cases`_
 __ `Data-driven style`_
@@ -57,80 +51,78 @@ __ `Test setup and teardown`_
 __ `Suite setup and teardown`_
 
 
-High-level architecture
+.. High-level architecture:
+
+高水準のアーキテクチャ
 -----------------------
 
-Robot Framework is a generic, application and technology independent
-framework. It has a highly modular architecture illustrated in the
-diagram below.
+Robot Framework は、特定のアプリケーションや技術に依存しない、汎用のフレームワークです。
+以下の図のように、モジュラー性の高いアーキテクチャを備えています。
 
-.. figure:: src/GettingStarted/architecture.png
+.. figure:: architecture.png
 
-   Robot Framework architecture
+   Robot Framework のアーキテクチャ
 
-The `test data`_ is in simple, easy-to-edit tabular format. When
-Robot Framework is started, it processes the test data, `executes test
-cases`__ and generates logs and reports. The core framework does not
-know anything about the target under test, and the interaction with it
-is handled by `test libraries`__. Libraries can either use application
-interfaces directly or use lower level test tools as drivers.
+`テストデータ <test data_>`_ は、シンプルで編集しやすいテーブル形式のフォーマットです。
+Robot Framework を起動すると、フレームワークがテストデータを処理し、テストデータ中の  `テストケースを実行 <executes test cases_>`__ して、実行ログとレポートを生成します。フレームワークのコア部分は、テスト下にあるターゲットシステムの詳細は関知せず、 `テストライブラリ <test libraries_>`__ を通じてやり取りします。ライブラリはアプリケーションのインタフェースを直接使う場合もあれば、他の低水準のテストツールをテストドライバとして使う場合もあります。
 
 __ `Executing test cases`_
 __ `Creating test libraries`_
 
 
-Screenshots
------------
+.. Screenshots:
 
-Following screenshots show examples of the `test data`_ and created
-reports_ and logs_.
+スクリーンショット
+---------------------
 
-.. figure:: src/GettingStarted/testdata_screenshots.png
+以下のスクリーンショットは、 `テストデータ <test data>`_ と、テストを実行して得た `レポート <reports>`_ や `ログ <logs>`_ の例です。
 
-   Test case files
+.. figure:: testdata_screenshots.png
 
-.. figure:: src/GettingStarted/screenshots.png
+   テストケースファイル
 
-   Reports and logs
+.. figure:: screenshots.png
+
+   テストレポートとログ
 
 
-Getting more information
+.. _Getting more information:
+
+詳しい情報を探すには
 ------------------------
 
-Project pages
-~~~~~~~~~~~~~
+.. _Project pages:
 
-The number one place to find more information about Robot Framework
-and the rich ecosystem around it is http://robotframework.org.
-Robot Framework itself is hosted on GitHub__.
+Robot Framework プロジェクトのページ
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Robot Framework やそれをとりまくエコシステムの情報がまとまっている一番の場所は、なんといっても  http://robotframework.org です。フレームワーク自体のソースコードは GitHub__ 上で管理されています。
 
 __ https://github.com/robotframework/robotframework
 
-Mailing lists
-~~~~~~~~~~~~~
 
-There are several Robot Framework mailing lists where to ask and
-search for more information. The mailing list archives are open for
-everyone (including the search engines) and everyone can also join
-these lists freely. Only list members can send mails, though, and to
-prevent spam new users are moderated which means that it might take a
-little time before your first message goes through.  Do not be afraid
-to send question to mailing lists but remember `How To Ask Questions
-The Smart Way`__.
+.. _Mailing lists:
+
+メーリングリスト
+~~~~~~~~~~~~~~~~~~
+
+Robot Framework 関連のメーリングリストは複数あり、詳しい情報を調べたり質問したりできます。
+メーリングリストのアーカイブは公開で、誰でも  (検索エンジンも) 閲覧できます。
+もちろん、参加も自由です。ただし、投稿できるのはメーリングリストのメンバーだけです。
+また、スパム対策のため、新規ユーザの投稿は、最初に投稿した記事が無事掲載されるまで、しばらくの間モデレーションの対象になります。メーリングリストへの投稿は歓迎ですが、
+`上手な質問の仕方 <How To Ask Questions The Smart Way>`__ を心がけましょう。
 
 robotframework-users__
-   General discussion about all Robot Framework related
-   issues. Questions and problems can be sent to this list. Used also
-   for information sharing for all users.
+   Robot Framework に関する一般的な話題を扱うメーリングリストです。
+   質問や問題点の議論はここに投稿しましょう。
+   他のユーザに共有したい情報がある場合も、ここに投稿してください。
 
 robotframework-announce__
-    An announcements-only mailing list where only moderators can send
-    messages. All announcements are sent also to the
-    robotframework-users mailing list so there is no need to join both
-    lists.
+    アナウンスのみのメーリングリストで、モデレータしか投稿できません。
+    ここに投稿されるアナウンスは robotframework-users にも投稿されるので、どちらかにだけ入っておけば大丈夫です。
 
 robotframework-devel__
-   Discussion about Robot Framework development.
+   Robot Framework の開発に関する議論のメーリングリストです。
 
 __ http://www.catb.org/~esr/faqs/smart-questions.html
 __ http://groups.google.com/group/robotframework-users
