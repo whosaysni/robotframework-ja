@@ -8,11 +8,17 @@
 .. toctree::
    :maxdepth: 1
 
-   userguide/RobotFrameworkUserGuide
-   lib/index
-   python/PythonTutorial
-   schema/README
-   
+   BuiltIn
+   Collections
+   DateTime
+   Dialogs
+   OperatingSystem
+   Process
+   Screenshot
+   String
+   Telnet
+   XML
+
 
 さくいん
 ==========
