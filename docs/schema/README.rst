@@ -1,5 +1,9 @@
+.. _Robot Framework output XML schema:
+
 Robot Framework output XML schema
 =================================
+
+.. _Introduction:
 
 Introduction
 ------------
@@ -19,6 +23,8 @@ files that can be used for validating that an XML file is Robot Framework
 compatible. The output file format can be useful both for people interested in
 parsing the output and for people interested to create Robot Framework
 compatible outputs.
+
+.. _General structure:
 
 General structure
 -----------------
@@ -67,6 +73,8 @@ kw - keyword element, name is given as an attribute. Type attribute describes th
     * ``status`` - keyword has to have a status
 
 For more details and full list of elements and attributes, please see the XML schema files below.
+
+.. _XML schema definition:
 
 XML schema definition
 ---------------------
