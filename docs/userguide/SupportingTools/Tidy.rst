@@ -1,11 +1,13 @@
 .. _tidy:
 
-Test data clean-up tool (Tidy)
-==============================
+Test data clean-up tool (Tidy )
+===============================================
 
 .. contents::
    :depth: 1
    :local:
+
+.. program:: tidy
 
 Tidy is Robot Framework's built-in a tool for cleaning up and changing
 the format of Robot Framework test data files.
@@ -31,25 +33,28 @@ Synopsis
 Options
 ~~~~~~~
 
- -i, --inplace    Tidy given file(s) so that original file(s) are overwritten
+.. option:: -i, --inplace
+                  Tidy given file(s) so that original file(s) are overwritten
                   (or removed, if the format is changed). When this option is
                   used, it is possible to give multiple input files. Examples::
 
                       python -m robot.tidy --inplace tests.html
                       python -m robot.tidy --inplace --format txt *.html
 
- -r, --recursive  Process given directory recursively. Files in the directory
+.. option:: -r, --recursive
+                  Process given directory recursively. Files in the directory
                   are processed in place similarly as when :option:`--inplace`
                   option is used.
- -f, --format <robot|txt|html|tsv>
+.. option::  -f, --format <robot|txt|html|tsv>
                   Output file format. If the output file is given explicitly,
                   the default value is got from its extension. Otherwise
                   the format is not changed.
- -p, --use-pipes  Use a pipe character (|) as a cell separator in the txt format.
- -s, --spacecount <number>
+.. option::  -p, --use-pipes
+                  Use a pipe character (|) as a cell separator in the txt format.
+.. option::  -s, --spacecount <number>
                   The number of spaces between cells in the txt format.
                   New in Robot Framework 2.7.3.
- -l, --lineseparator <native|windows|unix>
+.. option::  -l, --lineseparator <native|windows|unix>
                   Line separator to use in outputs. The default is 'native'.
 
                   - *native*: use operating system's native line separators
@@ -57,7 +62,8 @@ Options
                   - *unix*: use Unix line separators (LF)
 
                   New in Robot Framework 2.7.6.
- -h, --help       Show this help.
+.. option::  -h, --help
+                  Show this help.
 
 Alternative execution
 ~~~~~~~~~~~~~~~~~~~~~
@@ -90,6 +96,8 @@ Examples::
 
     python -m robot.tidy messed_up_tests.html cleaned_tests.html
     python -m robot.tidy --inplace tests.txt
+
+.. _Changing test data format:
 
 Changing test data format
 -------------------------

@@ -1,4 +1,6 @@
-Installation instructions
+.. _Installation instructions:
+
+インストール方法
 =========================
 
 These instructions cover installing and uninstalling Robot Framework and its
@@ -21,7 +23,9 @@ preconditions on different operating systems. If you already have `pip
 .. _post-process outputs: `supporting tools`_
 .. END USER GUIDE IGNORE
 
-Introduction
+.. Introduction:
+
+はじめに
 ------------
 
 `Robot Framework <http://robotframework.org>`_ is implemented with `Python
@@ -67,6 +71,8 @@ more thoroughly in the subsequent sections.
 
 __ https://github.com/robotframework/robotframework/issues/2218
 
+.. Preconditions:
+
 Preconditions
 -------------
 
@@ -88,8 +94,10 @@ faster), and also readily available on most UNIX-like operating systems.
 Another good alternative is using the `standalone JAR distribution`_ that
 only has Java as a precondition.
 
-Python 2 vs Python 3
-~~~~~~~~~~~~~~~~~~~~
+.. _Python 2 vs Python 3:
+
+Python 2 か Python 3 か
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Python 2 and Python 3 are mostly the same language, but they are not fully
 compatible with each others. The main difference is that in Python 3 all
@@ -107,6 +115,8 @@ libraries and tools in the wider Robot Framework ecosystem also start looking
 at Python 3 support now that the core framework supports it.
 
 __ https://wiki.python.org/moin/Python2orPython3
+
+.. _Python installation:
 
 Python installation
 ~~~~~~~~~~~~~~~~~~~
@@ -136,6 +146,8 @@ executable on the command line.
 
 __ https://github.com/robotframework/robotframework/issues/2276
 
+.. _Jython installation:
+
 Jython installation
 ~~~~~~~~~~~~~~~~~~~
 
@@ -160,6 +172,8 @@ After installing Jython, you probably still want to configure PATH_ to make
 Jython itself as well as the ``robot`` and ``rebot`` `runner scripts`_
 executable on the command line.
 
+.. _IronPython installation:
+
 IronPython installation
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -178,6 +192,8 @@ the package by downloading the source distribution, unzipping it, and running
 After installing IronPython, you probably still want to configure PATH_ to make
 IronPython itself as well as the ``robot`` and ``rebot`` `runner scripts`_
 executable on the command line.
+
+.. _Configuring PATH:
 
 Configuring ``PATH``
 ~~~~~~~~~~~~~~~~~~~~
@@ -199,6 +215,8 @@ separately.
          add both the Python installation directory and the :file:`Scripts`
          directory to the ``PATH``.
 
+.. _What directories to add to PATH:
+
 What directories to add to ``PATH``
 '''''''''''''''''''''''''''''''''''
 
@@ -213,6 +231,8 @@ directory regardless the operating system (e.g. :file:`C:\\jython2.7.0\\bin`).
 Notice that the :file:`Scripts` and :file:`bin` directories may not be created
 as part of the interpreter installation, but only later when Robot Framework
 or some other third party module is installed.
+
+.. _Setting PATH on Windows:
 
 Setting ``PATH`` on Windows
 '''''''''''''''''''''''''''
@@ -250,12 +270,16 @@ in this context even if the directory path would contain spaces.
 
 __ `Executing installed robot module`_
 
+.. _Setting PATH on UNIX-like systems:
+
 Setting ``PATH`` on UNIX-like systems
 '''''''''''''''''''''''''''''''''''''
 
 On UNIX-like systems you typically need to edit either some system wide or user
 specific configuration file. Which file to edit and how depends on the system,
 and you need to consult your operating system documentation for more details.
+
+.. _Setting https_proxy:
 
 Setting ``https_proxy``
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -268,6 +292,8 @@ packages.
 How to set the ``https_proxy`` depends on the operating system similarly as
 `configuring PATH`_. The value of this variable must be an URL of the proxy,
 for example, `http://10.0.0.42:8080`.
+
+.. _Installing with pip:
 
 Installing with pip
 -------------------
@@ -285,6 +311,8 @@ need to install it.
 
 .. note:: Only Robot Framework 2.7 and newer can be installed using pip. If you
           need an older version, you must use other installation approaches.
+
+.. _Installing pip for Python:
 
 Installing pip for Python
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -309,6 +337,8 @@ version directly:
     python -m pip install robotframework
     python3 -m pip install robotframework
 
+.. _Installing pip for Jython:
+
 Installing pip for Jython
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -327,6 +357,8 @@ is executing the ``pip`` module using Jython directly:
 .. sourcecode:: bash
 
     jython -m pip install robotframework
+
+.. _Installing pip for IronPython:
 
 Installing pip for IronPython
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -353,6 +385,8 @@ is executing the ``pip`` module using IronPython directly:
 IronPython versions prior to 2.7.5 do not officially support pip.
 
 __ http://blog.ironpython.net/2014/12/pip-in-ironpython-275.html
+
+.. _Using pip:
 
 Using pip
 ~~~~~~~~~
@@ -395,12 +429,16 @@ specify the version explicitly or use the :option:`--pre` option:
     # Upgrade to the latest version even if it is a pre-release
     pip install --pre --upgrade robotframework
 
+.. _Installing from source:
+
 Installing from source
 ----------------------
 
 This installation method can be used on any operating system with any of the
 supported interpreters. Installing *from source* can sound a bit scary, but
 the procedure is actually pretty straightforward.
+
+.. _Getting source code:
 
 Getting source code
 ~~~~~~~~~~~~~~~~~~~
@@ -416,6 +454,8 @@ directory contains the source code and scripts needed for installing it.
 An alternative approach for getting the source code is cloning project's
 `GitHub repository`_ directly. By default you will get the latest code, but
 you can easily switch to different released versions or other tags.
+
+.. _Installation:
 
 Installation
 ~~~~~~~~~~~~
@@ -434,6 +474,8 @@ The ``setup.py`` script accepts several arguments allowing, for example,
 installation into a non-default location that does not require administrative
 rights. It is also used for creating different distribution packages. Run
 `python setup.py --help` for more details.
+
+.. _Standalone JAR distribution:
 
 Standalone JAR distribution
 ---------------------------
@@ -468,6 +510,8 @@ In addition to the Python standard library and Robot Framework modules, the
 standalone JAR versions starting from 2.9.2 also contain the PyYAML dependency
 needed to handle yaml variable files.
 
+.. _Manual installation:
+
 Manual installation
 -------------------
 
@@ -484,6 +528,8 @@ you can always install it manually following these steps:
 3. Decide `how to run tests`__.
 
 __ `Executing Robot Framework`_
+
+.. _Verifying installation:
 
 Verifying installation
 ----------------------
@@ -508,6 +554,8 @@ as asking help on `robotframework-users
 <http://groups.google.com/group/robotframework-users/>`__ mailing list or
 elsewhere.
 
+.. _Where files are installed:
+
 Where files are installed
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -525,6 +573,8 @@ normally go to :file:`/usr/bin` or :file:`/usr/local/bin`. On Windows and
 with Jython and IronPython, the scripts are typically either in :file:`Scripts`
 or :file:`bin` directory under the interpreter installation directory.
 
+.. _Uninstallation:
+
 Uninstallation
 --------------
 
@@ -541,6 +591,8 @@ are installed`_ and remove them manually.
 
 If you have set PATH_ or configured the environment otherwise, you need to
 undo those changes separately.
+
+.. _Upgrading:
 
 Upgrading
 ---------
@@ -566,8 +618,12 @@ incompatible changes and deprecated features are explained in the release
 notes, and it is a good idea to study them especially when upgrading to
 a new major version.
 
+.. _Executing Robot Framework:
+
 Executing Robot Framework
 -------------------------
+
+.. _Using robot and rebot scripts:
 
 Using ``robot`` and ``rebot`` scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -589,6 +645,8 @@ Older Robot Framework versions do not have the ``robot`` script and the
 specific scripts ``pybot``, ``jybot`` and ``ipybot`` for test execution and
 ``jyrebot`` and ``ipyrebot`` for post-processing outputs. These scripts still
 work, but they will be deprecated and removed in the future.
+
+.. _Executing installed robot module:
 
 Executing installed ``robot`` module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -617,6 +675,8 @@ run is ``robot.rebot``:
     python -m robot.rebot output.xml
 
 __ https://docs.python.org/2/using/cmdline.html#cmdoption-m
+
+.. _Executing installed robot directory:
 
 Executing installed ``robot`` directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,3 +1,5 @@
+.. _Configuring execution:
+
 Configuring execution
 =====================
 
@@ -12,12 +14,16 @@ __ `Created outputs`_
    :depth: 2
    :local:
 
+.. _Selecting test cases:
+
 Selecting test cases
 --------------------
 
 Robot Framework offers several command line options for selecting
 which test cases to execute. The same options also work when
 post-processing outputs with Rebot_.
+
+.. _By test suite and test case names:
 
 By test suite and test case names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,6 +170,11 @@ In practice this option works the same way as :option:`--RunEmptySuite` when
 running tests.
 
 .. note:: :option:`--ProcessEmptySuite` option was added in Robot Framework 2.7.2.
+
+.. _critical:
+.. _critical test:
+.. _critical tests:
+.. _setting criticality:
 
 Setting criticality
 -------------------

@@ -1,3 +1,8 @@
+.. _user keyword:
+.. _user keywords:
+.. _higher-level keywords:
+.. _Creating user keywords:
+
 Creating user keywords
 ======================
 

@@ -1,3 +1,4 @@
+.. _HTML formatting:
 .. _Documentation syntax:
 
 Documentation formatting

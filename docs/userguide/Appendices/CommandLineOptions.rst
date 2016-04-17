@@ -1,3 +1,6 @@
+.. _command line options:
+.. _All command line options:
+
 All command line options
 ========================
 

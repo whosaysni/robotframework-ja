@@ -1,3 +1,5 @@
+.. _Demonstrations:
+
 Demonstrations
 ==============
 

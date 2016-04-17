@@ -1,3 +1,7 @@
+.. _test data:
+.. _general parsing rules:
+.. _Test data syntax:
+
 Test data syntax
 ================
 
@@ -770,6 +774,9 @@ test data easier to understand. It is especially handy in combination with
 the `extended variable syntax`_ when more than one space is needed.
 
 __ `Handling whitespace`_
+
+.. _split into several rows:
+.. _Dividing test data to several rows:
 
 Dividing test data to several rows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

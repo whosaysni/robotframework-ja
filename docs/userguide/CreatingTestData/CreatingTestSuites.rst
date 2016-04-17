@@ -1,3 +1,7 @@
+.. _test suite:
+.. _test suites:
+.. _Creating test suites:
+
 Creating test suites
 ====================
 
@@ -8,6 +12,9 @@ hierarchical test suite structure.
 .. contents::
    :depth: 2
    :local:
+
+.. _test case file:
+.. _Test case files:
 
 Test case files
 ---------------
@@ -35,6 +42,9 @@ test suite:
       especially when using the plain text format.
 
 __ `Test case syntax`_
+
+.. _test suite directory:
+.. _Test suite directories:
 
 Test suite directories
 ----------------------
@@ -73,6 +83,11 @@ option :option:`--warnonskippedfiles`, which turns the message into a warning
 shown in `test execution errors`__.
 
 __ `Errors and warnings during execution`_
+
+.. _initialization file:
+.. _test suite initialization file:
+.. _test suite initialization files:
+.. _Initialization files:
 
 Initialization files
 ~~~~~~~~~~~~~~~~~~~~
@@ -129,6 +144,10 @@ initialization files is explained below.
        Another Keyword
 
 __ `Test case related settings in the Setting table`_
+
+.. _test suite name:
+.. _test suite documentation:
+.. _Test suite name and documentation:
 
 Test suite name and documentation
 ---------------------------------
@@ -191,6 +210,10 @@ __ `Newlines in test data`_
 For top-level test suites, it is possible to set metadata also with the
 :option:`--metadata` command line option. This is discussed in more
 detail in section `Setting metadata`_.
+
+.. _suite setup:
+.. _suite teardown:
+.. _Suite setup and teardown:
 
 Suite setup and teardown
 ------------------------

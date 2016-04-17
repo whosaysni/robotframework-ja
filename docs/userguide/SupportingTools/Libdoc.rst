@@ -1,5 +1,7 @@
 .. _libdoc:
 
+.. _Library documentation tool (Libdoc):
+
 Library documentation tool (Libdoc)
 ===================================
 
@@ -27,8 +29,12 @@ __ `Python libraries`_
 __ `Java libraries`_
 __ `Dynamic libraries`_
 
+.. _General usage:
+
 General usage
 -------------
+
+.. _Synopsis:
 
 Synopsis
 ~~~~~~~~
@@ -37,6 +43,8 @@ Synopsis
 
     python -m robot.libdoc [options] library_or_resource output_file
     python -m robot.libdoc [options] library_or_resource list|show|version [names]
+
+.. _Options:
 
 Options
 ~~~~~~~
@@ -67,6 +75,8 @@ Options
 __ `Specifying library version`_
 __ `Using --pythonpath option`_
 
+.. _Alternative execution:
+
 Alternative execution
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -84,8 +94,12 @@ Executing as a script can be useful if you have done `manual installation`_
 or otherwise just have the :file:`robot` directory with the source code
 somewhere in your system.
 
+.. _Specifying library or resource file:
+
 Specifying library or resource file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _Python libraries and dynamic libraries with name or path:
 
 Python libraries and dynamic libraries with name or path
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -102,6 +116,8 @@ must be catenated with the library name or path using two colons like
 provides or otherwise alter its documentation, it might be a good idea to use
 :option:`--name` option to also change the library name accordingly.
 
+.. _Java libraries with path:
+
 Java libraries with path
 ''''''''''''''''''''''''
 
@@ -112,12 +128,16 @@ of the Java JDK distribution, must be found from ``CLASSPATH`` when
 Libdoc is executed. Notice that generating documentation for Java
 libraries works only with Jython.
 
+.. _Resource files with path:
+
 Resource files with path
 ''''''''''''''''''''''''
 
 Resource files must always be specified using a path. If the path does
 not exist, resource files are also searched from all directories in
 the `module search path`_ similarly as when executing test cases.
+
+.. _Generating documentation:
 
 Generating documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -134,6 +154,8 @@ Examples::
    python -m robot.libdoc test/resource.html doc/resource_doc.html
    jython -m robot.libdoc --version 1.0 MyJavaLibrary.java MyJavaLibrary.html
    jython -m robot.libdoc my.organization.DynamicJavaLibrary my.organization.DynamicJavaLibrary.xml
+
+.. _Viewing information on console:
 
 Viewing information on console
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,6 +188,8 @@ Examples::
   python -m robot.libdoc Selenium2Library show intro
   python -m robot.libdoc Selenium2Library version
 
+.. _Writing documentation:
+
 Writing documentation
 ---------------------
 
@@ -177,6 +201,8 @@ described in more details elsewhere in the User Guide.
 __ `Python libraries`_
 __ `Java libraries`_
 __ `Resource file documentation`_
+
+.. _Python libraries:
 
 Python libraries
 ~~~~~~~~~~~~~~~~
@@ -223,6 +249,8 @@ __ `Libdoc example`_
 __ http://www.python.org/dev/peps/pep-0263
 __ http://www.python.org/dev/peps/pep-0257
 
+.. _Java libraries:
+
 Java libraries
 ~~~~~~~~~~~~~~
 
@@ -264,6 +292,8 @@ than the earlier Python example.
 
 __ http://en.wikipedia.org/wiki/Javadoc
 
+.. _Dynamic libraries:
+
 Dynamic libraries
 ~~~~~~~~~~~~~~~~~
 
@@ -277,6 +307,8 @@ general library documentation via special `__intro__` and
 
 See the `Dynamic library API`_ section for more information about how to
 create these methods.
+
+.. _Importing section:
 
 Importing section
 ~~~~~~~~~~~~~~~~~
@@ -302,6 +334,8 @@ accepts arguments, all its public constructors are shown.
            """
            if self.mode == 'secret':
                 # ...
+
+.. _Resource file documentation:
 
 Resource file documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -339,6 +373,8 @@ Possible variables in resource files can not be documented.
 
 __ `Newlines in test data`_
 
+.. _Documentation syntax:
+
 Documentation syntax
 --------------------
 
@@ -355,6 +391,8 @@ code with existing documentation in test libraries. Support for other formats
 was added in Robot Framework 2.7.5.
 
 __ `Specifying documentation format`_
+
+.. _Robot Framework documentation syntax:
 
 Robot Framework documentation syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -383,6 +421,8 @@ line.
 
     def my_keyword():
         """Nothing more to see here."""
+
+.. _HTML documentation syntax:
 
 HTML documentation syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -414,6 +454,8 @@ on the command line like `--docformat HTML`.
     def my_keyword():
         """Nothing more to see here."""
 
+.. _Plain text documentation syntax:
+
 Plain text documentation syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -436,6 +478,8 @@ like :codesc:`\`My Keyword\``.
 
     def my_keyword():
         """Nothing more to see here"""
+
+.. _reStructuredText documentation syntax:
 
 reStructuredText documentation syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -489,6 +533,8 @@ end of this chapter.
 
 __ `Libdoc example`_
 
+.. _Linking to keywords:
+
 Linking to keywords
 ~~~~~~~~~~~~~~~~~~~
 
@@ -517,6 +563,8 @@ the example below where both keywords have links to each others.
 .. note:: When using `reStructuredText documentation syntax`_, backticks must
           be escaped like :codesc:`\\\`Keyword Name\\\``.
 
+.. _Linking to automatic sections:
+
 Linking to automatic sections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -540,6 +588,8 @@ shown in the example of the next section.
    Shortcuts         :codesc:`\`shortcuts\`` (New in Robot Framework 2.7.5.)
    Keywords          :codesc:`\`keywords\`` (New in Robot Framework 2.7.5.)
    ================  ===========================================================
+
+.. _Linking to custom sections:
 
 Linking to custom sections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -574,6 +624,8 @@ custom sections:
 
 .. note:: Prior to Robot Framework 2.8, only the first level section
           titles were linkable.
+
+.. _Representing arguments:
 
 Representing arguments
 ----------------------
@@ -613,6 +665,8 @@ more thoroughly in the table below.
 
 When referring to arguments in keyword documentation, it is recommended to
 use `inline code style <inline styles_>`__ like :codesc:`\`\`argument\`\``.
+
+.. _Libdoc example:
 
 Libdoc example
 --------------

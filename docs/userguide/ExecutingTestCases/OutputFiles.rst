@@ -1,5 +1,10 @@
+.. include:: ../roles.rst
+
+
 Created outputs
 ===============
+
+.. program:: robot
 
 Several output files are created when tests are executed, and all of
 them are somehow related to test results. This section discusses what
@@ -33,7 +38,12 @@ but can naturally be given also as an absolute path. Regardless of how
 a path to an individual output file is obtained, its parent directory
 is created automatically, if it does not exist already.
 
+.. _output:
+.. _outputs:
+.. _output files:
+.. _XML output files:
 .. _output.xml:
+.. _Output file:
 
 Output file
 ~~~~~~~~~~~
@@ -60,6 +70,13 @@ Framework 2.8 this also automatically disabled creating log and report files,
 but nowadays that is not done anymore. If no outputs are needed, they should
 all be explicitly disabled using `--output NONE --report NONE --log NONE`.
 
+
+.. _log:
+.. _logs:
+.. _log files:
+.. _test logs:
+.. _Log file:
+
 Log file
 ~~~~~~~~
 
@@ -75,17 +92,23 @@ files are created. Unless the special value `NONE` is used,
 log files are always created and their default name is
 :file:`log.html`.
 
-.. figure:: src/ExecutingTestCases/log_passed.png
-   :target: src/ExecutingTestCases/log_passed.html
+.. figure:: log_passed.png
+   :target: log_passed.html
    :width: 500
 
    An example of beginning of a log file
 
-.. figure:: src/ExecutingTestCases/log_failed.png
-   :target: src/ExecutingTestCases/log_failed.html
+.. figure:: log_failed.png
+   :target: log_failed.html
    :width: 500
 
    An example of a log file with keyword details visible
+
+.. _report:
+.. _reports:
+.. _report files:
+.. _test reports:
+.. _Report file:
 
 Report file
 ~~~~~~~~~~~
@@ -146,8 +169,14 @@ possible message of the test case in a format like `FAIL: Error message`.
 __ http://en.wikipedia.org/wiki/XUnit
 __ http://jenkins-ci.org
 __ https://wiki.jenkins-ci.org/display/JENKINS/Robot+Framework+Plugin
+.. __ :ref:`Setting criticality`
 __ `Setting criticality`_
 
+
+.. _debug files:
+.. _Debug file:
+
+Debug file
 Debug file
 ~~~~~~~~~~
 
@@ -219,6 +248,9 @@ can be a HTML color name (e.g. `red`), a hexadecimal value
 (e.g. `rgb(255,0,0)`). The default green and red colors are
 specified using hexadecimal values `#9e9` and `#f66`,
 respectively.
+
+.. _log level:
+.. _Log levels:
 
 Log levels
 ----------
@@ -624,6 +656,9 @@ If more than one model modifier is needed, they can be specified by using
 the :option:`--prerebotmodifier` option multiple times. When executing tests,
 it is possible to use :option:`--prerunmodifier` and
 :option:`--prerebotmodifier` options together.
+
+.. _syslog
+.. _System log:
 
 System log
 ----------

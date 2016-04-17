@@ -1,3 +1,5 @@
+.. _Extending the Robot Framework Jar:
+
 Extending the Robot Framework Jar
 =================================
 

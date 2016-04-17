@@ -1,5 +1,9 @@
+.. _Basic usage:
+
 Basic usage
 ===========
+
+.. program:: robot
 
 Robot Framework test cases are executed from the command line, and the
 end result is, by default, an `output file`_ in XML format and an HTML
@@ -13,9 +17,13 @@ __ `Post-processing outputs`_
    :local:
 
 .. _executing test cases:
+.. _test execution:
+.. _Starting test execution:
 
 Starting test execution
 -----------------------
+
+.. _Synopsis:
 
 Synopsis
 ~~~~~~~~
@@ -45,6 +53,8 @@ outputs in many ways.
 
 __ `Executing installed robot module`_
 __ `Executing installed robot directory`_
+
+.. _Specifying test data to be executed:
 
 Specifying test data to be executed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,6 +96,8 @@ example below::
    robot my_tests.robot your_tests.robot
    robot --name Example path/to/tests/pattern_*.robot
 
+.. _Using command line options:
+
 Using command line options
 --------------------------
 
@@ -95,6 +107,8 @@ generated. This section explains the option syntax, and what
 options actually exist. How they can be used is discussed elsewhere
 in this chapter.
 
+.. _Using options:
+
 Using options
 ~~~~~~~~~~~~~
 
@@ -103,6 +117,8 @@ script and the data sources. For example::
 
    robot -L debug my_tests.robot
    robot --include smoke --variable HOST:10.0.0.42 path/to/tests/
+
+.. _Short and long options:
 
 Short and long options
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -121,6 +137,8 @@ The long option format is case-insensitive, which facilitates writing option
 names in an easy-to-read format. For example, :option:`--SuiteStatLevel`
 is equivalent to, but easier to read than :option:`--suitestatlevel`.
 
+.. _Setting option values:
+
 Setting option values
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -136,6 +154,8 @@ Some options can be specified several times. For example,
 variables. If the options that take only one value are used several
 times, the value given last is effective.
 
+.. _Disabling options accepting no values:
+
 Disabling options accepting no values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -148,6 +168,9 @@ normal status rc.
 .. note:: Support for adding or dropping `no` prefix is a new feature in
           Robot Framework 2.9. In earlier versions options accepting no
           values could be disabled by using the exact same option again.
+
+.. _simple pattern:
+.. _Simple patterns:
 
 Simple patterns
 ~~~~~~~~~~~~~~~
@@ -165,6 +188,8 @@ Examples::
    --include f??       # Matches tests with a tag that starts with 'f' or 'F' and is three characters long.
 
 __ http://en.wikipedia.org/wiki/Glob_(programming)
+
+.. _Tag patterns:
 
 Tag patterns
 ~~~~~~~~~~~~
@@ -219,6 +244,8 @@ using lower case letters to avoid accidental operator usage::
 
 .. note:: `OR` operator is new in Robot Framework 2.8.4.
 
+.. _ROBOT_OPTIONS and REBOT_OPTIONS environment variables:
+
 ``ROBOT_OPTIONS`` and ``REBOT_OPTIONS`` environment variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -245,8 +272,12 @@ avoid the need to repeat them every time tests are run or Rebot used.
 
 __ `Post-processing outputs`_
 
+.. _Test results:
+
 Test results
 ------------
+
+.. _Command line output:
 
 Command line output
 ~~~~~~~~~~~~~~~~~~~
@@ -278,6 +309,8 @@ a keyword passes and a red F if it fails. These markers are written to the end
 of line and they are overwritten by the test status when the test itself ends.
 Writing the markers is disabled if console output is redirected to a file.
 
+.. _Generated output files:
+
 Generated output files
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -288,6 +321,9 @@ one is in XML format and contains all the information about test
 execution. The second is a higher-level report and the third is a more
 detailed log file. These files and other possible output files are
 discussed in more detail in the section `Different output files`_.
+
+.. _return code:
+.. _Return codes:
 
 Return codes
 ~~~~~~~~~~~~
@@ -326,6 +362,9 @@ is needed before the overall status of test execution can be determined.
 
 .. note:: Same return codes are also used with Rebot_.
 
+.. _execution errors:
+.. _Errors and warnings during execution:
+
 Errors and warnings during execution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -355,6 +394,8 @@ Example below illustrates how errors and warnings look like in the log file.
    </table>
 
 __ `Deprecating keywords`_
+
+.. _Escaping complicated characters:
 
 Escaping complicated characters
 -------------------------------
@@ -413,6 +454,8 @@ Note that all the given command line arguments, including paths to test
 data, are escaped. Escape character sequences thus need to be
 selected carefully.
 
+.. _Argument files:
+
 Argument files
 --------------
 
@@ -424,6 +467,8 @@ the command line growing too long.
 
 Argument files are taken into use with :option:`--argumentfile (-A)` option
 along with possible other command line options.
+
+.. _Argument file syntax:
 
 Argument file syntax
 ~~~~~~~~~~~~~~~~~~~~
@@ -453,6 +498,8 @@ identical::
 If argument files contain non-ASCII characters, they must be saved using
 UTF-8 encoding.
 
+.. _Using argument files:
+
 Using argument files
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -469,6 +516,8 @@ to use :option:`--argumentfile` option multiple times or even recursively::
    robot --argumentfile default_options.txt --name Example my_tests.robot
    robot -A first.txt -A second.txt -A third.txt tests.robot
 
+.. _Reading argument files from standard input:
+
 Reading argument files from standard input
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -478,6 +527,8 @@ arguments with a script::
 
    generate_arguments.sh | robot --argumentfile STDIN
    generate_arguments.sh | robot --name Example --argumentfile STDIN tests.robot
+
+.. _Getting help and version information:
 
 Getting help and version information
 ------------------------------------
@@ -499,6 +550,7 @@ or Jython version and the platform type::
 
 .. _start-up script:
 .. _start-up scripts:
+.. _Creating start-up scripts:
 
 Creating start-up scripts
 -------------------------
@@ -588,6 +640,8 @@ function.
        set CP=%CP%;%1
    goto :eof
 
+.. _Modifying Java startup parameters:
+
 Modifying Java startup parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -604,6 +658,8 @@ outputs are very big. There are two easy ways to configure JVM options:
    installed robot module`_ directly::
 
       jython -J-Xmx1024m -m robot tests.robot
+
+.. _Debugging problems:
 
 Debugging problems
 ------------------
@@ -652,6 +708,8 @@ Variables` are useful. If nothing else works, it is always possible to
 search help from `mailing lists`_ or elsewhere.
 
 __ `Communicating with Robot Framework`_
+
+.. _Using the Python debugger (pdb):
 
 Using the Python debugger (pdb)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

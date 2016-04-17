@@ -126,6 +126,9 @@ libraries distributed in JAR or ZIP packages is not possible with this mechanism
 
 __ `Test library names`_
 
+.. _With Name syntax:
+.. _Setting custom name to test library:
+
 Setting custom name to test library
 -----------------------------------
 

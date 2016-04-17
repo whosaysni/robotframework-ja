@@ -41,3 +41,8 @@
 .. role:: setting
 .. role:: name
 .. role:: codesc
+
+.. role:: cli
+.. role:: var
+.. role:: path
+

@@ -1,3 +1,7 @@
+.. _listener:
+.. _listeners:
+.. _Listener interface:
+
 Listener interface
 ==================
 
@@ -18,6 +22,8 @@ __ `Test libraries as listeners`_
 .. contents::
    :depth: 2
    :local:
+
+.. _Taking listeners into use:
 
 Taking listeners into use
 -------------------------
@@ -52,6 +58,8 @@ quotes on UNIX-like operating systems::
 
 __ `Using physical path to library`_
 
+.. _Listener interface versions:
+
 Listener interface versions
 ---------------------------
 
@@ -71,6 +79,8 @@ information about what listeners can do.
 Another difference between versions 2 and 3 is that the former supports
 both Python and Java but the latter supports only Python.
 
+.. _Listener interface methods:
+
 Listener interface methods
 --------------------------
 
@@ -88,6 +98,8 @@ they accept are different. These methods and their arguments are explained
 in the following sections. All methods that have an underscore in their name
 have also *camelCase* alternative. For example, `start_suite` method can
 be used also with name `startSuite`.
+
+.. _Listener version 2:
 
 Listener version 2
 ~~~~~~~~~~~~~~~~~~
@@ -344,6 +356,8 @@ to implement any explicit interface or have all these methods.
 
 __ https://github.com/robotframework/robotframework/issues/2248
 
+.. _Listener version 3:
+
 Listener version 3
 ~~~~~~~~~~~~~~~~~~
 
@@ -434,6 +448,8 @@ __ https://github.com/robotframework/robotframework/issues/1208#issuecomment-164
    |                  |                  | of scope.                                                      |
    +------------------+------------------+----------------------------------------------------------------+
 
+.. _Listeners logging:
+
 Listeners logging
 -----------------
 
@@ -465,12 +481,16 @@ methods can log messages is explained in the table below.
 .. note:: To avoid recursion, messages logged by listeners are not sent to
           listener methods `log_message` and `message`.
 
+.. _Listener examples:
+
 Listener examples
 -----------------
 
 This section contains examples using the listener interface. There are
 first examples that just receive information from Robot Framework and then
 examples that modify executed tests and created results.
+
+.. _Getting information:
 
 Getting information
 ~~~~~~~~~~~~~~~~~~~
@@ -605,12 +625,16 @@ but uses Java instead of Python.
        }
    }
 
+.. _Modifying execution and results:
+
 Modifying execution and results
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 These examples illustrate how to modify the executed tests and suites
 as well as the execution results. All these examples require using
 the `listener version 3`_.
+
+.. _Modifying executed suites and tests:
 
 Modifying executed suites and tests
 '''''''''''''''''''''''''''''''''''
@@ -660,6 +684,8 @@ be used like this:
        selector = SelectEveryXthTest(x=2)
        suite.visit(selector)
 
+.. _Modifying results:
+
 Modifying results
 '''''''''''''''''
 
@@ -705,6 +731,8 @@ that listeners modify also the created :file:`output.xml` file.
 
 .. _library listeners:
 
+.. _Test libraries as listeners:
+
 Test libraries as listeners
 ---------------------------
 
@@ -713,6 +741,8 @@ test execution. This allows them, for example, to perform certain clean-up
 activities automatically when a test suite or the whole test execution ends.
 
 .. note:: This functionality is new in Robot Framework 2.8.5.
+
+.. _Registering listener:
 
 Registering listener
 ~~~~~~~~~~~~~~~~~~~~
@@ -761,6 +791,8 @@ attribute exactly like any other listener.
 Starting from version 2.9, you can also provide any list like object of
 instances in the `ROBOT_LIBRARY_LISTENER` attribute. This will cause all
 instances of the list to be registered as listeners.
+
+.. _Called listener methods:
 
 Called listener methods
 ~~~~~~~~~~~~~~~~~~~~~~~

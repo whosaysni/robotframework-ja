@@ -1,3 +1,5 @@
+.. _Remote library interface:
+
 Remote library interface
 ========================
 
@@ -14,6 +16,8 @@ __ `Creating test libraries`_
 .. contents::
    :depth: 2
    :local:
+
+.. _Introduction:
 
 Introduction
 ------------
@@ -49,8 +53,12 @@ illustrated in the picture below:
 __ https://code.google.com/p/robotframework/wiki/RemoteLibrary#Available_remote_servers
 __ http://docs.python.org/2/library/xmlrpclib.html
 
+.. _Taking Remote library into use:
+
 Taking Remote library into use
 ------------------------------
+
+.. _Importing Remote library:
 
 Importing Remote library
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,6 +113,8 @@ the keyword.
 __ http://stackoverflow.com/questions/14504450/pythons-xmlrpc-extremely-slow-one-second-per-call
 __ https://docs.python.org/2/library/xmlrpclib.html
 
+.. _Starting and stopping remote servers:
+
 Starting and stopping remote servers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -134,6 +144,8 @@ implemented. Typically servers support the following methods:
 
 __ https://github.com/robotframework/SSHLibrary
 __ `Using Import Library keyword`_
+
+.. _Supported argument and return value types:
 
 Supported argument and return value types
 -----------------------------------------
@@ -178,6 +190,8 @@ according to the following rules. Other remote servers should behave similarly.
 
 __ http://docs.python.org/2/library/xmlrpclib.html#binary-objects
 
+.. _Remote protocol:
+
 Remote protocol
 ---------------
 
@@ -190,6 +204,8 @@ The remote protocol is implemented on top of `XML-RPC`_, which is a
 simple remote procedure call protocol using XML over HTTP. Most
 mainstream languages (Python, Java, C, Ruby, Perl, Javascript, PHP,
 ...) have a support for XML-RPC either built-in or as an extension.
+
+.. _Required methods:
 
 Required methods
 ~~~~~~~~~~~~~~~~
@@ -218,6 +234,8 @@ possible for external tools to know did stopping the server succeed.
 The provided Python remote server can be used as a reference
 implementation.
 
+.. _Getting remote keyword names and other information:
+
 Getting remote keyword names and other information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -238,6 +256,8 @@ be used when generating documentation with the Libdoc_ tool.
 __ `Getting keyword arguments`_
 __ `Getting keyword documentation`_
 __ `Getting general library documentation`_
+
+.. _Executing remote keywords:
 
 Executing remote keywords
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -292,6 +312,8 @@ __ `Supported argument and return value types`_
 __ `Reporting keyword status`_
 __ `Continue on failure`_
 __ `Stopping test execution gracefully`_
+
+.. _Different argument syntaxes:
 
 Different argument syntaxes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

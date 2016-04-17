@@ -158,7 +158,7 @@ Call Method
 -----------
 
 
-:Arguments:  [object, method_name, *args, **kwargs]
+:Arguments:  [object, method_name, \*args, \*\*kwargs]
 
 Calls the named method of the given object with the provided arguments.
 
@@ -173,19 +173,19 @@ backslash like ``\=``.
 
 例:
 
-
-| Call Method      | ${hashtable} | put          | myname  | myvalue |
-| ${isempty} =     | Call Method  | ${hashtable} | isEmpty |         |
-| Should Not Be True | ${isempty} |              |         |         |
-| ${value} =       | Call Method  | ${hashtable} | get     | myname  |
-| Should Be Equal  | ${value}     | myvalue      |         |         |
-| Call Method      | ${object}    | kwargs    | name=value | foo=bar |
-| Call Method      | ${object}    | positional   | escaped\=equals  |
+::
+  | Call Method      | ${hashtable} | put          | myname  | myvalue |
+  | ${isempty} =     | Call Method  | ${hashtable} | isEmpty |         |
+  | Should Not Be True | ${isempty} |              |         |         |
+  | ${value} =       | Call Method  | ${hashtable} | get     | myname  |
+  | Should Be Equal  | ${value}     | myvalue      |         |         |
+  | Call Method      | ${object}    | kwargs    | name=value | foo=bar |
+  | Call Method      | ${object}    | positional   | escaped\=equals  |
 
 Catenate
 --------
 
-:Arguments:  [*items]
+:Arguments:  [\*items]
 
 Catenates the given items together and returns the resulted string.
 
@@ -195,19 +195,19 @@ used instead. Items are converted into strings when necessary.
 
 例:
 
-
-| ${str1} = | Catenate | Hello         | world |       |
-| ${str2} = | Catenate | SEPARATOR=--- | Hello | world |
-| ${str3} = | Catenate | SEPARATOR=    | Hello | world |
-=>
-| ${str1} = 'Hello world'
-| ${str2} = 'Hello---world'
-| ${str3} = 'Helloworld'
+::
+  | ${str1} = | Catenate | Hello         | world |       |
+  | ${str2} = | Catenate | SEPARATOR=--- | Hello | world |
+  | ${str3} = | Catenate | SEPARATOR=    | Hello | world |
+  =>
+  | ${str1} = 'Hello world'
+  | ${str2} = 'Hello---world'
+  | ${str3} = 'Helloworld'
 
 Comment
 -------
 
-:Arguments:  [*messages]
+:Arguments:  [\*messages]
 
 Displays the given messages in the log file as keyword arguments.
 
@@ -231,11 +231,10 @@ in a keyword that the loop uses.
 例:
 
 .. code:: robotframework
-
   
-| :FOR | ${var}         | IN                     | @{VALUES}         |
-|      | Run Keyword If | '${var}' == 'CONTINUE' | Continue For Loop |
-|      | Do Something   | ${var}                 |
+  | :FOR | ${var}         | IN                     | @{VALUES}         |
+  |      | Run Keyword If | '${var}' == 'CONTINUE' | Continue For Loop |
+  |      | Do Something   | ${var}                 |
 
 See `Continue For Loop If` to conditionally continue a for loop without
 using `Run Keyword If` or other wrapper keywords.
@@ -257,10 +256,9 @@ semantics as with `Should Be True` keyword.
 
 .. code:: robotframework
 
-  
-| :FOR | ${var}               | IN                     | @{VALUES} |
-|      | Continue For Loop If | '${var}' == 'CONTINUE' |
-|      | Do Something         | ${var}                 |
+  | :FOR | ${var}               | IN                     | @{VALUES} |
+  |      | Continue For Loop If | '${var}' == 'CONTINUE' |
+  |      | Do Something         | ${var}                 |
 
 New in Robot Framework 2.8.
 
@@ -283,13 +281,10 @@ the required length, it is padded with zeros.
 
 例:
 
-
-| ${result} = | Convert To Binary | 10 |         |           | # Result is
-1010   |
-| ${result} = | Convert To Binary | F  | base=16 | prefix=0b | # Result is
-0b1111 |
-| ${result} = | Convert To Binary | -2 | prefix=B | length=4 | # Result is
--B0010 |
+::
+  | ${result} = | Convert To Binary | 10 |         |           | #  Result is 1010  |
+  | ${result} = | Convert To Binary | F  | base=16 | prefix=0b | # Result is 0b1111 |
+  | ${result} = | Convert To Binary | -2 | prefix=B | length=4 | # Result is -B0010 |
 
 See also `Convert To Integer`, `Convert To Octal` and `Convert To Hex`.
 

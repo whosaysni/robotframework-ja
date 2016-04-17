@@ -1,3 +1,7 @@
+.. _test case:
+.. _test cases:
+.. _Creating test cases:
+
 Creating test cases
 ===================
 
@@ -462,6 +466,10 @@ and logs. Using HTML in a custom message is shown in the second example below.
 __ `Continue on failure`_
 __ `HTML in error messages`_
 
+.. _test case name:
+.. _test case documentation:
+.. _Test case name and documentation:
+
 Test case name and documentation
 --------------------------------
 
@@ -522,7 +530,10 @@ instead of adding extra documentation. Finally, metadata, such as the
 environment and user information in the last example above, is often
 better specified using tags_.
 
+.. _tag:
+.. _tags:
 .. _test case tags:
+.. _Tagging test cases:
 
 Tagging test cases
 ------------------
@@ -622,6 +633,10 @@ At the time of writing, the only special tag is `robot-exit` that is
 automatically added to tests when `stopping test execution gracefully`_.
 More usages are likely to be added in the future, though.
 
+.. _test setup:
+.. _test teardown:
+.. _Test setup and teardown:
+
 Test setup and teardown
 -----------------------
 
@@ -697,6 +712,10 @@ the command line.
            executed after them.
 
 __  `Suite setup and teardown`_
+
+.. _test temlate:
+.. _template keyword:
+.. _Test templates:
 
 Test templates
 --------------
@@ -844,6 +863,9 @@ cases that describe some kind of *workflow* may be written either in
 keyword-driven or behavior-driven style. Data-driven style can be used to test
 the same workflow with varying input data.
 
+.. _keyword-driven:
+.. _Keyword-driven style:
+
 Keyword-driven style
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -857,6 +879,9 @@ finally it is verified that the system behaved as expected
 (:name:`Welcome Page Should Be Open`).
 
 .. _earlier: example-tests_
+
+.. _data-driven:
+.. _Data-driven style:
 
 Data-driven style
 ~~~~~~~~~~~~~~~~~

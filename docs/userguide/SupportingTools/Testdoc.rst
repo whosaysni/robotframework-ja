@@ -1,5 +1,7 @@
 .. _testdoc:
 
+.. _Test data documentation tool (Testdoc):
+
 Test data documentation tool (Testdoc)
 ======================================
 
@@ -13,8 +15,12 @@ format and it includes name, documentation and other metadata of each
 test suite and test case, as well as the top-level keywords and their
 arguments.
 
+.. _General usage:
+
 General usage
 -------------
+
+.. _Synopsis:
 
 Synopsis
 ~~~~~~~~
@@ -22,6 +28,8 @@ Synopsis
 ::
 
     python -m robot.testdoc [options] data_sources output_file
+
+.. _Options:
 
 Options
 ~~~~~~~
@@ -43,6 +51,8 @@ All options except :option:`--title` have exactly the same semantics as same
 options have when `executing test cases`__.
 
 __ `Configuring execution`_
+
+.. _Generating documentation:
 
 Generating documentation
 ------------------------
