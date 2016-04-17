@@ -1,6 +1,7 @@
 .. include:: <isonum.txt>
-.. include:: ../userguide/src/roles.rst
+.. include:: ../userguide/roles.rst
 
+.. _Python Tutorial for Robot Framework Test Library Developers:
 
 ===============================================================
   Python Tutorial for Robot Framework Test Library Developers
@@ -14,6 +15,8 @@ __ http://creativecommons.org/licenses/by/3.0/
 .. contents:: Table of Contents
    :depth: 2
 
+
+.. _Introduction:
 
 Introduction
 ============
@@ -61,8 +64,12 @@ Introduction
   integration. It is freely available at http://jythonbook.com.
 
 
+.. _Getting started:
+
 Getting started
 ===============
+
+.. _Installation:
 
 Installation
 ------------
@@ -85,6 +92,8 @@ Installation
     variable. For example `Robot Framework User Guide`_ has
     instructions on how to do it in its *Installation* section.
 
+
+.. _Interactive interpreter:
 
 Interactive interpreter
 -----------------------
@@ -112,6 +121,8 @@ Interactive interpreter
   http://diveintopython.net/installing_python/shell.html
 
 
+.. _Python editors:
+
 Python editors
 --------------
 
@@ -128,8 +139,12 @@ Python editors
   Windows and can be installed also on other systems.
 
 
+.. _Variables:
+
 Variables
 =========
+
+.. _Basic data types:
 
 Basic data types
 ----------------
@@ -159,6 +174,8 @@ Basic data types
     >>> "Ain't it"
     "Ain't it"
 
+
+.. _Declaring variables:
 
 Declaring variables
 -------------------
@@ -200,6 +217,8 @@ Declaring variables
     'second'
 
 
+.. _First program:
+
 First program
 =============
 
@@ -224,8 +243,12 @@ First program
   http://diveintopython.net/getting_to_know_python/index.html
 
 
+.. _Functions:
+
 Functions
 =========
+
+.. _Creating functions:
 
 Creating functions
 ------------------
@@ -267,6 +290,8 @@ Creating functions
   More information about it can be found e.g. from Dive Into Python:
   http://diveintopython.net/native_data_types/formatting_strings.html
 
+
+.. _Optional and named arguments:
 
 Optional and named arguments
 ----------------------------
@@ -315,6 +340,8 @@ Optional and named arguments
   http://diveintopython.net/power_of_introspection/optional_arguments.html
 
 
+.. _Variable number of arguments:
+
 Variable number of arguments
 ----------------------------
 
@@ -345,6 +372,8 @@ Variable number of arguments
   http://docs.python.org/tutorial/controlflow.html#more-on-defining-functions
 
 
+.. _Returning values:
+
 Returning values
 ----------------
 
@@ -366,6 +395,8 @@ Returning values
 * Robot Framework keywords can also return values that can be assigned
   to variables and then used as arguments to other keywords.
 
+
+.. _Documenting functions:
 
 Documenting functions
 ---------------------
@@ -395,6 +426,8 @@ Documenting functions
   are used as keywords is thus very important.
 
 
+.. _Container data types:
+
 Container data types
 ====================
 
@@ -405,6 +438,8 @@ Container data types
 * See Dive Into Python for more information and examples than shown
   below: http://diveintopython.net/native_data_types
 
+
+.. _Lists:
 
 Lists
 -----
@@ -428,6 +463,9 @@ Lists
     >>> x.append(42)
     >>> x
     ['Some', 'strings', 'HERE', 42]
+
+
+.. _Tuples:
 
 Tuples
 ------
@@ -456,6 +494,8 @@ Tuples
     >>> two = (1, 2)
 
 
+.. _Dictionaries:
+
 Dictionaries
 ------------
 
@@ -479,8 +519,12 @@ Dictionaries
     False
 
 
+.. _Control Flow:
+
 Control Flow
 ============
+
+.. _Conditional execution:
 
 Conditional execution
 ---------------------
@@ -508,6 +552,8 @@ Conditional execution
 	else:
             print '%s, you should be sleeping!' % name
 
+
+.. _Looping:
 
 Looping
 -------
@@ -550,6 +596,8 @@ Looping
   - Dive Into Python: http://diveintopython.net/file_handling/for_loops.html
 
 
+.. _List comprehensions:
+
 List comprehensions
 -------------------
 
@@ -570,8 +618,12 @@ List comprehensions
   http://diveintopython.net/native_data_types/mapping_lists.html
 
 
+.. _Modules:
+
 Modules
 =======
+
+.. _Importing modules:
 
 Importing modules
 -----------------
@@ -586,6 +638,8 @@ Importing modules
   be imported. It is recommended to study what is available to avoid
   reinventing wheels.
 
+
+.. _Creating modules:
 
 Creating modules
 ----------------
@@ -629,6 +683,8 @@ Creating modules
   http://docs.python.org/tutorial/modules.html
 
 
+.. _Module search path (PYTHONPATH):
+
 Module search path (PYTHONPATH)
 -------------------------------
 
@@ -649,8 +705,12 @@ Module search path (PYTHONPATH)
   can be imported.
 
 
+.. _Advanced features:
+
 Advanced features
 =================
+
+.. _Classes and instances:
 
 Classes and instances
 ---------------------
@@ -690,6 +750,8 @@ Classes and instances
   - http://diveintopython.net/object_oriented_framework
   - http://docs.python.org/tutorial/classes.html
 
+.. _Exceptions:
+
 Exceptions
 ----------
 
@@ -724,6 +786,8 @@ Exceptions
   because keywords use them to communicate failures to the framework.
 
 
+.. _Regular expressions:
+
 Regular expressions
 -------------------
 
@@ -741,6 +805,8 @@ Regular expressions
   (e.g. :code:`startswith`, :code:`find`, :code:`isdigit`) so regexps
   are not needed as often as in Perl or Ruby.
 
+
+.. _Unit testing:
 
 Unit testing
 ============
@@ -763,12 +829,16 @@ __ http://diveintopython.net/unit_testing/stage_1.html
 __ http://diveintopython.net/refactoring/index.html
 
 
+.. _Writing test libraries:
+
 Writing test libraries
 ======================
 
 Robot Framework's test library API is really simple. It is explained
 fully in `Robot Framework User Guide`_ and this tutorial only covers
 the very basic features with an executable example.
+
+.. _Library API basics:
 
 Library API basics
 ------------------
@@ -788,6 +858,8 @@ been covered in this tutorial:
 * :code:`print` statement can be used to log messages.
 * Values can be returned using the :code:`return` statement.
 * Doc strings are used to document keywords.
+
+.. _Executable example:
 
 Executable example
 ------------------
