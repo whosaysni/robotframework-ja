@@ -1,3 +1,7 @@
+.. _test library:
+.. _test libraries:
+.. _Using test libraries:
+
 Using test libraries
 ====================
 

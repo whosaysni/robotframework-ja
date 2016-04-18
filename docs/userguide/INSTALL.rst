@@ -3,9 +3,7 @@
 インストール方法
 =========================
 
-These instructions cover installing and uninstalling Robot Framework and its
-preconditions on different operating systems. If you already have `pip
-<http://pip-installer.org>`_ installed, it is enough to run::
+この節では、 Robot Framework のインストール・アンインストール方法と、各種 OS で必要な準備を開設しています。基本的に、  `pip <http://pip-installer.org>`_ をインストールしていれば、以下のように実行するだけです::
 
     pip install robotframework
 
@@ -23,128 +21,79 @@ preconditions on different operating systems. If you already have `pip
 .. _post-process outputs: `supporting tools`_
 .. END USER GUIDE IGNORE
 
+
 .. Introduction:
 
 はじめに
 ------------
 
-`Robot Framework <http://robotframework.org>`_ is implemented with `Python
-<http://python.org>`_ and supports also `Jython <http://jython.org>`_ (JVM) and
-`IronPython <http://ironpython.net>`_ (.NET). Before installing the framework,
-an obvious precondition_ is installing at least one of these interpreters.
+`Robot Framework <http://robotframework.org>`_ は `Python <http://python.org>`_ で書かれており、 `Jython <http://jython.org>`_ (JVM) や `IronPython <http://ironpython.net>`_ (.NET) でも動作します。このフレームワークをインストールするときには、 :ref:`前提条件 <precondition>` として、以下のインタプリタのいずれかが必要です。`
 
-Different ways to install Robot Framework itself are listed below and explained
-more thoroughly in the subsequent sections.
+Robot Framework 自体のインストール方法には、以下のような様々な方法があります。これらについては、後の節でも説明します。
 
-`Installing with pip`_
-    Using pip_ is the recommended way to install Robot Framework. As the
-    standard Python package manager it is included in the latest Python,
-    Jython and IronPython versions. If you already have pip available, you
-    can simply execute::
+:ref:`pip を使う <Installing with pip>`
+    Robot Framework 推奨のインストール方法です。 最近の Python, Jython, IronPython には、標準のパッケージマネジャとして pip_ が入っています。pip が使える状態なら、単に::
 
         pip install robotframework
 
-`Installing from source`_
-    This approach works regardless the operating system and the Python
-    interpreter used. You can get the source code either by downloading a
-    source distribution from `PyPI <https://pypi.python.org/pypi/robotframework>`_
-    and extracting it, or by cloning the
-    `GitHub repository <https://github.com/robotframework/robotframework>`_ .
+    とするだけです。
 
-`Standalone JAR distribution`_
-    If running tests with Jython is enough, the easiest approach is downloading
-    the standalone ``robotframework-<version>.jar`` from `Maven central
-    <http://search.maven.org/#search%7Cga%7C1%7Ca%3Arobotframework>`_.
-    The JAR distribution contains both Jython and Robot Framework and thus
-    only requires having `Java <http://java.com>`_ installed.
+:ref:`ソースコードから <Installing from source>`
+    どのオペレーティングシステムでも、どの Python インタプリタでも使える方法です。ソースコードは `PyPI <https://pypi.python.org/pypi/robotframework>`_ からダウンロードして展開したり、 `GitHub リポジトリから <https://github.com/robotframework/robotframework>`_ を clone したりして取得できます。
 
-`Manual installation`_
-    If you have special needs and nothing else works, you can always do
-    a custom manual installation.
+:ref:`JAR形式 <Standalone JAR distribution>`
+    Jython で実行できれば充分な場合、 `Maven central <http://search.maven.org/#search%7Cga%7C1%7Ca%3Arobotframework>`_ からスタンドアロンの ``robotframework-<version>.jar`` を取ってくるのが一番簡単です。この JAR には、 Jython と Robot Framework が両方とも入っていて、 `Java <http://java.com>`_ をインストールしておくだけで使えます。
 
-.. note:: Prior to Robot Framework 3.0, there were also separate Windows
-          installers for 32bit and 64bit Python versions. Because Python 2.7.9 and
-          newer contain pip_ on Windows and Python 3 would have needed two
-          more installers, it was decided that `Windows installers are not
-          created anymore`__. The recommend installation approach also on
-          Windows is `using pip`_.
+:ref:`手作業で <Manual installation>`
+    何か特別な事情があって、上の方法がどれも使えない場合には、自分で手作業で入れられます。
 
-__ https://github.com/robotframework/robotframework/issues/2218
+.. note:: Robot Framework 3.0 以前のバージョンには、 32bit 版と 64bit 版の両方の Python 向けのインストーラがありました。 Python 2.7.9 からは Windows 版にも pip_ が入っていることや、インストーラだと Python 3 向けにも二つ必要になってしまうことから、 `Windows インストーラの提供はやめました <https://github.com/robotframework/robotframework/issues/2218>`_ 。Windows版でも、 :ref:`pip を使ったインストール <using pip>` を推奨します。
 
-.. Preconditions:
+.. _precondition:
+.. _Preconditions:
 
-Preconditions
+前提条件
 -------------
 
-Robot Framework is supported on Python_ (both Python 2 and Python 3), Jython_
-(JVM) and IronPython_ (.NET) and runs also on `PyPy <http://pypy.org>`_.
-The interpreter you want to use should be installed before installing the
-framework itself.
+Robot Framework は Python_ (C Python, Python 2 と 3 の両方),  Jython_ (JVM),  IronPython (.NET), そして ``PyPy <http://pypy.org>`_ をサポートしています。フレームワークを動かすには、あらかじめいずれかのインタプリタをインストールしておく必要があります。
 
-Which interpreter to use depends on the needed test libraries and test
-environment in general. Some libraries use tools or modules that only work
-with Python, while others may use Java tools that require Jython or need
-.NET and thus IronPython. There are also many tools and libraries that run
-fine with all interpreters.
+一般に、どのインタプリタを使うべきかは、どんなテストライブラリやテスト環境が必要かによって変わります。ライブラリによっては、 CPython 上でしか動かないものもありますし、 Java のツールを使っているために Jython でしか動かないものや、 .NET 環境が必要なため IronPython が適している場合もあります。もちろん、どのインタプリタでも問題なく動くツールやライブラリもたくさんあります。
 
-If you do not have special needs or just want to try out the framework,
-it is recommended to use Python. It is the most mature implementation,
-considerably faster than Jython or IronPython (especially start-up time is
-faster), and also readily available on most UNIX-like operating systems.
-Another good alternative is using the `standalone JAR distribution`_ that
-only has Java as a precondition.
+特殊な事情がなく、まずはフレームワークを試してみたいのなら、Python をお勧めします。Python はもっとも成熟した実装で、 Jython や IronPython よりも高速 (とりわけ、起動が速い) で、ほとんどの UNIX 系 OS 上で使えます。もう一つの選択肢は、 Java さえあれば使える :ref:`スタンドアロン JAR版 <standalone JAR distribution>` です。
 
 .. _Python 2 vs Python 3:
 
 Python 2 か Python 3 か
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Python 2 and Python 3 are mostly the same language, but they are not fully
-compatible with each others. The main difference is that in Python 3 all
-strings are Unicode while in Python 2 strings are bytes by default, but there
-are also several other backwards incompatible changes. The last Python 2
-release is Python 2.7 that was released in 2010 and will be supported until
-2020. See `Should I use Python 2 or 3?`__ for more information about the
-differences, which version to use, how to write code that works with both
-versions, and so on.
+Python 2 と Pyhton 3 は、言語としてはほとんど同じですが、お互いに完全に互換というわけではありません。
+主な違いは、 Python 3 では、標準ではすべての文字列が Unicode 文字列型であるのに対して、 Python 2 では標準は実質 bytes 型に総統するということです。
+他にも、後方互換性のない変更がいくつかあります。
+2010 年にリリースされた Python 2.7 は Python 2 系の最後のリリースとされていて、2020 年までサポートされます。
+Python 2 と 3 の違い、どちらを使うべきか、どちらのバージョンでも動くコードの書き方などは、 `Wiki <https://wiki.python.org/moin/Python2orPython3>`_ を参照するとよいでしょう。
 
-Robot Framework 3.0 is the first Robot Framework version to support Python 3.
-It supports also Python 2, and the plan is to continue Python 2 support as
-long as Python 2 itself is officially supported. We hope that authors of the
-libraries and tools in the wider Robot Framework ecosystem also start looking
-at Python 3 support now that the core framework supports it.
-
-__ https://wiki.python.org/moin/Python2orPython3
+Robot Framework 3.0 は、 Python 3 をサポートする最初のバージョンです。
+このバージョンは、Python 2 もサポートしていて、 Python 2 自体が公式にサポートされている限り Python 2 に対応し続ける予定です。フレームワークのコア部分が Pyhton 3 へのサポートを始めたいま、Robot Framework のエコシステムに関わるライブラリやツールの作者にも、 Python 3 のサポートを検討していただきたいです。
 
 .. _Python installation:
 
-Python installation
-~~~~~~~~~~~~~~~~~~~
+Python のインストール
+~~~~~~~~~~~~~~~~~~~~~~
 
-On most UNIX-like systems such as Linux and OS X you have Python_ installed
-by default. If you are on Windows or otherwise need to install Python yourself,
-a good place to start is http://python.org. There you can download a suitable
-installer and get more information about the installation process and Python
-in general.
+Linux や OS X のように、ほとんどの UNIX 系システムには、最初から Python_ がインストールされています。
+Windows その他の環境では、 Python を自分でインストールする必要があります。
+まずは http://python.org に行って、適切なインストーラをダウンロードしたり、 Python のインストール手順について詳しい情報を得るのが良いでしょう。
 
-Robot Framework 3.0 supports Python 2.6, 2.7, 3.3 and newer, but the plan is
-to `drop Python 2.6 support in RF 3.1`__. If you need to use older versions,
-Robot Framework 2.5-2.8 support Python 2.5 and Robot Framework 2.0-2.1
-support Python 2.3 and 2.4.
+Robot Framework 3.0 は、 Python 2.6, 2.7, 3.3 以降をサポートしています。
+ただし、 `バージョン 3.1 以降で Python 2.6 のサポートを打ち切る <https://github.com/robotframework/robotframework/issues/2276>`_ 予定です。
+古いバージョンの Python を使いたい場合、 Robot Framework 2.5-2.8 が Python 2.5 を、 Robot Framework 2.0-2.1 が Python 2.3 および 2.4 をサポートしています。
 
-On Windows it is recommended to install Python to all users and to run the
-installer as an administrator. Additionally, environment variable
-``PYTHONCASEOK`` must not be set.
+Windows では、インストール時に、インストーラを管理者モードで起動し、全てのユーザにインストールするよう推奨します。
+また、環境変数 ``PYTHONCASEOK`` は設定してはなりません。
 
-After installing Python, you probably still want to configure PATH_ to make
-Python itself as well as the ``robot`` and ``rebot`` `runner scripts`_
-executable on the command line.
+インストール後、 PATH_ を変更して、コマンドラインから Python コマンドと ``robot``, ``rebot`` :ref:`テスト実行スクリプト <runner scripts>` を実行できるように設定する必要があるでしょう。
 
-.. tip:: Latest Python Windows installers allow setting ``PATH`` as part of
-         the installation. This is disabled by default, but `Add python.exe
-         to Path` can be enabled on the `Customize Python` screen.
-
-__ https://github.com/robotframework/robotframework/issues/2276
+.. tip:: 最近の Windows 用 Pyhton インストーラには、インストールの際に ``PATH`` を設定する機能があります。この機能は標準では無効になっていて、 `Customize Python` の画面で `Add python.exe to Path` を有効にします。
 
 .. _Jython installation:
 
@@ -623,6 +572,8 @@ a new major version.
 Executing Robot Framework
 -------------------------
 
+.. _runner script:
+.. _runner scripts:
 .. _Using robot and rebot scripts:
 
 Using ``robot`` and ``rebot`` scripts
@@ -703,9 +654,9 @@ Executing Robot Framework this way is especially handy if you have done
 a `manual installation`_.
 
 .. These aliases need an explicit target to work in GitHub
-.. _precondition: `Preconditions`_
+.. .. _precondition: `Preconditions`_
 .. _PATH: `Configuring PATH`_
 .. _https_proxy: `Setting https_proxy`_
 .. _source distribution: `Getting source code`_
-.. _runner script: `Using robot and rebot scripts`_
-.. _runner scripts: `Using robot and rebot scripts`_
+.. .. _runner script: `Using robot and rebot scripts`_
+.. .. _runner scripts: `Using robot and rebot scripts`_

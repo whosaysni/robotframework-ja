@@ -93,6 +93,8 @@ when the search order is not set.
 
 For more information and examples, see the documentation of the keyword.
 
+.. _Timeouts:
+
 Timeouts
 --------
 
@@ -106,6 +108,8 @@ library or system under test to an unstable state, and timeouts are
 recommended only when there is no safer option available. In general,
 libraries should be implemented so that keywords cannot hang or that
 they have their own timeout mechanism, if necessary.
+
+.. _Test case timeout:
 
 Test case timeout
 ~~~~~~~~~~~~~~~~~

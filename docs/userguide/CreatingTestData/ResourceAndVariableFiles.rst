@@ -17,6 +17,8 @@ them somewhat more complicated than `Variable tables`_.
    :depth: 2
    :local:
 
+.. _Resource files:
+
 Resource files
 --------------
 

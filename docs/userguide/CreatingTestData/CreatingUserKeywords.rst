@@ -1,3 +1,4 @@
+.. _keyword table:
 .. _user keyword:
 .. _user keywords:
 .. _higher-level keywords:
@@ -584,6 +585,8 @@ of the keyword definitions`__.
 
 __ `Ignoring Given/When/Then/And/But prefixes`_
 __ http://cukes.info
+
+.. _User keyword return values:
 
 User keyword return values
 --------------------------

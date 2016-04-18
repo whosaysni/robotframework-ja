@@ -2,43 +2,67 @@
 .. _test cases:
 .. _Creating test cases:
 
-Creating test cases
+テストケースの作成
 ===================
 
-This section describes the overall test case syntax. Organizing test
-cases into `test suites`_ using `test case files`_ and `test suite
-directories`_ is discussed in the next section.
+この節では、テストケースの作り方を説明します。
+テストケースを :ref:`テストケースファイル <test case files>` と
+:ref:`テストケースディレクトリ<test suite directories>` を使った
+:ref:`テストスイート <test suite>` の作り方は、この節の次の節で説明します。
 
 .. contents::
    :depth: 2
    :local:
 
-Test case syntax
-----------------
+.. Test case syntax:
 
-Basic syntax
+テストケースの構文
+----------------------
+
+.. Basic syntax:
+
+基本の構文
 ~~~~~~~~~~~~
 
-Test cases are constructed in test case tables from the available
-keywords. Keywords can be imported from `test libraries`_ or `resource
-files`_, or created in the `keyword table`_ of the test case file
-itself.
+テストケースは、キーワードを組み合わせたテーブル（表）として作成します。
+「テーブル」とは、テキストをスペースやタブ、パイプ (``|``) で区切ったものです。
+区切られた各文字列を「カラム」と呼び、行の頭から区切りごとに 1 カラム目、2カラム目、...と数えていきます。
+::
 
-.. _keyword table: `user keywords`_
+      テストケース1
+          キーワード1   引数1   引数2   ...
+          キーワード2   引数1   ...
+          ...
 
-The first column in the test case table contains test case names. A
-test case starts from the row with something in this column and
-continues to the next test case name or to the end of the table. It is
-an error to have something between the table headers and the first
-test.
+      テストケース2
+          ...
 
-The second column normally has keyword names. An exception to this rule
-is `setting variables from keyword return values`_, when the second and
-possibly also the subsequent columns contain variable names and a keyword
-name is located after them. In either case, columns after the keyword name
-contain possible arguments to the specified keyword.
 
-.. _setting variables from keyword return values: `User keyword return values`_
+「キーワード」は、テスト中のひとつひとつの操作の命令で、 :ref:`テストライブラリ <test libraries>` や :ref:`リソースファイル <resource files>` からインポートしたり、テストケースファイル中の :ref:`キーワードテーブル<keyword table>` で作成したりできます。
+
+テストケースの最初のカラムには、テストケースの名前を入れます。
+あるテストケース名の入った行から、次のテストケース名が始まるまで、もしくはテストケーステーブルの末尾に到達するまでが、ひとつのテストケースとみなされます。
+
+テストケースを書く場所には、先頭に ``*** test cases ***`` というヘッダを書きます。
+テーブルのヘッダから最初のテストケースまでの間にテストケース以外の内容を記述すると、エラーになります。
+
+.. note::
+   スペースやタブで区切る書き方のテストケースの場合、テーブルの「最初のカラム」は行頭、「2番めのカラム」は、行頭から 2 文字以上のスペース、またはタブを入れた後の文字列になります。そのため、テストケース名以外の行は、字下げしているように見えます::
+
+      Test Case Name
+          Keyword   Arg1   Arg2...
+
+   このテストをテーブルで表すと、以下のようになります::
+
+      +----------------+---------+------+----------+
+      | Test Case Name |         |      |          |
+      +----------------+---------+------+----------+
+      |                | Keyword | Arg1 | Arg2 ... |
+      +----------------+---------+------+----------+
+
+テストケースの2行目は、たいていはキーワード名ではじまっています。
+例外は、2行目で :ref:`キーワードの戻り値を変数に代入<User keyword return values>` しているときで、この場合、二つめのカラムに変数名、その後にキーワードがあります。
+どちらの場合も、キーワード名の後には、キーワードの引数などを表すカラムが入ることがあります。
 
 .. _example-tests:
 .. sourcecode:: robotframework
@@ -56,33 +80,34 @@ contain possible arguments to the specified keyword.
        ${value} =    Get Some Value
        Should Be Equal    ${value}    Expected value
 
-Settings in the Test Case table
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Settings in the Test Case table:
 
-Test cases can also have their own settings. Setting names are always
-in the second column, where keywords normally are, and their values
-are in the subsequent columns. Setting names have square brackets around
-them to distinguish them from keywords. The available settings are listed
-below and explained later in this section.
+テストケーステーブルごとの設定
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`[Documentation]`:setting:
-    Used for specifying a `test case documentation`_.
+テストケースには、ケースごとの設定（テスト設定）を持たせられます。
+テスト設定の名前を2カラム目に、設定の値をその後のカラムに指定します。
+テスト設定名は、キーワードと区別するために角括弧 (``[ ]``) で囲います。
+使える設定名を以下に示します。これらは、このセクションの後でも説明します。
 
-`[Tags]`:setting:
-    Used for `tagging test cases`_.
+:setting:`[Documentation]`
+    テストケースの :ref:`ドキュメント <test case documentation>` を書くときに使います。
 
-`[Setup]`:setting:, `[Teardown]`:setting:
-   Specify `test setup and teardown`_.
+:setting:`[Tags]`
+    テストケースを :ref:`タグ付け <tagging test cases>` するときに使います。
 
-`[Template]`:setting:
-   Specifies the `template keyword`_ to use. The test itself will contain only
-   data to use as arguments to that keyword.
+:setting:`[Setup]`, :setting:`[Teardown]`
+    テストケースごとに :ref:`セットアップやティアダウン <test setup and teardown>` を指定するときに使います。
 
-`[Timeout]`:setting:
-   Used for setting a `test case timeout`_. Timeouts_ are discussed in
-   their own section.
+:setting:`[Template]`
+   テストの :ref:`テンプレートキーワード <template keyword>` の設定に使います。
+   この設定を使うと、テストケースの中には、テンプレートに対して適用する引数のデータしか入れられません。
 
-Example test case with settings:
+:setting:`[Timeout]`
+   :ref:`テストケースのタイムアウトの設定 <test case timeout>` に使います。
+   :ref:`タイムアウト <timeouts>` についての説明も参照してください。
+
+テスト設定を使ったテストケースの例を示します:
 
 .. sourcecode:: robotframework
 
@@ -92,7 +117,10 @@ Example test case with settings:
        [Tags]    dummy    owner-johndoe
        Log    Hello, world!
 
-Test case related settings in the Setting table
+
+.. _Test case related settings in the Setting table:
+
+Test case related settings in the Setting table:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Setting table can have the following test case related
