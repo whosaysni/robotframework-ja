@@ -97,50 +97,38 @@ Windows では、インストール時に、インストーラを管理者モー
 
 .. _Jython installation:
 
-Jython installation
-~~~~~~~~~~~~~~~~~~~
+Jython のインストール
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using test libraries implemented with Java_ or that use Java tools internally
-requires running Robot Framework on Jython_, which in turn requires Java
-Runtime Environment (JRE) or Java Development Kit (JDK). Installing either
-of these Java distributions is out of the scope of these instructions, but
-you can find more information, for example, from http://java.com.
+Java_ で書かれていたり、内部的に Java のツールを使うテストライブラリを使いたい場合には、Robot Framework を Jython_ 上で動かす必要があります。
+そのため、 Java ランタイム環境 (JRE) か、 Java 開発キット (JDK) が必要です。
+ここでは、 JRE や JDK のインストール方法について説明しませんが、 http://java.com などで詳しい情報が手にはいります。
 
-Installing Jython is a fairly easy procedure, and the first step is getting
-an installer from http://jython.org. The installer is an executable JAR
-package, which you can run from the command line like `java -jar
-jython_installer-<version>.jar`. Depending on the  system configuration,
-it may also be possible to just double-click the installer.
+Jython のインストールはとても簡単で、まずは、 http://jython.org からインストーラを取得します。
+インストーラは実行可能な JAR のパッケージで、コマンドラインから `java -jar jython_installer-<version>.jar` で実行します。
+システム構成によっては、インストーラをダブルクリックするだけでインストールできます。
 
-Robot Framework 3.0 supports Jython 2.7 which requires Java 7 or newer.
-If older Jython or Java versions are needed, Robot Framework 2.5-2.8 support
-Jython 2.5 (requires Java 5 or newer) and Robot Framework 2.0-2.1 support
-Jython 2.2.
+Robot Framework 3.0 は Jython 2.7 をサポートしており、これには Java 7 以降が必要です。
+古い Jython や Java が必要なら、 Robot Framework 2.5-2.8 が Jython 2.5 (Java 5 以降)、
+Robot Framework 2.0-2.1 が Jython 2.2 をサポートしています。
 
-After installing Jython, you probably still want to configure PATH_ to make
-Jython itself as well as the ``robot`` and ``rebot`` `runner scripts`_
-executable on the command line.
+Jython をインストールしたら、 PATH_ を変更して、コマンドラインから Python コマンドと ``robot``, ``rebot`` :ref:`テスト実行スクリプト <runner scripts>` を実行できるように設定する必要があるでしょう。
+
 
 .. _IronPython installation:
 
-IronPython installation
-~~~~~~~~~~~~~~~~~~~~~~~
+IronPython のインストール
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-IronPython_ allows running Robot Framework on the `.NET platform
-<http://www.microsoft.com/net>`__ and interacting with C# and other .NET
-languages and APIs. Only IronPython 2.7 is supported.
+IronPython_ を使えば、 Robot Framework を `.NET platform <http://www.microsoft.com/net>`_ 上で動かしたり、 C# や他の .NET 言語とその API にアクセスできます。
+サポートしているバージョンは IronPython 2.7 のみです。
 
-When using IronPython, an additional dependency is installing
-`elementtree <http://effbot.org/downloads/#elementtree>`__
-module 1.2.7 preview release. This is required because the ``elementtree``
-module distributed with IronPython is
-`broken <https://github.com/IronLanguages/main/issues/968>`__. You can install
-the package by downloading the source distribution, unzipping it, and running
-``ipy setup.py install`` on the command prompt in the created directory.
+IronPython を使う場合、 `elementtree <http://effbot.org/downloads/#elementtree>`_ モジュールの
+1.2.7 プレビューリリース版が必要です。というのも、 IronPython の配布物に入っている ``elementtree`` の実装は `壊れている <https://github.com/IronLanguages/main/issues/968>`_ からです。
+``elementtree`` をインストールするには、ソース配布物をダウンロードして解凍し、解凍先ディレクトリで ``ipy setup.py install`` を実行します。
 
-After installing IronPython, you probably still want to configure PATH_ to make
-IronPython itself as well as the ``robot`` and ``rebot`` `runner scripts`_
-executable on the command line.
+IronPython をインストールしたら、 PATH_ を変更して、コマンドラインから Python コマンドと ``robot``, ``rebot`` :ref:`テスト実行スクリプト <runner scripts>` を実行できるように設定する必要があるでしょう。
+
 
 .. _Configuring PATH:
 
