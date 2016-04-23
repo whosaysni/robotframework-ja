@@ -48,20 +48,18 @@ is created automatically, if it does not exist already.
 Output file
 ~~~~~~~~~~~
 
-Output files contain all the test execution results in machine readable XML
-format. Log_, report_ and xUnit_ files are typically generated based on them,
-and they can also be combined and otherwise post-processed with Rebot_.
+Output files contain all the test execution results in machine readable XML format. :ref:`Log` , :ref:`report` and :ref:`xUnit` files are typically generated based on them, and they can also be combined and otherwise post-processed with :ref:`Rebot`.
 
-.. tip:: Starting from Robot Framework 2.8, generating report_ and xUnit_
+.. tip:: Starting from Robot Framework 2.8, generating :ref:`report` and :ref:`xUnit`
          files as part of test execution does not anymore require processing
-         output files. Disabling log_ generation when running tests can thus
+         output files. Disabling :ref:`log` generation when running tests can thus
          save memory.
 
 The command line option :option:`--output (-o)` determines the path where
-the output file is created relative to the `output directory`_. The default
+the output file is created relative to the :ref:`output directory`. The default
 name for the output file, when tests are run, is :file:`output.xml`.
 
-When `post-processing outputs`_ with Rebot, new output files are not created
+When :ref:`post-processing outputs` with Rebot, new output files are not created
 unless the :option:`--output` option is explicitly used.
 
 It is possible to disable creation of the output file when running tests by
@@ -119,7 +117,7 @@ as well as a list of all executed test cases. When both reports and
 logs are generated, the report has links to the log file for easy
 navigation to more detailed information.  It is easy to see the
 overall test execution status from report, because its background
-color is green, if all `critical tests`_ pass, and bright red
+color is green, if all :ref:`critical tests` pass, and bright red
 otherwise.
 
 The command line option :option:`--report (-r)` determines where
@@ -169,7 +167,7 @@ possible message of the test case in a format like `FAIL: Error message`.
 __ http://en.wikipedia.org/wiki/XUnit
 __ http://jenkins-ci.org
 __ https://wiki.jenkins-ci.org/display/JENKINS/Robot+Framework+Plugin
-.. __ :ref:`Setting criticality`
+.. .. _`Setting criticality`
 __ `Setting criticality`_
 
 
@@ -220,17 +218,13 @@ Example::
 Setting background colors
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default the `report file`_ has a green background when all the
-`critical tests`_ pass and a red background otherwise.  These colors
-can be customized by using the :option:`--reportbackground` command line
-option, which takes two or three colors separated with a colon as an
-argument::
+By default the :ref:`report file` has a green background when all the :ref:`critical tests` pass and a red background otherwise.  These colors can be customized by using the :option:`--reportbackground` command line option, which takes two or three colors separated with a colon as an argument::
 
    --reportbackground blue:red
    --reportbackground green:yellow:red
    --reportbackground #00E:#E00
 
-If you specify two colors, the first one will be used instead of the
+If you specify two colors, the first one will be used instead of the 
 default green color and the second instead of the default red. This
 allows, for example, using blue instead of green to make backgrounds
 easier to separate for color blind people.
@@ -299,17 +293,17 @@ threshold level. A special value `NONE` can also be used to
 disable logging altogether.
 
 It is possible to use the :option:`--loglevel` option also when
-`post-processing outputs`_ with Rebot. This allows, for example,
+:ref:`post-processing outputs` with Rebot. This allows, for example,
 running tests initially with the `TRACE` level, and generating smaller
 log files for normal viewing later with the `INFO` level. By default
 all the messages included during execution will be included also with
 Rebot. Messages ignored during the execution cannot be recovered.
 
-Another possibility to change the log level is using the BuiltIn_
+Another possibility to change the log level is using the :ref:`BuiltIn`
 keyword :name:`Set Log Level` in the test data. It takes the same
 arguments as the :option:`--loglevel` option, and it also returns the
-old level so that it can be restored later, for example, in a `test
-teardown`_.
+old level so that it can be restored later, for example, in a 
+:ref:`test teardown`.
 
 Visible log level
 ~~~~~~~~~~~~~~~~~
@@ -399,7 +393,7 @@ Generating combined tag statistics
 
 The command line option :option:`--tagstatcombine` can be used to
 generate aggregate tags that combine statistics from multiple
-tags. The combined tags are specified using `tag patterns`_ where
+tags. The combined tags are specified using :ref:`tag patterns` where
 `*` and `?` are supported as wildcards and `AND`,
 `OR` and `NOT` operators can be used for combining
 individual tags or patterns together.
@@ -434,7 +428,7 @@ option are given in the format `tag:link:name`, where `tag`
 specifies the tags to assign the link to, `link` is the link to
 be created, and `name` is the name to give to the link.
 
-`tag` may be a single tag, but more commonly a `simple pattern`_
+`tag` may be a single tag, but more commonly a :ref:`simple pattern`
 where `*` matches anything and `?` matches any single
 character. When `tag` is a pattern, the matches to wildcards may
 be used in `link` and `title` with the syntax `%N`,
@@ -459,10 +453,10 @@ Adding documentation to tags
 Tags can be given a documentation with the command line option
 :option:`--tagdoc`, which takes an argument in the format
 `tag:doc`. `tag` is the name of the tag to assign the
-documentation to, and it can also be a `simple pattern`_ matching
+documentation to, and it can also be a :ref:`simple pattern` matching
 multiple tags. `doc` is the assigned documentation. Underscores
 in the documentation are automatically converted to spaces and it
-can also contain `HTML formatting`_.
+can also contain :ref:`HTML formatting`.
 
 The given documentation is shown with matching tags in the :name:`Test
 Details by Tag` table, and as a tool tip for these tags in the
@@ -478,17 +472,17 @@ Examples::
 Removing and flattening keywords
 --------------------------------
 
-Most of the content of `output files`_ comes from keywords and their
+Most of the content of :ref:`output files` comes from keywords and their
 log messages. When creating higher level reports, log files are not necessarily
 needed at all, and in that case keywords and their messages just take space
 unnecessarily. Log files themselves can also grow overly large, especially if
-they contain `for loops`_ or other constructs that repeat certain keywords
+they contain :ref:`for loops` or other constructs that repeat certain keywords
 multiple times.
 
 In these situations, command line options :option:`--removekeywords` and
 :option:`--flattenkeywords` can be used to dispose or flatten unnecessary keywords.
-They can be used both when `executing test cases`_ and when `post-processing
-outputs`_. When used during execution, they only affect the log file, not
+They can be used both when :ref:`executing test cases` and when `post-processing
+:ref:`outputs`. When used during execution, they only affect the log file, not
 the XML output file. With `rebot` they affect both logs and possibly
 generated new output XML files.
 
@@ -497,8 +491,7 @@ Removing keywords
 
 The :option:`--removekeywords` option removes keywords and their messages
 altogether. It has the following modes of operation, and it can be used
-multiple times to enable multiple modes. Keywords that contain `errors
-or warnings`__ are not removed except when using the `ALL` mode.
+multiple times to enable multiple modes. Keywords that contain :ref:`errors or warnings <Errors and warnings>` are not removed except when using the `ALL` mode.
 
 `ALL`
    Remove data from all keywords unconditionally.
@@ -509,10 +502,10 @@ or warnings`__ are not removed except when using the `ALL` mode.
    possible failures.
 
 `FOR`
-   Remove all passed iterations from `for loops`_ except the last one.
+   Remove all passed iterations from :ref:`for loops` except the last one.
 
 `WUKS`
-   Remove all failing keywords inside BuiltIn_ keyword
+   Remove all failing keywords inside :ref:`BuiltIn` keyword
    :name:`Wait Until Keyword Succeeds` except the last one.
 
 `NAME:<pattern>`
@@ -520,15 +513,15 @@ or warnings`__ are not removed except when using the `ALL` mode.
    keyword status. The pattern is
    matched against the full name of the keyword, prefixed with
    the possible library or resource file name. The pattern is case, space, and
-   underscore insensitive, and it supports `simple patterns`_ with `*`
+   underscore insensitive, and it supports :ref:`simple patterns` with `*`
    and `?` as wildcards.
 
 `TAG:<pattern>`
    Remove data from keywords with tags that match the given pattern. Tags are
-   case and space insensitive and they can be specified using `tag patterns`_
+   case and space insensitive and they can be specified using :ref:`tag patterns`
    where `*` and `?` are supported as wildcards and `AND`, `OR` and `NOT`
    operators can be used for combining individual tags or patterns together.
-   Can be used both with `library keyword tags`__ and `user keyword tags`_.
+   Can be used both with :ref:`library keyword tags <Keyword tags>` and :ref:`user keyword tags`.
 
 Examples::
 
@@ -537,12 +530,11 @@ Examples::
    robot --removekeywords name:HugeKeyword --removekeywords name:resource.* tests.robot
    robot --removekeywords tag:huge tests.robot
 
-Removing keywords is done after parsing the `output file`_ and generating
+Removing keywords is done after parsing the :ref:`output file` and generating
 an internal model based on it. Thus it does not reduce memory usage as much
-as `flattening keywords`_.
+as :ref:`flattening keywords`.
 
-__ `Errors and warnings`_
-__ `Keyword tags`_
+
 
 .. note:: The support for using :option:`--removekeywords` when executing tests
           as well as `FOR` and `WUKS` modes were added in Robot
@@ -560,7 +552,7 @@ keywords, recursively, and child keywords are discarded otherwise. Flattening
 supports the following modes:
 
 `FOR`
-   Flatten `for loops`_ fully.
+   Flatten :ref:`for loops` fully.
 
 `FORITEM`
    Flatten individual for loop iterations.
@@ -588,7 +580,7 @@ deeply nested keyword structures.
 Setting start and end time of execution
 ---------------------------------------
 
-When `combining outputs`_ using Rebot, it is possible to set the start
+When :ref:`combining outputs` using Rebot, it is possible to set the start
 and end time of the combined test suite using the options :option:`--starttime`
 and :option:`--endtime`, respectively. This is convenient, because by default,
 combined suites do not have these values. When both the start and end time are
@@ -621,10 +613,9 @@ Robot Framework 2.9 and newer provide a possible to do custom modifications
 programmatically. This is accomplished by creating a model modifier and
 activating it using the :option:`--prerebotmodifier` option.
 
-This functionality works nearly exactly like `programmatic modification of
-test data`_ that can be enabled with the :option:`--prerunmodifier` option.
+This functionality works nearly exactly like :ref:`programmatic modification of test data` that can be enabled with the :option:`--prerunmodifier` option.
 The obvious difference is that this time modifiers operate with the
-`result model`_, not the `running model`_. For example, the following modifier
+:ref:`result model`, not the :ref:`running model`. For example, the following modifier
 marks all passed tests that have taken more time than allowed as failed:
 
 .. sourcecode:: python
@@ -657,7 +648,7 @@ the :option:`--prerebotmodifier` option multiple times. When executing tests,
 it is possible to use :option:`--prerunmodifier` and
 :option:`--prerebotmodifier` options together.
 
-.. _syslog
+.. _syslog:
 .. _System log:
 
 System log

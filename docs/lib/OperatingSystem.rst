@@ -117,7 +117,7 @@ Note that prior to Robot Framework 2.9, all non-empty strings, including
 |             | ${output} =       | Run | ${TEMPDIR}${/}script.py arg |
 
 Append To Environment Variable
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name, *values, **config]
 
 Appends given ``values`` to environment variable ``name``.
@@ -143,7 +143,7 @@ Examples (assuming ``NAME`` and ``NAME2`` do not exist initially):
 New in Robot Framework 2.8.4.
 
 Append To File
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, content, encoding=UTF-8]
 
 Appends the given contend to the specified file.
@@ -152,7 +152,7 @@ If the file does not exists, this keyword works exactly the same
 way as `Create File`.
 
 Copy Directory
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, destination]
 
 Copies the source directory into the destination.
@@ -162,7 +162,7 @@ the destination directory and the possible missing intermediate
 directories are created.
 
 Copy File
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, destination]
 
 Copies the source file into the destination.
@@ -192,7 +192,7 @@ The resulting destination path is returned since Robot Framework 2.9.2.
 See also `Copy Files`, `Move File`, and `Move Files`.
 
 Copy Files
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [*sources_and_destination]
 
 Copies specified files to the target directory.
@@ -213,19 +213,19 @@ See also `Copy File`, `Move File`, and `Move Files`.
 New in Robot Framework 2.8.4.
 
 Count Directories In Directory
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, pattern=None]
 
 Wrapper for `Count Items In Directory` returning only directory count.
 
 Count Files In Directory
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, pattern=None]
 
 Wrapper for `Count Items In Directory` returning only file count.
 
 Count Items In Directory
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, pattern=None]
 
 Returns and logs the number of all items in the given directory.
@@ -235,7 +235,7 @@ keyword. The count is returned as an integer, so it must be checked e.g.
 with the built-in keyword `Should Be Equal As Integers`.
 
 Create Binary File
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, content]
 
 Creates a binary file with the given content.
@@ -261,7 +261,7 @@ existing files.
 New in Robot Framework 2.8.5.
 
 Create Directory
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Creates the specified directory.
@@ -271,7 +271,7 @@ directory already exists, but fails if the path exists and is not
 a directory.
 
 Create File
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, content=, encoding=UTF-8]
 
 Creates a file with the given content and encoding.
@@ -296,7 +296,7 @@ The support for ``SYSTEM`` and ``CONSOLE`` encodings is new in Robot
 Framework 3.0.
 
 Directory Should Be Empty
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails unless the specified directory is empty.
@@ -304,7 +304,7 @@ Fails unless the specified directory is empty.
 The default error message can be overridden with the ``msg`` argument.
 
 Directory Should Exist
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails unless the given path points to an existing directory.
@@ -314,7 +314,7 @@ The pattern matching syntax is explained in `introduction`.
 The default error message can be overridden with the ``msg`` argument.
 
 Directory Should Not Be Empty
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails if the specified directory is empty.
@@ -322,7 +322,7 @@ Fails if the specified directory is empty.
 The default error message can be overridden with the ``msg`` argument.
 
 Directory Should Not Exist
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails if the given path points to an existing file.
@@ -332,7 +332,7 @@ The pattern matching syntax is explained in `introduction`.
 The default error message can be overridden with the ``msg`` argument.
 
 Empty Directory
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Deletes all the content from the given directory.
@@ -342,7 +342,7 @@ itself if not removed. Use `Remove Directory` if you want to remove
 the whole directory.
 
 Environment Variable Should Be Set
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name, msg=None]
 
 Fails if the specified environment variable is not set.
@@ -350,7 +350,7 @@ Fails if the specified environment variable is not set.
 The default error message can be overridden with the ``msg`` argument.
 
 Environment Variable Should Not Be Set
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name, msg=None]
 
 Fails if the specified environment variable is set.
@@ -358,7 +358,7 @@ Fails if the specified environment variable is set.
 The default error message can be overridden with the ``msg`` argument.
 
 File Should Be Empty
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails unless the specified file is empty.
@@ -366,7 +366,7 @@ Fails unless the specified file is empty.
 The default error message can be overridden with the ``msg`` argument.
 
 File Should Exist
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails unless the given ``path`` points to an existing file.
@@ -376,7 +376,7 @@ The pattern matching syntax is explained in `introduction`.
 The default error message can be overridden with the ``msg`` argument.
 
 File Should Not Be Empty
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails if the specified directory is empty.
@@ -384,7 +384,7 @@ Fails if the specified directory is empty.
 The default error message can be overridden with the ``msg`` argument.
 
 File Should Not Exist
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails if the given path points to an existing file.
@@ -394,7 +394,7 @@ The pattern matching syntax is explained in `introduction`.
 The default error message can be overridden with the ``msg`` argument.
 
 Get Binary File
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Returns the contents of a specified file.
@@ -403,7 +403,7 @@ This keyword reads the specified file and returns the contents as is.
 See also `Get File`.
 
 Get Environment Variable
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name, default=None]
 
 Returns the value of an environment variable with the given name.
@@ -418,7 +418,7 @@ Note that you can also access environment variables directly using
 the variable syntax ``%{ENV_VAR_NAME}``.
 
 Get Environment Variables
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  []
 
 Returns currently available environment variables as a dictionary.
@@ -430,7 +430,7 @@ variables.
 New in Robot Framework 2.7.
 
 Get File
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, encoding=UTF-8, encoding_errors=strict]
 
 Returns the contents of a specified file.
@@ -462,13 +462,13 @@ in practice the following values are most useful:
 support for ``SYSTEM`` and ``CONSOLE`` encodings in Robot Framework 3.0.
 
 Get File Size
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Returns and logs file size as an integer in bytes.
 
 Get Modified Time
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, format=timestamp]
 
 Returns the last modification time of a file or directory.
@@ -506,7 +506,7 @@ Examples (when the modified time of ``${CURDIR}`` is
 - @{time} = ['2006', '03', '29', '15', '06', '21']
 
 Grep File
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, pattern, encoding=UTF-8, encoding_errors=strict]
 
 Returns the lines of the specified file that match the ``pattern``.
@@ -534,7 +534,7 @@ Lines Matching Regexp`.
 ``encoding_errors`` argument is new in Robot Framework 2.8.5.
 
 Join Path
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [base, *parts]
 
 Joins the given path part(s) to the given base path.
@@ -557,7 +557,7 @@ Examples:
 - ${p5} = '/my/path2'
 
 Join Paths
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [base, *paths]
 
 Joins given paths with base and returns resulted paths.
@@ -574,13 +574,13 @@ Examples:
 - @{p3} = ['my/base/example/path', 'my/base/other', 'my/base/one/more']
 
 List Directories In Directory
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, pattern=None, absolute=False]
 
 Wrapper for `List Directory` that returns only directories.
 
 List Directory
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, pattern=None, absolute=False]
 
 Returns and logs items in a directory, optionally filtered with ``pattern``.
@@ -605,13 +605,13 @@ Examples (using also other `List Directory` variants):
 | ${count} = | Count Files In Directory | ${CURDIR} | ??? |
 
 List Files In Directory
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, pattern=None, absolute=False]
 
 Wrapper for `List Directory` that returns only files.
 
 Log Environment Variables
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [level=INFO]
 
 Logs all environment variables using the given log level.
@@ -622,7 +622,7 @@ Environment variables are also returned the same way as with
 New in Robot Framework 2.7.
 
 Log File
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, encoding=UTF-8, encoding_errors=strict]
 
 Wrapper for `Get File` that also logs the returned file.
@@ -637,7 +637,7 @@ See `Get File` for more information about ``encoding`` and
 ``encoding_errors`` argument is new in Robot Framework 2.8.5.
 
 Move Directory
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, destination]
 
 Moves the source directory into a destination.
@@ -647,7 +647,7 @@ Uses `Copy Directory` keyword internally, and ``source`` and
 that keyword.
 
 Move File
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, destination]
 
 Moves the source file into the destination.
@@ -662,7 +662,7 @@ filesystem and then removed from the original filesystem.
 See also `Move Files`, `Copy File`, and `Copy Files`.
 
 Move Files
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [*sources_and_destination]
 
 Moves specified files to the target directory.
@@ -674,7 +674,7 @@ See also `Move File`, `Copy File`, and `Copy Files`.
 New in Robot Framework 2.8.4.
 
 Normalize Path
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Normalizes the given path.
@@ -693,7 +693,7 @@ Examples:
 - ${p5} = 'abc/def'
 
 Remove Directory
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, recursive=False]
 
 Removes the directory pointed to by the given ``path``.
@@ -706,7 +706,7 @@ If the directory pointed to by the ``path`` does not exist, the keyword
 passes, but it fails, if the ``path`` points to a file.
 
 Remove Environment Variable
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [*names]
 
 Deletes the specified environment variable.
@@ -717,7 +717,7 @@ Starting from Robot Framework 2.7, it is possible to remove multiple
 variables by passing them to this keyword as separate arguments.
 
 Remove File
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Removes a file with the given path.
@@ -730,7 +730,7 @@ The pattern matching syntax is explained in `introduction`.
 If the path is a pattern, all files matching it are removed.
 
 Remove Files
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [*paths]
 
 Uses `Remove File` to remove multiple files one-by-one.
@@ -740,7 +740,7 @@ Example:
 ${TEMPDIR}${/}zap.txt |
 
 Run
----
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [command]
 
 Runs the given command in the system and returns the output.
@@ -779,7 +779,7 @@ Process library] supports better process configuration and is generally
 recommended as a replacement for this keyword.
 
 Run And Return Rc
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [command]
 
 Runs the given command in the system and returns the return code.
@@ -807,7 +807,7 @@ Process library] supports better process configuration and is generally
 recommended as a replacement for this keyword.
 
 Run And Return Rc And Output
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [command]
 
 Runs the given command in the system and returns the RC and output.
@@ -831,7 +831,7 @@ Process library] supports better process configuration and is generally
 recommended as a replacement for this keyword.
 
 Set Environment Variable
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name, value]
 
 Sets an environment variable to a specified value.
@@ -841,7 +841,7 @@ Framework 2.7, set variables are automatically encoded using the system
 encoding.
 
 Set Modified Time
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, mtime]
 
 Sets the file modification and access times.
@@ -889,7 +889,7 @@ the UTC time |
 Support for UTC time is a new feature in Robot Framework 2.7.5.
 
 Should Exist
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails unless the given path (file or directory) exists.
@@ -899,7 +899,7 @@ The pattern matching syntax is explained in `introduction`.
 The default error message can be overridden with the ``msg`` argument.
 
 Should Not Exist
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, msg=None]
 
 Fails if the given path (file or directory) exists.
@@ -909,7 +909,7 @@ The pattern matching syntax is explained in `introduction`.
 The default error message can be overridden with the ``msg`` argument.
 
 Split Extension
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Splits the extension from the given path.
@@ -938,7 +938,7 @@ Examples:
 - ${p6} = 'path/.file' & ${e6} = ''
 
 Split Path
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Splits the given path from the last path separator (``/`` or ``\``).
@@ -958,7 +958,7 @@ Examples:
 - ${path3} = 'def' & ${d2} = 'ghi'
 
 Touch
------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Emulates the UNIX touch command.
@@ -970,7 +970,7 @@ Fails if used with the directories or the parent directory of the given
 file does not exist.
 
 Wait Until Created
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, timeout=1 minute]
 
 Waits until the given file or directory is created.
@@ -989,7 +989,7 @@ If the timeout is negative, the keyword is never timed-out. The keyword
 returns immediately, if the path already exists.
 
 Wait Until Removed
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, timeout=1 minute]
 
 Waits until the given file or directory is removed.

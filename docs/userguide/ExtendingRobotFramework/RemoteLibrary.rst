@@ -9,9 +9,7 @@ and also for implementing libraries using other languages than the
 natively supported Python and Java. For a test library user remote
 libraries look pretty much the same as any other test library, and
 developing test libraries using the remote library interface is also
-very close to creating `normal test libraries`__.
-
-__ `Creating test libraries`_
+very close to creating :ref:`normal test libraries <Creating test libraries>`.
 
 .. contents::
    :depth: 2
@@ -122,8 +120,8 @@ Before the Remote library can be imported, the remote server providing
 the actual keywords must be started.  If the server is started before
 launching the test execution, it is possible to use the normal
 :setting:`Library` setting like in the above example. Alternatively other
-keywords, for example from Process_ or SSH__ libraries, can start
-the server up, but then you may need to use `Import Library keyword`__
+keywords, for example from Process_ or `SSH <https://github.com/robotframework/SSHLibrary>` libraries, can start
+the server up, but then you may need to use :ref:`Import Library keyword <Using Import Library keyword>`
 because the library is not available when the test execution starts.
 
 How a remote server can be stopped depends on how it is
@@ -142,8 +140,6 @@ implemented. Typically servers support the following methods:
           :name:`Stop Remote Server` keyword or `stop_remote_server`
           method.
 
-__ https://github.com/robotframework/SSHLibrary
-__ `Using Import Library keyword`_
 
 .. _Supported argument and return value types:
 
@@ -247,15 +243,12 @@ Remote servers can, and should, also implement
 `get_keyword_arguments` and `get_keyword_documentation`
 methods to provide more information about the keywords. Both of these
 keywords get the name of the keyword as an argument. Arguments must be
-returned as a list of strings in the `same format as with dynamic
-libraries`__, and documentation must be returned `as a string`__.
+returned as a list of strings in the 
+:ref:`same format as with dynamic libraries <Getting keyword arguments>`, and documentation must be returned :ref:`as a string <Getting keyword documentation>`.
 
-Remote servers can also provide `general library documentation`__ to
+Remote servers can also provide :ref:`general library documentation <Getting general library documentation>` to
 be used when generating documentation with the Libdoc_ tool.
 
-__ `Getting keyword arguments`_
-__ `Getting keyword documentation`_
-__ `Getting general library documentation`_
 
 .. _Executing remote keywords:
 
@@ -284,7 +277,7 @@ others can be omitted if they are not applicable.
    +------------+-------------------------------------------------------------+
    | output     | Possible output to write into the log file. Must be given   |
    |            | as a single string but can contain multiple messages and    |
-   |            | different `log levels`__ in format `*INFO* First            |
+   |            | different |log levels|   in format `*INFO* First            |
    |            | message\n*HTML* <b>2nd</b>\n*WARN* Another message`. It     |
    |            | is also possible to embed timestamps_ to the log messages   |
    |            | like `*INFO:1308435758660* Message with timestamp`.         |
@@ -305,7 +298,7 @@ others can be omitted if they are not applicable.
    |            | failure is fatal__. Also new in Robot Framework 2.8.4.      |
    +------------+-------------------------------------------------------------+
 
-__ `Different argument syntaxes`_
+.. |log levels| replace:: :ref:`Different argument syntaxes`
 __ `Supported argument and return value types`_
 __ `Logging information`_
 __ `Supported argument and return value types`_

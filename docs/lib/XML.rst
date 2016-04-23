@@ -419,7 +419,7 @@ Note that prior to Robot Framework 2.9, all non-empty strings, including
 ``false`` and ``no``, were considered true.
 
 Importing
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [use_lxml=False]
 
 Import library with optionally lxml mode enabled.
@@ -437,7 +437,7 @@ will emit a warning and revert back to using the standard ElementTree.
 The support for lxml is new in Robot Framework 2.8.5.
 
 Add Element
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, element, index=None, xpath=.]
 
 Adds a child element to the specified element.
@@ -469,7 +469,7 @@ Use `Remove Element` or `Remove Elements` to remove elements.
 New in Robot Framework 2.7.5.
 
 Clear Element
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=., clear_tail=False]
 
 Clears the contents of the specified element.
@@ -500,7 +500,7 @@ Use `Remove Element` to remove the whole element.
 New in Robot Framework 2.7.5.
 
 Copy Element
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=.]
 
 Returns a copy of the specified element.
@@ -524,7 +524,7 @@ Examples using ``${XML}`` structure from `Example`:
 New in Robot Framework 2.7.5.
 
 Element Attribute Should Be
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, expected, xpath=., message=None]
 
 Verifies that the specified attribute is ``expected``.
@@ -548,7 +548,7 @@ Examples using ``${XML}`` structure from `Example`:
 See also `Element Attribute Should Match` and `Get Element Attribute`.
 
 Element Attribute Should Match
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, pattern, xpath=., message=None]
 
 Verifies that the specified attribute matches ``expected``.
@@ -566,7 +566,7 @@ Examples using ``${XML}`` structure from `Example`:
 | Element Attribute Should Match | ${XML} | id | c*d | xpath=third/second |
 
 Element Should Exist
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=., message=None]
 
 Verifies that one or more element match the given ``xpath``.
@@ -582,7 +582,7 @@ that this keyword uses internally.
 New in Robot Framework 2.7.5.
 
 Element Should Not Exist
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=., message=None]
 
 Verifies that no element match the given ``xpath``.
@@ -598,7 +598,7 @@ that this keyword uses internally.
 New in Robot Framework 2.7.5.
 
 Element Should Not Have Attribute
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, xpath=., message=None]
 
 Verifies that the specified element does not have  attribute ``name``.
@@ -620,7 +620,7 @@ See also `Get Element Attribute`, `Get Element Attributes`,
 New in Robot Framework 2.7.5.
 
 Element Text Should Be
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, expected, xpath=., normalize_whitespace=False,
             message=None]
 
@@ -648,7 +648,7 @@ Examples using ``${XML}`` structure from `Example`:
 normalize_whitespace=yes |
 
 Element Text Should Match
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, pattern, xpath=., normalize_whitespace=False,
             message=None]
 
@@ -669,7 +669,7 @@ Examples using ``${XML}`` structure from `Example`:
 normalize_whitespace=yes |
 
 Element To String
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=., encoding=None]
 
 Returns the string representation of the specified element.
@@ -685,7 +685,7 @@ encoding. The resulting string never contains the XML declaration.
 See also `Log Element` and `Save XML`.
 
 Elements Should Be Equal
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, expected, exclude_children=False,
             normalize_whitespace=False]
 
@@ -725,7 +725,7 @@ has text ``Text with``. The reason is that rest of the text inside
 See also `Elements Should Match`.
 
 Elements Should Match
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, expected, exclude_children=False,
             normalize_whitespace=False]
 
@@ -746,7 +746,7 @@ Examples using ``${XML}`` structure from `Example`:
 See `Elements Should Be Equal` for more examples.
 
 Evaluate Xpath
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, expression, context=.]
 
 Evaluates the given xpath expression and returns results.
@@ -773,7 +773,7 @@ This keyword works only if lxml mode is taken into use when `importing`
 the library. New in Robot Framework 2.8.5.
 
 Get Child Elements
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=.]
 
 Returns the child elements of the specified element as a list.
@@ -792,7 +792,7 @@ Examples using ``${XML}`` structure from `Example`:
 | Should Be Empty  | ${children}        |        |             |
 
 Get Element
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=.]
 
 Returns an element in the ``source`` matching the ``xpath``.
@@ -821,7 +821,7 @@ given as a string. The XML structure parsed based on the string and
 then modified is nevertheless returned.
 
 Get Element Attribute
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, xpath=., default=None]
 
 Returns the named attribute of the specified element.
@@ -845,7 +845,7 @@ See also `Get Element Attributes`, `Element Attribute Should Be`,
 `Element Attribute Should Match` and `Element Should Not Have Attribute`.
 
 Get Element Attributes
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=.]
 
 Returns all attributes of the specified element.
@@ -866,7 +866,7 @@ Examples using ``${XML}`` structure from `Example`:
 Use `Get Element Attribute` to get the value of a single attribute.
 
 Get Element Count
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=.]
 
 Returns and logs how many elements the given ``xpath`` matches.
@@ -879,7 +879,7 @@ See also `Element Should Exist` and `Element Should Not Exist`.
 New in Robot Framework 2.7.5.
 
 Get Element Text
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=., normalize_whitespace=False]
 
 Returns all text of the element, possibly whitespace normalized.
@@ -914,7 +914,7 @@ See also `Get Elements Texts`, `Element Text Should Be` and
 `Element Text Should Match`.
 
 Get Elements
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath]
 
 Returns a list of elements in the ``source`` matching the ``xpath``.
@@ -934,7 +934,7 @@ Examples using ``${XML}`` structure from `Example`:
 | Should Be Empty  |  ${children} |        |             |
 
 Get Elements Texts
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath, normalize_whitespace=False]
 
 Returns text of all elements matching ``xpath`` as a list.
@@ -954,7 +954,7 @@ Examples using ``${XML}`` structure from `Example`:
 | Should Be Equal  | @{texts}[1]        | ${EMPTY}  |             |
 
 Log Element
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, level=INFO, xpath=.]
 
 Logs the string representation of the specified element.
@@ -966,7 +966,7 @@ resulting string is then logged using the given ``level``.
 The logged string is also returned.
 
 Parse Xml
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, keep_clark_notation=False]
 
 Parses the given XML file or string into an element structure.
@@ -997,7 +997,7 @@ examples.
 Stripping namespaces is a new feature in Robot Framework 2.7.5.
 
 Remove Element
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=, remove_tail=False]
 
 Removes the element matching ``xpath`` from the ``source`` structure.
@@ -1025,7 +1025,7 @@ normalize_whitespace=yes |
 New in Robot Framework 2.7.5.
 
 Remove Element Attribute
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, xpath=.]
 
 Removes attribute ``name`` from the specified element.
@@ -1049,7 +1049,7 @@ Attribute` to remove an attribute of multiple elements in one call.
 New in Robot Framework 2.7.5.
 
 Remove Element Attributes
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=.]
 
 Removes all attributes from the specified element.
@@ -1072,7 +1072,7 @@ Attributes` to remove all attributes of multiple elements in one call.
 New in Robot Framework 2.7.5.
 
 Remove Elements
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=, remove_tail=False]
 
 Removes all elements matching ``xpath`` from the ``source`` structure.
@@ -1096,7 +1096,7 @@ Examples using ``${XML}`` structure from `Example`:
 New in Robot Framework 2.7.5.
 
 Remove Elements Attribute
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, xpath=.]
 
 Removes attribute ``name`` from the specified elements.
@@ -1107,7 +1107,7 @@ elements matching the given ``xpath``.
 New in Robot Framework 2.8.6.
 
 Remove Elements Attributes
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, xpath=.]
 
 Removes all attributes from the specified elements.
@@ -1118,7 +1118,7 @@ elements matching the given ``xpath``.
 New in Robot Framework 2.8.6.
 
 Save Xml
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, path, encoding=UTF-8]
 
 Saves the given element to the specified file.
@@ -1143,7 +1143,7 @@ the element.
 New in Robot Framework 2.7.5.
 
 Set Element Attribute
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, value, xpath=.]
 
 Sets attribute ``name`` of the specified element to ``value``.
@@ -1169,7 +1169,7 @@ Attribute` to set an attribute of multiple elements in one call.
 New in Robot Framework 2.7.5.
 
 Set Element Tag
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, tag, xpath=.]
 
 Sets the tag of the specified element.
@@ -1192,7 +1192,7 @@ the tag of multiple elements in one call.
 New in Robot Framework 2.7.5.
 
 Set Element Text
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, text=None, tail=None, xpath=.]
 
 Sets text and/or tail text of the specified element.
@@ -1222,7 +1222,7 @@ to set the text/tail of multiple elements in one call.
 New in Robot Framework 2.7.5.
 
 Set Elements Attribute
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, name, value, xpath=.]
 
 Sets attribute ``name`` of the specified elements to ``value``.
@@ -1233,7 +1233,7 @@ matching the given ``xpath``.
 New in Robot Framework 2.8.6.
 
 Set Elements Tag
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, tag, xpath=.]
 
 Sets the tag of the specified elements.
@@ -1244,7 +1244,7 @@ the given ``xpath``.
 New in Robot Framework 2.8.6.
 
 Set Elements Text
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [source, text=None, tail=None, xpath=.]
 
 Sets text and/or tail text of the specified elements.

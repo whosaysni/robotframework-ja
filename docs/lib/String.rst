@@ -25,7 +25,7 @@ Following keywords from ``BuiltIn`` library can also be used with strings:
 - `Convert To Bytes`
 
 Convert To Lowercase
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string]
 
 Converts string to lowercase.
@@ -39,7 +39,7 @@ Examples:
 New in Robot Framework 2.8.6.
 
 Convert To Uppercase
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string]
 
 Converts string to uppercase.
@@ -53,7 +53,7 @@ Examples:
 New in Robot Framework 2.8.6.
 
 Decode Bytes To String
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [bytes, encoding, errors=strict]
 
 Decodes the given ``bytes`` to a Unicode string using the given ``encoding``.
@@ -78,7 +78,7 @@ convert arbitrary objects to Unicode strings.
 New in Robot Framework 2.7.7.
 
 Encode String To Bytes
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, encoding, errors=strict]
 
 Encodes the given Unicode ``string`` to bytes using the given ``encoding``.
@@ -104,7 +104,7 @@ in ``BuiltIn`` if you need to convert arbitrary objects to Unicode.
 New in Robot Framework 2.7.7.
 
 Fetch From Left
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, marker]
 
 Returns contents of the ``string`` before the first occurrence of ``marker``.
@@ -115,7 +115,7 @@ See also `Fetch From Right`, `Split String` and `Split String
 From Right`.
 
 Fetch From Right
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, marker]
 
 Returns contents of the ``string`` after the last occurrence of ``marker``.
@@ -126,7 +126,7 @@ See also `Fetch From Left`, `Split String` and `Split String
 From Right`.
 
 Generate Random String
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [length=8, chars=[LETTERS][NUMBERS]]
 
 Generates a string with a desired ``length`` from the given ``chars``.
@@ -149,7 +149,7 @@ Examples:
 | ${hex} = | Generate Random String | 4  | [NUMBERS]abcdef |
 
 Get Line
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, line_number]
 
 Returns the specified line from the given ``string``.
@@ -165,13 +165,13 @@ Examples:
 Use `Split To Lines` if all lines are needed.
 
 Get Line Count
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string]
 
 Returns and logs the number of lines in the given string.
 
 Get Lines Containing String
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, pattern, case_insensitive=False]
 
 Returns lines of the given ``string`` that contain the ``pattern``.
@@ -198,7 +198,7 @@ See `Get Lines Matching Pattern` and `Get Lines Matching Regexp`
 if you need more complex pattern matching.
 
 Get Lines Matching Pattern
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, pattern, case_insensitive=False]
 
 Returns lines of the given ``string`` that match the ``pattern``.
@@ -231,7 +231,7 @@ patterns and `Get Lines Containing String` if searching
 literal strings is enough.
 
 Get Lines Matching Regexp
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, pattern, partial_match=False]
 
 Returns lines of the given ``string`` that match the regexp ``pattern``.
@@ -270,7 +270,7 @@ complexity).
  versions exact match was always required.
 
 Get Regexp Matches
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, pattern, *groups]
 
 Returns a list of all non-overlapping matches in the given string.
@@ -302,7 +302,7 @@ Examples:
 New in Robot Framework 2.9.
 
 Get Substring
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, start, end=None]
 
 Returns a substring from ``start`` index to ``end`` index.
@@ -319,7 +319,7 @@ Examples:
 | ${last two} =     | Get Substring | ${string} | -2 |    |
 
 Remove String
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, *removables]
 
 Removes all ``removables`` from the given ``string``.
@@ -344,7 +344,7 @@ Examples:
 New in Robot Framework 2.8.2.
 
 Remove String Using Regexp
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, *patterns]
 
 Removes ``patterns`` from the given ``string``.
@@ -359,7 +359,7 @@ occurrences.
 New in Robot Framework 2.8.2.
 
 Replace String
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, search_for, replace_with, count=-1]
 
 Replaces ``search_for`` in the given ``string`` with ``replace_with``.
@@ -384,7 +384,7 @@ count=1 |
 | Should Be Equal | ${str}         | Helo, world!   |       |          |
 
 Replace String Using Regexp
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, pattern, replace_with, count=-1]
 
 Replaces ``pattern`` in the given ``string`` with ``replace_with``.
@@ -404,7 +404,7 @@ Examples:
 count=1 |
 
 Should Be Byte String
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [item, msg=None]
 
 Fails if the given ``item`` is not a byte string.
@@ -419,7 +419,7 @@ The default error message can be overridden with the optional
 New in Robot Framework 2.7.7.
 
 Should Be Lowercase
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, msg=None]
 
 Fails if the given ``string`` is not in lowercase.
@@ -433,7 +433,7 @@ The default error message can be overridden with the optional
 See also `Should Be Uppercase` and `Should Be Titlecase`.
 
 Should Be String
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [item, msg=None]
 
 Fails if the given ``item`` is not a string.
@@ -446,7 +446,7 @@ The default error message can be overridden with the optional
 ``msg`` argument.
 
 Should Be Titlecase
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, msg=None]
 
 Fails if given ``string`` is not title.
@@ -464,7 +464,7 @@ The default error message can be overridden with the optional
 See also `Should Be Uppercase` and `Should Be Lowercase`.
 
 Should Be Unicode String
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [item, msg=None]
 
 Fails if the given ``item`` is not a Unicode string.
@@ -479,7 +479,7 @@ The default error message can be overridden with the optional
 New in Robot Framework 2.7.7.
 
 Should Be Uppercase
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, msg=None]
 
 Fails if the given ``string`` is not in uppercase.
@@ -493,7 +493,7 @@ The default error message can be overridden with the optional
 See also `Should Be Titlecase` and `Should Be Lowercase`.
 
 Should Not Be String
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [item, msg=None]
 
 Fails if the given ``item`` is a string.
@@ -502,7 +502,7 @@ The default error message can be overridden with the optional
 ``msg`` argument.
 
 Split String
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, separator=None, max_split=-1]
 
 Splits the ``string`` using ``separator`` as a delimiter string.
@@ -525,7 +525,7 @@ from right, and `Fetch From Left` and `Fetch From Right` if
 you only want to get first/last part of the string.
 
 Split String From Right
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, separator=None, max_split=-1]
 
 Splits the ``string`` using ``separator`` starting from right.
@@ -538,7 +538,7 @@ Examples:
 | ${rest}  | ${last} = | Split String From Right | ${string} | - | 1 |
 
 Split String To Characters
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string]
 
 Splits the given ``string`` to characters.
@@ -549,7 +549,7 @@ Example:
 New in Robot Framework 2.7.
 
 Split To Lines
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, start=0, end=None]
 
 Splits the given string to lines.
@@ -573,7 +573,7 @@ Examples:
 Use `Get Line` if you only need to get a single line.
 
 Strip String
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string, mode=both, characters=None]
 
 Remove leading and/or trailing whitespaces from the given string.

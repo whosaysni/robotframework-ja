@@ -279,7 +279,7 @@ Note that prior to Robot Framework 2.9 some keywords considered all
 non-empty strings, including ``false`` and ``no``, to be true.
 
 Importing
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [timeout=3 seconds, newline=CRLF, prompt=None,
             prompt_is_regexp=False, encoding=UTF-8, encoding_errors=ignore,
             default_log_level=INFO, window_size=None, environ_user=None,
@@ -319,7 +319,7 @@ terminal type |
 | # disable logging messages from the underlying telnetlib |
 
 Close All Connections
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  []
 
 Closes all open connections and empties the connection cache.
@@ -333,7 +333,7 @@ After this keyword, new indexes returned by `Open Connection`
 keyword are reset to 1.
 
 Close Connection
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [loglevel=None]
 
 Closes the current Telnet connection.
@@ -347,7 +347,7 @@ connections are closed.
 See `Logging` section for more information about log levels.
 
 Execute Command
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [command, loglevel=None, strip_prompt=False]
 
 Executes the given ``command`` and reads, logs, and returns everything until
@@ -368,7 +368,7 @@ See `Logging` section for more information about log levels and `Read
 Until Prompt` for more information about the ``strip_prompt`` parameter.
 
 Login
------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [username, password, login_prompt=login: ,
             password_prompt=Password: , login_timeout=1 second,
             login_incorrect=Login incorrect]
@@ -400,7 +400,7 @@ See `Configuration` section for more information about setting
 newline, timeout, and prompt.
 
 Open Connection
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [host, alias=None, port=23, timeout=None, newline=None,
             prompt=None, prompt_is_regexp=False, encoding=None,
             encoding_errors=None, default_log_level=None, window_size=None,
@@ -424,7 +424,7 @@ by this keyword. Indexing starts from 1 and is reset back to it by
 `Close All Connections` keyword.
 
 Read
-----
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [loglevel=None]
 
 Reads everything that is currently available in the output.
@@ -433,7 +433,7 @@ Read output is both returned and logged. See `Logging` section for more
 information about log levels.
 
 Read Until
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [expected, loglevel=None]
 
 Reads output until ``expected`` text is encountered.
@@ -446,7 +446,7 @@ See `Logging` section for more information about log levels. Use
 `Read Until Regexp` if more complex matching is needed.
 
 Read Until Prompt
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [loglevel=None, strip_prompt=False]
 
 Reads output until the prompt is encountered.
@@ -469,7 +469,7 @@ See `Logging` section for more information about log levels.
 Optionally stripping prompt is a new feature in Robot Framework 2.8.7.
 
 Read Until Regexp
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [*expected]
 
 Reads output until any of the ``expected`` regular expressions match.
@@ -495,7 +495,7 @@ Examples:
 | `Read Until Regexp` | \\d{4}-\\d{2}-\\d{2} | DEBUG |
 
 Set Default Log Level
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [level]
 
 Sets the default log level used for `logging` in the current connection.
@@ -507,7 +507,7 @@ See `Configuration` section for more information about global and
 connection specific configuration.
 
 Set Encoding
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [encoding=None, errors=None]
 
 Sets the encoding to use for `writing and reading` in the current connection.
@@ -532,7 +532,7 @@ Setting encoding in general is a new feature in Robot Framework 2.7.6.
 Specifying the error handler and disabling encoding were added in 2.7.7.
 
 Set Newline
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [newline]
 
 Sets the newline used by `Write` keyword in the current connection.
@@ -547,7 +547,7 @@ See `Configuration` section for more information about global and
 connection specific configuration.
 
 Set Prompt
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [prompt, prompt_is_regexp=False]
 
 Sets the prompt used by `Read Until Prompt` and `Login` in the current
@@ -573,7 +573,7 @@ See `Configuration` section for more information about global and
 connection specific configuration.
 
 Set Telnetlib Log Level
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [level]
 
 Sets the log level used for `logging` in the underlying ``telnetlib``.
@@ -584,7 +584,7 @@ can shutdown the messages generated by this library.
 New in Robot Framework 2.8.7.
 
 Set Timeout
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [timeout]
 
 Sets the timeout used for waiting output in the current connection.
@@ -605,7 +605,7 @@ See `Configuration` section for more information about global and
 connection specific configuration.
 
 Switch Connection
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [index_or_alias]
 
 Switches between active connections using an index or an alias.
@@ -640,7 +640,7 @@ shown below.
 | `Switch Connection` | ${index}          |            |
 
 Write
------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [text, loglevel=None]
 
 Writes the given text plus a newline into the connection.
@@ -660,7 +660,7 @@ used. See `Writing and reading` section for more details.
 See `Logging` section for more information about log levels.
 
 Write Bare
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [text]
 
 Writes the given text, and nothing else, into the connection.
@@ -669,7 +669,7 @@ This keyword does not append a newline nor consume the written text.
 Use `Write` if these features are needed.
 
 Write Control Character
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [character]
 
 Writes the given control character into the connection.
@@ -686,7 +686,7 @@ Example:
 | Write Control Character | 241 | # Send No operation command |
 
 Write Until Expected Output
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [text, expected, timeout, retry_interval, loglevel=None]
 
 Writes the given ``text`` repeatedly, until ``expected`` appears in the

@@ -32,8 +32,7 @@ meanings:
 
 - ``date``: An entity with both date and time components but without any
    timezone information. For example, ``2014-06-11 10:07:42``.
-- ``time``: A time interval. For example, ``1 hour 20 minutes`` or
-``01:20:00``.
+- ``time``: A time interval. For example, ``1 hour 20 minutes`` or ``01:20:00``.
 
 This terminology differs from what Python's standard
 [https://docs.python.org/2/library/datetime.html|datetime] module uses.
@@ -69,14 +68,12 @@ using ``timestamp`` value with ``result_format`` argument. This is also the
 default format that keywords returning dates use. Milliseconds can be excluded
 using ``exclude_millis`` as explained in `Millisecond handling` section.
 
-Examples:
-| ${date1} =      | Convert Date | 2014-06-11 10:07:42.000 |
-| ${date2} =      | Convert Date | 20140611 100742         |
-result_format=timestamp |
-| Should Be Equal | ${date1}     | ${date2}                |
-| ${date} =       | Convert Date | 20140612 12:57          |
-exclude_millis=yes |
-| Should Be Equal | ${date}      | 2014-06-12 12:57:00     |
+Examples::
+  | ${date1} =      | Convert Date | 2014-06-11 10:07:42.000 |
+  | ${date2} =      | Convert Date | 20140611 100742         | result_format=timestamp |
+  | Should Be Equal | ${date1}     | ${date2}                |
+  | ${date} =       | Convert Date | 20140612 12:57          | exclude_millis=yes |
+  | Should Be Equal | ${date}      | 2014-06-12 12:57:00     |
 
 == Custom timestamp ==
 
@@ -91,13 +88,11 @@ When using a custom timestamp in input, it must be specified using
 the specified format exactly. When using a custom timestamp in output, it must
 be given using ``result_format`` argument.
 
-Examples:
-| ${date} =       | Convert Date | 28.05.2014 12:05        |
-date_format=%d.%m.%Y %H:%M |
-| Should Be Equal | ${date}      | 2014-05-28 12:05:00.000 |
-| ${date} =       | Convert Date | ${date}                 |
-result_format=%d.%m.%Y |
-| Should Be Equal | ${date}      | 28.05.2014              |
+Examples::
+  | ${date} =       | Convert Date | 28.05.2014 12:05        | date_format=%d.%m.%Y %H:%M |
+  | Should Be Equal | ${date}      | 2014-05-28 12:05:00.000 |
+  | ${date} =       | Convert Date | ${date}                 | result_format=%d.%m.%Y |
+  | Should Be Equal | ${date}      | 28.05.2014              |
 
 == Python datetime ==
 
@@ -111,15 +106,15 @@ One nice benefit with datetime objects is that they have different time
 components available as attributes that can be easily accessed using the
 extended variable syntax.
 
-Examples:
-| ${datetime} = | Convert Date | 2014-06-11 10:07:42.123 | datetime |
-| Should Be Equal As Integers | ${datetime.year}        | 2014   |
-| Should Be Equal As Integers | ${datetime.month}       | 6      |
-| Should Be Equal As Integers | ${datetime.day}         | 11     |
-| Should Be Equal As Integers | ${datetime.hour}        | 10     |
-| Should Be Equal As Integers | ${datetime.minute}      | 7      |
-| Should Be Equal As Integers | ${datetime.second}      | 42     |
-| Should Be Equal As Integers | ${datetime.microsecond} | 123000 |
+Examples::
+  | ${datetime} = | Convert Date | 2014-06-11 10:07:42.123 | datetime |
+  | Should Be Equal As Integers | ${datetime.year}        | 2014   |
+  | Should Be Equal As Integers | ${datetime.month}       | 6      |
+  | Should Be Equal As Integers | ${datetime.day}         | 11     |
+  | Should Be Equal As Integers | ${datetime.hour}        | 10     |
+  | Should Be Equal As Integers | ${datetime.minute}      | 7      |
+  | Should Be Equal As Integers | ${datetime.second}      | 42     |
+  | Should Be Equal As Integers | ${datetime.microsecond} | 123000 |
 
 == Epoch time ==
 
@@ -135,11 +130,11 @@ around the world at a certain time. What local time a certain epoch time
 matches obviously then depends on the timezone. For example, examples below
 were tested in Finland but verifications would fail on other timezones.
 
-Examples:
-| ${date} =       | Convert Date | ${1000000000}           |
-| Should Be Equal | ${date}      | 2001-09-09 04:46:40.000 |
-| ${date} =       | Convert Date | 2014-06-12 13:27:59.279 | epoch |
-| Should Be Equal | ${date}      | ${1402568879.279}       |
+Examples::
+  | ${date} =       | Convert Date | ${1000000000}           |
+  | Should Be Equal | ${date}      | 2001-09-09 04:46:40.000 |
+  | ${date} =       | Convert Date | 2014-06-12 13:27:59.279 | epoch |
+  | Should Be Equal | ${date}      | ${1402568879.279}       |
 
 == Earliest supported date ==
 
@@ -173,11 +168,11 @@ to a number.
 To return a time as a number, ``result_format`` argument must have value
 ``number``, which is also the default. Returned number is always a float.
 
-Examples:
-| ${time} =       | Convert Time | 3.14    |
-| Should Be Equal | ${time}      | ${3.14} |
-| ${time} =       | Convert Time | ${time} | result_format=number |
-| Should Be Equal | ${time}      | ${3.14} |
+Examples::
+  | ${time} =       | Convert Time | 3.14    |
+  | Should Be Equal | ${time}      | ${3.14} |
+  | ${time} =       | Convert Time | ${time} | result_format=number |
+  | Should Be Equal | ${time}      | ${3.14} |
 
 == Time string ==
 
@@ -203,13 +198,13 @@ uses
 shorter specifiers ``d``, ``h``, ``min``, ``s`` and ``ms``, and even drops
 the space between the number and the specifier.
 
-Examples:
-| ${time} =       | Convert Time | 1 minute 42 seconds |
-| Should Be Equal | ${time}      | ${102}              |
-| ${time} =       | Convert Time | 4200                | verbose |
-| Should Be Equal | ${time}      | 1 hour 10 minutes   |
-| ${time} =       | Convert Time | - 1.5 hours         | compact |
-| Should Be Equal | ${time}      | - 1h 30min          |
+Examples::
+  | ${time} =       | Convert Time | 1 minute 42 seconds |
+  | Should Be Equal | ${time}      | ${102}              |
+  | ${time} =       | Convert Time | 4200                | verbose |
+  | Should Be Equal | ${time}      | 1 hour 10 minutes   |
+  | ${time} =       | Convert Time | - 1.5 hours         | compact |
+  | Should Be Equal | ${time}      | - 1h 30min          |
 
 == Timer string ==
 
@@ -224,15 +219,15 @@ value ``timer``. Timer strings are by default returned in full
 format, but milliseconds can be excluded using ``exclude_millis`` as explained
 in `Millisecond handling` section.
 
-Examples:
-| ${time} =       | Convert Time | 01:42        |
-| Should Be Equal | ${time}      | ${102}       |
-| ${time} =       | Convert Time | 01:10:00.123 |
-| Should Be Equal | ${time}      | ${4200.123}  |
-| ${time} =       | Convert Time | 102          | timer |
-| Should Be Equal | ${time}      | 00:01:42.000 |
-| ${time} =       | Convert Time | -101.567     | timer | exclude_millis=yes |
-| Should Be Equal | ${time}      | -00:01:42    |
+Examples::
+  | ${time} =       | Convert Time | 01:42        |
+  | Should Be Equal | ${time}      | ${102}       |
+  | ${time} =       | Convert Time | 01:10:00.123 |
+  | Should Be Equal | ${time}      | ${4200.123}  |
+  | ${time} =       | Convert Time | 102          | timer |
+  | Should Be Equal | ${time}      | 00:01:42.000 |
+  | ${time} =       | Convert Time | -101.567     | timer | exclude_millis=yes |
+  | Should Be Equal | ${time}      | -00:01:42    |
 
 == Python timedelta ==
 
@@ -242,9 +237,9 @@ objects are also supported both in input and in output. In input they are
 recognized automatically, and in output it is possible to receive them by
 giving ``timedelta`` value to ``result_format`` argument.
 
-Examples:
-| ${timedelta} =  | Convert Time                 | 01:10:02.123 | timedelta |
-| Should Be Equal | ${timedelta.total_seconds()} | ${4202.123}  |
+Examples::
+  | ${timedelta} =  | Convert Time                 | 01:10:02.123 | timedelta |
+  | Should Be Equal | ${timedelta.total_seconds()} | ${4202.123}  |
 
 = Millisecond handling =
 
@@ -269,73 +264,61 @@ rounded to the nearest full second. With `timestamp` and `timer string`
 result formats, milliseconds will also be removed from the returned string
 altogether.
 
-Examples:
-| ${date} =       | Convert Date | 2014-06-11 10:07:42     |
-| Should Be Equal | ${date}      | 2014-06-11 10:07:42.000 |
-| ${date} =       | Convert Date | 2014-06-11 10:07:42.500 |
-exclude_millis=yes |
-| Should Be Equal | ${date}      | 2014-06-11 10:07:43     |
-| ${dt} =         | Convert Date | 2014-06-11 10:07:42.500 | datetime |
-exclude_millis=yes |
-| Should Be Equal | ${dt.second} | ${43}        |
-| Should Be Equal | ${dt.microsecond} | ${0}    |
-| ${time} =       | Convert Time | 102          | timer | exclude_millis=false
-|
-| Should Be Equal | ${time}      | 00:01:42.000 |       |
-| ${time} =       | Convert Time | 102.567      | timer | exclude_millis=true
-|
-| Should Be Equal | ${time}      | 00:01:43     |       |
+Examples::
+  | ${date} =       | Convert Date | 2014-06-11 10:07:42     |
+  | Should Be Equal | ${date}      | 2014-06-11 10:07:42.000 |
+  | ${date} =       | Convert Date | 2014-06-11 10:07:42.500 | exclude_millis=yes |
+  | Should Be Equal | ${date}      | 2014-06-11 10:07:43     |
+  | ${dt} =         | Convert Date | 2014-06-11 10:07:42.500 | datetime | exclude_millis=yes |
+  | Should Be Equal | ${dt.second} | ${43}        |
+  | Should Be Equal | ${dt.microsecond} | ${0}    |
+  | ${time} =       | Convert Time | 102          | timer | exclude_millis=false |
+  | Should Be Equal | ${time}      | 00:01:42.000 |       |
+  | ${time} =       | Convert Time | 102.567      | timer | exclude_millis=true |
+  | Should Be Equal | ${time}      | 00:01:43     |       |
 
 = Programmatic usage =
 
 In addition to be used as normal library, this library is intended to
 provide a stable API for other libraries to use if they want to support
 same date and time formats as this library. All the provided keywords
-are available as functions that can be easily imported:
+are available as functions that can be easily imported::
 
-| from robot.libraries.DateTime import convert_time
-|
-| def example_keyword(timeout):
-|     seconds = convert_time(timeout)
-|     # ...
+  from robot.libraries.DateTime import convert_time
+  def example_keyword(timeout):
+      seconds = convert_time(timeout)
+      # ...
 
-Additionally helper classes ``Date`` and ``Time`` can be used directly:
+Additionally helper classes ``Date`` and ``Time`` can be used directly::
 
-| from robot.libraries.DateTime import Date, Time
-|
-| def example_keyword(date, interval):
-|     date = Date(date).convert('datetime')
-|     interval = Time(interval).convert('number')
-|     # ...
+  from robot.libraries.DateTime import Date, Time
+ 
+  def example_keyword(date, interval):
+      date = Date(date).convert('datetime')
+      interval = Time(interval).convert('number')
+      # ...
 
 Add Time To Date
-----------------
-Arguments:  [date, time, result_format=timestamp, exclude_millis=False,
-            date_format=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [date, time, result_format=timestamp, exclude_millis=False, date_format=None]
 
 Adds time to date and returns the resulting date.
 
 Arguments:
-- ``date:``           Date to add time to in one of the supported
-                      `date formats`.
-- ``time:``           Time that is added in one of the supported
-                      `time formats`.
+- ``date:``           Date to add time to in one of the supported                      `date formats`.
+- ``time:``           Time that is added in one of the supported                      `time formats`.
 - ``result_format:``  Format of the returned date.
-- ``exclude_millis:`` When set to any true value, rounds and drops
-                      milliseconds as explained in `millisecond handling`.
+- ``exclude_millis:`` When set to any true value, rounds and drops                      milliseconds as explained in `millisecond handling`.
 - ``date_format:``    Possible `custom timestamp` format of ``date``.
 
-Examples:
-| ${date} =       | Add Time To Date | 2014-05-28 12:05:03.111 | 7 days
-|
-| Should Be Equal | ${date}          | 2014-06-04 12:05:03.111 |
-|
-| ${date} =       | Add Time To Date | 2014-05-28 12:05:03.111 | 01:02:03:004
-|
-| Should Be Equal | ${date}          | 2014-05-28 13:07:06.115 |
+Examples::
+  | ${date} =       | Add Time To Date | 2014-05-28 12:05:03.111 | 7 days |
+  | Should Be Equal | ${date}          | 2014-06-04 12:05:03.111 | |
+  | ${date} =       | Add Time To Date | 2014-05-28 12:05:03.111 | 01:02:03:004 |
+  | Should Be Equal | ${date}          | 2014-05-28 13:07:06.115 |
 
 Add Time To Time
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time1, time2, result_format=number, exclude_millis=False]
 
 Adds time to another time and returns the resulting time.
@@ -347,17 +330,15 @@ Arguments:
 - ``exclude_millis:`` When set to any true value, rounds and drops
                       milliseconds as explained in `millisecond handling`.
 
-Examples:
-| ${time} =       | Add Time To Time | 1 minute          | 42       |
-| Should Be Equal | ${time}          | ${102}            |
-| ${time} =       | Add Time To Time | 3 hours 5 minutes | 01:02:03 | timer |
-exclude_millis=yes |
-| Should Be Equal | ${time}          | 04:07:03          |
+Examples::
+  | ${time} =       | Add Time To Time | 1 minute          | 42       |
+  | Should Be Equal | ${time}          | ${102}            |
+  | ${time} =       | Add Time To Time | 3 hours 5 minutes | 01:02:03 | timer | exclude_millis=yes |
+  | Should Be Equal | ${time}          | 04:07:03          |
 
 Convert Date
-------------
-Arguments:  [date, result_format=timestamp, exclude_millis=False,
-            date_format=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [date, result_format=timestamp, exclude_millis=False, date_format=None]
 
 Converts between supported `date formats`.
 
@@ -368,17 +349,16 @@ Arguments:
                       milliseconds as explained in `millisecond handling`.
 - ``date_format:``    Specifies possible `custom timestamp` format.
 
-Examples:
-| ${date} =       | Convert Date | 20140528 12:05:03.111   |
-| Should Be Equal | ${date}      | 2014-05-28 12:05:03.111 |
-| ${date} =       | Convert Date | ${date}                 | epoch |
-| Should Be Equal | ${date}      | ${1401267903.111}       |
-| ${date} =       | Convert Date | 5.28.2014 12:05         |
-exclude_millis=yes | date_format=%m.%d.%Y %H:%M |
-| Should Be Equal | ${date}      | 2014-05-28 12:05:00     |
+Examples::
+  | ${date} =       | Convert Date | 20140528 12:05:03.111   |
+  | Should Be Equal | ${date}      | 2014-05-28 12:05:03.111 |
+  | ${date} =       | Convert Date | ${date}                 | epoch |
+  | Should Be Equal | ${date}      | ${1401267903.111}       |
+  | ${date} =       | Convert Date | 5.28.2014 12:05         | exclude_millis=yes | date_format=%m.%d.%Y %H:%M |
+  | Should Be Equal | ${date}      | 2014-05-28 12:05:00     |
 
 Convert Time
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time, result_format=number, exclude_millis=False]
 
 Converts between supported `time formats`.
@@ -389,16 +369,16 @@ Arguments:
 - ``exclude_millis:`` When set to any true value, rounds and drops
                       milliseconds as explained in `millisecond handling`.
 
-Examples:
-| ${time} =       | Convert Time  | 10 seconds        |
-| Should Be Equal | ${time}       | ${10}             |
-| ${time} =       | Convert Time  | 1:00:01           | verbose |
-| Should Be Equal | ${time}       | 1 hour 1 second   |
-| ${time} =       | Convert Time  | ${3661.5} | timer | exclude_milles=yes |
-| Should Be Equal | ${time}       | 01:01:02          |
+Examples::
+  | ${time} =       | Convert Time  | 10 seconds        |
+  | Should Be Equal | ${time}       | ${10}             |
+  | ${time} =       | Convert Time  | 1:00:01           | verbose |
+  | Should Be Equal | ${time}       | 1 hour 1 second   |
+  | ${time} =       | Convert Time  | ${3661.5} | timer | exclude_milles=yes |
+  | Should Be Equal | ${time}       | 01:01:02          |
 
 Get Current Date
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time_zone=local, increment=0, result_format=timestamp,
             exclude_millis=False]
 
@@ -413,21 +393,21 @@ Arguments:
 - ``exclude_millis:`` When set to any true value, rounds and drops
                       milliseconds as explained in `millisecond handling`.
 
-Examples:
-| ${date} =       | Get Current Date |
-| Should Be Equal | ${date}          | 2014-06-12 20:00:58.946 |
-| ${date} =       | Get Current Date | UTC                     |
-| Should Be Equal | ${date}          | 2014-06-12 17:00:58.946 |
-| ${date} =       | Get Current Date | increment=02:30:00      |
-| Should Be Equal | ${date}          | 2014-06-12 22:30:58.946 |
-| ${date} =       | Get Current Date | UTC                     | - 5 hours |
-| Should Be Equal | ${date}          | 2014-06-12 12:00:58.946 |
-| ${date} =       | Get Current Date | result_format=datetime  |
-| Should Be Equal | ${date.year}     | ${2014}                 |
-| Should Be Equal | ${date.month}    | ${6}                    |
+Examples::
+  | ${date} =       | Get Current Date |
+  | Should Be Equal | ${date}          | 2014-06-12 20:00:58.946 |
+  | ${date} =       | Get Current Date | UTC                     |
+  | Should Be Equal | ${date}          | 2014-06-12 17:00:58.946 |
+  | ${date} =       | Get Current Date | increment=02:30:00      |
+  | Should Be Equal | ${date}          | 2014-06-12 22:30:58.946 |
+  | ${date} =       | Get Current Date | UTC                     | - 5 hours |
+  | Should Be Equal | ${date}          | 2014-06-12 12:00:58.946 |
+  | ${date} =       | Get Current Date | result_format=datetime  |
+  | Should Be Equal | ${date.year}     | ${2014}                 |
+  | Should Be Equal | ${date.month}    | ${6}                    |
 
 Subtract Date From Date
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [date1, date2, result_format=number, exclude_millis=False,
             date1_format=None, date2_format=None]
 
@@ -444,18 +424,15 @@ Arguments:
 - ``date1_format:``   Possible `custom timestamp` format of ``date1``.
 - ``date2_format:``   Possible `custom timestamp` format of ``date2``.
 
- Examples:
-| ${time} =       | Subtract Date From Date | 2014-05-28 12:05:52     |
-2014-05-28 12:05:10 |
-| Should Be Equal | ${time}                 | ${42}                   |
-| ${time} =       | Subtract Date From Date | 2014-05-28 12:05:52     |
-2014-05-27 12:05:10 | verbose |
-| Should Be Equal | ${time}                 | 1 day 42 seconds        |
+Examples::
+  | ${time} =       | Subtract Date From Date | 2014-05-28 12:05:52     | 2014-05-28 12:05:10 |
+  | Should Be Equal | ${time}                 | ${42}                   |
+  | ${time} =       | Subtract Date From Date | 2014-05-28 12:05:52     | 2014-05-27 12:05:10 | verbose |
+  | Should Be Equal | ${time}                 | 1 day 42 seconds        |
 
 Subtract Time From Date
------------------------
-Arguments:  [date, time, result_format=timestamp, exclude_millis=False,
-            date_format=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [date, time, result_format=timestamp, exclude_millis=False, date_format=None]
 
 Subtracts time from date and returns the resulting date.
 
@@ -469,16 +446,14 @@ Arguments:
                       milliseconds as explained in `millisecond handling`.
 - ``date_format:``    Possible `custom timestamp` format of ``date``.
 
-Examples:
-| ${date} =       | Subtract Time From Date | 2014-06-04 12:05:03.111 | 7 days
-|
-| Should Be Equal | ${date}                 | 2014-05-28 12:05:03.111 |
-| ${date} =       | Subtract Time From Date | 2014-05-28 13:07:06.115 |
-01:02:03:004 |
-| Should Be Equal | ${date}                 | 2014-05-28 12:05:03.111 |
+Examples::
+  | ${date} =       | Subtract Time From Date | 2014-06-04 12:05:03.111 | 7 days |
+  | Should Be Equal | ${date}                 | 2014-05-28 12:05:03.111 |
+  | ${date} =       | Subtract Time From Date | 2014-05-28 13:07:06.115 | 01:02:03:004 |
+  | Should Be Equal | ${date}                 | 2014-05-28 12:05:03.111 |
 
 Subtract Time From Time
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time1, time2, result_format=number, exclude_millis=False]
 
 Subtracts time from another time and returns the resulting time.
@@ -491,9 +466,9 @@ Arguments:
 - ``exclude_millis:`` When set to any true value, rounds and drops
                       milliseconds as explained in `millisecond handling`.
 
-Examples:
-| ${time} =       | Subtract Time From Time | 00:02:30 | 100      |
-| Should Be Equal | ${time}                 | ${50}    |
-| ${time} =       | Subtract Time From Time | ${time}  | 1 minute | compact |
-| Should Be Equal | ${time}                 | - 10s    |
+Examples::
+  | ${time} =       | Subtract Time From Time | 00:02:30 | 100      |
+  | Should Be Equal | ${time}                 | ${50}    |
+  | ${time} =       | Subtract Time From Time | ${time}  | 1 minute | compact |
+  | Should Be Equal | ${time}                 | - 10s    |
 

@@ -132,7 +132,7 @@ IronPython をインストールしたら、 PATH_ を変更して、コマン�
 
 .. _Configuring PATH:
 
-Configuring ``PATH``
+``PATH`` の設定
 ~~~~~~~~~~~~~~~~~~~~
 
 The ``PATH`` environment variable lists locations where commands executed in

@@ -4,7 +4,7 @@
 .. _Python Tutorial for Robot Framework Test Library Developers:
 
 ===============================================================
-  Python Tutorial for Robot Framework Test Library Developers
+テストライブラリ開発者のための Python チュートリアル
 ===============================================================
 
 | Copyright |copy| Nokia Solutions and Networks 2008-2014
@@ -12,13 +12,13 @@
 
 __ http://creativecommons.org/licenses/by/3.0/
 
-.. contents:: Table of Contents
+.. contents:: 目次
    :depth: 2
 
 
-.. _Introduction:
+.. Introduction:
 
-Introduction
+はじめに
 ============
 
 * This is self learning material to learn how to program using `Python
@@ -66,13 +66,13 @@ Introduction
 
 .. _Getting started:
 
-Getting started
-===============
+はじめよう
+===========
 
 .. _Installation:
 
-Installation
-------------
+インストール
+--------------
 
 * Most Linux distributions, OS X, and other UNIX like machines have
   Python installed by default, but on Windows you probably need to
@@ -95,8 +95,8 @@ Installation
 
 .. _Interactive interpreter:
 
-Interactive interpreter
------------------------
+対話インタプリタ
+------------------
 
 * Open the command prompt and type :cli:`python`. On Windows you can
   also start the interpreter by selecting ``Start > All Programs >
@@ -123,8 +123,8 @@ Interactive interpreter
 
 .. _Python editors:
 
-Python editors
---------------
+Python ソースコードエディタ
+------------------------------
 
 * Most general purpose text editors (Emacs, VIM, UltraEdit, ...) and
   IDEs (Eclipse, Netbeans, ...) can be used to edit Python. There are
@@ -141,12 +141,12 @@ Python editors
 
 .. _Variables:
 
-Variables
-=========
+変数
+======
 
 .. _Basic data types:
 
-Basic data types
+基本のデータ型
 ----------------
 
 * Python has strings, integers, floating point numbers, Boolean values
@@ -177,8 +177,8 @@ Basic data types
 
 .. _Declaring variables:
 
-Declaring variables
--------------------
+変数の宣言
+------------
 
 * All different values can be assigned to variables. Valid characters
   in variable identifiers are letters, underscore, and numbers,
@@ -219,8 +219,8 @@ Declaring variables
 
 .. _First program:
 
-First program
-=============
+最初のプログラム
+===================
 
 * Create a file :path:`hello.py` with your editor of choice and write
   this content into it:
@@ -245,12 +245,12 @@ First program
 
 .. _Functions:
 
-Functions
-=========
+関数
+======
 
 .. _Creating functions:
 
-Creating functions
+関数を定義する
 ------------------
 
 * Creating functions in Python is super easy. This example uses the
@@ -293,7 +293,7 @@ Creating functions
 
 .. _Optional and named arguments:
 
-Optional and named arguments
+オプションの名前付き引数
 ----------------------------
 
 * Functions can have default values for some or all of its arguments:
@@ -342,8 +342,8 @@ Optional and named arguments
 
 .. _Variable number of arguments:
 
-Variable number of arguments
-----------------------------
+可変個数の引数
+----------------
 
 * Function can also be created so that they take any number of
   arguments. This is done by prefixing an argument after required and
@@ -374,8 +374,8 @@ Variable number of arguments
 
 .. _Returning values:
 
-Returning values
-----------------
+戻り値を返す
+--------------
 
 * Functions can use :code:`return` statement to return values that can be
   assigned to variables or passed to other functions:
@@ -398,7 +398,7 @@ Returning values
 
 .. _Documenting functions:
 
-Documenting functions
+関数のドキュメント
 ---------------------
 
 * In Python functions, as well as classes and modules, are documented with
@@ -428,7 +428,7 @@ Documenting functions
 
 .. _Container data types:
 
-Container data types
+コンテナデータ型
 ====================
 
 * Python has a nice set of container data types built into the
@@ -441,8 +441,8 @@ Container data types
 
 .. _Lists:
 
-Lists
------
+リスト
+-------
 
 * A list is an ordered collection of items which you normally access
   by index.
@@ -467,8 +467,8 @@ Lists
 
 .. _Tuples:
 
-Tuples
-------
+タプル
+--------
 
 * A tuple is a list like structure which you cannot alter after creating it.
 
@@ -496,8 +496,8 @@ Tuples
 
 .. _Dictionaries:
 
-Dictionaries
-------------
+辞書
+------
 
 * A dictionary is an unordered collection of key-value pairs. The same
   data structure is often called hashmap.
@@ -521,13 +521,13 @@ Dictionaries
 
 .. _Control Flow:
 
-Control Flow
+制御フロー
 ============
 
 .. _Conditional execution:
 
-Conditional execution
----------------------
+条件分岐
+----------
 
 * Python has similar :code:`if/elif/else` structure as most other
   programming languages.
@@ -555,7 +555,7 @@ Conditional execution
 
 .. _Looping:
 
-Looping
+ループ
 -------
 
 * :code:`for` loops allow iterating over a sequence of items such as
@@ -598,7 +598,7 @@ Looping
 
 .. _List comprehensions:
 
-List comprehensions
+リストの内包表記
 -------------------
 
 * Quite often :code:`for` loops can be replaced with even more concise list
@@ -620,13 +620,13 @@ List comprehensions
 
 .. _Modules:
 
-Modules
-=======
+モジュール
+============
 
 .. _Importing modules:
 
-Importing modules
------------------
+モジュールのインポート
+------------------------
 
 * Importing existing Python modules is as simply as saying :code:`import
   modulename`. 
@@ -641,8 +641,8 @@ Importing modules
 
 .. _Creating modules:
 
-Creating modules
-----------------
+モジュールの作成
+-------------------
 
 * Because every :path:`.py` file is effectively a Python module, you
   have already created at least :code:`hello` module.
@@ -685,8 +685,8 @@ Creating modules
 
 .. _Module search path (PYTHONPATH):
 
-Module search path (PYTHONPATH)
--------------------------------
+モジュール検索パス (PYTHONPATH)
+----------------------------------
 
 * Python modules are not automatically searched everywhere on you
   machine. Python has certain default places to search modules for
@@ -861,8 +861,8 @@ been covered in this tutorial:
 
 .. _Executable example:
 
-Executable example
-------------------
+実行可能なサンプル
+--------------------
 
 The example library and associated test data shown below demonstrate
 the most important features of the test library API. You can execute

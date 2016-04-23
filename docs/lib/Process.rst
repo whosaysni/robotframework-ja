@@ -277,7 +277,7 @@ shell=True    cwd=/path
 |     `Should Be Equal As Integers`    ${result.rc}    0
 
 Get Process Id
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None]
 
 Returns the process ID (pid) of the process as an integer.
@@ -288,7 +288,7 @@ Notice that the pid is not the same as the handle returned by
 `Start Process` that is used internally by this library.
 
 Get Process Object
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None]
 
 Return the underlying ``subprocess.Popen`` object.
@@ -296,7 +296,7 @@ Return the underlying ``subprocess.Popen`` object.
 If ``handle`` is not given, uses the current `active process`.
 
 Get Process Result
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None, rc=False, stdout=False, stderr=False,
             stdout_path=False, stderr_path=False]
 
@@ -344,7 +344,7 @@ can be returned without problems.
 New in Robot Framework 2.8.2.
 
 Is Process Running
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None]
 
 Checks is the process running or not.
@@ -354,7 +354,7 @@ If ``handle`` is not given, uses the current `active process`.
 Returns ``True`` if the process is still running and ``False`` otherwise.
 
 Join Command Line
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [*args]
 
 Joins arguments into one command line string.
@@ -373,7 +373,7 @@ Example:
 New in Robot Framework 2.9.2.
 
 Process Should Be Running
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None, error_message=Process is not running.]
 
 Verifies that the process is running.
@@ -383,7 +383,7 @@ If ``handle`` is not given, uses the current `active process`.
 Fails if the process has stopped.
 
 Process Should Be Stopped
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None, error_message=Process is running.]
 
 Verifies that the process is not running.
@@ -393,7 +393,7 @@ If ``handle`` is not given, uses the current `active process`.
 Fails if the process is still running.
 
 Run Process
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [command, *arguments, **configuration]
 
 Runs a process and waits for it to complete.
@@ -431,7 +431,7 @@ This keyword does not change the `active process`.
 2.8.4.
 
 Send Signal To Process
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [signal, handle=None, group=False]
 
 Sends the given ``signal`` to the specified process.
@@ -465,7 +465,7 @@ New in Robot Framework 2.8.2. Support for ``group`` argument is new
 in Robot Framework 2.8.5.
 
 Split Command Line
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [args, escaping=False]
 
 Splits command line string into a list of arguments.
@@ -483,7 +483,7 @@ Examples:
 New in Robot Framework 2.9.2.
 
 Start Process
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [command, *arguments, **configuration]
 
 Starts a new process on background.
@@ -501,7 +501,7 @@ terminating also possible child processes. This is not supported by
 Jython in general nor by Python versions prior to 2.7 on Windows.
 
 Switch Process
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle]
 
 Makes the specified process the current `active process`.
@@ -517,7 +517,7 @@ Example:
 | # now active process is process1 |
 
 Terminate All Processes
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [kill=False]
 
 Terminates all still running processes started by this library.
@@ -530,7 +530,7 @@ configured to forcefully kill them immediately. See `Terminate Process`
 that this keyword uses internally for more details.
 
 Terminate Process
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None, kill=False]
 
 Stops the process gracefully or forcefully.
@@ -573,7 +573,7 @@ Terminating also possible child processes, including using
 ``CTRL_BREAK_EVENT`` on Windows, is new in Robot Framework 2.8.5.
 
 Wait For Process
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [handle=None, timeout=None, on_timeout=continue]
 
 Waits for the process to complete or to reach the given timeout.

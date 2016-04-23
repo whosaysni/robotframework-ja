@@ -49,7 +49,7 @@ using `Set Screenshot Directory` keyword during execution. It is also
 possible to save screenshots using an absolute path.
 
 Importing
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [screenshot_directory=None, screenshot_module=None]
 
 Configure where screenshots are saved.
@@ -73,7 +73,7 @@ Examples (use only one of these):
 Specifying explicit screenshot module is new in Robot Framework 2.9.2.
 
 Set Screenshot Directory
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Sets the directory where screenshots are saved.
@@ -84,7 +84,7 @@ systems. Path to the old directory is returned.
 The directory can also be set in `importing`.
 
 Take Screenshot
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name=screenshot, width=800px]
 
 Takes a screenshot in JPEG format and embeds it into the log file.
@@ -116,7 +116,7 @@ this file) |
 The path where the screenshot is saved is returned.
 
 Take Screenshot Without Embedding
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name=screenshot]
 
 Takes a screenshot and links it from the log file.

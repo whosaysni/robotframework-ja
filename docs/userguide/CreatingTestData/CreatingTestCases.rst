@@ -178,9 +178,12 @@ Setting セクションに、以下のようなテストケース関連の設定
        Copy File    ${CURDIR}/file.txt    ${TEMPDIR}/stuff
        No Operation
 
-Default values
+.. _devault values:
+
+デフォルト値
 ~~~~~~~~~~~~~~
 
+引数にはデフォルト値
 Arguments often have default values which can either be given or
 not. In the documentation the default value is typically separated
 from the argument name with an equal sign like `name=default

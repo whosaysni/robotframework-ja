@@ -13,25 +13,31 @@ values from lists and dictionaries (e.g. `Append To List`, `Get
 From Dictionary`) and for verifying their contents (e.g. `Lists
 Should Be Equal`, `Dictionary Should Contain Value`).
 
-= Related keywords in BuiltIn =
+.. _`Related keywords in BuiltIn`:
+
+Related keywords in BuiltIn
+----------------------------
 
 Following keywords in the BuiltIn library can also be used with
-lists and dictionaries:
+lists and dictionaries::
 
-| = Keyword Name =             | = Applicable With = | = Comment = |
-| `Create List`                | lists |
-| `Create Dictionary`          | dicts | Was in Collections until RF 2.9. |
-| `Get Length`                 | both  |
-| `Length Should Be`           | both  |
-| `Should Be Empty`            | both  |
-| `Should Not Be Empty`        | both  |
-| `Should Contain`             | both  |
-| `Should Not Contain`         | both  |
-| `Should Contain X Times`     | lists |
-| `Should Not Contain X Times` | lists |
-| `Get Count`                  | lists |
+  | = Keyword Name =             | = Applicable With = | = Comment = |
+  | `Create List`                | lists |
+  | `Create Dictionary`          | dicts | Was in Collections until RF 2.9. |
+  | `Get Length`                 | both  |
+  | `Length Should Be`           | both  |
+  | `Should Be Empty`            | both  |
+  | `Should Not Be Empty`        | both  |
+  | `Should Contain`             | both  |
+  | `Should Not Contain`         | both  |
+  | `Should Contain X Times`     | lists |
+  | `Should Not Contain X Times` | lists |
+  | `Get Count`                  | lists |
 
-= Using with list-like and dictionary-like objects =
+.. _`Using with list-like and dictionary-like objects`:
+
+Using with list-like and dictionary-like objects
+--------------------------------------------------
 
 List keywords that do not alter the given list can also be used
 with tuples, and to some extend also with other iterables.
@@ -42,7 +48,10 @@ Similarly dictionary keywords can, for most parts, be used with other
 mappings. `Convert To Dictionary` can be used if real Python ``dict``
 objects are needed.
 
-= Boolean arguments =
+.. _`Boolean arguments`:
+
+Boolean arguments
+--------------------
 
 Some keywords accept arguments that are handled as Boolean values true or
 false. If such an argument is given as a string, it is considered false if
@@ -54,32 +63,26 @@ argument types are tested using same
 [http://docs.python.org/2/library/stdtypes.html#truth-value-testing|rules
 as in Python].
 
-True examples:
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=True    | #
-Strings are generally true.    |
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=yes     | #
-Same as the above.             |
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${TRUE} | #
-Python ``True`` is true.       |
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${42}   | #
-Numbers other than 0 are true. |
+True examples::
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=True    | # Strings are generally true.    |
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=yes     | # Same as the above.             |
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${TRUE} | # Python ``True`` is true.       |
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${42}   | # Numbers other than 0 are true. |
 
-False examples:
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=False    |
-# String ``false`` is false.   |
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=no       |
-# Also string ``no`` is false. |
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${EMPTY} |
-# Empty string is false.       |
-| `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${FALSE} |
-# Python ``False`` is false.   |
-| `Lists Should Be Equal` | ${x}   | ${y} | Custom error | values=no values |
-# ``no values`` works with ``values`` argument |
+False examples::
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=False    | # String ``false`` is false.   |
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=no       | # Also string ``no`` is false. |
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${EMPTY} | # Empty string is false.       |
+  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${FALSE} | # Python ``False`` is false.   |
+  | `Lists Should Be Equal` | ${x}   | ${y} | Custom error | values=no values | # ``no values`` works with ``values`` argument |
 
 Note that prior to Robot Framework 2.9 some keywords considered all
 non-empty strings, including ``False``, to be true.
 
-= Data in examples =
+.. _`Data in examples`:
+
+Data in examples
+------------------
 
 List related keywords use variables in format ``${Lx}`` in their examples.
 They mean lists with as many alphabetic characters as specified by ``x``.
@@ -90,36 +93,37 @@ Dictionary keywords use similar ``${Dx}`` variables. For example, ``${D1}``
 means ``{'a': 1}`` and ``${D3}`` means ``{'a': 1, 'b': 2, 'c': 3}``.
 
 Append To List
---------------
-Arguments:  [list_, *values]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , \*values]
 
 Adds ``values`` to the end of ``list``.
 
-Example:
-| Append To List | ${L1} | xxx |   |   |
-| Append To List | ${L2} | x   | y | z |
-=>
-| ${L1} = ['a', 'xxx']
-| ${L2} = ['a', 'b', 'x', 'y', 'z']
+Example::
+  | Append To List | ${L1} | xxx |   |   |
+  | Append To List | ${L2} | x   | y | z |
+  =>
+  | ${L1} = ['a', 'xxx']
+  | ${L2} = ['a', 'b', 'x', 'y', 'z']
 
 Combine Lists
--------------
-Arguments:  [*lists]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Arguments:  [\*lists]
 
 Combines the given ``lists`` together and returns the result.
 
 The given lists are not altered by this keyword.
 
-Example:
-| ${x} = | Combine List | ${L1} | ${L2} |       |
-| ${y} = | Combine List | ${L1} | ${L2} | ${L1} |
-=>
-| ${x} = ['a', 'a', 'b']
-| ${y} = ['a', 'a', 'b', 'a']
-| ${L1} and ${L2} are not changed.
+Example::
+  | ${x} = | Combine List | ${L1} | ${L2} |       |
+  | ${y} = | Combine List | ${L1} | ${L2} | ${L1} |
+  =>
+  | ${x} = ['a', 'a', 'b']
+  | ${y} = ['a', 'a', 'b', 'a']
+  | ${L1} and ${L2} are not changed.
 
 Convert To Dictionary
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [item]
 
 Converts the given ``item`` to a Python ``dict`` type.
@@ -131,7 +135,7 @@ dictionaries.
 New in Robot Framework 2.9.
 
 Convert To List
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [item]
 
 Converts the given ``item`` to a Python ``list`` type.
@@ -140,7 +144,7 @@ Mainly useful for converting tuples and other iterable to lists.
 Use `Create List` from the BuiltIn library for constructing new lists.
 
 Copy Dictionary
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary]
 
 Returns a copy of the given dictionary.
@@ -148,16 +152,16 @@ Returns a copy of the given dictionary.
 The given dictionary is never altered by this keyword.
 
 Copy List
----------
-Arguments:  [list_]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` ]
 
 Returns a copy of the given list.
 
 The given list is never altered by this keyword.
 
 Count Values In List
---------------------
-Arguments:  [list_, value, start=0, end=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , value, start=0, end=None]
 
 Returns the number of occurrences of the given ``value`` in ``list``.
 
@@ -165,14 +169,14 @@ The search can be narrowed to the selected sublist by the ``start`` and
 ``end`` indexes having the same semantics as with `Get Slice From List`
 keyword. The given list is never altered by this keyword.
 
-Example:
-| ${x} = | Count Values In List | ${L3} | b |
-=>
-| ${x} = 1
-| ${L3} is not changed
+Example::
+  | ${x} = | Count Values In List | ${L3} | b |
+  =>
+  | ${x} = 1
+  | ${L3} is not changed
 
 Dictionaries Should Be Equal
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dict1, dict2, msg=None, values=True]
 
 Fails if the given dictionaries are not equal.
@@ -188,7 +192,7 @@ the error message with ``msg`` and ``values`` arguments.
 The given dictionaries are never altered by this keyword.
 
 Dictionary Should Contain Item
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, key, value, msg=None]
 
 An item of ``key``/``value`` must be found in a `dictionary`.
@@ -199,7 +203,7 @@ See `Lists Should Be Equal` for an explanation of ``msg``.
 The given dictionary is never altered by this keyword.
 
 Dictionary Should Contain Key
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, key, msg=None]
 
 Fails if ``key`` is not found from ``dictionary``.
@@ -209,7 +213,7 @@ See `List Should Contain Value` for an explanation of ``msg``.
 The given dictionary is never altered by this keyword.
 
 Dictionary Should Contain Sub Dictionary
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dict1, dict2, msg=None, values=True]
 
 Fails unless all items in ``dict2`` are found from ``dict1``.
@@ -220,7 +224,7 @@ the error message with ``msg`` and ``values`` arguments.
 The given dictionaries are never altered by this keyword.
 
 Dictionary Should Contain Value
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, value, msg=None]
 
 Fails if ``value`` is not found from ``dictionary``.
@@ -230,7 +234,7 @@ See `List Should Contain Value` for an explanation of ``msg``.
 The given dictionary is never altered by this keyword.
 
 Dictionary Should Not Contain Key
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, key, msg=None]
 
 Fails if ``key`` is found from ``dictionary``.
@@ -240,7 +244,7 @@ See `List Should Contain Value` for an explanation of ``msg``.
 The given dictionary is never altered by this keyword.
 
 Dictionary Should Not Contain Value
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, value, msg=None]
 
 Fails if ``value`` is found from ``dictionary``.
@@ -250,7 +254,7 @@ See `List Should Contain Value` for an explanation of ``msg``.
 The given dictionary is never altered by this keyword.
 
 Get Dictionary Items
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary]
 
 Returns items of the given ``dictionary``.
@@ -258,13 +262,13 @@ Returns items of the given ``dictionary``.
 Items are returned sorted by keys. The given ``dictionary`` is not
 altered by this keyword.
 
-Example:
-| ${items} = | Get Dictionary Items | ${D3} |
-=>
-| ${items} = ['a', 1, 'b', 2, 'c', 3]
+Example::
+  | ${items} = | Get Dictionary Items | ${D3} |
+  =>
+  | ${items} = ['a', 1, 'b', 2, 'c', 3]
 
 Get Dictionary Keys
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary]
 
 Returns keys of the given ``dictionary``.
@@ -272,13 +276,13 @@ Returns keys of the given ``dictionary``.
 If keys are sortable, they are returned in sorted order. The given
 ``dictionary`` is never altered by this keyword.
 
-Example:
-| ${keys} = | Get Dictionary Keys | ${D3} |
-=>
-| ${keys} = ['a', 'b', 'c']
+Example::
+  | ${keys} = | Get Dictionary Keys | ${D3} |
+  =>
+  | ${keys} = ['a', 'b', 'c']
 
 Get Dictionary Values
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary]
 
 Returns values of the given dictionary.
@@ -286,13 +290,13 @@ Returns values of the given dictionary.
 Values are returned sorted according to keys. The given dictionary is
 never altered by this keyword.
 
-Example:
-| ${values} = | Get Dictionary Values | ${D3} |
-=>
-| ${values} = [1, 2, 3]
+Example::
+  | ${values} = | Get Dictionary Values | ${D3} |
+  =>
+  | ${values} = [1, 2, 3]
 
 Get From Dictionary
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, key]
 
 Returns a value from the given ``dictionary`` based on the given ``key``.
@@ -302,14 +306,14 @@ keyword fails.
 
 The given dictionary is never altered by this keyword.
 
-Example:
-| ${value} = | Get From Dictionary | ${D3} | b |
-=>
-| ${value} = 2
+Example::
+  | ${value} = | Get From Dictionary | ${D3} | b |
+  =>
+  | ${value} = 2
 
 Get From List
--------------
-Arguments:  [list_, index]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , index]
 
 Returns the value specified with an ``index`` from ``list``.
 
@@ -321,17 +325,17 @@ Using an index that does not exist on the list causes an error.
 The index can be either an integer or a string that can be converted
 to an integer.
 
-Examples (including Python equivalents in comments):
-| ${x} = | Get From List | ${L5} | 0  | # L5[0]  |
-| ${y} = | Get From List | ${L5} | -2 | # L5[-2] |
-=>
-| ${x} = 'a'
-| ${y} = 'd'
-| ${L5} is not changed
+Examples (including Python equivalents in comments)::
+  | ${x} = | Get From List | ${L5} | 0  | # L5[0]  |
+  | ${y} = | Get From List | ${L5} | -2 | # L5[-2] |
+  =>
+  | ${x} = 'a'
+  | ${y} = 'd'
+  | ${L5} is not changed
 
 Get Index From List
--------------------
-Arguments:  [list_, value, start=0, end=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , value, start=0, end=None]
 
 Returns the index of the first occurrence of the ``value`` on the list.
 
@@ -340,14 +344,14 @@ The search can be narrowed to the selected sublist by the ``start`` and
 keyword. In case the value is not found, -1 is returned. The given list
 is never altered by this keyword.
 
-Example:
-| ${x} = | Get Index From List | ${L5} | d |
-=>
-| ${x} = 3
-| ${L5} is not changed
+Example::
+  | ${x} = | Get Index From List | ${L5} | d |
+  =>
+  | ${x} = 3
+  | ${L5} is not changed
 
 Get Match Count
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [list, pattern, case_insensitive=False,
             whitespace_insensitive=False]
 
@@ -356,18 +360,15 @@ Returns the count of matches to ``pattern`` in ``list``.
 For more information on ``pattern``, ``case_insensitive``, and
 ``whitespace_insensitive``, see `Should Contain Match`.
 
-Examples:
-| ${count}= | Get Match Count | ${list} | a* | # ${count} will be the count of
-strings beginning with 'a' |
-| ${count}= | Get Match Count | ${list} | regexp=a.* | # ${matches} will be
-the count of strings beginning with 'a' (regexp version) |
-| ${count}= | Get Match Count | ${list} | a* | case_insensitive=${True} | #
-${matches} will be the count of strings beginning with 'a' or 'A' |
+Examples::
+  | ${count}= | Get Match Count | ${list} | a* | # ${count} will be the count of strings beginning with 'a' |
+  | ${count}= | Get Match Count | ${list} | regexp=a.* | # ${matches} will be the count of strings beginning with 'a' (regexp version) |
+  | ${count}= | Get Match Count | ${list} | a* | case_insensitive=${True} | # ${matches} will be the count of strings beginning with 'a' or 'A' |
 
 New in Robot Framework 2.8.6.
 
 Get Matches
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [list, pattern, case_insensitive=False,
             whitespace_insensitive=False]
 
@@ -376,19 +377,16 @@ Returns a list of matches to ``pattern`` in ``list``.
 For more information on ``pattern``, ``case_insensitive``, and
 ``whitespace_insensitive``, see `Should Contain Match`.
 
-Examples:
-| ${matches}= | Get Matches | ${list} | a* | # ${matches} will contain any
-string beginning with 'a' |
-| ${matches}= | Get Matches | ${list} | regexp=a.* | # ${matches} will contain
-any string beginning with 'a' (regexp version) |
-| ${matches}= | Get Matches | ${list} | a* | case_insensitive=${True} | #
-${matches} will contain any string beginning with 'a' or 'A' |
+Examples::
+  | ${matches}= | Get Matches | ${list} | a* | # ${matches} will contain any string beginning with 'a' |
+  | ${matches}= | Get Matches | ${list} | regexp=a.* | # ${matches} will contain any string beginning with 'a' (regexp version) |
+  | ${matches}= | Get Matches | ${list} | a* | case_insensitive=${True} | # ${matches} will contain any string beginning with 'a' or 'A' |
 
 New in Robot Framework 2.8.6.
 
 Get Slice From List
--------------------
-Arguments:  [list_, start=0, end=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , start=0, end=None]
 
 Returns a slice of the given list between ``start`` and ``end`` indexes.
 
@@ -403,19 +401,19 @@ the end, use ``None`` (default) as the end value.
 Using ``start`` or ``end`` not found on the list is the same as using
 the largest (or smallest) available index.
 
-Examples (incl. Python equivalents in comments):
-| ${x} = | Get Slice From List | ${L5} | 2 | 4  | # L5[2:4]    |
-| ${y} = | Get Slice From List | ${L5} | 1 |    | # L5[1:None] |
-| ${z} = | Get Slice From List | ${L5} |   | -2 | # L5[0:-2]   |
-=>
-| ${x} = ['c', 'd']
-| ${y} = ['b', 'c', 'd', 'e']
-| ${z} = ['a', 'b', 'c']
-| ${L5} is not changed
+Examples (incl. Python equivalents in comments)::
+  | ${x} = | Get Slice From List | ${L5} | 2 | 4  | # L5[2:4]    |
+  | ${y} = | Get Slice From List | ${L5} | 1 |    | # L5[1:None] |
+  | ${z} = | Get Slice From List | ${L5} |   | -2 | # L5[0:-2]   |
+  =>
+  | ${x} = ['c', 'd']
+  | ${y} = ['b', 'c', 'd', 'e']
+  | ${z} = ['a', 'b', 'c']
+  | ${L5} is not changed
 
 Insert Into List
-----------------
-Arguments:  [list_, index, value]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , index, value]
 
 Inserts ``value`` into ``list`` to the position specified with ``index``.
 
@@ -430,29 +428,30 @@ the length of the list, the value is added at the end
 can be given either as an integer or a string that can be
 converted to an integer.
 
-Example:
-| Insert Into List | ${L1} | 0     | xxx |
-| Insert Into List | ${L2} | ${-1} | xxx |
-=>
-| ${L1} = ['xxx', 'a']
-| ${L2} = ['a', 'xxx', 'b']
+Example::
+  | Insert Into List | ${L1} | 0     | xxx |
+  | Insert Into List | ${L2} | ${-1} | xxx |
+  =>
+  | ${L1} = ['xxx', 'a']
+  | ${L2} = ['a', 'xxx', 'b']
 
 Keep In Dictionary
-------------------
-Arguments:  [dictionary, *keys]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Arguments:  [dictionary, \*keys]
 
 Keeps the given ``keys`` in the ``dictionary`` and removes all other.
 
 If the given ``key`` cannot be found from the ``dictionary``, it
 is ignored.
 
-Example:
-| Keep In Dictionary | ${D5} | b | x | d |
-=>
-| ${D5} = {'b': 2, 'd': 4}
+Example::
+  | Keep In Dictionary | ${D5} | b | x | d |
+  =>
+  | ${D5} = {'b': 2, 'd': 4}
 
 List Should Contain Sub List
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [list1, list2, msg=None, values=True]
 
 Fails if not all of the elements in ``list2`` are found in ``list1``.
@@ -464,8 +463,8 @@ See `Lists Should Be Equal` for more information about configuring
 the error message with ``msg`` and ``values`` arguments.
 
 List Should Contain Value
--------------------------
-Arguments:  [list_, value, msg=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , value, msg=None]
 
 Fails if the ``value`` is not found from ``list``.
 
@@ -474,8 +473,8 @@ not contain value '<value>'``. A custom message can be given using
 the ``msg`` argument.
 
 List Should Not Contain Duplicates
-----------------------------------
-Arguments:  [list_, msg=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , msg=None]
 
 Fails if any element in the ``list`` is found from it more than once.
 
@@ -488,15 +487,15 @@ This keyword works with all iterables that can be converted to a list.
 The original iterable is never altered.
 
 List Should Not Contain Value
------------------------------
-Arguments:  [list_, value, msg=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , value, msg=None]
 
 Fails if the ``value`` is not found from ``list``.
 
 See `List Should Contain Value` for an explanation of ``msg``.
 
 Lists Should Be Equal
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [list1, list2, msg=None, values=True, names=None]
 
 Fails if given lists are unequal.
@@ -511,11 +510,8 @@ Python tuple and list with same content are considered equal.
 The error message can be configured using ``msg`` and ``values``
 arguments:
 - If ``msg`` is not given, the default error message is used.
-- If ``msg`` is given and ``values`` gets a value considered true
-  (see `Boolean arguments`), the error message starts with the given
-  ``msg`` followed by a newline and the default message.
-- If ``msg`` is given and ``values``  is not given a true value,
-  the error message is just the given ``msg``.
+- If ``msg`` is given and ``values`` gets a value considered true (see `Boolean arguments`), the error message starts with the given ``msg`` followed by a newline and the default message.
+- If ``msg`` is given and ``values``  is not given a true value, the error message is just the given ``msg``.
 
 Optional ``names`` argument can be used for naming the indices shown in
 the default error message. It can either be a list of names matching
@@ -524,18 +520,18 @@ need to be named. It is not necessary to name all of the indices.  When
 using a dictionary, keys can be either integers or strings that can be
 converted to integers.
 
-Examples:
-| ${names} = | Create List | First Name | Family Name | Email |
-| Lists Should Be Equal | ${people1} | ${people2} | names=${names} |
-| ${names} = | Create Dictionary | 0=First Name | 2=Email |
-| Lists Should Be Equal | ${people1} | ${people2} | names=${names} |
+Examples::
+  | ${names} = | Create List | First Name | Family Name | Email |
+  | Lists Should Be Equal | ${people1} | ${people2} | names=${names} |
+  | ${names} = | Create Dictionary | 0=First Name | 2=Email |
+  | Lists Should Be Equal | ${people1} | ${people2} | names=${names} |
 
 If the items in index 2 would differ in the above examples, the error
 message would contain a row like ``Index 2 (email): name@foo.com !=
 name@bar.com``.
 
 Log Dictionary
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, level=INFO]
 
 Logs the size and contents of the ``dictionary`` using given ``level``.
@@ -546,8 +542,8 @@ If you only want to log the size, use keyword `Get Length` from
 the BuiltIn library.
 
 Log List
---------
-Arguments:  [list_, level=INFO]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , level=INFO]
 
 Logs the length and contents of the ``list`` using given ``level``.
 
@@ -557,7 +553,7 @@ If you only want to the length, use keyword `Get Length` from
 the BuiltIn library.
 
 Pop From Dictionary
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [dictionary, key, default=]
 
 Pops the given ``key`` from the ``dictionary`` and returns its value.
@@ -566,17 +562,17 @@ By default the keyword fails if the given ``key`` cannot be found from
 the ``dictionary``. If optional ``default`` value is given, it will be
 returned instead of failing.
 
-Example:
-| ${val}= | Pop From Dictionary | ${D3} | b |
-=>
-| ${val} = 2
-| ${D3} = {'a': 1, 'c': 3}
+Example::
+  | ${val}= | Pop From Dictionary | ${D3} | b |
+  =>
+  | ${val} = 2
+  | ${D3} = {'a': 1, 'c': 3}
 
 New in Robot Framework 2.9.2.
 
 Remove Duplicates
------------------
-Arguments:  [list_]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` ]
 
 Returns a list without duplicates based on the given ``list``.
 
@@ -588,22 +584,22 @@ duplicates. Number of the removed duplicates is logged.
 New in Robot Framework 2.7.5.
 
 Remove From Dictionary
-----------------------
-Arguments:  [dictionary, *keys]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [dictionary, \*keys]
 
 Removes the given ``keys`` from the ``dictionary``.
 
 If the given ``key`` cannot be found from the ``dictionary``, it
 is ignored.
 
-Example:
-| Remove From Dictionary | ${D3} | b | x | y |
-=>
-| ${D3} = {'a': 1, 'c': 3}
+Example::
+  | Remove From Dictionary | ${D3} | b | x | y |
+  =>
+  | ${D3} = {'a': 1, 'c': 3}
 
 Remove From List
-----------------
-Arguments:  [list_, index]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , index]
 
 Removes and returns the value specified with an ``index`` from ``list``.
 
@@ -613,41 +609,42 @@ Using an index that does not exist on the list causes an error.
 The index can be either an integer or a string that can be converted
 to an integer.
 
-Example:
-| ${x} = | Remove From List | ${L2} | 0 |
-=>
-| ${x} = 'a'
-| ${L2} = ['b']
+Example::
+  | ${x} = | Remove From List | ${L2} | 0 |
+  =>
+  | ${x} = 'a'
+  | ${L2} = ['b']
 
 Remove Values From List
------------------------
-Arguments:  [list_, *values]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , \*values]
 
 Removes all occurrences of given ``values`` from ``list``.
 
 It is not an error if a value does not exist in the list at all.
 
-Example:
-| Remove Values From List | ${L4} | a | c | e | f |
-=>
-| ${L4} = ['b', 'd']
+Example::
+  | Remove Values From List | ${L4} | a | c | e | f |
+  =>
+  | ${L4} = ['b', 'd']
 
 Reverse List
-------------
-Arguments:  [list_]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` ]
 
 Reverses the given list in place.
 
 Note that the given list is changed and nothing is returned. Use
 `Copy List` first, if you need to keep also the original order.
+::
 
-| Reverse List | ${L3} |
-=>
-| ${L3} = ['c', 'b', 'a']
+  | Reverse List | ${L3} |
+  =>
+  | ${L3} = ['c', 'b', 'a']
 
 Set List Value
---------------
-Arguments:  [list_, index, value]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` , index, value]
 
 Sets the value of ``list`` specified by ``index`` to the given ``value``.
 
@@ -657,29 +654,29 @@ Using an index that does not exist on the list causes an error.
 The index can be either an integer or a string that can be converted to
 an integer.
 
-Example:
-| Set List Value | ${L3} | 1  | xxx |
-| Set List Value | ${L3} | -1 | yyy |
-=>
-| ${L3} = ['a', 'xxx', 'yyy']
+Example::
+  | Set List Value | ${L3} | 1  | xxx |
+  | Set List Value | ${L3} | -1 | yyy |
+  =>
+  | ${L3} = ['a', 'xxx', 'yyy']
 
 Set To Dictionary
------------------
-Arguments:  [dictionary, *key_value_pairs, **items]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [dictionary, \*key_value_pairs, \*\*items]
 
 Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.
 
 Giving items as ``key_value_pairs`` means giving keys and values
-as separate arguments:
+as separate arguments::
 
-| Set To Dictionary | ${D1} | key | value | second | ${2} |
-=>
-| ${D1} = {'a': 1, 'key': 'value', 'second': 2}
+  | Set To Dictionary | ${D1} | key | value | second | ${2} |
+  =>
+  | ${D1} = {'a': 1, 'key': 'value', 'second': 2}
 
 Starting from Robot Framework 2.8.1, items can also be given as kwargs
-using ``key=value`` syntax:
+using ``key=value`` syntax::
 
-| Set To Dictionary | ${D1} | key=value | second=${2} |
+  | Set To Dictionary | ${D1} | key=value | second=${2} |
 
 The latter syntax is typically more convenient to use, but it has
 a limitation that keys must be strings.
@@ -687,7 +684,7 @@ a limitation that keys must be strings.
 If given keys already exist in the dictionary, their values are updated.
 
 Should Contain Match
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [list, pattern, msg=None, case_insensitive=False,
             whitespace_insensitive=False]
 
@@ -720,24 +717,18 @@ The given list is never altered by this keyword.
 
 See also ``Should Not Contain Match``.
 
-Examples:
-| Should Contain Match | ${list} | a*              | | | # Match strings
-beginning with 'a'. |
-| Should Contain Match | ${list} | regexp=a.*      | | | # Same as the above
-but with regexp. |
-| Should Contain Match | ${list} | regexp=\\d{6} | | | # Match strings
-containing six digits. |
-| Should Contain Match | ${list} | a*  | case_insensitive=True       | | #
-Match strings beginning with 'a' or 'A'. |
-| Should Contain Match | ${list} | ab* | whitespace_insensitive=yes  | | #
-Match strings beginning with 'ab' with possible whitespace ignored. |
-| Should Contain Match | ${list} | ab* | whitespace_insensitive=true |
-case_insensitive=true | # Same as the above but also ignore case. |
+Examples::
+  | Should Contain Match | ${list} | a*              | | | # Match strings beginning with 'a'. |
+  | Should Contain Match | ${list} | regexp=a.*      | | | # Same as the above but with regexp. |
+  | Should Contain Match | ${list} | regexp=\\d{6} | | | # Match strings containing six digits. |
+  | Should Contain Match | ${list} | a*  | case_insensitive=True       | | # Match strings beginning with 'a' or 'A'. |
+  | Should Contain Match | ${list} | ab* | whitespace_insensitive=yes  | | # Match strings beginning with 'ab' with possible whitespace ignored. |
+  | Should Contain Match | ${list} | ab* | whitespace_insensitive=true | case_insensitive=true | # Same as the above but also ignore case. |
 
 New in Robot Framework 2.8.6.
 
 Should Not Contain Match
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [list, pattern, msg=None, case_insensitive=False,
             whitespace_insensitive=False]
 
@@ -749,8 +740,8 @@ for information about arguments and usage in general.
 New in Robot Framework 2.8.6.
 
 Sort List
----------
-Arguments:  [list_]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arguments:  [ :ref:`list` ]
 
 Sorts the given list in place.
 
@@ -758,9 +749,11 @@ The strings are sorted alphabetically and the numbers numerically.
 
 Note that the given list is changed and nothing is returned. Use
 `Copy List` first, if you need to keep also the original order.
+::
 
-${L} = [2,1,'a','c','b']
-| Sort List | ${L} |
-=>
-| ${L} = [1, 2, 'a', 'b', 'c']
+  ${L} = [2,1,'a','c','b']
+
+  | Sort List | ${L} |
+  =>
+  | ${L} = [1, 2, 'a', 'b', 'c']
 
