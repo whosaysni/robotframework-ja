@@ -205,7 +205,7 @@ UNIX系システムでは、通常、システム全体設定用または個別�
 `PIP でインストール <Installing with pip>`_ する場合、環境変数 ``https_proxy`` を設定する必要があります。
 この環境変数は、 pip 自体のインストールと、 Robot Framework や他の Python パッケージインストールに必要です。
 
-``https_proxy`` の設定方法は、 `PATH の設定<configuring PATH>`_ と同様、 OS によって異なります。
+``https_proxy`` の設定方法は、 `PATH の設定 <configuring PATH>`_ と同様、 OS によって異なります。
 変数の値は、通常は `http://10.0.0.42:8080` のようにプロキシの URL です。
 
 .. _Installing with pip:
@@ -228,23 +228,18 @@ pip の最新版が必要なときは、 pip_ のプロジェクトページを�
 
 .. _Installing pip for Python:
 
-Installing pip for Python
+Python に pip を入れる
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Starting from Python 2.7.9, the standard Windows installer by default installs
-and activates pip. Assuming you also have configured PATH_ and possibly
-set https_proxy_, you can run `pip install robotframework` right after
-Python installation.
+Python 2.7.9 からは、標準の Windows インストーラは pip を自動でインストールして有効にします。
+PATH_ と、必要に応じて `https_proxy`_ が正しく設定されていていれば、 Python をインストールした後、すぐに `pip install robotframework` で Robot Framework をインストールできます。
 
-Outside Windows and with older Python versions you need to install pip yourself.
-You may be able to do it using system package managers like Apt or Yum on Linux,
-but you can always use the manual installation instructions found from the pip_
-project pages.
+Windows 以外のプラットフォームや、古いバージョンの Python では、 pip を自分でインストールせねばなりません。
+Linux で、 Apt や Yum のようなパッケージマネジャが使えるなら、パッケージマネジャで pip_ をインストールできます。
+とはいえ、 pip_ はいつでも pip_ のプロジェクトページから手動でインストールできます。
 
-If you have multiple Python versions with pip installed, the version that is
-used when the ``pip`` command is executed depends on which pip is first in the
-PATH_. An alternative is executing the ``pip`` module using the selected Python
-version directly:
+複数のバージョンの Python をインストールしていて、それぞれに pip をインストールしている場合、実行される ``pip`` コマンドは、 PATH_ 上で最初に見つかったものです。
+pip を動かす Python のバージョンを特定したければ、その Python を使って ``pip`` モジュールを呼び出してください:
 
 .. sourcecode:: bash
 
@@ -253,20 +248,18 @@ version directly:
 
 .. _Installing pip for Jython:
 
-Installing pip for Jython
+Jython に pip を入れる
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Jython 2.7 contain pip bundled in, but it needs to be activated before using it
-by running the following command:
+Jython 2.7 には pip がバンドルされていますが、有効にするには以下のコマンドを実行せねばなりません:
 
 .. sourcecode:: bash
 
     jython -m ensurepip
 
-Jython installs its pip into :file:`<JythonInstallation>/bin` directory.
-Does running `pip install robotframework` actually use it or possibly some
-other pip version depends on which pip is first in the PATH_. An alternative
-is executing the ``pip`` module using Jython directly:
+Jython は pip を :file:`<JythonInstallation>/bin` ディレクトリにインストールします。
+他の Python の pip が入っている場合、 `pip install robotframework` で Jython 上にインストールできるかどうかは PATH_ の設定次第です。
+pip を使う Jython を特定したければ、以下のように Jython から ``pip`` モジュールを呼び出します:
 
 .. sourcecode:: bash
 
@@ -274,45 +267,38 @@ is executing the ``pip`` module using Jython directly:
 
 .. _Installing pip for IronPython:
 
-Installing pip for IronPython
+IronPython に pip を入れる
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-IronPython contains bundled pip starting from `version 2.7.5`__. Similarly as
-with Jython, it needs to be activated first:
+IronPython には、 `バージョン 2.7.5 <http://blog.ironpython.net/2014/12/pip-in-ironpython-275.html>`_ から pip がバンドルされています。
+Jython と同様、まず有効にする必要があります:
 
 .. sourcecode:: bash
 
     ipy -X:Frames -m ensurepip
 
-Notice that with IronPython `-X:Frames` command line option is needed both
-when activating and when using pip.
+IronPython の場合、pip を有効にするときも、使うときにも `-X:Frames` コマンドラインオプションが必要なので注意してください。
 
-IronPython installs pip into :file:`<IronPythonInstallation>/Scripts` directory.
-Does running `pip install robotframework` actually use it or possibly some
-other pip version depends on which pip is first in the PATH_. An alternative
-is executing the ``pip`` module using IronPython directly:
+IronPython は pip を :file:`<IronPythonInstallation>/Scripts` ディレクトリに配置します。
+他の Python の pip が入っている場合、 `pip install robotframework` で IronPython 上にインストールできるかどうかは PATH_ の設定次第です。
+pip を使う IronPython を特定したければ、以下のように IronPython から ``pip`` モジュールを呼び出します:
+
 
 .. sourcecode:: bash
 
     ipy -X:Frames -m pip install robotframework
 
-IronPython versions prior to 2.7.5 do not officially support pip.
+バージョン 2.7.5 以前の IronPython は pip をサポートしていません。
 
-__ http://blog.ironpython.net/2014/12/pip-in-ironpython-275.html
 
 .. _Using pip:
 
-Using pip
-~~~~~~~~~
+pip を使う
+~~~~~~~~~~~~
 
-Once you have pip_ installed, and have set https_proxy_ if you are behind
-a proxy, using it on the command line is very easy. The easiest way to use
-pip is by letting it find and download packages it installs from the
-`Python Package Index (PyPI)`__, but it can also install packages
-downloaded from the PyPI separately. The most common usages are shown below
-and pip_ documentation has more information and examples.
-
-__ PyPI_
+pip_ をインストールしたら (そして、プロキシの下にいる場合は `https_proxy`_ を設定したら)、あとの使い方はとても簡単です。
+最も簡単な使い方は、 pip に全てお任せして、 `Python Package Index (PyPI) <https://pypi.python.org/>`_ から必要なパッケージを見つけてダウンロードさせ、インストールさせるというものですが、 pip には PyPI 上の個別のパッケージを指定してインストールする機能もあります。
+基本的な使い方は下記の通りで、 pip_ のドキュメントにはより詳しい説明やサンプルがあります。
 
 .. sourcecode:: bash
 
@@ -552,7 +538,7 @@ Robot Framework 3.0 から、 ``robot`` スクリプトでテストを実行し�
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 テストを実行するもう一つの方法は、インストール済みの ``robot`` モジュールや、サブモジュールの ``robot.run`` を、 Python の
-`-m コマンドラインオプション<https://docs.python.org/2/using/cmdline.html#cmdoption-m>`_ で実行するやりかたです。
+`-m コマンドラインオプション <https://docs.python.org/2/using/cmdline.html#cmdoption-m>`_ で実行するやりかたです。
 この方法は、複数のバージョンの Python で Robot Framework を実行したい場合に特に便利です:
 
 .. sourcecode:: bash
