@@ -470,107 +470,90 @@ elsewhere.
 
 .. _Where files are installed:
 
-Where files are installed
+ファイルのインストール先
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When an automatic installer is used, Robot Framework source code is copied
-into a directory containing external Python modules. On UNIX-like operating
-systems where Python is pre-installed the location of this directory varies.
-If you have installed the interpreter yourself, it is normally
-:file:`Lib/site-packages` under the interpreter installation directory, for
-example, :file:`C:\\Python27\\Lib\\site-packages`. The actual Robot
-Framework code is in a directory named :file:`robot`.
+自動インストーラを使った場合は、 Robot Framework のソースコードは、サードパーティの Python モジュールのインストール場所に置かれています。
+UNIX 系の OS では、たいてい Python はプリインストールで、その場所はさまざまです。
+Windows でインタプリタを自分でインストールしたなら、 :file:`C:\\Python27\\Lib\\site-packages` のように、インタプリタをインストールしたディレクトリの下にある :file:`Lib/site-packages` です。
+Robot Framework 本体のコードは :file:`robot` という名前のディレクトリ下に収まっています。
 
-Robot Framework `runner scripts`_ are created and copied into another
-platform-specific location. When using Python on UNIX-like systems, they
-normally go to :file:`/usr/bin` or :file:`/usr/local/bin`. On Windows and
-with Jython and IronPython, the scripts are typically either in :file:`Scripts`
-or :file:`bin` directory under the interpreter installation directory.
+Robot Framework の :ref:`実行スクリプト <runner scripts>` は、コードとは別に、プラットフォームごとに異なる場所に作成されます。
+UNIX 系のシステムであれば、通常は :file:`/usr/bin` や :file:`/usr/local/bin` です。
+Windows や Jython, IronPython の場合は、スクリプトはインタプリタのインストールディレクトリの下の :file:`Scripts` または :file:`bin` ディレクトリに配置されます。
 
 .. _Uninstallation:
 
-Uninstallation
---------------
+アンインストール
+---------------------
 
-The easiest way to uninstall Robot Framework is using pip_:
+Robot Framework のアンインストールには、 pip_ を使うのが一番簡単です:
 
 .. sourcecode:: bash
 
    pip uninstall robotframework
 
-A nice feature in pip is that it can uninstall packages even if they are
-installed from the source. If you do not have pip available or have done
-a `manual installation`_ to a custom location, you need to find `where files
-are installed`_ and remove them manually.
+pip のいいところは、ソースコードからインストールしたパッケージもアンインストールできるところです。
+pip が使えないか、特定の場所に `手作業でインストール <manual installation>`_ した場合には、
+`どこにファイルをインストールしたか <where files are installed>`_ を調べて、手作業で削除してください。
 
-If you have set PATH_ or configured the environment otherwise, you need to
-undo those changes separately.
+PATH_ などの環境変数を変更したのなら、別途元に戻してください。
 
 .. _Upgrading:
 
-Upgrading
----------
+アップグレード
+--------------------
 
-If you are using pip_, upgrading to a new version required either using
-the :option:`--upgrade` option or specifying the version to use explicitly:
+pip_ を使っているなら、新しいバージョンへのアップグレードは :option:`--upgrade` を使います。
+バージョンを指定して特定のバージョンへの変更もできます:
 
 .. sourcecode:: bash
 
    pip install --upgrade robotframework
    pip install robotframework==2.9.2
 
-When using pip, it automatically uninstalls previous versions before
-installation. If you are `installing from source`_, it should be safe to
-just install over an existing installation. If you encounter problems,
-uninstallation_ before installation may help.
+pip を使っている場合、以前のバージョンは自動的にアンインストールされます。
+`ソースコードからインストール <installing from source>`_ した場合、既存のインストールに上書きしてかまいません。
+何か問題があれば、一旦 `アンインストール <uninstallation>`_ してからインストールしなおすとうまくいくでしょう。
 
-When upgrading Robot Framework, there is always a change that the new version
-contains backwards incompatible changes affecting existing tests or test
-infrastructure. Such changes are very rare in minor versions like 2.8.7 or
-2.9.2, but more common in major versions like 2.9 and 3.0. Backwards
-incompatible changes and deprecated features are explained in the release
-notes, and it is a good idea to study them especially when upgrading to
-a new major version.
+Robot Framework をアップグレードする場合、以前のバージョンと互換性のない変更のために、既存のテストやテスト環境に影響が及ぶかもしれません。
+そのような変更は、 2.8.7 や 2.9.2 のようなマイナーバージョンではほとんどありませんが、バージョン 2.9 や 3.0 といったメジャーバージョンの変更ではよくあります。
+互換性のない変更や撤廃された機能についてはリリースノートに記載してあるので、メジャーバージョンを切り替えるときにはよく調べておいてください。
 
 .. _Executing Robot Framework:
 
-Executing Robot Framework
+Robot Framework の実行
 -------------------------
 
 .. _runner script:
 .. _runner scripts:
 .. _Using robot and rebot scripts:
 
-Using ``robot`` and ``rebot`` scripts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``robot`` や ``rebot`` スクリプトの実行
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Starting from Robot Framework 3.0, tests are executed using the ``robot``
-script and results post-processed with the ``rebot`` script:
+Robot Framework 3.0 から、 ``robot`` スクリプトでテストを実行して、 ``rebot`` スクリプトで結果を処理できるようになりました:
 
 .. sourcecode:: bash
 
     robot tests.robot
     rebot output.xml
 
-Both of these scripts are installed as part of the normal installation and
-can be executed directly from the command line if PATH_ is set correctly.
-They are implemented using Python except on Windows where they are batch files.
+これらのスクリプトは、通常のインストール手順でインストールされ、 PATH_ が正しく設定されていれば直接実行できます。
+スクリプトは Python で実装されています。ただし、 Windows では起動用のバッチファイルもあります。
 
-Older Robot Framework versions do not have the ``robot`` script and the
-``rebot`` script is installed only with Python. Instead they have interpreter
-specific scripts ``pybot``, ``jybot`` and ``ipybot`` for test execution and
-``jyrebot`` and ``ipyrebot`` for post-processing outputs. These scripts still
-work, but they will be deprecated and removed in the future.
+以前のバージョンの Robot Framework には、 ``robot`` スクリプトがなく、 ``rebot`` ツールも別途 Python を使ってインストールせねばなりませんでした。
+その代わり、テストの実行は ``pybot``,  ``jybot``,  ``ipybot``  で行い、テスト結果のポストプロセスには ``jyrebot`` や ``ipyrebot`` を使っていました。
+これらのスクリプトは、現在の Robot Framework でも使えますが、将来は廃止される予定です。
 
 .. _Executing installed robot module:
 
-Executing installed ``robot`` module
+``robot`` モジュールの実行
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An alternative way to run tests is executing the installed ``robot`` module
-or its sub module ``robot.run`` directly using Python's `-m command line
-option`__. This is especially useful if Robot Framework is used with multiple
-Python versions:
+テストを実行するもう一つの方法は、インストール済みの ``robot`` モジュールや、サブモジュールの ``robot.run`` を、 Python の
+`-m コマンドラインオプション<https://docs.python.org/2/using/cmdline.html#cmdoption-m>`_ で実行するやりかたです。
+この方法は、複数のバージョンの Python で Robot Framework を実行したい場合に特に便利です:
 
 .. sourcecode:: bash
 
@@ -579,44 +562,37 @@ Python versions:
     jython -m robot tests.robot
     /opt/jython/jython -m robot tests.robot
 
-The support for ``python -m robot`` approach is a new feature in Robot
-Framework 3.0, but the older versions support ``python -m robot.run``.
-The latter must also be used with Python 2.6.
+``python -m robot`` は、 Robot Framework 3.0 で新たに使えるようになった書き方です。
+以前のバージョンでは、 Python 2.6 以降であれば、 ``python -m robot.run`` で実行できます。
 
-Post-processing outputs using the same approach works too, but the module to
-run is ``robot.rebot``:
+テスト結果出力のポストプロセスも同じやりかたで実行できますが、モジュール名は ``robot.rebot`` です:
 
 .. sourcecode:: bash
 
     python -m robot.rebot output.xml
 
-__ https://docs.python.org/2/using/cmdline.html#cmdoption-m
 
 .. _Executing installed robot directory:
 
-Executing installed ``robot`` directory
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``robot`` モジュールのインストールディレクトリを指定して実行する
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you know where Robot Framework is installed, you can also execute the
-installed :file:`robot` directory or :file:`run.py` file inside it directly:
+Robot Framework のインストール先が分かっていれば、 :file:`robot`  ディレクトリや :file:`run.py` ファイルの場所を直接指定して実行できます:
 
 .. sourcecode:: bash
 
    python path/to/robot/ tests.robot
    jython path/to/robot/run.py tests.robot
 
-Running the directory is a new feature in Robot Framework 3.0, but the older
-versions support running the :file:`robot/run.py` file.
+ディレクトリ指定は Robot Framework 3.0 で登場したやり方で、以前のバージョンでは :file:`robot/run.py` ファイルを指定してください。
 
-Post-processing outputs using the :file:`robot/rebot.py` file works the same
-way too:
+同様に、ポストプロセスも :file:`robot/rebot.py` ファイルの指定でできます。
 
 .. sourcecode:: bash
 
    python path/to/robot/rebot.py output.xml
 
-Executing Robot Framework this way is especially handy if you have done
-a `manual installation`_.
+この方法での実行は、Robot Framework を `手作業でインストール <manual installation>`_ した場合に便利です。
 
 .. These aliases need an explicit target to work in GitHub
 .. .. _precondition: `Preconditions`_
