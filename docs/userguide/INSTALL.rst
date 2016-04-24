@@ -135,119 +135,96 @@ IronPython をインストールしたら、 PATH_ を変更して、コマン�
 ``PATH`` の設定
 ~~~~~~~~~~~~~~~~~~~~
 
-The ``PATH`` environment variable lists locations where commands executed in
-a system are searched from. To make using Robot Framework easier from the
-command prompt, it is recommended to add the locations where the `runner
-scripts`_ are installed into the ``PATH``. It is also often useful to have
-the interpreter itself in the ``PATH`` to make executing it easy.
+環境変数 ``PATH`` は、システム上でコマンドを実行するときに、コマンドの実行ファイルがある場所を探すのに使うリストです。
+コマンドプロンプトから Robot Framework を簡単に使うには、 :ref:`テスト実行スクリプト <runner scripts`> を ``PATH`` に入れておくよう勧めます。
+インタプリタも ``PATH`` に入れておけば実行が楽です。
 
-When using Python on UNIX-like machines both Python itself and scripts
-installed with should be automatically in the ``PATH`` and no extra actions
-needed. On Windows and with other interpreters the ``PATH`` must be configured
-separately.
+Python を UNIX 系のマシンで使う場合、 Python 自体とスクリプトは自動的に ``PATH`` 上のどこかに置かれるので、特に作業は必要ありません。
+Windows などのシステムでは、 ``PATH`` を別途設定する必要があります。
 
-.. tip:: Latest Python Windows installers allow setting ``PATH`` as part of
-         the installation. This is disabled by default, but `Add python.exe
-         to Path` can be enabled on the `Customize Python` screen. It will
-         add both the Python installation directory and the :file:`Scripts`
-         directory to the ``PATH``.
+.. tip::
+
+   最新の Windows 向け Python インストーラには、インストール処理中に ``PATH`` を設定する機能があります。
+   この機能はデフォルトでは無効になっていて、 `Customize Python` の画面で `Add python.exe to Path` を有効にする必要があります。
+   有効にすると、Python のインストールディレクトリ直下と :file:`Scripts` ディレクトリの両方が ``PATH`` に追加されます。
 
 .. _What directories to add to PATH:
 
-What directories to add to ``PATH``
-'''''''''''''''''''''''''''''''''''
+どのディレクトリを ``PATH`` に追加すればいいの？
+'''''''''''''''''''''''''''''''''''''''''''''''''''
 
-What directories you need to add to the ``PATH`` depends on the interpreter and
-the operating system. The first location is the installation directory of
-the interpreter (e.g. :file:`C:\\Python27`) and the other is the location
-where scripts are installed with that interpreter. Both Python and IronPython
-install scripts to :file:`Scripts` directory under the installation directory
-on Windows (e.g. :file:`C:\\Python27\\Scripts`) and Jython uses :file:`bin`
-directory regardless the operating system (e.g. :file:`C:\\jython2.7.0\\bin`).
+どのディレクトリを ``PATH`` に追加すればよいかは、使っているインタプリタや OS によって違います。
+最初に追加すべきは、インタプリタのインストール先 (:file:`C:\\Python27` など) で、もうひとつはスクリプトのインストール先です。
+Windows 用の Python と IronPython は、スクリプトをインタプリタのインストールディレクトリの下の :file:`Scripts` (:file:`C:\\Python27\\Scripts` など) に置きます。
+Jython は、オペレーティングシステムに関係なく、 :file:`bin` を使います (:file:`C:\\jython2.7.0\\bin` など)。
+:file:`Scripts` や :file:`bin` は、インタプリタのインストール時にはなく、 Robot Framework やその他のサードパーティモジュールのインストール時に作成されるかもしれません。
 
-Notice that the :file:`Scripts` and :file:`bin` directories may not be created
-as part of the interpreter installation, but only later when Robot Framework
-or some other third party module is installed.
 
 .. _Setting PATH on Windows:
 
-Setting ``PATH`` on Windows
+Windows の ``PATH`` の設定
 '''''''''''''''''''''''''''
 
-On Windows you can configure ``PATH`` by following the steps below. Notice
-that the exact setting names may be different on different Windows versions,
-but the basic approach should still be the same.
+Windows では、以下の手順で ``PATH`` を設定します。
+設定に使うメニューなどの名前は、 Windows のバージョンによって多少違うこともありますが、基本的なアプローチは同じです。
 
-1. Open `Control Panel > System > Advanced > Environment Variables`. There
-   are `User variables` and `System variables`, and the difference between
-   them is that user variables affect only the current users, whereas system
-   variables affect all users.
+1. コントロールパネルから、「システムとセキュリティ」の「システム」メニューを選び、「システムの詳細設定」パネルで「環境変数」ボタンを押します。
+   「ユーザー環境変数」と 「システム環境変数」がありますが、これはサインイン中のユーザだけの設定か、全てのユーザに影響する設定かの違いです。
 
-2. To edit an existing ``PATH`` value, select `Edit` and add
-   `;<InstallationDir>;<ScriptsDir>` at the end of the value (e.g.
-   `;C:\Python27;C:\Python27\Scripts`). Note that the semicolons (`;`) are
-   important as they separate the different entries. To add a new ``PATH``
-   value, select `New` and set both the name and the value, this time without
-   the leading semicolon.
+2. 既存の ``PATH`` の値を変更するには、リストから ``PATH`` の項目を選んで、「編集 (E)」ボタンを押します。
+   表示されたダイアログで、「変数値」の一番最後に、「 `;<インタプリタのインストールディレクトリ>;<スクリプトのインストールディレクトリ>` 」
+   の形式でパスを追加します (例: `;C:\Python27;C:\Python27\Scripts`)。セミコロン (``;``) は重要なので忘れないようにしてください。
+   リストに ``PATH`` がなく、新たに設定したいときは、「新規 (N)」ボタンを押して、ダイアログに変数名 ``PATH`` と変数値を入力します。
+   このときは、先頭のセミコロンは要りません。
 
-3. Exit the dialog with `Ok` to save the changes.
+3. ダイアログを「OK」ボタンで閉じて、変更を適用します。
 
-4. Start a new command prompt for the changes to take effect.
+4. 新しくコマンドプロンプトを起動すると、変更が適用されます。
 
-Notice that if you have multiple Python versions installed, the executed
-``robot`` or ``rebot`` `runner script`_ will always use the one that is
-*first* in the ``PATH`` regardless under what Python version that script is
-installed. To avoid that, you can always execute the `installed robot module
-directly`__ like `C:\Python27\python.exe -m robot`.
+複数のバージョンの Python をインストールしている場合、 ``robot`` や ``rebot`` :ref:`テスト実行スクリプト <runner scripts>` は、常に ``PATH`` 上で **先に** 登場する Python インタプリタを、テスト実行スクリプトのパスがどこにあるかは関係なく使おうとするので注意してください。
+インタプリタを指定して実行したければ、 `C:\Python27\python.exe -m robot` のように、 :ref:`インストールした robot モジュールを直接実行 <Executing installed robot module>` してください。
 
-Notice also that you should not add quotes around directories you add into
-the ``PATH`` (e.g. `"C:\Python27\Scripts"`). Quotes `can cause problems with
-Python programs <http://bugs.python.org/issue17023>`_ and they are not needed
-in this context even if the directory path would contain spaces.
+また、 ``PATH`` に設定するときは、(`"C:\Python27\Scripts"` のように ) 値をクオートで囲ってはなりません。
+クオートすると、 `Python プログラムの実行がうまくいかない <http://bugs.python.org/issue17023>`_ ことがあります。
+Windows では、ディレクトリパスにスペースが入っていても、クオートは必要ありません。
 
-__ `Executing installed robot module`_
 
 .. _Setting PATH on UNIX-like systems:
 
-Setting ``PATH`` on UNIX-like systems
+UNIX系システムでの ``PATH`` の設定
 '''''''''''''''''''''''''''''''''''''
 
-On UNIX-like systems you typically need to edit either some system wide or user
-specific configuration file. Which file to edit and how depends on the system,
-and you need to consult your operating system documentation for more details.
+UNIX系システムでは、通常、システム全体設定用または個別ユーザ設定用の設定ファイルを編集する必要があります。
+どのファイルを編集すべきかは、システムによって異なります。そのため、詳しくは OSのドキュメントを参照してください。
 
 .. _Setting https_proxy:
 
-Setting ``https_proxy``
+``https_proxy`` の設定
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are `installing with pip`_ and are behind a proxy, you need to set
-the ``https_proxy`` environment variable. It is needed both when installing
-pip itself and when using it to install Robot Framework and other Python
-packages.
+`PIP でインストール <Installing with pip>`_ する場合、環境変数 ``https_proxy`` を設定する必要があります。
+この環境変数は、 pip 自体のインストールと、 Robot Framework や他の Python パッケージインストールに必要です。
 
-How to set the ``https_proxy`` depends on the operating system similarly as
-`configuring PATH`_. The value of this variable must be an URL of the proxy,
-for example, `http://10.0.0.42:8080`.
+``https_proxy`` の設定方法は、 `PATH の設定<configuring PATH>`_ と同様、 OS によって異なります。
+変数の値は、通常は `http://10.0.0.42:8080` のようにプロキシの URL です。
 
 .. _Installing with pip:
 
-Installing with pip
+pip のインストール
 -------------------
 
-The standard Python package manager is pip_, but there are also other
-alternatives such as `Buildout <http://buildout.org>`__ and `easy_install
-<http://peak.telecommunity.com/DevCenter/EasyInstall>`__. These instructions
-only cover using pip, but other package managers ought be able to install
-Robot Framework as well.
+pip_ は Python 標準のパッケージマネジャですが、他にも
+`Buildout <http://buildout.org>`_ や
+`easy_install <http://peak.telecommunity.com/DevCenter/EasyInstall>`_ があります。
+このドキュメントでは pip でのインストール手順しか解説しませんが、他のパッケージマネジャでも Robot Framework をインストールできます。
 
-Latest Python, Jython and IronPython versions contain pip bundled in. Which
-versions contain it and how to possibly activate it is discussed in sections
-below. See pip_ project pages if for latest installation instructions if you
-need to install it.
+最新の Python , Jython, IronPython には、 pip がバンドルされています。
+どのバージョンの Python に pip が入っているか、使えるようにする方法などは、以降の節で解説します。
+pip の最新版が必要なときは、 pip_ のプロジェクトページを参照してください。
 
-.. note:: Only Robot Framework 2.7 and newer can be installed using pip. If you
-          need an older version, you must use other installation approaches.
+.. note:: 
+   pip でインストールできるのは、Robot Framework 2.7 以降からです。
+   それ以前のバージョンのインストールは、ソースコードからのインストールなど、他のアプローチが必要です。
 
 .. _Installing pip for Python:
 
@@ -535,7 +512,7 @@ Upgrading
 ---------
 
 If you are using pip_, upgrading to a new version required either using
-the `--upgrade` option or specifying the version to use explicitly:
+the :option:`--upgrade` option or specifying the version to use explicitly:
 
 .. sourcecode:: bash
 
