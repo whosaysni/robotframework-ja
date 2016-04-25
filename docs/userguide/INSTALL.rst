@@ -302,63 +302,57 @@ pip_ をインストールしたら (そして、プロキシの下にいる場�
 
 .. sourcecode:: bash
 
-    # Install the latest version
+    # 最新版をインストールする
     pip install robotframework
 
-    # Upgrade to the latest version
+    # 最新版にアップグレードする
     pip install --upgrade robotframework
 
-    # Install a specific version
+    # 特定のバージョンをインストールする
     pip install robotframework==2.9.2
 
-    # Install separately downloaded package (no network connection needed)
+    # 別途ダウンロードしたパッケージをインストールする (ネットワーク接続不要)
     pip install robotframework-3.0.tar.gz
 
-    # Uninstall
+    # アンインストール
     pip uninstall robotframework
 
-Notice that pip 1.4 and newer will only install stable releases by default.
-If you want to install an alpha, beta or release candidate, you need to either
-specify the version explicitly or use the :option:`--pre` option:
+pip 1.4 以降からは、デフォルトの設定で安定版しかインストールしないので注意してください。
+アルファ・ベータ版やリリース候補版をインストールしたいなら、バージョンを明示するか、 :option:`--pre` を使ってください:
 
 .. sourcecode:: bash
 
-    # Install 3.0 beta 1
+    # 3.0 beta 1 を入れる
     pip install robotframework==3.0b1
 
-    # Upgrade to the latest version even if it is a pre-release
+    # 最新版がプレリリース版でもインストールする
     pip install --pre --upgrade robotframework
 
 .. _Installing from source:
 
-Installing from source
-----------------------
+ソースからインストールする
+----------------------------
 
-This installation method can be used on any operating system with any of the
-supported interpreters. Installing *from source* can sound a bit scary, but
-the procedure is actually pretty straightforward.
+このインストール方法は、どの OS でも利用でき、全ての Python インタプリタに対応しています。
+インストールを *ソースから* なんて怖そうですが、実際のところはとても単純です。
 
 .. _Getting source code:
 
-Getting source code
-~~~~~~~~~~~~~~~~~~~
+ソースコードを手に入れる
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You typically get the source by downloading a *source distribution package*
-in `.tar.gz` format. Newer packages are available on PyPI_, but Robot Framework
-2.8.1 and older can be found from the old `Google Code download page
-<https://code.google.com/p/robotframework/downloads/list?can=1>`_.
-Once you have downloaded the package, you need to extract it somewhere and,
-as a result, you get a directory named `robotframework-<version>`. The
-directory contains the source code and scripts needed for installing it.
+ソースコードは通常、 ``.tar.gz`` 形式の *ソース配布パッケージ* をダウンロードして手に入れます。
+新しいパッケージは PyPI にもありますが、バージョン 2.8.1 以前のバージョンは `Google Code のダウンロードページ <https://code.google.com/p/robotframework/downloads/list?can=1>`_ から手に入れねばなりません。
+パッケージをダウンロードしたら、ファイルをどこかに展開してください。 `robotframework-<version>` という名前のディレクトリができるはずです。
+このディレクトリには、インストール作業に必要なソースコードとスクリプトが入っています。
 
-An alternative approach for getting the source code is cloning project's
-`GitHub repository`_ directly. By default you will get the latest code, but
-you can easily switch to different released versions or other tags.
+ソースコードは、プロジェクトの `GitHub リポジトリ <https://github.com/robotframework/robotframework>`_ から直接入手する方法もあります。
+GitHub では最新のコードを配布していますが、リリースバージョンやタグを指定して、特定のバージョンにスイッチできます。
 
 .. _Installation:
 
-Installation
-~~~~~~~~~~~~
+インストール
+~~~~~~~~~~~~~~~
 
 Robot Framework is installed from source using Python's standard ``setup.py``
 script. The script is in the directory containing the sources and you can run
