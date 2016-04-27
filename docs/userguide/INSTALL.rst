@@ -354,9 +354,7 @@ GitHub では最新のコードを配布していますが、リリースバー�
 インストール
 ~~~~~~~~~~~~~~~
 
-Robot Framework is installed from source using Python's standard ``setup.py``
-script. The script is in the directory containing the sources and you can run
-it from the command line using any of the supported interpreters:
+ソースコードからのビルドには、Python標準の ``setup.py`` スクリプトを使います。このスクリプトはソースコードの入ったディレクトリに置かれていて、コマンドラインからインタプリタで実行して使います:
 
 .. sourcecode:: bash
 
@@ -364,73 +362,56 @@ it from the command line using any of the supported interpreters:
    jython setup.py install
    ipy setup.py install
 
-The ``setup.py`` script accepts several arguments allowing, for example,
-installation into a non-default location that does not require administrative
-rights. It is also used for creating different distribution packages. Run
-`python setup.py --help` for more details.
+``setup.py`` スクリプトには様々な引数を指定できます。たとえば、デフォルトのインストール先以外を指定して、管理者権限をもたなくてもインストールできます。
+詳しくは `python setup.py --help` を実行してみてください。
 
 .. _Standalone JAR distribution:
 
-Standalone JAR distribution
----------------------------
+スタンドアロンの JAR 配布物
+-------------------------------
 
-Robot Framework is also distributed as a standalone Java archive that contains
-both Jython_ and Robot Framework and only requires Java_ a dependency. It is
-an easy way to get everything in one package that  requires no installation,
-but has a downside that it does not work with the normal Python_ interpreter.
+Robot Framework は、スタンドアロンの Java アーカイブとしても配布されています。この配布物には Jython_ と Robot Framework の両方が入っているので、 Java_ さえあればインストールできます。
+JAR でのインストールは、ひとつのパッケージで必要なものが全て手に入るところですが、通常の Python_ インタプリタが使えないという欠点もあります。
 
-The package is named ``robotframework-<version>.jar`` and it is available
-on the `Maven central`_. After downloading the package, you can execute tests
-with it like:
+パッケージのファイル名は ``robotframework-<version>.jar`` の形式で、 `Maven central`_ から入手できます。パッケージをダウンロードしたら、以下のように実行してください:
 
 .. sourcecode:: bash
 
   java -jar robotframework-3.0.jar mytests.robot
   java -jar robotframework-3.0.jar --variable name:value mytests.robot
 
-If you want to `post-process outputs`_ using Rebot or use other built-in
-`supporting tools`_, you need to give the command name ``rebot``, ``libdoc``,
-``testdoc`` or ``tidy`` as the first argument to the JAR file:
+Rebot を使って :ref:`出力のポストプロセス <post-process outputs>` を実行したい場合や、組み込みの :ref:`サポートツール群 <supporting tools>` を使いたければ、 ``rebot``, ``libdoc``, ``testdoc``, ``tidy`` といったコマンド名を JAR ファイルの最初の引数に指定します:
 
 .. sourcecode:: bash
 
   java -jar robotframework-3.0.jar rebot output.xml
   java -jar robotframework-3.0.jar libdoc MyLibrary list
 
-For more information about the different commands, execute the JAR without
-arguments.
+各コマンドの詳しい説明は、引数なしで JAR コマンドを実行すると表示されます。
 
-In addition to the Python standard library and Robot Framework modules, the
-standalone JAR versions starting from 2.9.2 also contain the PyYAML dependency
-needed to handle yaml variable files.
+スタンドアロン JAR 版は、バージョン 2.9.2 から、 Python の標準ライブラリと Robot Framework モジュールの他に、 yaml でかかれた変数ファイルを扱うための PyYAML が入っています。
 
 .. _Manual installation:
 
-Manual installation
--------------------
+マニュアルインストール
+------------------------
 
-If you do not want to use any automatic way of installing Robot Framework,
-you can always install it manually following these steps:
+Robot Framework のインストールを自動で行いたくない場合、以下のステップでマニュアルインストールできます:
 
-1. Get the source code. All the code is in a directory (a package in Python)
-   called :file:`robot`. If you have a `source distribution`_ or a version
-   control checkout, you can find it from the :file:`src` directory, but you
-   can also get it from an earlier installation.
+1. ソースコードを入手します。コードは全て、 :file:`robot` というディレクトリ (Python パッケージ) に入っています。
+   `ソースコード配布物 <source distribution>`_ がある場合か、バージョン管理システムからチェックアウトした場合は、 :file:`src` ディレクトリ下にあります。
 
-2. Copy the source code where you want to.
+2. ソースコードを任意の場所にコピーします。
 
-3. Decide `how to run tests`__.
+3. `テストの実行方法 <how to run tests>`_ を決めます。
 
-__ `Executing Robot Framework`_
 
 .. _Verifying installation:
 
-Verifying installation
-----------------------
+インストール内容を確認する
+----------------------------
 
-After a successful installation, you should be able to execute the created
-`runner scripts`_ with :option:`--version` option and get both Robot Framework
-and interpreter versions as a result:
+インストールがうまくいったら、 :ref:`テストランナースクリプト <runner scripts>` を :option:`--version` オプション付きで実行でき、 Robot Framework とインタプリタのバージョンが表示されるはずです:
 
 .. sourcecode:: bash
 
@@ -440,13 +421,9 @@ and interpreter versions as a result:
    $ rebot --version
    Rebot 3.0 (Python 2.7.10 on linux2)
 
-If running the runner scripts fails with a message saying that the command is
-not found or recognized, a good first step is double-checking the PATH_
-configuration. If that does not help, it is a good idea to re-read relevant
-sections from these instructions before searching help from the Internet or
-as asking help on `robotframework-users
-<http://groups.google.com/group/robotframework-users/>`__ mailing list or
-elsewhere.
+ランナースクリプトが「コマンドがありません」のようなメッセージで失敗する場合は、まず PATH_ の設定が正しいか調べてみてください。
+解決しなければ、このドキュメントの関連する節をもう一度読み、インターネットで `robotframework-users <http://groups.google.com/group/robotframework-users/>` メーリングリストなどに助けを求めてください。
+
 
 .. _Where files are installed:
 
