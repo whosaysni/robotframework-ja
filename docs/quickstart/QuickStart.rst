@@ -186,14 +186,17 @@ __ https://github.com/robotframework/QuickStartGuide
 テストケース
 ==============
 
-Workflow tests
---------------
+.. _Workflow tests:
 
-Robot Framework test cases are created using a simple tabular syntax. For
-example, the following table has two tests:
+ワークフローテスト
+---------------------
 
-- User can create an account and log in
-- User cannot log in with bad password
+Robot Framework のテストケースは、簡単なテーブル形式です。
+（※ここでは、タブやスペースなどで区切った形式を、テーブル形式と呼んでいます）
+例えば、以下のテーブルは二つのテストを定義しています:
+
+- User can create an account and log in （ユーザはアカウントを作成してログインできる）
+- User cannot log in with bad password （ユーザは不正なパスワードでログインできない）
 
 .. code:: robotframework
 
@@ -208,18 +211,13 @@ example, the following table has two tests:
         Attempt to Login with Credentials    betty    wrong
         Status Should Be    Access Denied
 
-Notice that these tests read like manual tests written in English rather
-than like automated test cases. Robot Framework uses the keyword-driven
-approach that supports writing tests that capture the essence of the actions
-and expectations in natural language.
+自動化テストのテストケース定義データというよりは、英語で書かれた手作業のテスト手順書のように読めますね。
+Robot Framework はキーワード駆動型のアプローチをとっているので、自然言語のもつ特質をうまく利用した書き方ができるのです。
 
-Test cases are constructed from keywords and their possible arguments. The
-syntax requires that keywords and arguments, as well as settings and their
-values, are separated by at least two spaces or by a tab character. It is
-generally recommended to use four spaces to make the separator more explicit,
-and in some cases aligning arguments or other values may make the data easier
-to understand. For more details about the syntax see `Robot Framework User
-Guide`_.
+テストケースは、キーワードや引数を使って作られています。
+Robot Framework のルールでは、キーワードと引数は、少なくとも二つ以上のスペースか、タブで区切る必要があります。
+基本的には、 4 つのスペースで区切る方法を推奨しています。これは、2スペースやタブよりも区切りがはっきりしていて、引数を他の行と綺麗に揃えて書きやすいことが多いからです。
+テストケースの書き方の詳細は、 `ユーザガイド <Robot Framework User Guide>`_ を参照してください。
 
 Higher-level tests
 ------------------
