@@ -29,11 +29,9 @@ __ http://creativecommons.org/licenses/by/3.0/
 
 *Robot Framework クイックスタートガイド* では、 `Robot Framework <http://robotframework.org>`_ の最も重要な機能を紹介します。
 この文書は、単に読んでデモを眺めるだけでなく、文書のソース rst ファイルを `デモとして実行 <Executing this guide>`_ できます。
-ここで紹介する各機能は、 `Robot Framework ユーザガイド`_ で詳しく説明しています。
+ここで紹介する各機能は、 `Robot Framework ユーザガイド <Robot Framework User Guide>`_ で詳しく説明しています。
 
-__ `Executing this guide`_
 .. _Robot Framework User Guide: http://robotframework.org/robotframework/#user-guide
-
 .. _Robot Framework overview:
 
 Robot Framework の概要
@@ -110,9 +108,7 @@ Robot Framework とそのエコシステムの詳細を知りたければ、 htt
 ====================
 
 以下では、ガイドのテスト内容を自分で実行する方法を解説します。
-この手順を実行しない場合は、オンラインで `結果を表示 <view the results>`__ できません。
-
-__ `Viewing results`_
+この手順を実行しない場合は、オンラインで `結果を表示 <Viewing results>`_ できません。
 
 .. Installations:
 
@@ -126,8 +122,8 @@ Python_ に Robot Framework をインストールするお勧めの方法は `pi
 とするだけでインストールできます。
 その他のインストール方法や、インストールに関する一般的な情報は  `インストールガイド <Robot Framework installation instructions>`_  を参照してください。
 
-この文書は reStructuredText__ マークアップで書かれたデモになっていて、 Robot Framework のテストデータは文書中にコードブロックとしてマークされています。
-この形式のテストを実行するには、 docutils__ モジュールのインストールも必要です::
+この文書は `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ マークアップで書かれたデモになっていて、 Robot Framework のテストデータは文書中にコードブロックとしてマークされています。
+この形式のテストを実行するには、 `docutils <https://pypi.python.org/pypi/docutils>`_ モジュールのインストールも必要です::
 
     pip install docutils
 
@@ -137,8 +133,6 @@ Python 2 と Python 3 の情報は、前述の `インストールガイド <Rob
 .. _`Robot Framework installation instructions`:
    https://github.com/robotframework/robotframework/blob/master/INSTALL.rst
 .. _`installation instructions`: `Robot Framework installation instructions`_
-__ http://docutils.sourceforge.net/rst.html
-__ https://pypi.python.org/pypi/docutils
 
 .. _Execution:
 
@@ -174,11 +168,11 @@ __ https://github.com/robotframework/QuickStartGuide
 デモを実行すると、以下の結果ファイルが生成されます。
 このページのリンクは、あらかじめデモを実行して作っておいたファイルへのリンクですが、読者の手元でデモを実行したときには、結果ファイルは手元の実行環境に生成されます。
 
-`report.html <http://robotframework.org/QuickStartGuide/report.html>`__
+`report.html <http://robotframework.org/QuickStartGuide/report.html>`_
     高水準のテストレポート。
-`log.html <http://robotframework.org/QuickStartGuide/log.html>`__
+`log.html <http://robotframework.org/QuickStartGuide/log.html>`_
     詳しいテスト実行ログ。
-`output.xml <http://robotframework.org/QuickStartGuide/output.xml>`__
+`output.xml <http://robotframework.org/QuickStartGuide/output.xml>`_
     機械可読な XML のフォーマット。
 
 .. _Test cases:
@@ -219,19 +213,18 @@ Robot Framework のルールでは、キーワードと引数は、少なくと�
 基本的には、 4 つのスペースで区切る方法を推奨しています。これは、2スペースやタブよりも区切りがはっきりしていて、引数を他の行と綺麗に揃えて書きやすいことが多いからです。
 テストケースの書き方の詳細は、 `ユーザガイド <Robot Framework User Guide>`_ を参照してください。
 
-Higher-level tests
+.. _Higher-level tests:
+
+高水準のテスト
 ------------------
 
-Test cases can also be created using only high-level keywords that take no
-positional arguments. This style allows using totally free text which is
-suitable for communication even with non-technical customers or other project
-stakeholders. This is especially important when using the `acceptance
-test-driven development`__ (ATDD) approach or any of its variants and created
-tests act also as requirements.
+引数をとらない高水準のテストだけでも、テストケースは書けます。
+このやり方なら、技術に詳しくない顧客やプロジェクトのステークホルダに対して、ほぼ普通の文章でテスト内容のコミュニケーションができます。
+この利点は `受け入れテスト駆動開発`__ (ATDD) や類似の手法で、作成したテストそのものが要求仕様も表している場合には特に重要です。
 
-Robot Framework does not enforce any particular style for writing test cases.
-One common style is the *given-when-then* format popularized by
-`behavior-driven development`__ (BDD):
+また、Robot Framework は、テストケースの書き方を何か一つに制限してはいません。
+例えば、よく使われる書き方の一つは、 `ビヘイビア駆動開発`__ (BDD: behavior-driven development) の
+*given-when-then* 型の書き方もできます:
 
 .. code:: robotframework
 
@@ -245,15 +238,14 @@ One common style is the *given-when-then* format popularized by
 __ http://en.wikipedia.org/wiki/Acceptance_test-driven_development
 __ http://en.wikipedia.org/wiki/Behavior_driven_development
 
-Data-driven tests
+.. _Data-driven tests:
+
+データ駆動テスト
 -----------------
 
-Quite often several test cases are otherwise similar but they have slightly
-different input or output data. In these situations *data-driven tests*
-allows varying the test data without duplicating the workflow. With Robot
-Framework the `[Template]` setting turns a test case into a data-driven test
-where the template keyword is executed using the data defined in the test case
-body:
+複数のテストケースが、ちょっとだけ入出力が違うことを除いて、ほとんど同じということが多々有ります。
+そんな状況では、 *データ駆動テスト (data-driven test)* を使えば、ワークフローを複製することなく、テストデータだけを変えてテストできます。
+Robot Framework では、 `[Template]` 設定を使うと、テストケースをデータ駆動型テストに変更でき、テストケースに列挙したデータを使って、テンプレートのキーワードを次々に実行できます:
 
 .. code:: robotframework
 
@@ -267,43 +259,33 @@ body:
         AbCdEfGh         ${PWD INVALID CONTENT}
         abCD56+          ${PWD INVALID CONTENT}
 
-In addition to using the `[Template]` setting with individual tests, it would
-be possible to use the `Test Template` setting once in the setting table like
-`setups and teardowns`_ are defined in this guide later. In our case that
-would ease creating separate and separately named tests for too short and too
-long passwords and for other invalid cases. That would require moving those
-tests to a separate file, though, because otherwise the common template would
-be applied also to other tests in this file.
+個々のテストに `[Template]` を設定する方法の他に、このガイドの後で説明する `セットアップやティアダウン <setups and teardowns>`_ の設定のように `Test Template` を一度だけ設定しておくことも可能です。
+そうすれば、例えばこのテストケースなら、「短すぎるパスワード」「長すぎるパスワード」などといった不正なケース用に、別の名前のついたテストを作りやすくなります。
+とはいえ、テストファイル全体で共通のテンプレートが適用されてしまうので、同じテンプレートを使うテストだけを、別のテストファイルに移動する必要があるでしょう。
 
-Notice also that the error messages in the above example are specified using
-variables_.
+ちなみに、上のケースでは、エラーメッセージを `変数 <variables>`_ で表現しています。
 
-Keywords
-========
+.. Keywords:
 
-Test cases are created from keywords that can come from two sources. `Library
-keywords`_ come from imported test libraries, and so called `user keywords`_
-can be created using the same tabular syntax that is used for creating test
-cases.
+キーワード
+===========
 
-Library keywords
-----------------
+テストケースに使うキーワードは、二つの場所で定義できます。一つは `ライブラリキーワード <Library keywords>`_ で、テストライブラリをインポートして使います。もう一つは `ユーザ定義キーワード <user keywords>`_ で、テストケースを作るのと同様、テーブル形式で作成するものです。
 
-All lowest level keywords are defined in test libraries which are implemented
-using standard programming languages, typically Python or Java. Robot Framework
-comes with a handful of `test libraries`_ that can be divided to *standard
-libraries*, *external libraries* and *custom libraries*. `Standard libraries`_
-are distributed with the core framework and included generic libraries such as
-`OperatingSystem`, `Screenshot` and `BuiltIn`, which is special because its
-keywords are available automatically. External libraries, such as
-Selenium2Library_ for web testing, must be installed separately. If available
-test libraries are not enough, it is easy to `create custom test libraries`__.
+.. _Library keywords:
 
-To be able to use keywords provided by a test library, it must be taken into
-use. Tests in this guide need keywords from the standard `OperatingSystem`
-library (e.g. `Remove File`) and from a custom made `LoginLibrary` (e.g.
-`Attempt to login with credentials`). Both of these libraries are imported
-in the setting table below:
+ライブラリキーワード
+---------------------
+
+Robot Framework では、最も低水準のキーワードは、 Python や Java のような標準的なプログラム言語で記述されています。
+Robot Framework には沢山の `テストライブラリ <test libraries>`_ がありますが、大きく *標準ライブラリ* 、 *外部ライブラリ* 、 *カスタムライブラリ* の3つに分類できます。 `標準ライブラリ <standard libraries>`_ とは、フレームワーク本体と一緒に配布されている汎用のライブラリで、 `OperatingSystem` (ファイル操作など、OS 関連)、 `Screenshot` (スクリーンキャプチャ機能)、 `BuiltIn` (特に何もしなくて使える、基本機能を提供する特別なライブラリ) などがあります。
+Webテストに使う Selenium2Library_ のような外部ライブラリは、手作業でインストールする必要があります。
+現在入手できるテストライブラリだけで足りない時は、 `自分でライブラリを作成 <Creating test libraries>`_ できます。
+
+テストライブラリ中のキーワードを使うには、まずライブラリの利用を宣言せねばなりません。
+このガイドのテストには、 `OperatingSystem` ライブラリのキーワード (例えば `Remove File`)
+と、カスタムメイドの `LoginLibrary` のキーワード (例えば `Attempt to login with credentials`) が入っています。
+それぞれのライブラリは、以下のように settings テーブルでインポートします:
 
 .. code:: robotframework
 
@@ -314,17 +296,16 @@ in the setting table below:
 .. _Test libraries: http://robotframework.org/#test-libraries
 .. _Standard libraries: http://robotframework.org/robotframework/#standard-libraries
 .. _Selenium2Library: https://github.com/rtomac/robotframework-selenium2library/#readme
-__ `Creating test libraries`_
 
-User keywords
--------------
+.. _User keywords:
 
-One of the most powerful features of Robot Framework is the ability to easily
-create new higher-level keywords from other keywords. The syntax for creating
-these so called *user-defined keywords*, or *user keywords* for short, is
-similar to the syntax that is used for creating test cases. All the
-higher-level keywords needed in previous test cases are created in this
-keyword table:
+ユーザ定義のキーワード
+--------------------------
+
+ユーザがキーワードを組み合わせて高水準のキーワードを定義できるのが、 Robot Frmework の最も強力な機能の一つです。
+このキーワードの定義機能は、 *ユーザ定義のキーワード* または *ユーザキーワード* と呼びます。
+ユーザキーワードは、テストケースを書くのに似た方法で定義できます。
+前述のテストケースに登場した高水準のキーワードは、以下のようなキーワードテーブルで作成しています:
 
 .. code:: robotframework
 
@@ -347,8 +328,9 @@ keyword table:
         Attempt to login with credentials    ${username}    ${password}
         Status should be    Logged In
 
-    # Keywords below used by higher level tests. Notice how given/when/then/and
-    # prefixes can be dropped. And this is a comment.
+    # 以下のキーワードは高水準のテストで使うためのもの
+    # キーワードには given/when/then/and といったプレフィクスがないことに注意
+    # ちなみにこれはコメントの書き方の例
 
     A user has a valid account
         Create valid user    ${USERNAME}    ${PASSWORD}
@@ -364,23 +346,25 @@ keyword table:
         Attempt to login with credentials    ${USERNAME}    ${PASSWORD}
         Status should be    Access Denied
 
-User-defined keywords can include actions defined by other user-defined or
-library keywords. As you can see from this example, user-defined keywords can
-take parameters. They can also return values and even contain FOR loops. For
-now, the important thing to know is that user-defined keywords enable test
-creators to create reusable steps for common action sequences. User-defined
-keywords can also help the test author keep the tests as readable as possible
-and use appropriate abstraction levels in different situations.
+ユーザ定義のキーワードには、他のユーザ定義キーワードやライブラリキーワードを含められます。
+上の例でわかるように、ユーザ定義のキーワードは、パラメタを持たせたり、値を返させたりできます。
+定義の中で、 FOR ループを書くことも可能です。
+ともあれ、大事なことは、ユーザ定義キーワードを上手く使えば、テスト作成者は、よく使う操作手順を再利用性の高いステップとして定義できるということです。
+それに、ユーザ定義キーワードを活用すれば、テストの読みやすさをキープしたり、さまざまな状況に対応するために操作をうまく抽象化できるのです。
 
-Variables
+.. _Variables:
+
+変数
 =========
 
-Defining variables
+.. _Defining variables:
+
+変数を定義する
 ------------------
 
-Variables are an integral part of Robot Framework. Usually any data used in
-tests that is subject to change is best defined as variables. Syntax for
-variable definition is quite simple, as seen in this variable table:
+変数は、 Robot Framework の絶対不可欠な機能です。
+というのも、テストで使われるデータはたびたび変更されるので、変数で定義するのがベストだからです。
+変数の定義はとても簡単で、以下のように変数テーブルを書くだけです:
 
 .. code:: robotframework
 
@@ -392,26 +376,23 @@ variable definition is quite simple, as seen in this variable table:
     ${PWD INVALID LENGTH}     Password must be 7-12 characters long
     ${PWD INVALID CONTENT}    Password must be a combination of lowercase and uppercase letters and numbers
 
-Variables can also be given from the command line which is useful if
-the tests need to be executed in different environments. For example
-this demo can be executed like::
+変数の値はコマンドラインからも指定できるので、異なる環境でテストを実行するときに便利です。
+例えば、上のデモを PASSWORD を指定して実行したければ、以下のようにします::
 
    robot --variable USERNAME:johndoe --variable PASSWORD:J0hnD0e QuickStart.rst
 
-In addition to user defined variables, there are some built-in variables that
-are always available. These variables include `${TEMPDIR}` and `${/}` which
-are used in the above example.
+ユーザ定義の変数の他に、定義しなくても使える組み込みの変数があります。上の例でも使われている `${TEMPDIR}` や `${/}` がその例です。
 
-Using variables
+.. _Using variables:
+
+変数を参照する
 ---------------
 
-Variables can be used in most places in the test data. They are most commonly
-used as arguments to keywords like the following test case demonstrates.
-Return values from keywords can also be assigned to variables and used later.
-For example, the following `Database Should Contain` `user keyword`_ sets
-database content to `${database}` variable and then verifies the content
-using BuiltIn_ keyword `Should Contain`. Both library and user keywords can
-return values.
+変数は、テストデータのほとんどどこにでも使えます。
+最もよく使われるのは、以下のテストケースのようなキーワードの引数です。
+キーワードを実行したときの戻り値もまた、変数に代入して後で利用できます。
+例えば、下の例で `Database Should Contain` という `ユーザキーワード <user keyword>`_ は、ユーザデータベースのファイルを開いて、その内容を `${database}` という変数に入れ、 BuiltIn_ ライブラリの `Should Contain` キーワードを使って検証しています。
+ライブラリのキーワードもユーザキーワードもどちらも戻り値を持たせられます。
 
 .. _User keyword: `User keywords`_
 .. _BuiltIn: `Standard libraries`_
@@ -432,37 +413,37 @@ return values.
         ${database} =     Get File    ${DATABASE FILE}
         Should Contain    ${database}    ${username}\t${password}\t${status}\n
 
-Organizing test cases
-=====================
+.. _Organizing test cases:
 
-Test suites
------------
+テストケースを組織化する
+=========================
 
-Collections of test cases are called test suites in Robot Framework. Every
-input file which contains test cases forms a test suite. When `executing this
-guide`_, you see test suite `QuickStart` in the console output. This name is
-got from the file name and it is also visible in reports and logs.
+.. _Test suites:
 
-It is possible to organize test cases hierarchically by placing test case
-files into directories and these directories into other directories. All
-these directories automatically create higher level test suites that get their
-names from directory names. Since test suites are just files and directories,
-they are trivially placed into any version control system.
+テストスイート
+----------------
 
-Setups and teardowns
---------------------
+Robot Framework では、複数のテストケースを集めたものをテストスイートと呼んでいます。
+テストケースの入った入力ファイルそれぞれが、テストスイートです。
+このガイドのソースファイルを `テストとして実行 <executing this guide>`_ したなら、コンソール出力に `QuickStart` というテストスイート名が表示されたはずです。
+この名前はファイル名から決めたもので、レポートやログにもこの名前で表示されます。
 
-If you want certain keywords to be executed before or after each test,
-use the `Test Setup` and `Test Teardown` settings in the setting table.
-Similarly you can use the `Suite Setup` and `Suite Teardown` settings to
-specify keywords to be executed before or after an entire test suite.
+テストケースファイルをディレクトリに入れ、そのディレクトリをまた別のディレクトリの下に置くといった形で、テストケースを階層化できます。
+ディレクトリを階層化すると、ディレクトリの名前とテストファイルの名前に基づいて、自動的に高水準のテストスイートが構築されます。
+テストスイートは単なるファイルやディレクトリなので、バージョン管理システムに簡単に取り込んで管理できます。
 
-Individual tests can also have a custom setup or teardown by using `[Setup]`
-and `[Teardown]` in the test case table. This works the same way as
-`[Template]` was used earlier with `data-driven tests`_.
+.. _Setups and teardowns:
 
-In this demo we want to make sure the database is cleared before execution
-starts and that every test also clears it afterwards:
+セットアップとティアダウン
+----------------------------
+
+テストスイート内の全てのテストについて、テストの前後に特定のキーワードを実行したいなら、 setting テーブルの `Test Setup` や `Test Teardown` を使います。
+同様に `Suite Setup` や `Suite Teardown` 使うと、テストスイート全体の前後に実行したいキーワードを指定できます。
+
+個別のテストケースでも、 `[Setup]` や `[Teardown]` でセットアップとティアダウンのカスタマイズができます。
+この設定は、 `データ駆動型テスト <data-driven tests>`_ で使った `[Template]` と同じように働きます。
+
+このデモでは、テストスイートの実行後と、各テストの実行後には必ずデータベースを消去する必要があるので、以下のように設定します:
 
 .. code:: robotframework
 
@@ -470,14 +451,14 @@ starts and that every test also clears it afterwards:
     Suite Setup       Clear Login Database
     Test Teardown     Clear Login Database
 
-Using tags
-----------
+.. _Using tags:
 
-Robot Framework allows setting tags for test cases to give them free metadata.
-Tags can be set for all test cases in a file with `Force Tags` and `Default
-Tags` settings like in the table below. It is also possible to define tags
-for a single test case using `[Tags]` settings like in earlier__ `User
-status is stored in database` test.
+タグ
+------
+
+Robot Framework には、テストケースにタグを設定することで、テストのメタデータを自由に設定する機能があります。
+下の例のように、 setting テーブルに `Force Tags` や `Default Tags` を設定すると、全てのテストケースに対して同じタグをつけられます。
+`先ほどの`__ `User status is stored in database` のテストケースのように、個別のテストに対して `[Tags]` を付けることも可能です。
 
 __ `Using variables`_
 
@@ -487,28 +468,25 @@ __ `Using variables`_
     Force Tags        quickstart
     Default Tags      example    smoke
 
-When you look at a report after test execution, you can see that tests have
-specified tags associated with them and there are also statistics generated
-based on tags. Tags can also be used for many other purposes, one of the most
-important being the possibility to select what tests to execute. You can try,
-for example, following commands::
+テストを実行してレポートを確認すると、タグのついたテストは関連付けられ、タグごとにテスト結果をまとめた情報が出力されているはずです。
+タグは他の用途にも使われます。例えば、実行したいテストを選ぶという重要な用途があります。
+以下のように実行すると、 ``smoke`` や ``database`` といったタグのついたテストだけを実行します::
 
     robot --include smoke QuickStart.rst
     robot --exclude database QuickStart.rst
 
-Creating test libraries
-=======================
+.. _Creating test libraries:
 
-Robot Framework offers a simple API for creating test libraries using either
-Python or Java, and the remote library interface allows using also other
-programming languages. `Robot Framework User Guide`_ contains detailed
-description about the library API.
+テストライブラリを自作する
+==============================
 
-As an example, we can take a look at `LoginLibrary` test library used in this
-demo. The library is located at `<lib/LoginLibrary.py>`_, and its source code
-is also copied below. Looking at the code you can see, for example, how the
-keyword `Create User` is mapped to actual implementation of method
-`create_user`.
+Robot Framework は、簡単に使えるテストライブラリ自作用 API を、 Python と Java 向けに提供しています。
+また、リモートライブラリインタフェースを使えば、他の言語でも実装できます。 
+`ユーザガイド <Robot Framework User Guide>`_ には、ライブラリの詳しい使い方が記載されています。
+
+例えば、デモで使っている `LoginLibrary` テストライブラリを見てみましょう。
+ライブラリは `<lib/LoginLibrary.py>`_ にありますが、同じ内容を以下に示します。
+例えば、以下のコードを見れば、 `Create User` が `create_user` というメソッドにどうやって対応付けられているかがわかります。
 
 .. code:: python
 
