@@ -27,10 +27,11 @@ __ http://creativecommons.org/licenses/by/3.0/
 .. toctree::
    :maxdepth: 2
 
+   quickstart/QuickStart
    userguide/RobotFrameworkUserGuide
-   lib/index
-   python/PythonTutorial
-   schema/README
+..   lib/index
+..   python/PythonTutorial
+..   schema/README
    
 
 さくいん

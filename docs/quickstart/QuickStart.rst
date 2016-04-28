@@ -1,73 +1,76 @@
 .. default-role:: code
 
-=====================================
-  Robot Framework Quick Start Guide
-=====================================
+.. _Robot Framework Quick Start Guide:
+
+========================================
+Robot Framework クイックスタートガイド
+========================================
 
 Copyright © Nokia Networks. Licensed under the
 `Creative Commons Attribution 3.0 Unported`__ license.
 
 __ http://creativecommons.org/licenses/by/3.0/
 
+和訳: Yasushi Masuda (@whosaysni)
+
 .. contents:: Table of contents:
    :local:
    :depth: 2
 
-Introduction
+.. Introduction
+
+はじめに
 ============
 
-About this guide
-----------------
+.. About this guide
 
-*Robot Framework Quick Start Guide* introduces the most important `Robot
-Framework <http://robotframework.org>`_ features. You can simply browse
-through it and look at the examples, but you can also use the guide as an
-`executable demo`__. All features shown here are explained more thoroughly
-in `Robot Framework User Guide`_.
+このガイドについて
+--------------------
+
+*Robot Framework クイックスタートガイド* では、 `Robot Framework <http://robotframework.org>`_ の最も重要な機能を紹介します。
+この文書は、単に読んでデモを眺めるだけでなく、文書のソース rst ファイルを `デモとして実行 <Executing this guide>`_ できます。
+ここで紹介する各機能は、 `Robot Framework ユーザガイド`_ で詳しく説明しています。
 
 __ `Executing this guide`_
 .. _Robot Framework User Guide: http://robotframework.org/robotframework/#user-guide
 
-Robot Framework overview
+.. _Robot Framework overview:
+
+Robot Framework の概要
 ------------------------
 
-`Robot Framework`_ is a generic open source test automation framework for
-acceptance testing and acceptance test-driven development (ATDD). It has
-easy-to-use tabular test data syntax and it utilizes the keyword-driven
-testing approach. Its testing capabilities can be extended by test libraries
-implemented either with Python or Java, and users can create new higher-level
-keywords from existing ones using the same syntax that is used for creating
-test cases.
+`Robot Framework`_ は、受け入れテストやテスト駆動開発 (ATDD) のための、オープンソースの汎用テスト自動化フレームワークです。
+簡単に扱えるテーブル形式のテストデータ記述方法を備えていて、キーワード駆動型のテストアプローチに便利です。
+テスト機能は Python や Java でテストライブラリを書いて拡張できます。
+ユーザは既存のキーワードを使って新しい高水準キーワードを定義でき、それを使ってテストケースを書けます。
 
-Robot Framework is operating system and application independent. The core
-framework is implemented using `Python <http://python.org>`_ and runs also on
-`Jython <http://jython.org>`_ (JVM) and `IronPython <http://ironpython.net>`_
-(.NET). The framework has a rich ecosystem around it consisting of various
-generic test libraries and tools that are developed as separate projects.
+Robot Framework は、特定の OS やアプリケーションに依存しません。
+コアのフレームワークは `Python <http://python.org>`_ で書かれていて、 (Java VM で動作する) `Jython <http://jython.org>`_ や、 (.NET 上の) `IronPython <http://ironpython.net>`_ でも動作します。
+Robot Framework は、別途開発された様々な汎用テストライブラリやツールに取り囲まれ、充実したエコシステムを形成しています。
 
-For more information about Robot Framework and the ecosystem, see
-http://robotframework.org. There you can find plenty more documentation,
-demo projects, list of available test libraries and other tools, and so on.
+Robot Framework とそのエコシステムの詳細を知りたければ、 http://robotframework.org をご覧ください。
+豊富なドキュメント、デモプロジェクト、テストライブラリもろもろ、ツール類などが置かれています。
 
-Demo application
-----------------
+.. _Demo application:
 
-The sample application for this guide is a variation on a classic login
-example: it is a command-line based authentication server written in Python.
-The application allows a user to do three things:
+デモアプリケーション
+-----------------------
 
-- Create an account with a valid password.
-- Log in with a valid user name and password.
-- Change the password of an existing account.
+ここでは、本ガイドで扱うサンプルのアプリケーションについて解説します。
+アプリケーションは、伝統的なログイン操作テストの変型で、 Python で作ったコマンドラインベースの認証サーバにログインするというものです。
+このアプリケーションで、ユーザは以下の3つの操作ができます:
 
-The application itself is in `<sut/login.py>`_ file and can be executed with
-a command `python sut/login.py`. Attempting to log in with a non-existent
-user account or with an invalid password results in the same error message::
+- 適切なパスワードでアカウントを作る
+- 有効なユーザとパスワードでログインする
+- 既存のアカウントのパスワードを変更する
+
+アプリケーション本体は `<sut/login.py>`_ ファイルで、 `python sut/login.py` コマンドで実行できます。
+存在しないユーザや、不正なパスワードでログインを試みた場合は、以下のメッセージを返します::
 
     > python sut/login.py login nobody P4ssw0rd
     Access Denied
 
-After creating a user account with valid password login succeeds::
+適切なパスワードの設定されたユーザアカウントを作成した後だと、ログインに成功します::
 
     > python sut/login.py create fred P4ssw0rd
     SUCCESS
@@ -75,10 +78,9 @@ After creating a user account with valid password login succeeds::
     > python sut/login.py login fred P4ssw0rd
     Logged In
 
-There are two requirements that a password must fulfill to be valid: it must
-be between 7-12 characters long, and it must contain lower and upper case
-letters and numbers, but it must not contain special characters. Trying to
-create a user with invalid password fails::
+パスワードに使う文字列には、二つの要件があります。
+一つは長さが 7〜12 文字でなければならないこと、もう一つは小文字と大文字、数字が入っていて、特殊文字を含まないことです。
+適切でないパスワードでユーザを作成を試みると失敗します::
 
     > python sut/login.py create fred short
     Creating user failed: Password must be 7-12 characters long
@@ -87,9 +89,8 @@ create a user with invalid password fails::
     Creating user failed: Password must be a combination of lowercase and
     uppercase letters and numbers
 
-Changing password with invalid credentials results in the same error message
-as logging in with invalid credentials. The validity of new password is
-verified and if not valid, an error message is given::
+現在のパスワードに不正なパスワードを指定して、新たなパスワードの設定を試みると、不正なパスワードでログインを試みた時と同じエラーを返します。
+新しいパスワードにも、パスワードの要件が適用され、不適切な場合にはエラーメッセージを返します::
 
     > python sut/login.py change-password fred wrong NewP4ss
     Changing password failed: Access Denied
@@ -100,38 +101,38 @@ verified and if not valid, an error message is given::
     > python sut/login.py change-password fred P4ssw0rd NewP4ss
     SUCCESS
 
-The application uses a simple database file to keep track on user statuses.
-The file is located in operating system dependent temporary directory.
+このアプリケーションは、簡単なデータベースファイルを使って、ユーザの状態を保持します。
+ファイルは OS 依存の一時ディレクトリ下に保管されています。
 
-Executing this guide
+.. _Executing this guide:
+
+ガイドを実行する
 ====================
 
-These instructions explain how to run this guide yourself. If you are not
-interested in that, you can nevertheless `view the results`__ online.
+以下では、ガイドのテスト内容を自分で実行する方法を解説します。
+この手順を実行しない場合は、オンラインで `結果を表示 <view the results>`__ できません。
 
 __ `Viewing results`_
 
-Installations
+.. Installations:
+
+インストール
 -------------
 
-The recommended approach to install Robot Framework on Python_ is using `pip
-<http://pip-installer.org>`_. Once you have both of these preconditions
-installed, you can simply run::
+Python_ に Robot Framework をインストールするお勧めの方法は `pip <http://pip-installer.org>`_ です。 Python と pip の両方が入っているなら、単に::
 
     pip install robotframework
 
-See `Robot Framework installation instructions`_ for alternative installation
-approaches and more information about installation in general.
+とするだけでインストールできます。
+その他のインストール方法や、インストールに関する一般的な情報は  `インストールガイド <Robot Framework installation instructions>`_  を参照してください。
 
-This demo is written using reStructuredText__ markup language with Robot
-Framework test data in code blocks. Executing tests in this format requires
-installing additional docutils__ module::
+この文書は reStructuredText__ マークアップで書かれたデモになっていて、 Robot Framework のテストデータは文書中にコードブロックとしてマークされています。
+この形式のテストを実行するには、 docutils__ モジュールのインストールも必要です::
 
     pip install docutils
 
-Notice that Robot Framework 3.0 is the first Robot Framework version to support
-Python 3. See the aforementioned `installation instructions`_ for information
-about Python 2 vs Python 3.
+Robot Framework 3.0 は、 Python 3 をサポートするようになった最初のバージョンです。
+Python 2 と Python 3 の情報は、前述の `インストールガイド <Robot Framework installation instructions>`_  を参照してください。
 
 .. _`Robot Framework installation instructions`:
    https://github.com/robotframework/robotframework/blob/master/INSTALL.rst
@@ -139,49 +140,51 @@ about Python 2 vs Python 3.
 __ http://docutils.sourceforge.net/rst.html
 __ https://pypi.python.org/pypi/docutils
 
-Execution
----------
+.. _Execution:
 
-After installations you still need to get the demo itself. It is easiest to
-download a certain release__ or grab the `latest content`__ and extract the
-package somewhere, but it is also possible to clone the `project repository`__.
+実行
+------
 
-After installations and with all other preconditions in place, you can run
-the demo on the command line by using the `robot` command::
+Robot Framework をインストールできたら、今度はデモを手に入れます。
+`リリース版のファイル`__ か `最新版のファイル`__ を手に入れて解凍するのが楽ですが、 `プロジェクトのリポジトリ`__ を clone しても入手できます。
+
+インストールが完了して、もろもろ準備ができたら、コマンドラインで `robot` コマンドを使ってデモを実行します::
 
     robot QuickStart.rst
-    
-If you use Robot Framework 2.9 or older, instead of the `robot` command you
-need to use `pybot`::
+
+Robot Framework 2.9 以前を使っているなら、 `robot` コマンドの代わりに `pybot` を使ってください::
 
     pybot QuickStart.rst
 
-You can also configure the execution with various command line options::
+設定を変えて実行したければ、コマンドラインオプションを追加します::
 
     robot --log custom_log.html --name Custom_Name QuickStart.rst
 
-For a list of available options run `robot --help`.
+利用できるオプションは `robot --help` で確認できます。
 
 __ https://github.com/robotframework/QuickStartGuide/releases
 __ https://github.com/robotframework/QuickStartGuide/archive/master.zip
 __ https://github.com/robotframework/QuickStartGuide
 
-Viewing results
+.. _Viewing results:
+
+結果を表示する
 ---------------
 
-Running the demo generates the following three result files. These files are
-linked to pre-executed files available online, but executing the demo creates
-them locally.
+デモを実行すると、以下の結果ファイルが生成されます。
+このページのリンクは、あらかじめデモを実行して作っておいたファイルへのリンクですが、読者の手元でデモを実行したときには、結果ファイルは手元の実行環境に生成されます。
 
 `report.html <http://robotframework.org/QuickStartGuide/report.html>`__
-    Higher level test report.
+    高水準のテストレポート。
 `log.html <http://robotframework.org/QuickStartGuide/log.html>`__
-    Detailed test execution log.
+    詳しいテスト実行ログ。
 `output.xml <http://robotframework.org/QuickStartGuide/output.xml>`__
-    Results in machine readable XML format.
+    機械可読な XML のフォーマット。
 
-Test cases
-==========
+.. _Test cases:
+
+テストケース
+==============
 
 Workflow tests
 --------------
