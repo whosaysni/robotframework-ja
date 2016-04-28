@@ -55,7 +55,7 @@ Robot Framework 自体のインストール方法には、以下のような様�
 前提条件
 -------------
 
-Robot Framework は Python_ (C Python, Python 2 と 3 の両方),  Jython_ (JVM),  IronPython (.NET), そして ``PyPy <http://pypy.org>`_ をサポートしています。フレームワークを動かすには、あらかじめいずれかのインタプリタをインストールしておく必要があります。
+Robot Framework は Python_ (C Python, Python 2 と 3 の両方),  Jython_ (JVM),  IronPython (.NET), そして `PyPy <http://pypy.org>`_ をサポートしています。フレームワークを動かすには、あらかじめいずれかのインタプリタをインストールしておく必要があります。
 
 一般に、どのインタプリタを使うべきかは、どんなテストライブラリやテスト環境が必要かによって変わります。ライブラリによっては、 CPython 上でしか動かないものもありますし、 Java のツールを使っているために Jython でしか動かないものや、 .NET 環境が必要なため IronPython が適している場合もあります。もちろん、どのインタプリタでも問題なく動くツールやライブラリもたくさんあります。
 
@@ -109,8 +109,7 @@ Jython のインストールはとても簡単で、まずは、 http://jython.o
 システム構成によっては、インストーラをダブルクリックするだけでインストールできます。
 
 Robot Framework 3.0 は Jython 2.7 をサポートしており、これには Java 7 以降が必要です。
-古い Jython や Java が必要なら、 Robot Framework 2.5-2.8 が Jython 2.5 (Java 5 以降)、
-Robot Framework 2.0-2.1 が Jython 2.2 をサポートしています。
+古い Jython や Java が必要なら、 Robot Framework 2.5-2.8 が Jython 2.5 (Java 5 以降)、Robot Framework 2.0-2.1 が Jython 2.2 をサポートしています。
 
 Jython をインストールしたら、 PATH_ を変更して、コマンドラインから Python コマンドと ``robot``, ``rebot`` :ref:`テスト実行スクリプト <runner scripts>` を実行できるように設定する必要があるでしょう。
 
