@@ -2,62 +2,57 @@
 .. _general parsing rules:
 .. _Test data syntax:
 
-Test data syntax
-================
+テストデータの書き方
+======================
 
-This section covers Robot Framework's overall test data
-syntax. The following sections will explain how to actually create test
-cases, test suites and so on.
+この節では、 Robot Framework のテストデータの書き方を大まかに解説します。
+実際のテストケースやテストスイートなどの作成方法は、後の節で述べます。
 
 .. contents::
    :depth: 2
    :local:
 
-Files and directories
----------------------
+ファイルとディレクトリ
+------------------------
 
-The hierarchical structure for arranging test cases is built as follows:
+テストケースを階層的にアレンジする方法は、以下の通りです:
 
-- Test cases are created in `test case files`_.
-- A test case file automatically creates a `test suite`_ containing
-  the test cases in that file.
-- A directory containing test case files forms a higher-level test
-  suite. Such a `test suite directory`_ has suites created from test
-  case files as its sub test suites.
-- A test suite directory can also contain other test suite directories,
-  and this hierarchical structure can be as deeply nested as needed.
-- Test suite directories can have a special `initialization file`_.
+- テストケースは :ref:`テストケースファイル <test case files>` の中に書きます。
+- テストケースファイル一つが、自動的にファイル中の全てのテストケースからなる :ref:`テストスイート <test suite>` になります。
+- テストケースファイルの入ったディレクトリは、より高水準のテストスイートとなります。
+  この :ref:`テストスイートディレクトリ <test suite directory>` の中には、ディレクトリ内のテストファイルによるテストスイートが、サブテストスイートとして入っています
+- テストスイートディレクトリの中に、別のテストスイートディレクトリを配置できます。
+  その場合、階層構造は必要に応じて深くなっていきます。
+- テストスイートディレクトリに、特殊な :ref:`初期化ファイル <initialization file>` を置くことがあります。
 
-In addition to this, there are:
+上のルールの他に、テストに関係する以下のファイルがあります:
 
-- `Test libraries`_ containing the lowest-level keywords.
-- `Resource files`_ with variables_ and higher-level `user keywords`_.
-- `Variable files`_ to provide more flexible ways to create variables
-  than resource files.
+- :ref:`ライブラリファイル <Test libraries>` には、他のテストを定義するための低水準のキーワードが入っています。
+- :ref:`リソースファイル <Resource files>` には、 :ref:`変数 <variables>` と、高水準の  `ユーザ定義のキーワード <user keywords>` が入っています。
+- :ref:`変数ファイル <Variable files>` は、リソースファイルよりも柔軟なやりかたで変数を生成する方法を提供します。
 
-Supported file formats
-----------------------
 
-Robot Framework test data is defined in tabular format, using either
-hypertext markup language (HTML), tab-separated values (TSV),
-plain text, or reStructuredText (reST) formats. The details of these
-formats, as well as the main benefits and problems with them, are explained
-in the subsequent sections. Which format to use depends on the context,
-but the plain text format is recommended if there are no special needs.
+.. _Supported file formats:
 
-Robot Framework selects a parser for the test data based on the file extension.
-The extension is case-insensitive, and the recognized extensions are
-:file:`.html`, :file:`.htm` and :file:`.xhtml` for HTML, :file:`.tsv`
-for TSV, :file:`.txt` and special :file:`.robot` for plain text, and
-:file:`.rst` and :file:`.rest` for reStructuredText.
+サポートするファイル形式
+--------------------------
 
-Different `test data templates`_ are available for HTML and TSV
-formats to make it easier to get started writing tests.
+Robot Framework のテストデータは、 HTML, タブ区切りの値(TSV)、プレーンテキスト、 reStruncturedText (reST) フォーマットのいずれかを使ったテーブル形式です。
+それぞれのフォーマットの詳細と長所や短所については、以降の節で個々に説明していきます。
+どのフォーマットを使うべきかは状況次第ですが、特に事情がないのなら、プレーンテキストを推奨します。
 
-.. note:: The special :file:`.robot` extension with plain text files is
-          supported starting from Robot Framework 2.7.6.
+Robot Framework は、ファイルの拡張子に基づいて、テストデータのパーザを切り替えます。拡張子の大小文字は区別しません。
+認識する拡張子は、 :file:`.html`, :file:`.htm`, :file:`.xhtml` が HTML,  :file:`.tsv` が TSV, :file:`.txt` と :file:`.robot` がプレーンテキスト、 :file:`.rst` と :file:`.rest` が reStructuredText です。
 
-HTML format
+テストの書き方を学びやすくするため、 HTML と TSV 形式には特別なテストデータ形式があります。
+.. Different `test data templates`_ are available for HTML and TSV
+.. formats to make it easier to get started writing tests.
+
+.. note:: 拡張子 :file:`.robot` のプレーンテキストファイルへの対応は Robot Framework 2.7.6 以降でサポートしています。
+
+.. _HTML format:
+
+HTML 形式
 ~~~~~~~~~~~
 
 HTML files support formatting and free text around tables. This makes it
