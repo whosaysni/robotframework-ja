@@ -50,25 +50,22 @@ Robot Framework は、ファイルの拡張子に基づいて、テストデー�
 
 .. note:: 拡張子 :file:`.robot` のプレーンテキストファイルへの対応は Robot Framework 2.7.6 以降でサポートしています。
 
+
 .. _HTML format:
 
 HTML 形式
 ~~~~~~~~~~~
 
-HTML files support formatting and free text around tables. This makes it
-possible to add additional information into test case files and allows creating
-test case files that look like formal test specifications. The main problem
-with HTML format is that editing these files using normal text editors is not
-that easy. Another problem is that HTML does not work as well with version
-control systems because the diffs resulting from changes contain HTML syntax
-in addition to changes to the actual test data.
+HTML ファイルを使うと、テーブルのフォーマットができ、その前後に自由にテキストを書けます。
+テストケースファイルに追加の情報を記載できるので、様式に沿ったテスト仕様書にできます。
+HTML フォーマットの大きな問題は、普通のテキストエディタで編集するのが楽ではないことです。
+もう一つの問題は、 HTML にすると、差分の中にテストデータに加えて HTML の構文が交じるので、バージョン管理システムでの管理がしづらいことです。
 
-In HTML files, the test data is defined in separate tables (see the
-example below). Robot Framework recognizes these `test data tables`_
-based on the text in their first cell. Everything outside recognized
-tables is ignored.
+HTML ファイルでは、テストデータは個別のテーブルで定義します (下の例を参照)。
+Robot Framework は :ref:`テストデータテーブル <test data tables>` を、テーブルの最初のセルのテキストで判別します。
+テーブルの外にある情報は、全て無視されます。
 
-.. table:: Using the HTML format
+.. table:: HTML 形式の書き方
    :class: example
 
    ============  ================  =======  =======
@@ -111,47 +108,46 @@ tables is ignored.
    \             Directory Should Exist  ${path}
    ============  ======================  ============  ==========
 
-Editing test data
-'''''''''''''''''
 
-Test data in HTML files can be edited with whichever editor you
-prefer, but a graphic editor, where you can actually see the tables,
-is recommended. RIDE_ can read and write HTML files, but unfortunately
-it loses all HTML formatting and also possible data outside test case
-tables.
+テストデータの編集
+'''''''''''''''''''''
 
-Encoding and entity references
-''''''''''''''''''''''''''''''
+HTML ファイルのテストデータはどんなエディタでも編集できますが、テーブルを表の形で見られるグラフィカルなエディタがお勧めです。
+RIDE_ は HTML を読み書きできますが、残念ながら、 HTML によるフォーマットが失われ、テストケーステーブルの外にある情報が欠落することがあります。
 
-HTML entity references (for example, `&auml;`) are
-supported. Additionally, any encoding can be used, assuming that it is
-specified in the data file. Normal HTML files must use the META
-element as in the example below::
+.. _Encoding and entity references:
+
+エンコーディングとエンティティ参照
+''''''''''''''''''''''''''''''''''''
+
+Robot Framework は HTML エンティティ参照 (`&auml;` など) をサポートしています。
+さらに、どんなエンコーディングも、データファイル中で指定している限り使えます。
+通常の HTML ファイルには、以下のような META エレメントが必要です::
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-XHTML files should use the XML preamble as in this example::
+XHTML ファイルの場合は、以下のように XML のプリアンブルが必要です::
 
   <?xml version="1.0" encoding="Big5"?>
 
-If no encoding is specified, Robot Framework uses ISO-8859-1 by default.
+エンコーディングを指定しない場合、 Robot Framework はデフォルト値として ISO-8859-1 (latin-1) を使います。 
 
-TSV format
+
+.. _TSV format:
+
+TSV 形式
 ~~~~~~~~~~
 
-TSV files can be edited in spreadsheet programs and, because the syntax is
-so simple, they are easy to generate programmatically. They are also pretty
-easy to edit using normal text editors and they work well in version control,
-but the `plain text format`_ is even better suited for these purposes.
+TSV ファイルは表計算プログラムで編集でき、構文が簡単なためプログラムで簡単に生成できます。
+普通のテキストエディタでも編集しやすく、バージョン管理システムでの管理も楽です。
+とはいえ、同じ理由で選ぶのであれば、 :ref:`プレーンテキスト形式 <plain text format>` の方がもっと向いています。
 
-The TSV format can be used in Robot Framework's test data for all the
-same purposes as HTML. In a TSV file, all the data is in one large
-table. `Test data tables`_ are recognized from one or more asterisks
-(`*`), followed by a normal table name and an optional closing
-asterisks.  Everything before the first recognized table is ignored
-similarly as data outside tables in HTML data.
+TSV 形式は、ほぼ HTML と同じ用途のテストデータに使えます。
+TSV ファイルの中では、全テストデータが一つの大きなテーブルの中に入っています。
+各々の  :ref:`テストデータテーブル <test data tables>`  は、「一つ以上のアスタリスク (`*`)、テーブル名、アスタリスク」が書かれている場所から始まります。ただし、テーブル名の後のアスタリスクは省略できます。
+最初に認識されたテーブルよりも前にかかれている内容は、 HTML データのテーブルの外のデータと同様、無視されます。
 
-.. table:: Using the TSV format
+.. table:: TSV 形式の書き方
    :class: tsv-example
 
    ============  =======================  =============  =============
@@ -176,67 +172,54 @@ similarly as data outside tables in HTML data.
    \             Directory Should Exist   ${path}
    ============  =======================  =============  =============
 
-Editing test data
-'''''''''''''''''
+テストデータの編集
+'''''''''''''''''''''
 
-You can create and edit TSV files in any spreadsheet program, such as
-Microsoft Excel. Select the tab-separated format when you save the
-file and remember to set the file extension to :file:`.tsv`. It is
-also a good idea to turn all automatic corrections off and configure
-the tool to treat all values in the file as plain text.
+TSV ファイルの作成や編集は、Microsoft Excel をはじめほとんどの表計算ソフトでできます。
+ファイルを保存するときに、タブ区切り形式のフォーマットにして、ファイルの拡張子を :file:`.tsv` にセットしてください。
+編集するときは、オートコレクトをオフにして、ファイル中の全ての値をプレーンテキストで保存する設定にしてください。
 
-TSV files are relatively easy to edit with any text editor,
-especially if the editor supports visually separating tabs from
-spaces. The TSV format is also supported by RIDE_.
+TSV ファイルは、テキストエディタでも比較的容易に編集できます。
+特に、エディタがタブとスペースを視覚的に区別できると便利です。
+RIDE_ は TSV 形式をサポートしています。
 
-Robot Framework parses TSV data by first splitting all the content
-into rows and then rows into cells on the basis of the tabular
-characters. Spreadsheet programs sometimes surround cells with quotes
-(for example, `"my value"`) and Robot Framework removes
-them. Possible quotes inside the data are doubled (for example,
-`"my ""quoted"" value"`) and also this is handled correctly.  If
-you are using a spreadsheet program to create TSV data, you should not
-need to pay attention to this, but if you create data
-programmatically, you have to follow the same quoting conventions as
-spreadsheets.
+Robot Framework は、 TSV データを解析するときに、全ファイルコンテンツを行に分割して、さらに各行をタブ文字で分割します。
+表計算ソフトによっては、(`"my value"` のように) セルの値をクオートで囲うことがあり、 Robot Framework はクオートを除去します。
+データ中のクオートが2重でエスケープされている場合 (例: `"my ""quoted"" value"`) もありますが、これも正しく扱います。
+表計算ソフトで TSV データを作成する場合はこうした挙動を気にする必要はありませんが、プログラムでデータを生成するときには、表計算と同じクオートの取扱いが必要なので注意してください。
 
-Encoding
-''''''''
+エンコーディング
+'''''''''''''''''''
 
-TSV files are always expected to use UTF-8 encoding. Because ASCII is
-a subset of UTF-8, plain ASCII is naturally supported too.
+TSV ファイルは、常に UTF-8 エンコーディングとみなします。
+ASCII は UTF-8 のサブセットなので、 ASCII エンコーディングもサポートしています。
 
-Plain text format
-~~~~~~~~~~~~~~~~~
+.. _Plain text format:
 
-The plain texts format is very easy to edit using any text editor and
-they also work very well in version control. Because of these benefits
-it has became the most used data format with Robot Framework.
+プレーンテキスト形式
+~~~~~~~~~~~~~~~~~~~~~
 
-The plain text format is technically otherwise similar to the `TSV
-format`_ but the separator between the cells is different. The TSV
-format uses tabs, but in the plain text format you can use either two
-or more spaces or a pipe character surrounded with spaces (:codesc:`\ |\ `).
+プレーンテキスト形式は、編集がとても簡単で、どんなテキストエディタでも編集でき、バージョン管理システムでも容易に扱えます。
+こうした諸々の長所から、 Robot Framework で最もよく使われているデータ形式です。
 
-The `test data tables`_ must have one or more asterisk before their
-names similarly as in the TSV format. Otherwise asterisks and possible
-spaces in the table header are ignored so, for example, `***
-Settings ***` and `*Settings` work the same way. Also similarly
-as in the TSV format, everything before the first table is ignored.
+プレーンテキスト形式は、技術的にはどちらかといえば :ref:`TSV形式 <tsv format>` に近いですが、セルの区切り方が違います。
+TSV 形式がタブを使うのに対して、プレーンテキスト形式は 2 個以上のスペースか、パイプ文字の両側にスペースを入れたもの ( :codesc:`\ |\ ` ) で区切ります。
 
-In plain text files tabs are automatically converted to two
-spaces. This allows using a single tab as a separator similarly as in
-the TSV format. Notice, however, that in the plain text format
-multiple tabs are considered to be a single separator whereas in the
-TSV format every tab would be a separator.
+:ref:`テストデータテーブル <test data tables>` は、TSVと同様、「一つ以上のアスタリスク (`*`)、テーブル名、アスタリスク」が書かれている場所から始まります。余分なアスタリスクとスペースがヘッダにあっても無視されるので、 `*** Settings ***` と `*Settings` は同じです。
+また、 TSV と同様、最初に認識したテーブルよりも前の内容は無視されます。
 
-Space separated format
+プレーンテキスト形式では、タブは自動的に 2 スペースに変換されます。そのため、 TSV と同様、タブを区切り文字として使えます。
+ただし、TSV 形式ではタブは常に区切り文字ですが、プレーンテキスト形式では、複数のタブ文字が連続すると合わせて一つの区切りとみなします。
+
+.. _Space separated format:
+
+スペース区切り方式
 ''''''''''''''''''''''
 
-The number of spaces used as separator can vary, as long as there are
-at least two spaces, and it is thus possible to align the data nicely.
-This is a clear benefit over editing the TSV format in a text editor
-because with TSV the alignment cannot be controlled.
+スペース区切り方式では、区切りに使うスペースの数は 2文字以上なら何個つづけてもかまいません。
+そのため、データを見栄え良く並べられます。
+これはテキストエディタで TSV 形式を編集するより好都合です。
+というのも、TSV は列の並びを完全にはコントロールできないからです。
 
 .. sourcecode:: robotframework
 
@@ -260,26 +243,19 @@ because with TSV the alignment cannot be controlled.
        [Arguments]    ${path}
        Directory Should Exist    ${path}
 
-Because space is used as separator, all empty cells must be escaped__
-with `${EMPTY}` variable or a single backslash. Otherwise
-`handling whitespace`_ is not different than in other test data
-because leading, trailing, and consecutive spaces must always be
-escaped.
+スペースを区切り文字として使っているので、空のセルは `${EMPTY}` という特殊な変数か、バックスラッシュ一文字で :ref:`エスケープ <Escaping>` せねばなりません。
+また、 :ref:`空白文字の扱い <handling whitespace>` が他のテストデータと違っていて、テストデータの前後にスペースがある場合や、データの中に2つ以上続くスペースがある場合は常にエスケープせねばなりません。
 
-__ Escaping_
-
-.. tip:: It is recommend to use four spaces between keywords and arguments.
+.. tip:: キーワードと引数の間は、4文字以上スペースを入れるよう勧めます。
 
 .. _pipe separated format:
 
-Pipe and space separated format
+スペース・パイプ区切り方式
 '''''''''''''''''''''''''''''''
 
-The biggest problem of the space delimited format is that visually
-separating keywords form arguments can be tricky. This is a problem
-especially if keywords take a lot of arguments and/or arguments
-contain spaces. In such cases the pipe and space delimited variant can
-work better because it makes the cell boundary more visible.
+スペース区切り方式の最大の問題は、キーワードと引数の区切りが見づらいことです。
+特に、引数がたくさんあるキーワードや、引数にスペースが入る場合には厄介です。
+そんな時は、パイプとスペースを使った区切りの方が、セルの境界がはっきり判ります。
 
 .. sourcecode:: robotframework
 
@@ -299,18 +275,14 @@ work better because it makes the cell boundary more visible.
    | My Keyword | [Arguments] | ${path}
    |            | Directory Should Exist | ${path}
 
-A plain text file can contain test data in both space-only and
-space-and-pipe separated formats, but a single line must always use
-the same separator. Pipe and space separated lines are recognized by
-the mandatory leading pipe, but the pipe at the end of the line is
-optional. There must always be at least one space on both sides of the
-pipe (except at the beginning and end) but there is no need to align
-the pipes other than if it makes the data more clear.
+プレーンテキスト形式のテストデータには、スペース区切り方式とスペース・パイプ区切り方式を混在させられます。
+ただし、一つの行の中ではどちらかに揃えねばなりません。
+パイプ・スペース方式の行はパイプで開始せねばなりませんが、行末のパイプは省略可能です。
+行の先頭を除き、パイプ文字の両側には必ず一つ以上スペースがなければなりません。
+ただし、データの並びをはっきりさせるために、パイプの位置を他の行と揃える必要はありません。
 
-There is no need to escape empty cells (other than the `trailing empty
-cells`__) when using the pipe and space separated format. The only
-thing to take into account is that possible pipes surrounded by spaces
-in the actual test data must be escaped with a backslash:
+パイプ・スペース方式では、(:ref:`末尾の空白セル <trailing empty cells>` を除き、) 空のセルをエスケープする必要はありません。
+唯一、エスケープを考慮しなければならないのは、パイプの両側にスペースがあるような文字列を書きたい時で、その場合はバックスラッシュでエスケープしてください:
 
 .. sourcecode:: robotframework
 
@@ -318,28 +290,24 @@ in the actual test data must be escaped with a backslash:
    | Escaping Pipe      | ${file count} = | Execute Command | ls -1 *.txt \| wc -l |
    |                    | Should Be Equal | ${file count}   | 42                   |
 
-__ Escaping_
 
-Editing and encoding
-''''''''''''''''''''
+.. Editing and encoding:
 
-One of the biggest benefit of the plain text format over HTML and TSV
-is that editing it using normal text editors is very easy. Many editors
-and IDEs (at least Eclipse, Emacs, Vim, and TextMate) also have plugins that
-support syntax highlighting Robot Framework test data and may also provide
-other features such as keyword completion. The plain text format is also
-supported by RIDE_.
+編集とエンコーディング
+''''''''''''''''''''''''
 
-Similarly as with the TSV test data, plain text files are always expected
-to use UTF-8 encoding. As a consequence also ASCII files are supported.
+プレーンテキスト形式が HTML や TSV に対して最も優れているのは、普通のテキストエディタでの編集がとても簡単なことです。
+ほとんどのエディタや IDE (Eclipse, Emacs, Vim, TextMate など) には、 Robot Framework のテストデータを編集するための構文ハイライト用プラグインがあり、キーワード保管などの機能も備えています。
+RIDE_ もプレーンテキスト形式をサポートしています。
+
+TSV 形式のテストデータと同様、プレーンテキスト形式のファイルも UTF-8 エンコーディング想定です。
+従って、 ASCII エンコーディングのファイルもサポートしています。
 
 Recognized extensions
 '''''''''''''''''''''
 
-Starting from Robot Framework 2.7.6, it is possible to save plain text
-test data files using a special :file:`.robot` extension in addition to
-the normal :file:`.txt` extension. The new extension makes it easier to
-distinguish test data files from other plain text files.
+Robot Framework 2.7.6 から、プレーンテキスト形式のテストデータファイルの拡張子として、従来の :file:`.txt` に加えて :file:`.robot` のサポートを追加しました。
+新しい拡張子を使えば、他のプレーンテキストファイルとテストデータを区別しやすくなります。
 
 reStructuredText format
 ~~~~~~~~~~~~~~~~~~~~~~~
