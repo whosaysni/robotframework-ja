@@ -478,35 +478,40 @@ reStructuredText ドキュメントが構文的に正しくない場合 (テー�
 Robot Framework 2.9.2 からは、 `SEVERE` レベルに達しないエラーを無視することで、 reST 文書中に標準でサポートしないディレクティブやマークアップがあっても、ノイズの影響を受けないようにしました。
 この仕様のため、 reST マークアップのエラーはテストランナには隠蔽されますが、 docutils でファイルを普通にコンパイルするとエラーが表示されるので注意してください。
 
-Test data tables
-----------------
 
-Test data is structured in four types of tables listed below. These
-test data tables are identified by the first cell of the table. Recognized
-table names are `Settings`, `Variables`, `Test Cases`, and `Keywords`. Matching
-is case-insensitive and also singular variants like `Setting` and `Test Case`
-are accepted.
+.. _Test data tables:
 
-.. table:: Different test data tables
+テストデータテーブル
+-----------------------
+
+テストデータは、以下の 4 つのタイプのテーブルで構成されています。
+各々のテストデータテーブルは、テーブルの最初のセルの値で区別します。
+Robot Framework が認識するテーブル名は、 `Settings` (設定)、 `Variables` (変数), `Test Cases` (テストケース), `Keywords` (キーワード) です。
+テーブル名は大小文字の区別をせず、 `Setting` や `Test Case` のように単数形でもかまいません。
+
+.. table:: テストデータテーブルとその役割
    :class: tabular
 
-   +--------------+--------------------------------------------+
-   |    Table     |                 Used for                   |
-   +==============+============================================+
-   | Settings     | | 1) Importing `test libraries`_,          |
-   |              |   `resource files`_ and `variable files`_. |
-   |              | | 2) Defining metadata for `test suites`_  |
-   |              |   and `test cases`_.                       |
-   +--------------+--------------------------------------------+
-   | Variables    | Defining variables_ that can be used       |
-   |              | elsewhere in the test data.                |
-   +--------------+--------------------------------------------+
-   | Test Cases   | `Creating test cases`_ from available      |
-   |              | keywords.                                  |
-   +--------------+--------------------------------------------+
-   | Keywords     | `Creating user keywords`_ from existing    |
-   |              | lower-level keywords                       |
-   +--------------+--------------------------------------------+
+   +--------------+------------------------------------------------+
+   |  テーブル    |                     用途                       |
+   +==============+================================================+
+   | Settings     | | 1) :ref:`テストライブラリ <test libraries>`, |
+   |              |   :ref:`リソースファイル <resource files>`,    |
+   |              |   :ref:`変数ファイル <variable files>`         |
+   |              |   の取り込み                                   |
+   |              | | 2) :ref:`テストスイート <test suites>` や    |
+   |              |   :ref:`テストケース` のメタデータの定義       |
+   +--------------+------------------------------------------------+
+   | Variables    | テストデータ中で使う :ref:`変数 <variables>`   |
+   |              | の定義                                         |
+   +--------------+------------------------------------------------+
+   | Test Cases   | 定義済みのキーワードを使った                   |
+   |              | :ref:`テストケース定義 <Creating test cases>`  |
+   +--------------+------------------------------------------------+
+   | Keywords     | 既存の低水準キーワードを使った                 |
+   |              | :ref:`キーワード定義 <Creating user keywords>` |
+   +--------------+------------------------------------------------+
+
 
 Rules for parsing the data
 --------------------------
@@ -647,7 +652,7 @@ Prevent ignoring empty cells
 ''''''''''''''''''''''''''''
 
 If empty values are needed as arguments for keywords or otherwise, they often
-need to be escaped to prevent them from being ignored__. Empty trailing cells
+need to be escaped to prevent them from being :ref:`ignored <Ignored data>`. Empty trailing cells
 must be escaped regardless of the test data format, and when using the
 `space separated format`_ all empty values must be escaped.
 
@@ -684,7 +689,6 @@ examples first in HTML and then in the space separated plain text format:
        :FOR    ${var}    IN    @{VALUES}
        \    Log    ${var}                         # Escaping needed here too
 
-__ `Ignored data`_
 
 Prevent ignoring spaces
 '''''''''''''''''''''''
@@ -716,7 +720,7 @@ __ `Handling whitespace`_
 .. _split into several rows:
 .. _Dividing test data to several rows:
 
-Dividing test data to several rows
+テストデータを複数行に分ける
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If there is more data than readily fits a row, it possible to use ellipsis
@@ -729,17 +733,15 @@ Additionally, values of settings that take only one value (mainly
 documentations) can be split to several columns. These values will be
 then catenated together with spaces when the test data is
 parsed. Starting from Robot Framework 2.7, documentation and test
-suite metadata split into multiple rows will be `catenated together
-with newlines`__.
+suite metadata split into multiple rows will be :ref:`catenated together with newlines <Newlines in test data>`
 
 All the syntax discussed above is illustrated in the following examples.
 In the first three tables test data has not been split, and
 the following three illustrate how fewer columns are needed after
 splitting the data to several rows.
 
-__ `Newlines in test data`_
 
-.. table:: Test data that has not been split
+.. table:: テストデータ行を分割せず、一行に収めたテーブルの例
    :class: example
 
    ============  =======  =======  =======  =======  =======  =======
@@ -776,7 +778,7 @@ __ `Newlines in test data`_
    |           | ${var} =        | Get X         | 1    | 2     | 3    | 4    | 5   | 6   |
    +-----------+-----------------+---------------+------+-------+------+------+-----+-----+
 
-.. table:: Test data split to several rows
+.. table:: テストデータ行を分割して、複数行に収めたテーブルの例
    :class: example
 
    ============  =======  =======  =======
