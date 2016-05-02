@@ -309,40 +309,33 @@ Recognized extensions
 Robot Framework 2.7.6 から、プレーンテキスト形式のテストデータファイルの拡張子として、従来の :file:`.txt` に加えて :file:`.robot` のサポートを追加しました。
 新しい拡張子を使えば、他のプレーンテキストファイルとテストデータを区別しやすくなります。
 
-reStructuredText format
+reStructuredText 形式
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-reStructuredText_ (reST) is an easy-to-read plain text markup syntax that
-is commonly used for documentation of Python projects (including
-Python itself, as well as this User Guide). reST documents are most
-often compiled to HTML, but also other output formats are supported.
+reStructuredText_ (reST) は、読みやすさを重視したプレーンテキストのマークアップ方式で、 Python プロジェクトのドキュメンテーションによく使われています (Python のソースコード自体にも、ユーザガイドにも)。
+reST ドキュメントは HTML にコンパイルされることが多いですが、他の出力フォーマットもサポートしています。
 
-Using reST with Robot Framework allows you to mix richly formatted documents
-and test data in a concise text format that is easy to work with
-using simple text editors, diff tools, and source control systems.
-In practice it combines many of the benefits of plain text and HTML formats.
+reST を Robot Framework に使うと、簡単なテキストフォーマットのファイル中に、巧みにフォーマットしたドキュメントとテストデータを混在させられます。
+ファイルは単純なテキストエディタでも簡単に編集でき、差分ツールやソースコード管理システムで扱えます。
+プレーンテキストと HTML フォーマットの長所をうまく合わせたフォーマットといえるでしょう。
 
-When using reST files with Robot Framework, there are two ways to define the
-test data. Either you can use `code blocks`__ and define test cases in them
-using the `plain text format`_ or alternatively you can use tables__ exactly
-like you would with the `HTML format`_.
+reST ファイルを使う場合、テストデータの定義方法は2つあります。
+:ref:`コードブロック <Using code blocks>` を使って、 :ref:`プレーンテキスト形式 <plain text format>` でテストケースを書く方法と、 :ref:`HTML 形式 <HTML format>` と同じように、 :ref:`テーブル <Using tables>` で書く方法です。
 
-.. note:: Using reST files with Robot Framework requires the Python docutils_
-          module to be installed.
+.. note:: reST ファイルのテストデータを Robot Framework で扱うには、 Python の docutils_ モジュールが必要です。
 
-__ `Using code blocks`_
-__ `Using tables`_
 
-Using code blocks
-'''''''''''''''''
+.. Using code blocks:
 
-reStructuredText documents can contain code examples in so called code blocks.
-When these documents are compiled into HTML or other formats, the code blocks
-are syntax highlighted using Pygments_. In standard reST code blocks are
-started using the `code` directive, but Sphinx_ uses `code-block`
-or `sourcecode` instead. The name of the programming language in
-the code block is given as an argument to the directive. For example, following
-code blocks contain Python and Robot Framework examples, respectively:
+コードブロック方式
+'''''''''''''''''''''
+
+reStructuredText のドキュメントには、コードブロックと呼ばれるマークアップにコードサンプルを入れられます。
+ドキュメントを HTML などのフォーマットに変換すると、コードブロックの内容は Pygments_ などでハイライト表示されます。
+標準の reST の書き方では、コードブロックは `code` ディレクティブで開始します。
+Sphinx_ を使っている場合は、 `code-block` か `sourcecode` ディレクティブを使います。
+ディレクティブの最初の引数には、コードブロック内のコードのプログラミング言語名を指定できます。
+例えば、以下のコードブロックには、それぞれ Python と Robot Framework のコードサンプルが入っています:
 
 .. sourcecode:: rest
 
@@ -357,22 +350,18 @@ code blocks contain Python and Robot Framework examples, respectively:
        Example Test
            Example Keyword
 
-When Robot Framework parses reStructuredText files, it first searches for
-possible `code`, `code-block` or `sourcecode` blocks
-containing Robot Framework test data. If such code blocks are found, data
-they contain is written into an in-memory file and executed. All data outside
-the code blocks is ignored.
+Robot Framework に reStructuredText ファイルを処理させると、まず `code`, `code-block`, `sourcecode` ブロックのうち、 Robot Framework のテストデータが入ったものを探します。
+コードブロックが見つかったら、テストデータをメモリ上のファイルに書き出して実行します。コードブロック外の情報は全て無視します。
 
-The test data in the code blocks must be defined using the `plain text format`_.
-As the example below illustrates, both space and pipe separated variants are
-supported:
+コードブロック内のテストデータは、 :ref:`プレーンテキスト形式 <plain text format>`  で書かねばなりません。
+以下の例のように、スペース区切り方式、スペース・パイプ区切り方式の両方をサポートしています。
 
 .. sourcecode:: rest
 
-    Example
-    -------
+    サンプル
+    ----------
 
-    This text is outside code blocks and thus ignored.
+    このテキストは、コードブロックの外にあるので無視されます。
 
     .. code:: robotframework
 
@@ -391,9 +380,9 @@ supported:
        Another Test
            Should Be Equal    ${MESSAGE}    Hello, world!
 
-    Also this text is outside code blocks and ignored. Above block used
-    the space separated plain text format and the block below uses the pipe
-    separated variant.
+    このテキストも、コードブロックの外にあるので無視されます。
+    上のブロックはスペース区切り方式のプレーンテキストで、下のブロックは
+    パイプ・スペース区切り方式です。
 
     .. code:: robotframework
 
@@ -401,31 +390,27 @@ supported:
        | My Keyword       | [Arguments]            | ${path} |
        |                  | Directory Should Exist | ${path} |
 
-.. note:: Escaping_ using the backslash character works normally in this format.
-          No double escaping is needed like when using reST tables.
+.. note:: このフォーマット内では、バックスラッシュを使った :ref:`エスケープ <Escaping>` を使えます。
+          reST のテーブルを使う時のように、2重のエスケープは要りません。
 
-.. note:: Support for test data in code blocks is a new feature in
-          Robot Framework 2.8.2.
+.. note:: コードブロックでテストデータを書けるようになったのは、 Robot Framework 2.8.2 からです。
 
-Using tables
-''''''''''''
+.. _Using tables
 
-If a reStructuredText document contains no code blocks with Robot Framework
-data, it is expected to contain the data in tables similarly as in
-the `HTML format`_. In this case Robot Framework compiles the document to
-HTML in memory and parses it exactly like it would parse a normal HTML file.
+テーブル方式
+''''''''''''''
 
-Robot Framework identifies `test data tables`_ based on the text in the first
-cell and all content outside of the recognized table types is ignored.
-An example of each of the four test data tables is shown below
-using both simple table and grid table syntax:
+reStructuredText ドキュメント中に、 Robot Framework のデータの入ったコードブロックがなければ、Robot Framework は、 :ref:`HTML 形式 <HTML format>` と同様、テーブルにテストデータが入っているものとみなし、ドキュメントをメモリ上で HTML にコンパイルしてから、通常の HTML ファイルのテストデータと同じように解析します。
+
+Robot Framework は、テーブルの最初のセルで :ref:`テストデータテーブル <test data tables>` を認識し、テーブルの外にある情報を無視します。
+以下に、 4 つのテストデータを、シンプルなテーブル形式と、グリッド形式で示します:
 
 .. sourcecode:: rest
 
     Example
     -------
 
-    This text is outside tables and thus ignored.
+    このテキストは、コードブロックの外にあるので無視されます。
 
     ============  ================  =======  =======
       Setting          Value         Value    Value
@@ -451,9 +436,8 @@ using both simple table and grid table syntax:
     Another Test   Should Be Equal     ${MESSAGE}    Hello, world!
     =============  ==================  ============  =============
 
-    Also this text is outside tables and ignored. Above tables are created
-    using the simple table syntax and the table below uses the grid table
-    approach.
+    このテキストも、コードブロックの外にあるので無視されます。
+    上はシンプルなテーブル定義の書き方で、下はグリッドを使った書き方です。
 
     +-------------+------------------------+------------+------------+
     |   Keyword   |         Action         |  Argument  |  Argument  |
@@ -463,45 +447,36 @@ using both simple table and grid table syntax:
     |             | Directory Should Exist | ${path}    |            |
     +-------------+------------------------+------------+------------+
 
-.. note:: Empty cells in the first column of simple tables need to be escaped.
-          The above example uses :codesc:`\\` but `..` could also be used.
+.. note:: シンプルなテーブル定義の場合、各行の最初のカラムが空のときはエスケープが必要です。
+          上の例では :codesc:`\\` を使っていますが `..` も使えます。
 
-.. note:: Because the backslash character is an escape character in reST,
-          specifying a backslash so that Robot Framework will see it requires
-          escaping it with an other backslash like `\\`. For example,
-          a new line character must be written like `\\n`. Because
-          the backslash is used for escaping_ also in Robot Framework data,
-          specifying a literal backslash when using reST tables requires double
-          escaping like `c:\\\\temp`.
+.. note:: reST ではバックスラッシュ文字をエスケープ文字として使っています。
+          そのため、バックスラッシュを Robot Framework に認識させたい場合には、 `\\` のように、もう一つバックスラッシュが必要です。
+          例えば、改行文字を表現するときは、 `\\n` です。
+          Robot Framework のデータは、バックスラッシュを :ref:`エスケープ <escaping>` に使うので、 reST のテーブルの中で、リテラルとしてバックスラッシュを使いたい場合には、さらにエスケープして `c:\\\\temp` のように書かねばなりません。
 
-Generating HTML files based on reST files every time tests are run obviously
-adds some overhead. If this is a problem, it can be a good idea to convert
-reST files to HTML using external tools separately, and let Robot Framework
-use the generated files only.
+テストをランする度に毎回 reST で HTML ファイルを生成していると、明らかにオーバヘッドを生じます。
+問題になるようなら、外部ツールを使って reST ファイルを予め HTML に変換しておき、生成したファイルを Robot Framework に読ませるとよいでしょう。
 
-Editing and encoding
-''''''''''''''''''''
+.. _Editing and encoding:
 
-Test data in reStructuredText files can be edited with any text editor, and
-many editors also provide automatic syntax highlighting for it. reST format
-is not supported by RIDE_, though.
+編集とエンコーディング
+''''''''''''''''''''''''
 
-Robot Framework requires reST files containing non-ASCII characters to be
-saved using UTF-8 encoding.
+reStructuredText 形式のテストデータはどんなテキストエディタでも編集でき、多くのテキストエディタが reST の構文ハイライトをサポートしています。
+残念ながら、 RIDE_ は reST をサポートしていません。
 
-Syntax errors in reST source files
+reST ファイルでは、非 ASCII 文字を UTF-8 エンコーディングで保存せねばなりません。
+
+.. _Syntax errors in reST source files:
+
+reST ソースファイルの構文エラー
 ''''''''''''''''''''''''''''''''''
 
-If a reStructuredText document is not syntactically correct (a malformed table
-for example), parsing it will fail and no test cases can be found from that
-file. When executing a single reST file, Robot Framework will show the error
-on the console. When executing a directory, such parsing errors will
-generally be ignored.
+reStructuredText ドキュメントが構文的に正しくない場合 (テーブルの書式がおかしい場合など) は、 reST ファイルの解析に失敗するため、テストケースを抽出できないことがあります。単一の reST ファイルを実行しているときには、 Robot Framework はコンソールにエラーを出力しますが、ディレクトリ単位で実行しているときには、解析エラーは無視されてしまいます。
 
-Starting from Robot Framework 2.9.2, errors below level `SEVERE` are ignored
-when running tests to avoid noise about non-standard directives and other such
-markup. This may hide also real errors, but they can be seen when processing
-files normally.
+Robot Framework 2.9.2 からは、 `SEVERE` レベルに達しないエラーを無視することで、 reST 文書中に標準でサポートしないディレクティブやマークアップがあっても、ノイズの影響を受けないようにしました。
+この仕様のため、 reST マークアップのエラーはテストランナには隠蔽されますが、 docutils でファイルを普通にコンパイルするとエラーが表示されるので注意してください。
 
 Test data tables
 ----------------
