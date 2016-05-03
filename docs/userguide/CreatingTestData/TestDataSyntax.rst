@@ -303,8 +303,10 @@ RIDE_ もプレーンテキスト形式をサポートしています。
 TSV 形式のテストデータと同様、プレーンテキスト形式のファイルも UTF-8 エンコーディング想定です。
 従って、 ASCII エンコーディングのファイルもサポートしています。
 
-Recognized extensions
-'''''''''''''''''''''
+.. _Recognized extensions:
+
+Robot Framework の認識する拡張子
+''''''''''''''''''''''''''''''''''
 
 Robot Framework 2.7.6 から、プレーンテキスト形式のテストデータファイルの拡張子として、従来の :file:`.txt` に加えて :file:`.robot` のサポートを追加しました。
 新しい拡張子を使えば、他のプレーンテキストファイルとテストデータを区別しやすくなります。
@@ -513,168 +515,156 @@ Robot Framework が認識するテーブル名は、 `Settings` (設定)、 `Var
    +--------------+------------------------------------------------+
 
 
-Rules for parsing the data
+.. _Rules for parsing the data:
+
+テストデータ解析のルール
 --------------------------
 
 .. _comment:
+.. _Ignored data:
 
-Ignored data
-~~~~~~~~~~~~
+コメント、無視される情報
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When Robot Framework parses the test data, it ignores:
+Robot Framework がテストデータを解析する際、以下の内容は無視されます:
 
-- All tables that do not start with a `recognized table name`__ in the first cell.
-- Everything else on the first row of a table apart from the first cell.
-- All data before the first table. If the data format allows data between
-  tables, also that is ignored.
-- All empty rows, which means these kinds of rows can be used to make
-  the tables more readable.
-- All empty cells at the end of rows, unless they are escaped__.
-- All single backslashes (:codesc:`\\`) when not used for escaping_.
-- All characters following the hash character (`#`), when it is the first
-  character of a cell. This means that hash marks can be used to enter
-  comments in the test data.
-- All formatting in the HTML/reST test data.
+- 最初のセルに :ref:`テストデータテーブル <Test data tables>` の名前が入っていないテーブル。
+- テストデータのテーブルで、最初の行の最初のセル以外の内容。
+- 最初に見つかったテストデータテーブルより前に書かれている情報全て。
+  テーブルの間に何か記述できるデータフォーマットの場合は、その内容も無視されます。
+- テーブルの見栄えをよくするなどの目的で挿入されている空の行。
+- 行末側の空のセルで、 :ref:`エスケープ <Prevent ignoring empty cells>` していないもの全て。
+- :ref:`エスケープ <escaping>` に使っていないバックスラッシュ (:codesc:`\\`) 全て。
+- セル中の値がハッシュ文字 (`#`) で始まる場合、ハッシュ文字より後ろの内容。
+  この機能を使って、テストデータのコメントを書けます。
+- HTML/reST 中の全マークアップ。
 
-When Robot Framework ignores some data, this data is not available in
-any resulting reports and, additionally, most tools used with Robot
-Framework also ignore them. To add information that is visible in
-Robot Framework outputs, place it to the documentation or other metadata of
-test cases or suites, or log it with the BuiltIn_ keywords :name:`Log` or
-:name:`Comment`.
+Robot Framework がテストデータ中の情報を無視した場合、その情報は結果レポートから一切アクセスできません。
+また、 Robot Framework と組み合わせて使うツールのほとんどが、同じようにデータを無視します。
+Robot Framework の出力に何らかの情報を表示したいなら、テストケースやテストスイートにドキュメントやメタデータを付与するか、 :ref:`組み込み <BuiltIn>` キーワードの :name:`Log` や :name:`Comment` を使ってログに出力してください。
 
-__ `Test data tables`_
-__ `Prevent ignoring empty cells`_
+.. _Handling whitespace:
 
-Handling whitespace
+空白文字の扱い
 ~~~~~~~~~~~~~~~~~~~
 
-Robot Framework handles whitespace the same way as they are handled in HTML
-source code:
+Robot Framework は、空白文字を HTML のソースコード中の空白文字と同じように扱います。すなわち:
 
-- Newlines, carriage returns, and tabs are converted to spaces.
-- Leading and trailing whitespace in all cells is ignored.
-- Multiple consecutive spaces are collapsed into a single space.
+- 改行、復帰、タブはスペースに変換される。
+- セルの先頭や末尾に入っている空白文字は全て無視する。
+- スペースが複数個並んでいる時は、ひとつのスペースに置き換える。
 
-In addition to that, non-breaking spaces are replaced with normal spaces.
-This is done to avoid hard-to-debug errors
-when a non-breaking space is accidentally used instead of a normal space.
+加えて、非改行スペースは普通のスペースに置き換わります。
+これは、普通のスペースの代わりに誤って非改行スペースを使ってしまった場合に、検出が難しいエラーとなるのを防ぐためです。
 
-If leading, trailing, or consecutive spaces are needed, they `must be
-escaped`__. Newlines, carriage returns, tabs, and non-breaking spaces can be
-created using `escape sequences`_ `\n`, `\r`, `\t`, and `\xA0` respectively.
+セルの先頭や末尾のスペース、複数個並んだスペースが必要な場合は、 :ref:`エスケープ <Prevent ignoring spaces>` が必要です。
+改行、復帰、タブ、非改行スペースは、それぞれ `\n`, `\r`, `\t`, `\xA0` といった :ref:`エスケープシーケンス <escape sequences>` で入力できます。
 
-__ `Prevent ignoring spaces`_
+.. _Escaping:
 
-Escaping
-~~~~~~~~
+エスケープ
+~~~~~~~~~~~
 
-The escape character in Robot Framework test data is the backslash
-(:codesc:`\\`) and additionally `built-in variables`_ `${EMPTY}` and `${SPACE}`
-can often be used for escaping. Different escaping mechanisms are
-discussed in the sections below.
+Robot Framework のテストデータでエスケープに使う文字は、バックスラッシュ (:codesc:`\\`) です。
+:ref:`組み込み変数 <built-in variables>` の `${EMPTY}` および `${SPACE}` もよく使われます。
+この節では、それぞれのエスケープメカニズムについて解説します。
 
-Escaping special characters
-'''''''''''''''''''''''''''
+.. _Escaping special characters:
 
-The backslash character can be used to escape special characters
-so that their literal values are used.
+特殊文字のエスケープ
+''''''''''''''''''''''
 
-.. table:: Escaping special characters
+バックスラッシュを使って特殊文字をエスケープすることで、リテラルとしてその文字を表現できます。
+
+.. table:: 特殊文字のエスケープ
    :class: tabular
 
-   ===========  ================================================================  ==============================
-    Character                              Meaning                                           Examples
-   ===========  ================================================================  ==============================
-   `\$`         Dollar sign, never starts a `scalar variable`_.                   `\${notvar}`
-   `\@`         At sign, never starts a `list variable`_.                         `\@{notvar}`
-   `\%`         Percent sign, never starts an `environment variable`_.            `\%{notvar}`
-   `\#`         Hash sign, never starts a comment_.                               `\# not comment`
-   `\=`         Equal sign, never part of `named argument syntax`_.               `not\=named`
-   `\|`         Pipe character, not a separator in the `pipe separated format`_.  `| Run | ps \| grep xxx |`
-   `\\`         Backslash character, never escapes anything.                      `c:\\temp, \\${var}`
-   ===========  ================================================================  ==============================
+   ======  ==========================================================  ============================
+    文字                         意味                                               例
+   ======  ==========================================================  ============================
+   `\$`    :ref:`スカラー変数 <scalar variable>` の開始記号でない      `\${notvar}`
+   `\@`    :ref:`リスト変数 <list variable>` の開始記号でない          `\@{notvar}`
+   `\%`    :ref:`環境変数 <environment variable>` の開始記号でない     `\%{notvar}`
+   `\#`    :ref:`コメント <comment>` の開始記号でない                  `\# not comment`
+   `\=`    :ref:`名前付き引数 <named argument syntax>` の記法でない    `not\=named`
+   `\|`    :ref:`パイプ区切り <pipe separated format>` でない          `| Run | ps \| grep xxx |`
+   `\\`    バックスラッシュそのもので、何もエスケープしない            `c:\\temp, \\${var}`
+   ======  ==========================================================  ============================
 
 .. _escape sequence:
 .. _escape sequences:
+.. _Forming escape sequences:
 
-Forming escape sequences
-''''''''''''''''''''''''
+エスケープシーケンスの記法
+''''''''''''''''''''''''''''
 
-The backslash character also allows creating special escape sequences that are
-recognized as characters that would otherwise be hard or impossible to create
-in the test data.
+バックスラッシュは、テストデータ中で入力するのが難しい文字を扱うときに、文字を表現する特殊なエスケープシーケンスにも使われます。
 
-.. table:: Escape sequences
+.. table:: エスケープシーケンス
    :class: tabular
 
    =============  ====================================  ============================
-      Sequence                  Meaning                           Examples
+    シーケンス                   意味                                例
    =============  ====================================  ============================
-   `\n`           Newline character.                    `first line\n2nd line`
-   `\r`           Carriage return character             `text\rmore text`
-   `\t`           Tab character.                        `text\tmore text`
-   `\xhh`         Character with hex value `hh`.        `null byte: \x00, ä: \xE4`
-   `\uhhhh`       Character with hex value `hhhh`.      `snowman: \u2603`
-   `\Uhhhhhhhh`   Character with hex value `hhhhhhhh`.  `love hotel: \U0001f3e9`
+   `\n`           改行文字                              `first line\n2nd line`
+   `\r`           復帰文字                              `text\rmore text`
+   `\t`           タブ                                  `text\tmore text`
+   `\xhh`         16 進 `hh` で表される文字             `null byte: \x00, ä: \xE4`
+   `\uhhhh`       16 進 `hhhh` で表される文字           `snowman: \u2603`
+   `\Uhhhhhhhh`   16 進 `hhhhhhhh` で表される文字       `love hotel: \U0001f3e9`
    =============  ====================================  ============================
 
-.. note:: All strings created in the test data, including characters like
-          `\x02`, are Unicode and must be explicitly converted to
-          byte strings if needed. This can be done, for example, using
-          :name:`Convert To Bytes` or :name:`Encode String To Bytes` keywords
-          in BuiltIn_ and String_ libraries, respectively, or with
-          something like `str(value)` or `value.encode('UTF-8')`
-          in Python code.
+.. note::
+   テストデータ中でエスケープシーケンスで表した文字は、 `\x02` のようなものも含め、全て Unicode での表現なので、必要に応じて明示的な変換が必要です。
+   変換は、例えば、 :ref:`BuiltIn` や :ref:`String` ライブラリの :name:`Convert To Bytes` や :name:`Encode String To Bytes` といったキーワードでできます。
+あるいは、Python コードで `str(value)` や `value.encode('UTF-8')` のようにして変換できます。
 
-.. note:: If invalid hexadecimal values are used with `\x`, `\u`
-          or `\U` escapes, the end result is the original value without
-          the backslash character. For example, `\xAX` (not hex) and
-          `\U00110000` (too large value) result with `xAX`
-          and `U00110000`, respectively. This behavior may change in
-          the future, though.
+.. note::
+   `\x`, `\u`, `\U` に無効な16進の値を指定した場合は、バックスラッシュ抜きの16進値に変換されます。
+   たとえば、 `\xAX` (16進でない) や `\U00110000` (値が大きすぎる) は、それぞれ `xAX` や `U00110000` になります。
+   ただし、この挙動は将来変更される可能性があります。
 
-.. note:: `Built-in variable`_ `${\n}` can be used if operating system
-          dependent line terminator is needed (`\r\n` on Windows and
-          `\n` elsewhere).
+.. note::
+   OS による改行文字の違い (Windows は `\r\n` , それ以外は `\n` elsewhere) を吸収したい場合は、 :ref:`組み込み変数 <built-in variable>` の `${\n}` を使えます。
 
-.. note:: Possible un-escaped whitespace character after the `\n` is
-          ignored. This means that `two lines\nhere` and
-          `two lines\n here` are equivalent. The motivation for this
-          is to allow wrapping long lines containing newlines when using
-          the HTML format, but the same logic is used also with other formats.
-          An exception to this rule is that the whitespace character is not
-          ignored inside the `extended variable syntax`_.
+.. note::
+   `\n` の後にエスケープなしの空白文字を続けた場合は無視されます。
+   つまり、 `two lines\nhere` と `two lines\n here` は同じになります。
+   これはもともと、 HTML 形式で改行を含む長い行を折り返せるようにするための措置ですが、他のフォーマットにも適用されています。
+   唯一の例外は、 :ref:`拡張変数記法 <extended variable syntax>` 中の空白文字は無視されないというルールです。
 
-.. note:: `\x`, `\u` and `\U` escape sequences are new in Robot Framework 2.8.2.
+.. note::
+   `\x`, `\u`, `\U` のエスケープシーケンスは Robot Framework 2.8.2 で導入されました。
 
-Prevent ignoring empty cells
+.. _Prevent ignoring empty cells:
+
+空セルを無視させない方法
 ''''''''''''''''''''''''''''
 
-If empty values are needed as arguments for keywords or otherwise, they often
-need to be escaped to prevent them from being :ref:`ignored <Ignored data>`. Empty trailing cells
-must be escaped regardless of the test data format, and when using the
-`space separated format`_ all empty values must be escaped.
+セルの前後にあるスペースや、セル内の複数連続するスペースは :ref:`無視される <handling whitespace>` ので、キーワードの引数などでスペースを無視させたくないときには、スペースをエスケープする必要があります。
+空のセルを無視させたくないときと同じように、 :ref:`組み込み変数 <built-in variable>` の `${SPACE}` でも表現できます。
 
-Empty cells can be escaped either with the backslash character or with
-`built-in variable`_ `${EMPTY}`. The latter is typically recommended
-as it is easier to understand. An exception to this recommendation is escaping
-the indented cells in `for loops`_ with a backslash when using the
-`space separated format`_. All these cases are illustrated in the following
-examples first in HTML and then in the space separated plain text format:
+キーワードの引数に空の値を指定したい場合など、データを :ref:`無視 <Ignored data>` させたくないときには、空セルのエスケープが必要です。
+行の末尾側にある空のセルは、テストデータをどのフォーマットで書いていてもエスケープが必要です。
+:ref:`スペース区切り方式 <space separated format>` のフォーマットの場合は、空の値はどこにあっても常にエスケープせねばなりません。
+
+空のセルは、バックラッシュでエスケープするか、 :ref:`組み込み変数 <built-in variable>` の `${EMPTY}` で表現します。
+見やすさの観点から、基本的に後者を勧めます。
+例外は、 :ref:`スペース区切り方式 <space separated format>` のフォーマットで :ref:`for ループ <for loops>` を書いていて、セルのインデントにバックスラッシュを使うときです。
+こうしたケースについて、以下に例を挙げます。最初の例は HTML のテーブル、次の例はスペース区切り方式のテキストフォーマットです:
 
 .. table::
    :class: example
 
-   ==================  ============  ==========  ==========  ================================
+   ==================  ============  ==========  ==========  ===================================
         Test Case         Action      Argument    Argument                Argument
-   ==================  ============  ==========  ==========  ================================
+   ==================  ============  ==========  ==========  ===================================
    Using backslash     Do Something  first arg   \\
    Using ${EMPTY}      Do Something  first arg   ${EMPTY}
-   Non-trailing empty  Do Something              second arg  # No escaping needed in HTML
+   Non-trailing empty  Do Something              second arg  # HTML 形式は行末のエスケープ不要
    For loop            :FOR          ${var}      IN          @{VALUES}
-   \                                 Log         ${var}      # No escaping needed here either
-   ==================  ============  ==========  ==========  ================================
+   \                                 Log         ${var}      # エスケープは不要
+   ==================  ============  ==========  ==========  ===================================
 
 .. sourcecode:: robotframework
 
@@ -684,38 +674,34 @@ examples first in HTML and then in the space separated plain text format:
    Using ${EMPTY}
        Do Something    first arg    ${EMPTY}
    Non-trailing empty
-       Do Something    ${EMPTY}     second arg    # Escaping needed in space separated format
+       Do Something    ${EMPTY}     second arg    # スペース区切り方式ではエスケープが必要
    For loop
        :FOR    ${var}    IN    @{VALUES}
-       \    Log    ${var}                         # Escaping needed here too
+       \    Log    ${var}                         # エスケープが必要。バックスラッシュが見やすい
 
 
-Prevent ignoring spaces
-'''''''''''''''''''''''
+.. _Prevent ignoring spaces:
 
-Because leading, trailing, and consecutive spaces in cells are ignored__, they
-need to be escaped if they are needed as arguments to keywords or otherwise.
-Similarly as when preventing ignoring empty cells, it is possible to do that
-either using the backslash character or using `built-in variable`_
-`${SPACE}`.
+スペースを無視させない方法
+'''''''''''''''''''''''''''''
 
-.. table:: Escaping spaces examples
+セルの前後にあるスペースや、セル内の複数連続するスペースは :ref:`無視される <handling whitespace>` ので、キーワードの引数などでスペースを無視させたくないときには、スペースをエスケープする必要があります。
+空のセルを無視させたくないときと同じように、 :ref:`組み込み変数 <built-in variable>` の `${SPACE}` でも表現できます。
+
+.. table:: スペースをエスケープする方法の例
    :class: tabular
 
-   ==================================  ==================================  ==================================
-        Escaping with backslash             Escaping with `${SPACE}`                      Notes
-   ==================================  ==================================  ==================================
-   :codesc:`\\ leading space`          `${SPACE}leading space`
-   :codesc:`trailing space \\`         `trailing space${SPACE}`            Backslash must be after the space.
-   :codesc:`\\ \\`                     `${SPACE}`                          Backslash needed on both sides.
-   :codesc:`consecutive \\ \\ spaces`  `consecutive${SPACE * 3}spaces`     Using `extended variable syntax`_.
-   ==================================  ==================================  ==================================
+   ==================================  ===============================  ===========================================
+        バックスラッシュを使う方法         `${SPACE}` を使う方法                        備考
+   ==================================  ===============================  ===========================================
+   :codesc:`\\ 前のスペース``          `${SPACE}前のスペース`
+   :codesc:`後ろのスペース \\`         `後ろのスペース${SPACE}`         バックスラッシュはスペースの後ろ
+   :codesc:`\\ \\`                     `${SPACE}`                       爆スラッシュはスペースの前後
+   :codesc:`セル中の \\ \\ スペース`   `セル中の${SPACE * 3}スペース`   `拡張変数記法<extended variable syntax>`_
+   ==================================  ===============================  ===========================================
 
-As the above examples show, using the `${SPACE}` variable often makes the
-test data easier to understand. It is especially handy in combination with
-the `extended variable syntax`_ when more than one space is needed.
-
-__ `Handling whitespace`_
+上の例のように、 `${SPACE}` を使ったほうが、テストデータはわかりやすく書けます。
+特に、 :ref:`拡張変数記法 <extended variable syntax>` と組み合わせることで、スペースが複数個のときに便利です。
 
 .. _split into several rows:
 .. _Dividing test data to several rows:
@@ -723,23 +709,18 @@ __ `Handling whitespace`_
 テストデータを複数行に分ける
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If there is more data than readily fits a row, it possible to use ellipsis
-(`...`) to continue the previous line. In test case and keyword tables,
-the ellipsis must be preceded by at least one empty cell.  In settings and
-variable tables, it can be placed directly under the setting or variable name.
-In all tables, all empty cells before the ellipsis are ignored.
+一行におさまらないデータがあるばあい、省略符号 (`...`) を使って、前行からの続きを書けます。
+キーワードテーブルの場合、省略符号の前には、必ず一つ以上空のセルが必要です。
+設定テーブルと変数テーブルについては行頭に省略符号を書けます。
+どのテーブルも、省略符号よりも前の空のセルは無視されます。
 
-Additionally, values of settings that take only one value (mainly
-documentations) can be split to several columns. These values will be
-then catenated together with spaces when the test data is
-parsed. Starting from Robot Framework 2.7, documentation and test
-suite metadata split into multiple rows will be :ref:`catenated together with newlines <Newlines in test data>`
+さらに、設定テーブルの項目のうち、値がひとつしかないもの (主にドキュメント) は、データを複数のカラムに分けて記述できます。
+その場合、各セルの値は、テストデータを解析するときにスペースで結合されます。
+Robot Framework 2.7 からは、ドキュメントとテストスイートのメタデータを複数行に分けて書くと、 :ref:`改行で結合されます <Newlines in test data>` 。
 
-All the syntax discussed above is illustrated in the following examples.
-In the first three tables test data has not been split, and
-the following three illustrate how fewer columns are needed after
-splitting the data to several rows.
-
+以下のサンプルは、上記の規則を実演したものです。
+最初の3つのテーブルはでは、テストデータは分割されていません。
+その次の3つのテーブルを見れば、複数行に分けることで少ないカラム数でテストデータを表現できることがわかります。
 
 .. table:: テストデータ行を分割せず、一行に収めたテーブルの例
    :class: example
