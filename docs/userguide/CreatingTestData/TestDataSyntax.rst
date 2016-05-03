@@ -45,6 +45,7 @@ Robot Framework は、ファイルの拡張子に基づいて、テストデー�
 認識する拡張子は、 :file:`.html`, :file:`.htm`, :file:`.xhtml` が HTML,  :file:`.tsv` が TSV, :file:`.txt` と :file:`.robot` がプレーンテキスト、 :file:`.rst` と :file:`.rest` が reStructuredText です。
 
 テストの書き方を学びやすくするため、 HTML と TSV 形式には特別なテストデータ形式があります。
+
 .. Different `test data templates`_ are available for HTML and TSV
 .. formats to make it easier to get started writing tests.
 
