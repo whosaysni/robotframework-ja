@@ -5,10 +5,8 @@
 テストケースの作成
 ===================
 
-この節では、テストケースの作り方を説明します。
-テストケースを :ref:`テストケースファイル <test case files>` と
-:ref:`テストケースディレクトリ<test suite directories>` を使った
-:ref:`テストスイート <test suite>` の作り方は、この節の次の節で説明します。
+この節では、テストケースの書き方を説明します。
+:ref:`テストケースファイル <test case files>` と :ref:`テストケースディレクトリ<test suite directories>` を使った :ref:`テストスイート <test suite>` の作り方は、この節の次の節で説明します。
 
 .. contents::
    :depth: 2
@@ -158,7 +156,7 @@ Setting セクションに、以下のようなテストケース関連の設定
 .. _Mandatory arguments:
 
 必須の引数
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 ほとんどのキーワードには、常に指定しなければならない引数があります。
 こうした引数は、キーワードのドキュメント中では、カンマ区切りの引数名、例えば
@@ -183,22 +181,11 @@ Setting セクションに、以下のようなテストケース関連の設定
 デフォルト値
 ~~~~~~~~~~~~~~
 
-引数にはデフォルト値
-Arguments often have default values which can either be given or
-not. In the documentation the default value is typically separated
-from the argument name with an equal sign like `name=default
-value`, but with keywords implemented using Java there may be
-`multiple implementations`__ of the same keyword with different
-arguments instead. It is possible that all the arguments have default
-values, but there cannot be any positional arguments after arguments
-with default values.
+引数にはたいていデフォルト値があり、指定してもしなくてもよくなっています。
+このドキュメントでは、デフォルト値を、引数名と等号で区切った `name=default value` の形式で表していますが、 Java で実装したキーワードの場合、同じキーワードで引数の異なる実装が :ref:`複数存在する <Default values with Java>` 場合があります。
+全引数にデフォルト値を持たせることはできますが、デフォルト値を持つ引数の後ろに必須の引数は置けません。
 
-__ `Default values with Java`_
-
-Using default values is illustrated by the example below that uses
-:name:`Create File` keyword which has arguments `path, content=,
-encoding=UTF-8`. Trying to use it without any arguments or more than
-three arguments would not work.
+デフォルト値の扱い方を以下の例に示します。この例では、引数の形式が `path, content=, encoding=UTF-8` であるような :name:`Create File` というキーワードを使っています。引数が3つ、うち一つが必須なので、引数が全く無い場合や、4つ以上引数がある場合は動作しません。
 
 .. sourcecode:: robotframework
 
