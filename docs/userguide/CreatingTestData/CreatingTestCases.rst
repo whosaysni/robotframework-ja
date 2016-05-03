@@ -15,7 +15,7 @@
 .. Test case syntax:
 
 テストケースの構文
-----------------------
+--------------------
 
 .. Basic syntax:
 
@@ -23,26 +23,26 @@
 ~~~~~~~~~~~~
 
 テストケースは、キーワードを組み合わせたテーブル（表）として作成します。
-ここでいう「テーブル」とは、「テキストをスペースやタブ、パイプ (``|``) で区切ったもの」です。
-区切られた各文字列を「カラム」と呼び、行の頭から区切りごとに 1 カラム目、2カラム目、...と数えていきます。
+ここでいう「テーブル」とは、「テキストをスペースやタブ、パイプ (``|``) で区切って、行と列の構造にしたもの」です。
+区切られた各列を「カラム」と呼び、行の頭から区切りごとに 1 カラム目、2カラム目、...と数えていきます。
 ::
 
-      テストケース1
+      *** Test Cases ***        # ヘッダ
+
+      テストケース名1
           キーワード1   引数1   引数2   ...
           キーワード2   引数1   ...
           ...
 
-      テストケース2
+      テストケース名2
           ...
 
+「キーワード」は、テスト中のひとつひとつの操作の命令で、 :ref:`テストライブラリ <test libraries>` や :ref:`リソースファイル <resource files>` からインポートしたり、テストケースファイル中の :ref:`キーワードテーブル <keyword table>` で作成したりできます。
 
-「キーワード」は、テスト中のひとつひとつの操作の命令で、 :ref:`テストライブラリ <test libraries>` や :ref:`リソースファイル <resource files>` からインポートしたり、テストケースファイル中の :ref:`キーワードテーブル<keyword table>` で作成したりできます。
+テストケーステーブルの最初のカラムにはテストケース名を入れます。
+この行から、次のテストケース名の行の前まで、もしくは、テストケーステーブルの末尾に到達するまでが、ひとつのテストケースです。
 
-テストケースの最初のカラムには、テストケースの名前を入れます。
-あるテストケース名の入った行から、次のテストケース名が始まるまで、もしくはテストケーステーブルの末尾に到達するまでが、ひとつのテストケースとみなされます。
-
-テストケースを書く場所には、先頭に ``*** test cases ***`` というヘッダを書きます。
-テーブルのヘッダから最初のテストケースまでの間にテストケース以外の内容を記述すると、エラーになります。
+テストケーステーブルの冒頭には ``*** test cases ***`` のようなヘッダが必要です。ヘッダから最初のテストケースまでの間にテストケース以外の内容を記述すると、エラーになります。
 
 .. note::
    スペースやタブで区切る書き方のテストケースの場合、テーブルの「最初のカラム」は行頭、「2番めのカラム」は、行頭から 2 文字以上のスペース、またはタブを入れた後の文字列になります。そのため、テストケース名以外の行は、字下げしているように見えます::
@@ -58,8 +58,8 @@
       |                | Keyword | Arg1 | Arg2 ... |
       +----------------+---------+------+----------+
 
-テストケースの2行目は、たいていはキーワード名ではじまっています。
-例外は、2行目で :ref:`キーワードの戻り値を変数に代入<User keyword return values>` しているときで、この場合、二つめのカラムに変数名、その後にキーワードがあります。
+テストケースの2列目は、たいていはキーワード名が入っています。
+例外は、2行目で :ref:`キーワードの戻り値を変数に代入 <User keyword return values>` しているような場合で、その場合は二つめのカラムに変数名が入り、その後にキーワードが続きます。
 どちらの場合も、キーワード名の後には、キーワードの引数などを表すカラムが入ることがあります。
 
 .. _example-tests:
@@ -80,11 +80,11 @@
 
 .. Settings in the Test Case table:
 
-テストケースに書ける設定
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+テストケースに設定を書く
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 テストケースには、ケースごとの設定（テスト設定）を持たせられます。
-テスト設定の名前を2カラム目に、設定の値をその後のカラムに指定します。
+テスト設定名は必ず2カラム目に書き、その後に設定の値を続けます。
 テスト設定名は、キーワードと区別するために角括弧 (``[ ]``) で囲います。
 使える設定名を以下に示します。これらは、このセクションの後でも説明します。
 
@@ -118,11 +118,11 @@
 
 .. _Test case related settings in the Setting table:
 
-Setting に書けるテストケース関連の設定
+テストケースに関する設定を設定テーブルに書く
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Setting セクションに、以下のようなテストケース関連の設定が書かれていることがあります。
-この設定は、主に、先に挙げたテストケースごとの設定で変更できる値のデフォルト値です。
+設定テーブルにも、テストケース関連の設定を書けます。
+主に設定できるのは、先に挙げたテストケースごとの設定で変更できる値のデフォルト値です。
 
 :setting:`Default Tags`, :setting:`Force Tags`
    :ref:`タグ <tags>` のデフォルトの値や、全てのテストに強制的に付与されるタグです。
@@ -143,13 +143,13 @@ Setting セクションに、以下のようなテストケース関連の設定
 引数の使い方
 ---------------
 
-これまでの例でも、キーワードが様々な引数を取るさまを示してきました。
-この節では、この重要な機能について詳しく説明します。
+これまでの例で、引数を取るキーワードがいくつかありましたが、この節では、この重要な機能について詳しく説明します。
 引数を持つような :ref:`ユーザ定義のキーワード <user keyword arguments>` や :ref:`ライブラリのキーワード <Keyword arguments>` の書き方は、別の節で説明します。
 
 キーワードは、引数をとらない場合も、複数取る場合もあります。
 引数によっては、デフォルト値が存在する場合もあります。
-キーワードがどのような引数を取るかは実装によって決まり、あるキーワードがどんな引数を取るかを知りたければ、キーワードのドキュメントを調べるのがベストです。
+キーワードがどのような引数を取るかは、キーワードの実装で決まっています。
+あるキーワードがどんな引数を取るかを知りたければ、キーワードのドキュメントを調べるのがベストです。
 この節の例で使われているキーワードのドキュメントは :ref:`Libdoc` ツールで生成できるはずですが、
 ``javadoc`` のような汎用のドキュメントツールでも、同じ情報が得られます。
 
@@ -159,14 +159,14 @@ Setting セクションに、以下のようなテストケース関連の設定
 ~~~~~~~~~~~~
 
 ほとんどのキーワードには、常に指定しなければならない引数があります。
-こうした引数は、キーワードのドキュメント中では、カンマ区切りの引数名、例えば
-`first, second, third` のように表されています。
-引数名自体にはあまり意味はなく、大事なのはドキュメントに指定されたのと同じ数の引数を指定しなければならないということです。
+こうした引数は、キーワードのドキュメント中では、引数をカンマで区切った形式、例えば `first, second, third` のように表されています。
+必須の引数の場合、引数名自体にはあまり意味はなく、ドキュメントで定義されているのと同じ数の引数を指定することだけが大事です。
 引数が少なすぎても、多すぎてもエラーになります。
 
 以下のテストでは、 :ref:`OperatingSystem` ライブラリの :name:`Create Directory` と :name:`Copy File` というキーワードを使っています。
-引数は `path` と `source, destination` で、前者のキーワードは引数を一つ、後者は二つ取ります。
-最後のキーワードは組み込み :ref:`BuiltIn` ライブラリの :name:`No Operation` で、引数を取りません。
+それぞれの引数は `path` と `source, destination` です。
+つまり、前者のキーワードは引数を一つ、後者は二つ取ります。
+最後のキーワード、組み込み :ref:`BuiltIn` ライブラリの :name:`No Operation` は引数を取りません。
 
 .. sourcecode:: robotframework
 
@@ -181,9 +181,11 @@ Setting セクションに、以下のようなテストケース関連の設定
 デフォルト値
 ~~~~~~~~~~~~~~
 
-引数にはたいていデフォルト値があり、指定してもしなくてもよくなっています。
-このドキュメントでは、デフォルト値を、引数名と等号で区切った `name=default value` の形式で表していますが、 Java で実装したキーワードの場合、同じキーワードで引数の異なる実装が :ref:`複数存在する <Default values with Java>` 場合があります。
-全引数にデフォルト値を持たせることはできますが、デフォルト値を持つ引数の後ろに必須の引数は置けません。
+引数にデフォルト値が定義されている場合があります。
+デフォルト値のある引数は、指定してもしなくてもかまいません。
+キーワードのドキュメント中では、デフォルト値は引数名と等号で区切った `name=default value` の形式で表わされています。
+Java で実装したキーワードには、同じキーワードで引数の異なる実装が :ref:`複数存在する <Default values with Java>` 場合があるので注意してください。
+全引数にデフォルト値を持たせることはできますが、デフォルト値を持つ引数の後ろには、必須の引数は置けません。
 
 デフォルト値の扱い方を以下の例に示します。この例では、引数の形式が `path, content=, encoding=UTF-8` であるような :name:`Create File` というキーワードを使っています。引数が3つ、うち一つが必須なので、引数が全く無い場合や、4つ以上引数がある場合は動作しません。
 
@@ -197,19 +199,16 @@ Setting セクションに、以下のようなテストケース関連の設定
 
 .. _varargs:
 
-Variable number of arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+可変個の引数
+~~~~~~~~~~~~~~~~~
 
-It is also possible that a keyword accepts any number of arguments.
-These so called *varargs* can be combined with mandatory arguments
-and arguments with default values, but they are always given after
-them. In the documentation they have an asterisk before the argument
-name like `*varargs`.
+キーワードに任意の数の引数を持たせることも可能です。
+可変個の引数は *varargs* と呼び、必須の引数やデフォルト値つきの引数の組み合わせて使えます。
+ただし、可変個の引数は、必須の引数やデフォルト値つき引数の後に指定します。
+キーワードのドキュメント中では、変数名の前にアスタリスクをつけた `*varargs` の形式で表されています。
 
-For example, :name:`Remove Files` and :name:`Join Paths` keywords from
-the OperatingSystem_ library have arguments `*paths` and `base, *parts`,
-respectively. The former can be used with any number of arguments, but
-the latter requires at least one argument.
+例えば、 :ref:`OperatingSystem` ライブラリの :name:`Remove Files` や :name:`Join Paths` キーワードには、それぞれ `*paths` や `base, *parts` という引数があります。
+前者は引数をいくつにもできますが、後者は少なくとも一つ引数が必要です。
 
 .. sourcecode:: robotframework
 
@@ -219,49 +218,42 @@ the latter requires at least one argument.
        @{paths} =    Join Paths    ${TEMPDIR}    f1.txt    f2.txt    f3.txt    f4.txt
 
 .. _Named argument syntax:
+.. _Named arguments:
 
-Named arguments
+引数の名前指定
 ~~~~~~~~~~~~~~~
 
-The named argument syntax makes using arguments with `default values`_ more
-flexible, and allows explicitly labeling what a certain argument value means.
-Technically named arguments work exactly like `keyword arguments`__ in Python.
+引数の名前指定は、 :ref:`default values <デフォルト値>` つき引数をより柔軟に扱えるようにし、引数に何の値を指定したかを明示的に書ける記法です。
 
-__ http://docs.python.org/2/tutorial/controlflow.html#keyword-arguments
+技術的には、引数の名前指定は、 Python の `キーワード引数 <http://docs.python.org/2/tutorial/controlflow.html#keyword-arguments>`_ と同じです。
 
-Basic syntax
+
+.. Basic syntax
+
+基本の記法
 ''''''''''''
 
-It is possible to name an argument given to a keyword by prefixing the value
-with the name of the argument like `arg=value`. This is especially
-useful when multiple arguments have default values, as it is
-possible to name only some the arguments and let others use their defaults.
-For example, if a keyword accepts arguments `arg1=a, arg2=b, arg3=c`,
-and it is called with one argument `arg3=override`, arguments
-`arg1` and `arg2` get their default values, but `arg3`
-gets value `override`. If this sounds complicated, the `named arguments
-example`_ below hopefully makes it more clear.
+キーワードの引数を指定する際、 `arg=value` のように、値の前に引数の名前を指定できます。
+この書き方は、デフォルト値つきの引数が何個もあって、一部の引数だけに値を指定し、他はデフォルト値のままにしておきたいときにとても便利です。
+例えば、あるキーワードが `arg1=a, arg2=b, arg3=c` のような3つのデフォルト値つき引数で呼び出せるとき、 `arg3=override` だけを指定してキーワードを呼び出すと、 `arg1` と `arg2` はデフォルト値のままで、 `arg3` だけ `override` にできます。
+この挙動がよく理解できなければ、下の :ref:`名前付き引数の例 <named arguments example>` が助けになるかもしれません。
 
-The named argument syntax is both case and space sensitive. The former
-means that if you have an argument `arg`, you must use it like
-`arg=value`, and neither `Arg=value` nor `ARG=value`
-works.  The latter means that spaces are not allowed before the `=`
-sign, and possible spaces after it are considered part of the given value.
+引数を名前指定するときは、名前に大小文字の区別があることと、スペースの扱いが厳密なことに注意してください。前者は、例えば `arg` という引数を名前指定子たければ、 `Arg=value` や `ARG=value` でなく `arg=value` とせねばならないということです。
+後者は、 `=` 記号の前にはスペースを入れてはならず、 `=` の後ろに入っているスペースが、値の一部とみなされるということです。
 
-When the named argument syntax is used with `user keywords`_, the argument
-names must be given without the `${}` decoration. For example, user
-keyword with arguments `${arg1}=first, ${arg2}=second` must be used
-like `arg2=override`.
 
-Using normal positional arguments after named arguments like, for example,
-`| Keyword | arg=value | positional |`, does not work.
-Starting from Robot Framework 2.8 this causes an explicit error.
-The relative order of the named arguments does not matter.
+:ref:`ユーザ定義のキーワード <user keywords>` 中で名前指定の引数を使う場合、引数名に `${}` を付ける必要はありません。例えば、 `${arg1}=first, ${arg2}=second` のように定義したユーザキーワードで引数値を指定するときは、 `arg2=override` のように指定します。
 
-.. note:: Prior to Robot Framework 2.8 it was not possible to name arguments
-          that did not have a default value.
+引数を名前指定で入力すると、その後ろに必須の引数は指定できません。例えば、 `| Keyword | arg=value | positional |` は動きません。
+Robot Framework 2.8 からは、明にエラーになります。
+名前指定で引数を指定する場合、引数の並びは問題になりません。
 
-Named arguments with variables
+.. note:: 
+   Robot Framework 2.8 以前では、デフォルト値を持たない引数は名前指定にできませんでした。
+
+.. _Named arguments with variables:
+
+名前指定の引数に変数を渡す
 ''''''''''''''''''''''''''''''
 
 It is possible to use `variables`_ in both named argument names and values.
