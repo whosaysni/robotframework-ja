@@ -256,41 +256,35 @@ Robot Framework 2.8 からは、明にエラーになります。
 名前指定の引数に変数を渡す
 ''''''''''''''''''''''''''''''
 
-It is possible to use `variables`_ in both named argument names and values.
-If the value is a single `scalar variable`_, it is passed to the keyword as-is.
-This allows using any objects, not only strings, as values also when using
-the named argument syntax. For example, calling a keyword like `arg=${object}`
-will pass the variable `${object}` to the keyword without converting it to
-a string.
+名前指定の引数は、名前と値のどちらにも :ref:`変数 <variables>` を使えます。
+値が単一の :ref:`スカラ値 <scalar variable>` であれば、キーワードに「そのまま」渡されます。
+つまり、この機能を使うと、文字列以外の任意のオブジェクトを、名前指定の引数に使えるのです。
+例えば、 `arg=${object}` を指定してキーワードを呼ぶと、 `${object}`  の値を文字列に変換しないでキーワードに渡します。
 
-If variables are used in named argument names, variables are resolved before
-matching them against argument names. This is a new feature in Robot Framework
-2.8.6.
+名前指定の引数の名前に変数を使うと、引数名と値を結びつけるよりも前に、値の方を評価します。
+この機能は Robot Framework 2.8.6 で登場しました。
 
-The named argument syntax requires the equal sign to be written literally
-in the keyword call. This means that variable alone can never trigger the
-named argument syntax, not even if it has a value like `foo=bar`. This is
-important to remember especially when wrapping keywords into other keywords.
-If, for example, a keyword takes a `variable number of arguments`_ like
-`@{args}` and passes all of them to another keyword using the same `@{args}`
-syntax, possible `named=arg` syntax used in the calling side is not recognized.
-This is illustrated by the example below.
+名前指定の引数を使う場合、キーワードを呼び出すときの記述で、必ずリテラルの等号を書かねばなりません。
+逆に言えば、変数単体では名前指定の引数扱いにはならないし、 `foo=bar` のような値を変数で渡したしても認識されないということです。
+キーワードを他のキーワードでラップするときには特に注意してください。
+例えば、 :ref:`可変個の引数 <variable number of arguments>`  を取るあるキーワードが、引数を `@{args}` に格納していて、それを別のキーワードにそのまま渡しているとします。
+このキーワードを `named=arg` のように名前指定の引数で呼び出しても、 Robot Framework はこれをうまく解釈できません。
+以下に例を挙げましょう。
+
 
 .. sourcecode:: robotframework
 
    *** Test Cases ***
    Example
-       Run Program    shell=True    # This will not come as a named argument to Run Process
+       Run Program    shell=True    # これは Run Process の名前指定引数にはならない
 
    *** Keywords ***
    Run Program
        [Arguments]    @{args}
-       Run Process    program.py    @{args}    # Named arguments are not recognized from inside @{args}
+       Run Process    program.py    @{args}    # @{args} の中の名前指定の引数が正しく解釈されない
 
-If keyword needs to accept and pass forward any named arguments, it must be
-changed to accept `free keyword arguments`_. See `kwargs examples`_ for
-a wrapper keyword version that can pass both positional and named arguments
-forward.
+名前指定の引数をキーワード間で受け渡ししたい場合は、 :ref:`フリーキーワード引数 <free keyword arguments>` を受け取るよう変更が必要です。
+必須引数と名前指定引数の両方を受け渡しできるラッパーキーワードは :ref:`kwargs example` を参照してください。
 
 Escaping named arguments syntax
 '''''''''''''''''''''''''''''''
