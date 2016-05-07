@@ -341,7 +341,7 @@ Robot Framework 2.8 からは、明にエラーになります。
 フリーキーワード引数
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Robot Framework 2.8 から、 `Python スタイルｎフリーキーワード引数 <http://docs.python.org/2/tutorial/controlflow.html#keyword-arguments>`_ (`**kwargs`)をサポートしています。
+Robot Framework 2.8 から、 `Python スタイルのフリーキーワード引数 <http://docs.python.org/2/tutorial/controlflow.html#keyword-arguments>`_ (`**kwargs`)をサポートしています。
 すなわち、 `name=value` の形式で指定した引数のうち、キーワードの引数定義にマッチしない引数全てを、引数 `kwargs` で受けられるようになりました。
 
 フリーキーワード引数には、 :ref:`名前指定の引数 <Named arguments with variables>` と同じような形式で変数を指定できます。
@@ -363,14 +363,10 @@ Robot Framework 2.8.2 から、 :ref:`ダイナミックライブラリ API <dyn
 kwargs の例
 '''''''''''''''
 
-As the first example of using kwargs, let's take a look at
-:name:`Run Process` keyword in the Process_ library. It has a signature
-`command, *arguments, **configuration`, which means that it takes the command
-to execute (`command`), its arguments as `variable number of arguments`_
-(`*arguments`) and finally optional configuration parameters as free keyword
-arguments (`**configuration`). The example below also shows that variables
-work with free keyword arguments exactly like when `using the named argument
-syntax`__.
+kwargs の最初の例として、 :ref:`Process` ライブラリの :name:`Run Process` キーワードを見てみましょう。
+このキーワードのシグネチャは `command, *arguments, **configuration` で、実行するコマンド (`command`),
+:ref:`可変個の <variable number of arguments>` コマンドの引数 (`*arguments`), そして、オプションの設定パラメタをフリーキーワード引数 (`**configuration`) として取ります。
+以下の例は、 :ref:`名前指定の引数に変数を使う <Named arguments with variables>` 方法が、フリーキーワード引数でも使えるという例にもなっています。
 
 .. sourcecode:: robotframework
 
@@ -379,14 +375,10 @@ syntax`__.
        Run Process    program.py    arg1    arg2    cwd=/home/user
        Run Process    program.py    argument    shell=True    env=${ENVIRON}
 
-See `Free keyword arguments (**kwargs)`_ section under `Creating test
-libraries`_ for more information about using the kwargs syntax in
-your custom test libraries.
+自作のテストライブラリで kwargs を使う際の情報は、 :ref:`テストライブラリの作成 <Creating test libraries>` の :ref:`フリーキーワード引数 <Free keyword arguments (**kwargs)>` の節を参照してください。
 
-As the second example, let's create a wrapper `user keyword`_ for running the
-`program.py` in the above example. The wrapper keyword :name:`Run Program`
-accepts any number of arguments and kwargs, and passes them forward for
-:name:`Run Process` along with the name of the command to execute.
+二つ目の例として、上の例の `program.py` を実行する :ref:`ユーザキーワード <user keyword>` のラッパを書いてみましょう。
+ラッパのキーワードは :name:`Run Program` として、任意の数の引数と kwargs を受け取って、受け取った引数を :name:`Run Process` に渡しています。
 
 .. sourcecode:: robotframework
 
@@ -400,48 +392,46 @@ accepts any number of arguments and kwargs, and passes them forward for
        [Arguments]    @{arguments}    &{configuration}
        Run Process    program.py    @{arguments}    &{configuration}
 
-__ `Named arguments with variables`_
+.. _Arguments embedded to keyword names:
 
-Arguments embedded to keyword names
+キーワード名への引数の埋め込み
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A totally different approach to specify arguments is embedding them
-into keyword names. This syntax is supported by both `test library keywords`__
-and `user keywords`__.
+きわめて特異な引数の指定方法として、キーワード名への変数の埋め込みがあります。
+この記法は :ref:`テストライブラリ <Embedding arguments into keyword names>` と :ref:`ユーザキーワード<Embedding arguments into keyword name>` の両方でサポートしています。
 
-__ `Embedding arguments into keyword names`_
-__ `Embedding arguments into keyword name`_
 
-Failures
---------
+.. _Failures:
 
-When test case fails
-~~~~~~~~~~~~~~~~~~~~
+テストケース失敗時の動作
+---------------------------
 
-A test case fails if any of the keyword it uses fails. Normally this means that
-execution of that test case is stopped, possible `test teardown`_ is executed,
-and then execution continues from the next test case. It is also possible to
-use special `continuable failures`__ if stopping test execution is not desired.
+.. _When test case fails:
 
-Error messages
-~~~~~~~~~~~~~~
+テストケースが失敗するとき
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The error message assigned to a failed test case is got directly from the
-failed keyword. Often the error message is created by the keyword itself, but
-some keywords allow configuring them.
+テストケース中のキーワードのいずれかの実行に失敗すると、テストケースの実行は失敗します。
+通常、テストケースが失敗すると、その実行を停止して、 :ref:`ティアダウン <test teadown>` があれば実行し、次のテストケースの実行に移ります。
+テストケースの実行を停めたくない場合に、特別に :ref:`失敗時も実行を継続 <continue on failure>` させることもあります。
 
-In some circumstances, for example when continuable failures are used,
-a test case can fail multiple times. In that case the final error message
-is got by combining the individual errors. Very long error messages are
-automatically cut from the middle to keep reports_ easier to read. Full
-error messages are always visible in log_ file as a message of the failed
-keyword.
+.. _Error messages:
 
-By default error messages are normal text, but
-starting from Robot Framework 2.8 they can `contain HTML formatting`__. This
-is enabled by starting the error message with marker string `*HTML*`.
-This marker will be removed from the final error message shown in reports
-and logs. Using HTML in a custom message is shown in the second example below.
+エラーメッセージ
+~~~~~~~~~~~~~~~~~~
+
+失敗したテストケースに関するメッセージは、実行に失敗したキーワードから直接取っています。
+大抵は、エラーメッセージはキーワード名自体ですが、その挙動は設定で変更できます。
+
+例えば失敗時も実行を継続する場合など、テストケースが何度も失敗するような状況があります。
+そうした場合には、最終的なメッセージは、個々のエラーを結合したものになります。
+エラーメッセージが長すぎる場合には、 :ref:`レポート <reports>` を見やすくするために、メッセージを途中でカットします。
+完全なエラーメッセージは、常に :ref:`ログ <log>` ファイル上で、失敗したキーワードごとのメッセージとして読めます。
+
+デフォルトの設定では、エラーメッセージは素のテキストですが、 Robot Framework 2.8 からは :ref:`HTMLで書ける <HTML in error messages>` ようになりました。
+エラーメッセージを `*HTML*` で始めることで、この機能を有効にできます。
+`*HTML*` マーカー自体は、レポートやログ上の最終的なエラーメッセージ上では除去されます。
+カスタムのメッセージを HTML で出力する例を、下の例の二つめのテストで示します。
 
 .. sourcecode:: robotframework
 
@@ -453,40 +443,26 @@ and logs. Using HTML in a custom message is shown in the second example below.
        ${number} =    Get Number
        Should Be Equal    ${number}    42    *HTML* Number is not my <b>MAGIC</b> number.
 
-__ `Continue on failure`_
-__ `HTML in error messages`_
-
 .. _test case name:
 .. _test case documentation:
 .. _Test case name and documentation:
 
-Test case name and documentation
+テストケースの名前とドキュメント
 --------------------------------
 
-The test case name comes directly from the Test Case table: it is
-exactly what is entered into the test case column. Test cases in one
-test suite should have unique names.  Pertaining to this, you can also
-use the `automatic variable`_ `${TEST_NAME}` within the test
-itself to refer to the test name. It is available whenever a test is
-being executed, including all user keywords, as well as the test setup
-and the test teardown.
+個々のテストケースの名前は、テストケーステーブルのテストケース名に入力した内容そのものです。
+一つのテストスイート中に、同じ名前のテストケースは一つしか作れません。
+ちなみに、テスト名をテスト中で参照するために、 `${TEST_NAME}` という :ref:`自動変数 <automatic variable>` を使えます。
+この変数は、テストが実行されている最中は、テストから呼び出されたユーザーキーワード中でも、テストのセットアップやティアダウン中でも、常に利用できます。
 
-The :setting:`[Documentation]` setting allows you to set a free
-documentation for a test case. That text is shown in the command line
-output, as well as the resulting test logs and test reports.
-It is possible to use simple `HTML formatting`_ in documentation and
-variables_ can be used to make the documentation dynamic.
+:setting:`[Documentation]` 設定を使うと、テストケースのドキュメントを書けます。
+このテキストはコマンドラインでテストを実行したときの出力と、テスト結果のログやレポートに表示されます。
+ドキュメントには簡単な :ref:`HTML タグ<HTML formatting>` を利用でき、 :ref:`変数 <variables>` で動的なドキュメントを生成できます。
 
-If documentation is split into multiple columns, cells in one row are
-concatenated together with spaces. This is mainly be useful when using
-the `HTML format`_ and columns are narrow. If documentation is `split
-into multiple rows`__, the created documentation lines themselves are
-`concatenated using newlines`__. Newlines are not added if a line
-already ends with a newline or an `escaping backslash`__.
-
-__ `Dividing test data to several rows`_
-__ `Newlines in test data`_
-__ `Escaping`_
+ドキュメントを複数のカラムに分割した場合、一つの行中の各セルの内容はスペースで結合されます。
+この仕様が有用なのは、テストケースの記述に :ref:`HTML フォーマット <HTML format>` を使っていて、カラム幅が狭いときです。
+ドキュメントが :ref:`複数の行に分かれている <Dividing test data to several rows>` 場合には、各行のドキュメントを :ref:`改行で結合 <Newlines in test data>` します。
+結合する行が改行で終わっている場合や、 :ref:`バックスラッシュでエスケープ <escaping backslash>` している場合には、改行は付加しません。
 
 .. sourcecode:: robotframework
 
@@ -512,68 +488,54 @@ __ `Escaping`_
        ...                an automatic newline
        No Operation
 
-It is important that test cases have clear and descriptive names, and
-in that case they normally do not need any documentation. If the logic
-of the test case needs documenting, it is often a sign that keywords
-in the test case need better names and they are to be enhanced,
-instead of adding extra documentation. Finally, metadata, such as the
-environment and user information in the last example above, is often
-better specified using tags_.
+テストケースには、明解で意味の伝わる名前を与えることが重要で、そうであれば、原則、ドキュメントは不要です。
+ドキュメントが必要なくらいテストケースのロジックが複雑だと感じたら、ドキュメントを追加する前に、テスト中のキーワードにもっと適切な名前をつけたり、キーワードを改良することを考えましょう。
+そして、上の例で使ったような、ユーザ向けの情報や環境に関するメタデータは、実はドキュメントよりも :ref:`タグ <tags>` を使ったほうが適切です。
 
 .. _tag:
 .. _tags:
 .. _test case tags:
 .. _Tagging test cases:
 
-Tagging test cases
-------------------
+.. _Tagging test cases:
 
-Using tags in Robot Framework is a simple, yet powerful mechanism for
-classifying test cases. Tags are free text and they can be used at
-least for the following purposes:
+テストケースにタグ付けする
+----------------------------
 
-- Tags are shown in test reports_, logs_ and, of course, in the test
-  data, so they provide metadata to test cases.
-- Statistics__ about test cases (total, passed, failed  are
-  automatically collected based on tags).
-- With tags, you can `include or exclude`__ test cases to be executed.
-- With tags, you can specify which test cases are considered `critical`_.
+Robot Framework のタグは、テストケースを分類する上で、単純ながらも強力なメカニズムを備えています。
+タグは普通のテキストで記述でき、少なくとも以下の目的のために使えます:
 
-__ `Configuring statistics`_
-__ `By tag names`_
+- タグはテストの :ref:`レポート<reports>` や :ref:`ログ <logs>` に表示されます。もちろん、テストデータ中においてはメタデータとしての役割を果たします。
+- テストケースの :ref:`成績の計算 <Configuring statistics>` に使います (自動的に、タグごとのテストのパス数・失敗数を計算します)。
+- タグを使って、実行したいテストや除外したいテストを :ref:`絞り込み <By tag names>` できます。
+- タグを使って、どれが :ref:`重要不可欠なテスト <critical>` なのかを指定できます。
 
-In this section it is only explained how to set tags for test
-cases, and different ways to do it are listed below. These
-approaches can naturally be used together.
+この節では、テストケースにタグを指定する方法と、同じことを実現する別のやり方だけを解説しています。
+ここで示す各アプローチは、自由に組み合わせて使えます。
 
-`Force Tags`:setting: in the Setting table
-   All test cases in a test case file with this setting always get
-   specified tags. If it is used in the `test suite initialization file`,
-   all test cases in sub test suites get these tags.
+設定テーブルで `Force Tags`:setting: を指定する
+   この設定のあるテストケースファイル中の全てのテストケースに、指定のタグが付与されます。
+   :ref:`テストスイートの初期化ファイル <test suite initialization file>` で使うと、テストスイートとサブスイート中の全てのテストケースに指定のタグが付与されます。
 
-`Default Tags`:setting: in the Setting table
-   Test cases that do not have a :setting:`[Tags]` setting of their own
-   get these tags. Default tags are not supported in test suite initialization
-   files.
+設定テーブルで `Default Tags`:setting: を指定する
+   :setting:`[Tags]` 設定のないテストケースだけに、指定のタグを付与します。
+   デフォルトタグは、テストスイート初期化ファイル中では使えません。
 
-`[Tags]`:setting: in the Test Case table
-   A test case always gets these tags. Additionally, it does not get the
-   possible tags specified with :setting:`Default Tags`, so it is possible
-   to override the :setting:`Default Tags` by using empty value. It is
-   also possible to use value `NONE` to override default tags.
+テストケーステーブルで `[Tags]`:setting: を指定する
+   この設定を使うと、テストケースには指定のタグが必ず付与されます。
+   さらに、 :setting:`Default Tags` で指定したタグがあっても、付与されなくなります。
+   そのため、この設定に空の値を指定すれば、 :setting:`Default Tags` のタグを打ち消せます。
+   `NONE` を指定することでも、デフォルトタグを打ち消せます。
 
-`--settag`:option: command line option
-   All executed test cases get tags set with this option in addition
-   to tags they got elsewhere.
+コマンドラインオプションに `--settag`:option: を指定する
+   このオプションを指定すると、実行されるテストにもともと付与されていたタグに加えて、指定したタグが付与されます。
 
-`Set Tags`:name:, `Remove Tags`:name:, `Fail`:name: and `Pass Execution`:name: keywords
-   These BuiltIn_ keywords can be used to manipulate tags dynamically
-   during the test execution.
+`Set Tags`:name:, `Remove Tags`:name:, `Fail`:name: および `Pass Execution`:name: キーワードで指定する
+   これらの :ref:`BuiltIn` ライブラリキーワードを使うと、テストの実行時に動的にタグを操作できます。
 
-Tags are free text, but they are normalized so that they are converted
-to lowercase and all spaces are removed. If a test case gets the same tag
-several times, other occurrences than the first one are removed. Tags
-can be created using variables, assuming that those variables exist.
+タグは普通のテキストですが、処理の過程では、全て小文字に変換してスペースを除去した形式に変換します。
+一つのテストケースに同じタグが何度も定義されている場合には、最初に定義したタグ以外の重複するタグ定義を除去します。
+タグは変数で作成できます。ただし、変数値が存在するときに限ります。
 
 .. sourcecode:: robotframework
 
