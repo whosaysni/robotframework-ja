@@ -721,23 +721,14 @@ Robot Framework のセットアップとティアダウンは普通のキーワ�
        [Template]    Example keyword
        first argument    second argument
 
-As the example illustrates, it is possible to specify the
-template for an individual test case using the :setting:`[Template]`
-setting. An alternative approach is using the :setting:`Test Template`
-setting in the Setting table, in which case the template is applied
-for all test cases in that test case file. The :setting:`[Template]`
-setting overrides the possible template set in the Setting table, and
-an empty value for :setting:`[Template]` means that the test has no
-template even when :setting:`Test Template` is used. It is also possible
-to use value `NONE` to indicate that a test has no template.
+上の例からわかるように、 :setting:`[Template]` を使うことで、個別のテストケースにテンプレートを指定できます。
+テンプレートの指定は、設定テーブルに :setting:`Test Template` を設定することでもできますが、その場合は、テストケースファイル中の全てのテストケースに対してテンプレートが適用されます。
+:setting:`[Template]` 設定は、設定テーブルのテンプレート設定をオーバライドでき、空の値を指定したり、 `NONE` を指定した場合には、設定テーブルで :setting:`Test Template` が指定されていても、その設定を取り消せます。
 
-If a templated test case has multiple data rows in its body, the template
-is applied for all the rows one by one. This
-means that the same keyword is executed multiple times, once with data
-on each row. Templated tests are also special so that all the rounds
-are executed even if one or more of them fails. It is possible to use this
-kind of `continue on failure`_ mode with normal tests too, but with
-the templated tests the mode is on automatically.
+テンプレートの指定されたテストケースにデータ行が複数あれば、全ての行について一つ一つテンプレートが適用されます。
+つまり、各行ごとに、同じキーワードが何度も実行されていくわけです。
+テンプレートつきのテストには、もう一つ特別な点があります。それは、テスト中のどこかでキーワードの実行に失敗しても、全ての行を処理し終えるまでテストケースの実行を継続するということです。
+この :ref:`失敗しても処理を継続 <continue on failure>` する機能は、通常のテストの実行でも設定できますが、テンプレートつきのテストにはデフォルトで適用されています。
 
 .. sourcecode:: robotframework
 
@@ -750,20 +741,18 @@ the templated tests the mode is on automatically.
        second round 1    second round 2
        third round 1     third round 2
 
-Using arguments with `default values`_ or `varargs`_, as well as using
-`named arguments`_ and `free keyword arguments`_, work with templates
-exactly like they work otherwise. Using variables_ in arguments is also
-supported normally.
+引数の :ref:`デフォルト値 <default values>` や :ref:`可変個の引数 <varargs>`, :ref:`名前指定の引数 <named arguments>`, :ref:`フリーキーワード引数 <free keyword arguments>` などは、他で使うときと同様、テンプレートでも使えます。
+:ref:`変数での引数の指定 <variables>` もサポートしています。
 
-Templates with embedded arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Templates with embedded arguments:
 
-Starting from Robot Framework 2.8.2, templates support a variation of
-the `embedded argument syntax`_. With templates this syntax works so
-that if the template keyword has variables in its name, they are considered
-placeholders for arguments and replaced with the actual arguments
-used with the template. The resulting keyword is then used without positional
-arguments. This is best illustrated with an example:
+引数埋め込みのキーワードをテンプレートに使う
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Robot Framework 2.8.2 からは、テンプレートでもキーワードの :ref:`引数埋め込み <embedded argument syntax>` をサポートしています。
+テンプレートで引数埋め込みキーワードを扱う場合には、キーワード名のプレースホルダを引数とみなして、テストケース中の引数をそこに割り当てます。
+その結果、キーワードはプレースホルダの数分、必須の引数を取ることになります。
+この挙動がよくわかる例を以下に示します:
 
 .. sourcecode:: robotframework
 
@@ -782,10 +771,8 @@ arguments. This is best illustrated with an example:
        ${result} =    Calculate    ${calculation}
        Should Be Equal    ${result}     ${expected}
 
-When embedded arguments are used with templates, the number of arguments in
-the template keyword name must match the number of arguments it is used with.
-The argument names do not need to match the arguments of the original keyword,
-though, and it is also possible to use different arguments altogether:
+引数埋め込みのキーワードがテンプレート中に使われている場合、キーワード中の「引数」の数と、テストケースに定義する引数の数を一致させせねばなりません。
+引数名は、もとのキーワードの引数名と一致している必要はなく、一部の引数に固定値を入れて、引数の数を変えることもできます:
 
 .. sourcecode:: robotframework
 
@@ -804,11 +791,9 @@ though, and it is also possible to use different arguments altogether:
        [Template]    The ${meaning} of ${life} should be 42
        result    21 * 2
 
-The main benefit of using embedded arguments with templates is that
-argument names are specified explicitly. When using normal arguments,
-the same effect can be achieved by naming the columns that contain
-arguments. This is illustrated by the `data-driven style`_ example in
-the next section.
+引数埋め込みキーワードとテンプレートの組み合わせの最大の利点は、引数名をわかりやすく定義できるところです。
+通常の引数でも、カラムに名前をつけて同じような効果を得られます。
+その例は、以降の :ref:`データ駆動スタイルのテストケース <data-driven style>` の節で示しています。
 
 .. _Templates with for loops:
 
