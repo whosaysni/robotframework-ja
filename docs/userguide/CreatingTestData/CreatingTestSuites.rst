@@ -2,12 +2,11 @@
 .. _test suites:
 .. _Creating test suites:
 
-Creating test suites
-====================
+テストスイートの作成
+======================
 
-Robot Framework test cases are created in test case files, which can
-be organized into directories. These files and directories create a
-hierarchical test suite structure.
+Robot Framework のテストケースは、テストケースファイルの中に書かれます。
+複数のテストケースファイルを一つのディレクトリ中に置いて、一つの階層化されたテストスイートとして構造化できます。
 
 .. contents::
    :depth: 2
@@ -16,73 +15,51 @@ hierarchical test suite structure.
 .. _test case file:
 .. _Test case files:
 
-Test case files
----------------
+テストケースファイル
+------------------------
 
-Robot Framework test cases `are created`__ using test case tables in
-test case files. Such a file automatically creates a test suite from
-all the test cases it contains. There is no upper limit for how many
-test cases there can be, but it is recommended to have less than ten,
-unless the `data-driven approach`_ is used, where one test case consists of
-only one high-level keyword.
+Robot Framework のテストケースは、テストケースファイルにテストケーステーブルを :ref:`定義する <Test case syntax>` ことで作成します。
+個々のテストケースファイルは、中に入っているテストケースからなる一つのテストスイートを自動的に形成します。
+一つのファイル中に書けるテストケースの数に制限はありませんが、 :ref:`データ駆動テスト <data-driven approach>` のように、テストケースあたり一つのキーワードを使っているのでないかぎり、一つのファイルに書くのはたかだか 10個程度のテストケースとするよう勧めます。
 
-The following settings in the Setting table can be used to customize the
-test suite:
-
+ファイル単位のテストスイートは、設定テーブルに以下のような設定ができます:
 `Documentation`:setting:
-   Used for specifying a `test suite documentation`_
+   :ref:`テストスイートのドキュメント <test suite documentation>` の指定に使います。
 `Metadata`:setting:
-   Used for setting `free test suite metadata`_ as name-value
-   pairs.
+   :ref:`テストスイートのメタデータ <free test suite metadata>` を名前-値のペアで指定します。
 `Suite Setup`:setting:, `Suite Teardown`:setting:
-   Specify `suite setup and teardown`_.
+   :ref:`テストスイートのセットアップとティアダウン <suite setup and teardown>` を指定します。
 
-.. note:: All setting names can optionally include a colon at the end, for
-      example :setting:`Documentation:`. This can make reading the settings easier
-      especially when using the plain text format.
-
-__ `Test case syntax`_
+.. note:: 設定の名前には、 :setting:`Documentation:` 末尾にオプションのコロンをつけてもかまいません。
+   この書き方だと、プレーンテキスト形式でテストを書くときに、多少読みやすさが増します。
 
 .. _test suite directory:
 .. _Test suite directories:
 
-Test suite directories
-----------------------
+テストスイートディレクトリ
+----------------------------
 
-Test case files can be organized into directories, and these
-directories create higher-level test suites. A test suite created from
-a directory cannot have any test cases directly, but it contains
-other test suites with test cases, instead. These directories can then be
-placed into other directories creating an even higher-level suite. There
-are no limits for the structure, so test cases can be organized
-as needed.
+テストケースファイルはディレクトリに分けて管理でき、個々のディレクトリがより高水準のテストケースを形成します。
+ディレクトリでできたテストスイートそのものにはテストケースがありませんが、テストケースの入った他のテストスイートを中に格納できます。
+テストスイートのディレクトリを他のディレクトリの中に入れていくことで、より高水準のテストスイートを形成できます。
+テストスイートの構造には制約がないので、好きなようにテストケースを組織化して構成できます。
 
-When a test directory is executed, the files and directories it
-contains are processed recursively as follows:
+テストディレクトリ単位でテストを実行すると、そのディレクトリ下のファイルを、以下のような手順で階層的に実行していきます:
 
-- Files and directories with names starting with a dot (:file:`.`) or an
-  underscore (:file:`_`) are ignored.
-- Directories with the name :file:`CVS` are ignored (case-sensitive).
-- Files not having one of the `recognized extensions`__ (:file:`.html`,
-  :file:`.xhtml`, :file:`.htm`, :file:`.tsv`, :file:`.txt`, :file:`.rst`,
-  or :file:`.rest`) are ignored (case-insensitive).
-- Other files and directories are processed.
+- ファイル名がドット (:file:`.`) やアンダースコア (:file:`_`) で始まるものは無視します。
+- :file:`CVS` (大小文字は区別) という名前のディレクトリは無視します。
+- テストファイルとしてサポートしている :ref:`ファイル拡張子タイプ <supported file formats>` (:file:`.html`, :file:`.xhtml`, :file:`.htm`, :file:`.tsv`, :file:`.txt`, :file:`.rst`, :file:`.rest`) 以外のファイルは無視します (拡張子は大小文字を区別しません)。
+- 上記以外のファイルやディレクトリを処理対象にします。
 
-If a file or directory that is processed does not contain any test
-cases, it is silently ignored (a message is written to the syslog_)
-and the processing continues.
+処理対象となったファイルやディレクトリにテストケースが全く定義されていなかったとしても、単に無視して (メッセージを syslog_ に書いて) 処理を継続します。
 
-__ `Supported file formats`_
+.. _Warning on invalid files:
 
-Warning on invalid files
-~~~~~~~~~~~~~~~~~~~~~~~~
+無効なファイルに対する警告
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Normally files that do not have a valid test case table are silently ignored
-with a message written to the syslog_. It is possible to use a command line
-option :option:`--warnonskippedfiles`, which turns the message into a warning
-shown in `test execution errors`__.
-
-__ `Errors and warnings during execution`_
+通常は、テストケースとして正しく認識できるテーブルが入っていないファイルは無視し、 syslog_ にメッセージを出力します。
+コマンドラインオプション :option:`--warnonskippedfiles` を指定すると、 :ref:`テスト実行エラー <Errors and warnings during execution>` にメッセージを出力するようになります。
 
 .. _initialization file:
 .. _test suite initialization file:
