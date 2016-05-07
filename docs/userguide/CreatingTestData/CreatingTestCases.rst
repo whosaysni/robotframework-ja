@@ -301,25 +301,24 @@ Robot Framework 2.8 からは、明にエラーになります。
 この例では、そもそも `foo` という引数がなければエスケープは必要ありませんでしたが、より明示的に書いておくために、常にエスケープしておくのがよいでしょう。
 
 
-Where named arguments are supported
-'''''''''''''''''''''''''''''''''''
+.. _Where named arguments are supported:
 
-As already explained, the named argument syntax works with keywords. In
-addition to that, it also works when `importing libraries`_.
+名前指定引数のサポート状況
+'''''''''''''''''''''''''''''
 
-Naming arguments is supported by `user keywords`_ and by most `test libraries`_.
-The only exception are Java based libraries that use the `static library API`_.
-Library documentation generated with Libdoc_ has a note does the library
-support named arguments or not.
+これまでで解説したように、名前指定の引数はキーワード全般で使えます。
+その他、 :ref:`ライブラリのインポート <importing libraries>` でも使えます。
 
-.. note:: Prior to Robot Framework 2.8 named argument syntax did not work
-          with test libraries using the `dynamic library API`_.
+名前指定の引数は、 :ref:`ユーザキーワード <user keywords>` と、ほとんどの :ref:`テストライブラリ <test libraries>` で使えます。
+例外は :ref:`スタティックライブラリ API <static library API>` を使っている Java ベースのライブラリです。
+:ref:`Libdoc` で生成したライブラリドキュメントには、ライブラリが名前指定の引数をサポートしているかどうかが記載されます。
 
-Named arguments example
+.. note:: Robot Framework 2.8 以前では、 :ref:`dynamic library API` を使ったテストライブラリには名前指定の記法が使えませんでした。
+
+名前指定引数の例
 '''''''''''''''''''''''
 
-The following example demonstrates using the named arguments syntax with
-library keywords, user keywords, and when importing the Telnet_ test library.
+名前指定の引数を、ライブラリキーワード、ユーザキーワード、 :ref:`Telnet` テストライブラリのインポートで使っている例を示します。
 
 .. sourcecode:: robotframework
 
@@ -337,32 +336,31 @@ library keywords, user keywords, and when importing the Telnet_ test library.
        [Arguments]    ${path}=.    ${options}=
        Execute command    ls ${options} ${path}
 
-Free keyword arguments
+.. _Free keyword arguments:
+
+フリーキーワード引数
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Robot Framework 2.8 added support for `Python style free keyword arguments`__
-(`**kwargs`). What this means is that keywords can receive all arguments that
-use the `name=value` syntax and do not match any other arguments as kwargs.
+Robot Framework 2.8 から、 `Python スタイルｎフリーキーワード引数 <http://docs.python.org/2/tutorial/controlflow.html#keyword-arguments>`_ (`**kwargs`)をサポートしています。
+すなわち、 `name=value` の形式で指定した引数のうち、キーワードの引数定義にマッチしない引数全てを、引数 `kwargs` で受けられるようになりました。
 
-Free keyword arguments support variables similarly as `named arguments
-<Named arguments with variables_>`__. In practice that means that variables
-can be used both in names and values, but the escape sign must always be
-visible literally. For example, both `foo=${bar}` and `${foo}=${bar}` are
-valid, as long as the variables that are used exist. An extra limitation is
-that free keyword argument names must always be strings. Support for variables
-in names is a new feature in Robot Framework 2.8.6, prior to that possible
-variables were left un-resolved.
+フリーキーワード引数には、 :ref:`名前指定の引数 <Named arguments with variables>` と同じような形式で変数を指定できます。
+実際のところ、引数の名前と値の両方に変数を指定できます。
+ただし、エスケープ記号はリテラルとして扱われます。
+例えば、 `foo=${bar}` と `${foo}=${bar}` は、使われている変数がきちんと定義されているかぎり、いずれも有効な書き方です。
+もう一つの制限として、フリーキーワード引数の引数名は、常に文字列でなければなりません。
+引数名に変数を使える機能は Robot Framework 2.8.6 で登場しました。
+それ以前のバージョンでは、引数名を変数のような書き方で指定しても、変数として解決されません。
 
-Initially free keyword arguments only worked with Python based libraries, but
-Robot Framework 2.8.2 extended the support to the `dynamic library API`_
-and Robot Framework 2.8.3 extended it further to Java based libraries and to
-the `remote library interface`_. Finally, user keywords got `kwargs support
-<Kwargs with user keywords_>`__ in Robot Framework 2.9. In other words,
-all keywords can nowadays support kwargs.
+フリーキーワード引数は、もともと Python ベースのライブラリでしか使えませんでした。
+Robot Framework 2.8.2 から、 :ref:`ダイナミックライブラリ API <dynamic library API>` のサポートが拡張され、 Robot Framework 2.8.3 からは Java ベースのライブラリと :ref:`リモートライブラリインタフェース <remote library interface>` もサポートしています。
+. Finally, user keywords got __ in Robot Framework 2.9 からは、ユーザキーワードも :ref:`kwargsをサポート <Kwargs with user keywords>` しています。
+つまり、今では全てのキーワードが kwargs をサポートしているのです。
 
-__ http://docs.python.org/2/tutorial/controlflow.html#keyword-arguments
 
-Kwargs examples
+.. _Kwargs examples:
+
+kwargs の例
 '''''''''''''''
 
 As the first example of using kwargs, let's take a look at
@@ -611,55 +609,45 @@ can be created using variables, assuming that those variables exist.
        Set Tags    mytag
        Remove Tags    smoke    req-*
 
-Reserved tags
-~~~~~~~~~~~~~
+.. _Reserved tags:
 
-Users are generally free to use whatever tags that work in their context.
-There are, however, certain tags that have a predefined meaning for Robot
-Framework itself, and using them for other purposes can have unexpected
-results. All special tags Robot Framework has and will have in the future
-have a `robot-` prefix. To avoid problems, users should thus not use any
-tag with a `robot-` prefix unless actually activating the special functionality.
+予約ずみのタグ
+~~~~~~~~~~~~~~~~
 
-At the time of writing, the only special tag is `robot-exit` that is
-automatically added to tests when `stopping test execution gracefully`_.
-More usages are likely to be added in the future, though.
+基本的に、ユーザはどんなタグを指定してもかまいません。
+ただし、例外として、 Robot Framework の中で、ある種のタグがあらかじめ定義されていて、それらのタグを使うと、予想外の結果を招くことがあります。
+Robot Framework の特殊なタグには、今後組み込まれるものも含めて、すべて `robot-` というプレフィクスがつきます。
+トラブルを避けるには、特に意図して内部機能を使いたいのでない限り `robot-` ではじまるタグを使わないよう勧めます。
+
+このドキュメントの執筆時点では、定義済みの特殊なタグは `robot-exit` のみです。
+このタグは、 :ref:`テストをグレースフルに停止させる <stopping test execution gracefully>` ときに、対象のテストに自動的に付加されます。
+その他の使い方も、将来増える可能性があります。
 
 .. _test setup:
 .. _test teardown:
 .. _Test setup and teardown:
 
-Test setup and teardown
------------------------
+テストのセットアップとティアダウン
+---------------------------------------
 
-Robot Framework has similar test setup and teardown functionality as many
-other test automation frameworks. In short, a test setup is something
-that is executed before a test case, and a test teardown is executed
-after a test case. In Robot Framework setups and teardowns are just
-normal keywords with possible arguments.
+他のテスト自動化フレームワークと同様、 Robot Framework にもセットアップとティアダウンの機能があります。
+簡単にいえば、セットアップはテストケースの前に実行する処理で、ティアダウンはテストケース後に実行するものです。
+Robot Framework のセットアップとティアダウンは普通のキーワードとして定義でき、引数も指定できます。
 
-Setup and teardown are always a single keyword. If they need to take care
-of multiple separate tasks, it is possible to create higher-level `user
-keywords`_ for that purpose. An alternative solution is executing multiple
-keywords using the BuiltIn_ keyword :name:`Run Keywords`.
+セットアップとティアダウンに指定できるキーワードは、つねに一つだけです。
+複数のタスクを実行したいのなら、高水準の :ref:`ユーザキーワード <user keywords>` ひとつにまとめてください。
+あるいは、 :ref:`BuiltIn` キーワードの :name:`Run Keywords` を使えば、複数のキーワードを一つのキーワードから実行できます。
 
-The test teardown is special in two ways. First of all, it is executed also
-when a test case fails, so it can be used for clean-up activities that must be
-done regardless of the test case status. In addition, all the keywords in the
-teardown are also executed even if one of them fails. This `continue on failure`_
-functionality can be used also with normal keywords, but inside teardowns it is
-on by default.
+テストのティアダウンには、二つの特殊な働きがあります。
+一つは、ティアダウンはテストケースが失敗しても実行され、テストケースの実行結果にかかわらず後始末処理を行なうところです。
+もう一つは、ティアダウン中に実行されるキーワードは、たとえいずれかが失敗しても全て実行されるということです。
+この :ref:`失敗しても処理を継続 <continue on failure>` する機能は、通常のキーワードの実行でも設定できますが、ティアダウンにはデフォルトで適用されています。
 
-The easiest way to specify a setup or a teardown for test cases in a
-test case file is using the :setting:`Test Setup` and :setting:`Test
-Teardown` settings in the Setting table. Individual test cases can
-also have their own setup or teardown. They are defined with the
-:setting:`[Setup]` or :setting:`[Teardown]` settings in the test case
-table and they override possible :setting:`Test Setup` and
-:setting:`Test Teardown` settings. Having no keyword after a
-:setting:`[Setup]` or :setting:`[Teardown]` setting means having no
-setup or teardown. It is also possible to use value `NONE` to indicate that
-a test has no setup/teardown.
+テストケースにセットアップやティアダウンを指定したいときは、設定テーブルに :setting:`Test Setup` や :setting:`Test Teardown` を指定するのが一番簡単です。
+個々のテストケースにも、セットアップやティアダウンを指定できます。
+テストケース中で :setting:`[Setup]` や:setting:`[Teardown]` を指定すると、設定テーブルなどで指定された :setting:`Test Setup` や :setting:`Test Teardown` に優先して使われます。
+:setting:`[Setup]` や :setting:`[Teardown]` の引数を省略すると、セットアップやティアダウンを行わないことを表します。
+`NONE` を指定した場合も同じ意味になります。
 
 .. sourcecode:: robotframework
 
@@ -693,17 +681,12 @@ a test has no setup/teardown.
        Do Something
        [Teardown]    ${TEARDOWN}
 
-The name of the keyword to be executed as a setup or a teardown can be a
-variable. This facilitates having different setups or teardowns in
-different environments by giving the keyword name as a variable from
-the command line.
+セットアップやティアダウンで実行するキーワードの名前は変数にできます。
+この機能を使うと、例えばコマンドラインからキーワードを入力して変数に入れ、それを使うことで、実行環境毎にセットアップやティアダウンをさまざまに切り替えられます。
 
-.. note:: `Test suites can have a setup and teardown of their
-           own`__. A suite setup is executed before any test cases or sub test
-           suites in that test suite, and similarly a suite teardown is
-           executed after them.
-
-__  `Suite setup and teardown`_
+.. note:: :ref:`テストスイート単位でも、セットアップやティアダウンを指定できます <suite setup and teardown>` 。
+   テストスイート単位のセットアップは、サブテストスイートを含む全テストスイート中の全てのテストケースのセットアップとして実行されます。
+   スイートのティアダウンも同様です。
 
 .. _test temlate:
 .. _template keyword:
@@ -720,12 +703,13 @@ __  `Suite setup and teardown`_
 また、キーワード名への埋め込み引数も使えます。
 テンプレートの設定は、他のテストの設定と違い、変数を使った設定ができません。
 
-Basic usage
-~~~~~~~~~~~
+.. Basic usage
 
-How a keyword accepting normal positional arguments can be used as a template
-is illustrated by the following example test cases. These two tests are
-functionally fully identical.
+基本の使い方
+~~~~~~~~~~~~~~~
+
+以下のテストケースの例では、必須の引数をとる普通のキーワードをテンプレートに使っています。
+二つのテストケースは、機能的には全く同じです。
 
 .. sourcecode:: robotframework
 
@@ -889,9 +873,8 @@ the next section.
    Empty Password                    ${VALID USER}    ${EMPTY}
    Empty User Name and Password      ${EMPTY}         ${EMPTY}
 
-.. tip:: Naming columns like in the example above makes tests easier to
-         understand. This is possible because on the header row other
-         cells except the first one `are ignored`__.
+.. tip:: 上の例のように、テストケーステーブルの減っだ行にカラム名を書いておくと、テストの内容を理解しやすくなります。
+         ヘッダ行の最初のセル以外の内容は :ref:`無視される <ignored data>` ので、こういう書き方ができます。
 
 上の例には、6 つのテストが入っています。それぞれが、無効なユーザIDまたはパスワードの組み合わせになっています。
 一方、一つのテストだけで、上の6つの組み合わせを検証する方法を以下に示します。
@@ -912,7 +895,6 @@ the next section.
        ${VALID USER}    ${EMPTY}
        ${EMPTY}         ${EMPTY}
 
-__ `Ignored data`_
 
 .. _Behavior-driven style:
 
