@@ -284,25 +284,22 @@ Robot Framework 2.8 からは、明にエラーになります。
        Run Process    program.py    @{args}    # @{args} の中の名前指定の引数が正しく解釈されない
 
 名前指定の引数をキーワード間で受け渡ししたい場合は、 :ref:`フリーキーワード引数 <free keyword arguments>` を受け取るよう変更が必要です。
-必須引数と名前指定引数の両方を受け渡しできるラッパーキーワードは :ref:`kwargs example` を参照してください。
+必須引数と名前指定引数の両方を受け渡しできるラッパーキーワードは :ref:`kwargs の例 <kwargs example>` を参照してください。
 
-Escaping named arguments syntax
+.. _Escaping named arguments syntax:
+
+名前指定引数のエスケープ
 '''''''''''''''''''''''''''''''
 
-The named argument syntax is used only when the part of the argument
-before the equal sign matches one of the keyword's arguments. It is possible
-that there is a positional argument with a literal value like `foo=quux`,
-and also an unrelated argument with name `foo`. In this case the argument
-`foo` either incorrectly gets the value `quux` or, more likely,
-there is a syntax error.
+名前指定の引数は、引数中の等号 ``=`` の前の部分が、キーワードの引数のどれかに一致する場合にのみ使われます。
+例えば、あるキーワードに、必須の引数として、 `foo=quux` というリテラルの値を渡したとします。
+そのキーワードに `foo` という別の引数があったとします。
+この場合、 `quux` は引数 `foo` に渡されてしまい、おそらく必須の引数の指定がないためにエラーとなるでしょう。
 
-In these rare cases where there are accidental matches, it is possible to
-use the backslash character to escape__ the syntax like `foo\=quux`.
-Now the argument will get a literal value `foo=quux`. Note that escaping
-is not needed if there are no arguments with name `foo`, but because it
-makes the situation more explicit, it may nevertheless be a good idea.
+こういった、期待しないマッチが起きるレアケースのために、 `foo\=quux` のように、バックスラッシュによる :ref:`エスケープ <escaping>` が可能です。
+エスケープすると、必須の引数に `foo=quux` という値が渡ります。
+この例では、そもそも `foo` という引数がなければエスケープは必要ありませんでしたが、より明示的に書いておくために、常にエスケープしておくのがよいでしょう。
 
-__ Escaping_
 
 Where named arguments are supported
 '''''''''''''''''''''''''''''''''''
@@ -712,19 +709,16 @@ __  `Suite setup and teardown`_
 .. _template keyword:
 .. _Test templates:
 
-Test templates
---------------
+テストテンプレート
+----------------------
 
-Test templates convert normal `keyword-driven`_ test cases into
-`data-driven`_ tests. Whereas the body of a keyword-driven test case
-is constructed from keywords and their possible arguments, test cases with
-template contain only the arguments for the template keyword.
-Instead of repeating the same keyword multiple times per test and/or with all
-tests in a file, it is possible to use it only per test or just once per file.
+テストテンプレートを使うと、普通の :ref:`キーワード駆動 <keyword-driven>` テストを :ref:`データ駆動 <data-driven>` テストに変換できます。
+キーワード駆動のテストケースがキーワードと引数によって成り立つのに対して、テンプレートを使ったテストケースは、テンプレートにするキーワードに与える引数だけが入っています。
+テンプレートを使うと、テストの度に同じキーワードを何度も繰り返さず、一つのテストに一回、もしくは一つのファイルに一回だけ指定すればよくなります。
 
-Template keywords can accept both normal positional and named arguments, as
-well as arguments embedded to the keyword name. Unlike with other settings,
-it is not possible to define a template using a variable.
+テンプレートのキーワードには、通常の必須の引数も、名前指定の引数も使えます。
+また、キーワード名への埋め込み引数も使えます。
+テンプレートの設定は、他のテストの設定と違い、変数を使った設定ができません。
 
 Basic usage
 ~~~~~~~~~~~
@@ -832,13 +826,13 @@ the same effect can be achieved by naming the columns that contain
 arguments. This is illustrated by the `data-driven style`_ example in
 the next section.
 
-Templates with for loops
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Templates with for loops:
 
-If templates are used with `for loops`_, the template is applied for
-all the steps inside the loop. The continue on failure mode is in use
-also in this case, which means that all the steps are executed with
-all the looped elements even if there are failures.
+テンプレート中で for ループを使う
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+テンプレート中で :ref:`for ループ <for loops>` を使った場合、ループの全ステップに対してテンプレートを適用します。
+その際、「失敗しても継続」モードが使われるので、途中でキーワードの実行に失敗しても、ループの全ての要素を実行するまで処理を継続します。
 
 .. sourcecode:: robotframework
 
@@ -850,44 +844,37 @@ all the looped elements even if there are failures.
        :FOR    ${index}    IN RANGE    42
        \    1st arg    ${index}
 
-Different test case styles
---------------------------
+.. _Different test case styles:
 
-There are several different ways in which test cases may be written. Test
-cases that describe some kind of *workflow* may be written either in
-keyword-driven or behavior-driven style. Data-driven style can be used to test
-the same workflow with varying input data.
+色々なテストケースの書き方
+----------------------------
+
+テストケースの書き方にはいくつか方法があります。
+何らかの *手順 (workflow)* を記述するようなテストケースは、「キーワード駆動」または「ビヘイビア駆動」スタイルで書きます。
+様々な入力データに対して同じワークフローを何度も試すようなテストは、「データ駆動」スタイルで書いてください。
 
 .. _keyword-driven:
 .. _Keyword-driven style:
 
-Keyword-driven style
-~~~~~~~~~~~~~~~~~~~~
+キーワード駆動の書き方
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Workflow tests, such as the :name:`Valid Login` test described
-earlier_, are constructed from several keywords and their possible
-arguments. Their normal structure is that first the system is taken
-into the initial state (:name:`Open Login Page` in the :name:`Valid
-Login` example), then something is done to the system (:name:`Input
-Name`, :name:`Input Password`, :name:`Submit Credentials`), and
-finally it is verified that the system behaved as expected
-(:name:`Welcome Page Should Be Open`).
+:ref:`以前のサンプル <example-tests>` で説明した :name:`Valid Login` のようなワークフローテストは、キーワードいくつかと、引数から成り立っています。
+テストの通常の構成は、まずシステムを初期状態にして (:name:`Valid Login` では :name:`Open Login Page` に相当), 次にシステムに何か操作を行い (:name:`Input Name`, :name:`Input Password`, :name:`Submit Credentials`), 最後にシステムが期待通りに動作しているか検証 (:name:`Welcome Page Should Be Open`) します。
+
 
 .. _earlier: example-tests_
 
 .. _data-driven:
 .. _Data-driven style:
 
-Data-driven style
-~~~~~~~~~~~~~~~~~
+データ駆動の書き方
+~~~~~~~~~~~~~~~~~~~~~
 
-Another style to write test cases is the *data-driven* approach where
-test cases use only one higher-level keyword, normally created as a
-`user keyword`_, that hides the actual test workflow. These tests are
-very useful when there is a need to test the same scenario with
-different input and/or output data. It would be possible to repeat the
-same keyword with every test, but the `test template`_ functionality
-allows specifying the keyword to use only once.
+もう一つのテストケースの書き方は、「 *データ駆動* 」アプローチでの書き方です。
+この書き方では、テストケースは高水準のキーワード（通常は :ref:`ユーザキーワード <user keyword>` として定義したもの) を一つだけ使い、実際のテストワークフローを隠蔽してしまいます。
+この書き方は、様々な入出力データに対して同じテストシナリオを実行する必要があるときにとても便利です。
+テストごとに何度も同じキーワードを繰り返して記述してもかまいませんが、 :ref:`テストテンプレート <test template>` を使えば、キーワードの指定が一度だけで済みます。
 
 .. sourcecode:: robotframework
 
@@ -906,15 +893,12 @@ allows specifying the keyword to use only once.
          understand. This is possible because on the header row other
          cells except the first one `are ignored`__.
 
-The above example has six separate tests, one for each invalid
-user/password combination, and the example below illustrates how to
-have only one test with all the combinations. When using `test
-templates`_, all the rounds in a test are executed even if there are
-failures, so there is no real functional difference between these two
-styles. In the above example separate combinations are named so it is
-easier to see what they test, but having potentially large number of
-these tests may mess-up statistics. Which style to use depends on the
-context and personal preferences.
+上の例には、6 つのテストが入っています。それぞれが、無効なユーザIDまたはパスワードの組み合わせになっています。
+一方、一つのテストだけで、上の6つの組み合わせを検証する方法を以下に示します。
+:ref:`テストテンプレート <test templates>` 使った場合、仮にテスト内のいずれかの条件で検証に失敗しても、テスト内の全ての条件を検証し終えるまでテストを実行し続けます。
+そのため、これらのテストは実質的にほぼ同じく機能します。
+上の例では、個別の組み合わせについてテストケース名がついているので、それぞれのテストを区別しやすい反面、大量にテストケースが存在するために、テスト結果出力が台無しになるかもしれません。
+状況と好みによって、うまく使い分けてください。
 
 .. sourcecode:: robotframework
 
@@ -930,52 +914,43 @@ context and personal preferences.
 
 __ `Ignored data`_
 
-Behavior-driven style
-~~~~~~~~~~~~~~~~~~~~~
+.. _Behavior-driven style:
 
-It is also possible to write test cases as requirements that also non-technical
-project stakeholders must understand. These *executable requirements* are a
-corner stone of a process commonly called `Acceptance Test Driven Development`__
-(ATDD) or `Specification by Example`__.
+ビヘイビア駆動の書き方
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-One way to write these requirements/tests is *Given-When-Then* style
-popularized by `Behavior Driven Development`__ (BDD). When writing test cases in
-this style, the initial state is usually expressed with a keyword starting with
-word :name:`Given`, the actions are described with keyword starting with
-:name:`When` and the expectations with a keyword starting with :name:`Then`.
-Keyword starting with :name:`And` or :name:`But` may be used if a step has more
-than one action.
+テストケースを、技術に詳しくないプロジェクトのステークホルダでも理解できるような形の要求仕様のように書くことも可能です。
+この、いわば *実行可能な要求仕様書* は、一般に `受け入れテスト駆動開発 <http://testobsessed.com/2008/12/08/acceptance-test-driven-development-atdd-an-overview>`_ (ATDD: Acceptance Test Driven Development) ないし `実例による仕様書 <http://en.wikipedia.org/wiki/Specification_by_example>`_ (SbE) と呼ばれています。
+
+このような要求仕様書兼テストの書き方の一つに、 `ビヘイビア駆動開発 <https://ja.wikipedia.org/wiki/%E3%83%93%E3%83%98%E3%82%A4%E3%83%93%E3%82%A2%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA>`_ でよく使われる *Given-When-Then* スタイルがあります。
+*Given-When-Then* スタイルでは、テストの初期状態を :name:`Given` で始まるキーワードで書きます。
+同様に、アクションは :name:`When` で始め、期待される動作は :name:`Then` で始めます。
+アクションを追加するときは、 :name:`And` や :name:`But` を使います。
 
 .. sourcecode:: robotframework
 
    *** Test Cases ***
    Valid Login
-       Given login page is open
-       When valid username and password are inserted
-       and credentials are submitted
-       Then welcome page should be open
+       Given login page is open   # ログインページが開いている「とする」
+       When valid username and password are inserted   # 「もし」有効なユーザ名とパスワードがDB上にあり
+       and credentials are submitted   # 「かつ」認証情報を入力した
+       Then welcome page should be open    # 「ならば」ウェルカムページを表示せねばならない
 
-__ http://testobsessed.com/2008/12/08/acceptance-test-driven-development-atdd-an-overview
-__ http://en.wikipedia.org/wiki/Specification_by_example
-__ http://en.wikipedia.org/wiki/Behavior_Driven_Development
 
-Ignoring :name:`Given/When/Then/And/But` prefixes
-'''''''''''''''''''''''''''''''''''''''''''''''''
+:name:`Given/When/Then/And/But` プレフィクスは無視される
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Prefixes :name:`Given`, :name:`When`, :name:`Then`, :name:`And` and :name:`But`
-are dropped when matching keywords are searched, if no match with the full name
-is found. This works for both user keywords and library keywords. For example,
-:name:`Given login page is open` in the above example can be implemented as
-user keyword either with or without the word :name:`Given`. Ignoring prefixes
-also allows using the same keyword with different prefixes. For example
-:name:`Welcome page should be open` could also used as :name:`And welcome page
-should be open`.
+:name:`Given`, :name:`When`, :name:`Then`, :name:`And`, :name:`But` といったプレフィクスは、キーワードマッチングの際に、他に完全に一致するキーワードがライブラリやユーザ定義のキーワード中で見つからないかぎり、捨てられてしまいます。
+例えば、上の例のキーワード、 :name:`Given login page is open` の場合、ユーザキーワードを定義するときには、キーワード名に :name:`Given` がついていてもいなくてもかまいません。
+このことを利用すれば、一つのキーワードに対して、異なるプレフィクスを使えます。
+例えば、上の例の :name:`Welcome page should be open` は :name:`And welcome page should be open` にも使えます。
 
-.. note:: Ignoring :name:`But` prefix is new in Robot Framework 2.8.7.
+.. note:: :name:`But` プレフィクスを無視するようになったのは Robot Framework 2.8.7 からです。
 
-Embedding data to keywords
-''''''''''''''''''''''''''
+.. _Embedding data to keywords:
 
-When writing concrete examples it is useful to be able pass actual data to
-keyword implementations. User keywords support this by allowing `embedding
-arguments into keyword name`_.
+キーワードにデータを埋め込む
+''''''''''''''''''''''''''''''
+
+具体的なテストのサンプルを書いている際、実際のデータをキーワードに渡せると便利なことがあります。
+ユーザ定義のキーワードは、この機能を :ref:`キーワード名に引数を埋め込む <embedding arguments into keyword name>` ことでサポートしています。

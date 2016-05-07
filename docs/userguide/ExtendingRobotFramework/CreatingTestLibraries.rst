@@ -1047,8 +1047,9 @@ to create signature-preserving decorators.
 __ http://micheles.googlecode.com/hg/decorator/documentation.html
 
 .. _Embedding arguments into keyword names:
+.. _Embedding argument into keyword names:
 
-Embedding arguments into keyword names
+キーワード名に引数を埋め込む
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Library keywords can also accept arguments which are passed using
