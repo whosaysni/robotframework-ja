@@ -66,42 +66,34 @@ Robot Framework のテストケースは、テストケースファイルにテ�
 .. _test suite initialization files:
 .. _Initialization files:
 
-Initialization files
+初期化ファイル
 ~~~~~~~~~~~~~~~~~~~~
 
-A test suite created from a directory can have similar settings as a suite
-created from a test case file. Because a directory alone cannot have that
-kind of information, it must be placed into a special test suite initialization
-file. An initialization file name must always be of the format
-:file:`__init__.ext`, where the extension must be one of the `supported
-file formats`_ (for example, :file:`__init__.robot` or :file:`__init__.html`).
-The name format is borrowed from Python, where files named in this manner
-denote that a directory is a module.
+ディレクトリでできたテストスイートにも、テストケースファイルと同じような設定を持たせられます。
+ディレクトリ単体には情報をもたせられないので、設定は特殊な「テストスイート初期化ファイル」に置かねばなりません。
+初期化ファイルの名前は、 :file:`__init__.ext` の形式にします。 ``ext`` は、 Robot Framework の :ref:`サポートするファイル形式 <supported file formats>` に準じます (:file:`__init__.robot`, :file:`__init__.html` など)。
+このファイル名の付け方は、 Python でディレクトリをパッケージにするときに配置するファイル名に倣っています。
 
-Initialization files have the same structure and syntax as test case files,
-except that they cannot have test case tables and not all settings are
-supported. Variables and keywords created or imported in initialization files
-*are not* available in the lower level test suites. If you need to share
-variables or keywords, you can put them into `resource files`_ that can be
-imported both by initialization and test case files.
+初期化ファイルの書き方はテストケースファイルとほぼ同じですが、テストケーステーブルがなく、設定テーブルに書けない設定がいくつかあります。
+また、初期化ファイル中で作成した変数とキーワードは、他の低水準のテストスイートからは利用 *できません* 。
+テストケースファイル間で変数やキーワードを共有したいのなら、 :ref:`リソースファイル <resource files>` を使ってください。
+リソースファイルは初期化ファイルとテストケースファイルのどちらにもインポートできます。
 
-The main usage for initialization files is specifying test suite related
-settings similarly as in `test case files`_, but setting some `test case
-related settings`__ is also possible. How to use different settings in the
-initialization files is explained below.
+初期化ファイルの主な役割は、 :ref:`テストケースファイル <test case files>` と同じ方法で、テストスイート関連の設定を行なうことにありますが、 :ref:`テストケース関連の設定 <Test case related settings in the Setting table>` も可能です。
+初期化ファイルでできる設定を以下で説明します。
 
 `Documentation`:setting:, `Metadata`:setting:, `Suite Setup`:setting:, `Suite Teardown`:setting:
-   These test suite specific settings work the same way as in test case files.
+   テストスイートむけの設定で、テストケースファイルに書いた時と同じ効果があります。
 `Force Tags`:setting:
-   Specified tags are unconditionally set to all test cases in all test case files
-   this directory contains directly or recursively.
+   この設定に書いたタグは、ディレクトリ内の全てのテストケースファイルのテストケースに付与されます。
+   子ディレクトリ以下のテストスイートにも再帰的に適用します。
 `Test Setup`:setting:, `Test Teardown`:setting:, `Test Timeout`:setting:
-   Set the default value for test setup/teardown or test timeout to all test
-   cases this directory contains. Can be overridden on lower level.
-   Support for defining test timeout in initialization files was added in
-   Robot Framework 2.7.
+   この設定に書いたセットアップおよびティアダウンは、ディレクトリ内の全てのテストケースファイルのテストケースのデフォルト値になります。   子ディレクトリ以下のテストスイートにも再帰的に適用します。
+   テストケースファイルや各テストケースレベルでオーバライドできます。
+   Robot Framework 2.7 から、初期化ファイルにテストタイムアウトを定義できるようになりました。
+
 `Default Tags`:setting:, `Test Template`:setting:
-   Not supported in initialization files.
+   これらの設定は、初期化ファイルには書けません。
 
 .. sourcecode:: robotframework
 
@@ -120,35 +112,25 @@ initialization files is explained below.
        Some Keyword    ${arg}
        Another Keyword
 
-__ `Test case related settings in the Setting table`_
-
 .. _test suite name:
 .. _test suite documentation:
 .. _Test suite name and documentation:
 
-Test suite name and documentation
+テストスイート名とドキュメント
 ---------------------------------
 
-The test suite name is constructed from the file or directory name. The name
-is created so that the extension is ignored, possible underscores are
-replaced with spaces, and names fully in lower case are title cased. For
-example, :file:`some_tests.html` becomes :name:`Some Tests` and
-:file:`My_test_directory` becomes :name:`My test directory`.
+テストスイート名は、ファイルやディレクトリの名前をもとに決まります。
+ファイル名から拡張子を除去し、アンダースコアがあればスペースで置換し、小文字だけの名前はタイトルケース (各単語の先頭を大文字にする) に変換します。
+例えば、 :file:`some_tests.html` は :name:`Some Tests` になり、 :file:`My_test_directory` は :name:`My test directory` です。
 
-The file or directory name can contain a prefix to control the `execution
-order`_ of the suites. The prefix is separated from the base name by two
-underscores and, when constructing the actual test suite name, both
-the prefix and underscores are removed. For example files
-:file:`01__some_tests.txt` and :file:`02__more_tests.txt` create test
-suites :name:`Some Tests` and :name:`More Tests`, respectively, and
-the former is executed before the latter.
+ファイルやディレクトリの名前はには、テストスイートの :ref:`実行順 <execution order>` を制御するプレフィクスを付与できます。
+プレフィクスと名前は、二つのアンダースコアで分割して書きます。
+実行時にテストスイート名を構築する際、プレフィクス部分とアンダースコアは除去されます。
+例えば、テストケースファイル :file:`01__some_tests.txt` および :file:`02__more_tests.txt` は、それぞれ :name:`Some Tests`, :name:`More Tests` というテストスイートになり、前者が先に実行されます。
 
-The documentation for a test suite is set using the :setting:`Documentation`
-setting in the Setting table. It can be used in test case files
-or, with higher-level suites, in test suite initialization files. Test
-suite documentation has exactly the same characteristics regarding to where
-it is shown and how it can be created as `test case
-documentation`_.
+テストスイートのドキュメントは、設定テーブルの :setting:`Documentation` に書きます。
+ドキュメントは、テストケースファイルに書くこともできますし、高水準のテストスイートでは、テストスイート初期化ファイルに書けます。
+テストスイートのドキュメントは、どこに表示されるか、どう書けるかといった観点で、 :ref:`テストケースのドキュメント <test case documentation>` の節で説明したのとほぼ同じ性質を備えています。
 
 .. sourcecode:: robotframework
 
@@ -156,26 +138,22 @@ documentation`_.
    Documentation    An example test suite documentation with *some* _formatting_.
    ...              See test documentation for more documentation examples.
 
-Both the name and documentation of the top-level test suite can be
-overridden in test execution. This can be done with the command line
-options :option:`--name` and :option:`--doc`, respectively, as
-explained in section `Setting metadata`_.
+トップレベルのテストスイートの名前とドキュメントは、実行時にオーバライドできます。
+オーバライドするには、それぞれ、コマンドラインオプション :option:`--name` や :option:`--doc` を使います。
+詳しくは :ref:`メタデータの設定 <Setting metadata>` の節で説明しています。
 
-Free test suite metadata
-------------------------
+.. _Free test suite metadata:
 
-Test suites can also have other metadata than the documentation. This metadata
-is defined in the Setting table using the :setting:`Metadata` setting. Metadata
-set in this manner is shown in test reports and logs.
+テストスイートのメタデータ
+----------------------------
 
-The name and value for the metadata are located in the columns following
-:setting:`Metadata`. The value is handled similarly as documentation, which means
-that it can be split `into several cells`__ (joined together with spaces)
-or `into several rows`__ (joined together with newlines),
-simple `HTML formatting`_ works and even variables_ can be used.
+テストスイートには、ドキュメント以外のメタデータも付与できます。
+メタデータは設定テーブルに :setting:`Metadata` を使って書きます。
+設定したメタデータは、テスト報告書やログに出力されます。
 
-__ `Dividing test data to several rows`_
-__ `Newlines in test data`_
+メタデータの名前と値は、 :setting:`Metadata` の後のカラムに書きます。
+メタデータの値はドキュメントと同じように書けます。つまり、
+:ref:`複数カラムに分けて <Dividing test data to several rows>` 書いたり (スペースで結合される)、 :ref:`複数行に分けて <Newlines in test data>` 書いたり (改行文字で結合される) でき、 :ref:`HTML 形式 <HTML formatting>` で書いたり :ref:`変数 <variable>` を使ったりできます。
 
 .. sourcecode:: robotframework
 
@@ -184,45 +162,32 @@ __ `Newlines in test data`_
    Metadata    More Info      For more information about *Robot Framework* see http://robotframework.org
    Metadata    Executed At    ${HOST}
 
-For top-level test suites, it is possible to set metadata also with the
-:option:`--metadata` command line option. This is discussed in more
-detail in section `Setting metadata`_.
+トップレベルのテストスイートのメタデータは実行時にオーバライドできます。
+オーバライドするには、コマンドラインオプション :option:`--metadata` を使います。
+詳しくは :ref:`メタデータの設定 <Setting metadata>` の節で説明しています。
 
 .. _suite setup:
 .. _suite teardown:
 .. _Suite setup and teardown:
 
-Suite setup and teardown
-------------------------
+テストスイート単位のセットアップとティアダウン
+------------------------------------------------
 
-Not only `test cases`__ but also test suites can have a setup and
-a teardown. A suite setup is executed before running any of the suite's
-test cases or child test suites, and a test teardown is executed after
-them. All test suites can have a setup and a teardown; with suites created
-from a directory they must be specified in a `test suite
-initialization file`_.
+:ref:`テストケース単位 <Test setup and teardown>` だけでなく、テストスイート単位でも、セットアップやティアダウンを指定できます。
+テストスイートのセットアップは、テストスイート中の最初のテストケースを実行する前に実行し、ティアダウンは、全てのテストケースを実行した後に実行します。
+どのテストスイートにも、セットアップとティアダウンを設定できます。ディレクトリでつくったスイートの場合は、設定を :ref:`テストスイート初期化ファイル <test suite initialization file>` に書いてください。
 
-__ `Test setup and teardown`_
+テストケースの場合と同様、スイート単位のセットアップ・ティアダウンはキーワードで指定し、キーワードには引数を指定できます。
+設定値は、設定テーブルで :setting:`Suite Setup` や :setting:`Suite Teardown` といった設定名を使って指定します。
+キーワード名や引数は、設定名の後のカラムに書きます。
 
-Similarly as with test cases, a suite setup and teardown are keywords
-that may take arguments. They are defined in the Setting table with
-:setting:`Suite Setup` and :setting:`Suite Teardown` settings,
-respectively. Keyword names and possible arguments are located in
-the columns after the setting name.
+スイート単位のセットアップの実行に失敗すると、そのスイート内の子テストスイートはただちに失敗扱いとなり、実行されません。
+この仕様のため、テストケースを実行する際、必要な前提条件が整っているかどうかをチェックするのに、テストスイートのセットアップが上手く働きます。
 
-If a suite setup fails, all test cases in it and its child test suites
-are immediately assigned a fail status and they are not actually
-executed. This makes suite setups ideal for checking preconditions
-that must be met before running test cases is possible.
+スイート単位のティアダウンは、通常、全テストケースの実行を終了したあとの後片付けに使います。
+ティアダウンは、同じスイートのセットアップの実行に失敗したときでさえ実行されます。
+スイート単位のティアダウンに失敗すると、スイート内の全テストケースは、実際の実行結果と関係なく失敗扱いになります。
+スイートのティアダウン中に、何らかのキーワードの実行に失敗しても、ティアダウン処理は継続するので注意してください。
 
-A suite teardown is normally used for cleaning up after all the test
-cases have been executed. It is executed even if the setup of the same
-suite fails. If the suite teardown fails, all test cases in the
-suite are marked failed, regardless of their original execution status.
-Note that all the keywords in suite teardowns are executed even if one
-of them fails.
-
-The name of the keyword to be executed as a setup or a teardown can be
-a variable. This facilitates having different setups or teardowns
-in different environments by giving the keyword name as a variable
-from the command line.
+セットアップやティアダウンに指定するキーワードの名前には、変数を指定できます。
+そのため、環境ごとに異なるセットアップ用キーワード名を定義しておき、スイートセットアップは変数にしておいて、コマンドラインで変数の値を指定することで、キーワードを切り替えて実行する、といったことができます。
