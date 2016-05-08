@@ -1,17 +1,14 @@
-Resource and variable files
-===========================
+.. _Resource and variable files:
 
-User keywords and variables in `test case files`_ and `test suite
-initialization files`_ can only be used in files where they are
-created, but *resource files* provide a mechanism for sharing them. Since
-the resource file structure is very close to test case files, it is
-easy to create them.
+リソースファイルと変数ファイル
+==================================
 
-*Variable files* provide a powerful mechanism for creating and sharing
-variables. For example, they allow values other than strings and
-enable creating variables dynamically. Their flexibility comes from
-the fact that they are created using Python code, which also makes
-them somewhat more complicated than `Variable tables`_.
+:ref:`テストケースファイル <test case files>` や :ref:`テストスイート初期化ファイル <test suite initialization files>` 中のユーザキーワードや変数は、定義したファイル中でしか使えませんが、 *リソースファイル* は、それを共有するためのメカニズムを提供します。
+リソースファイルの構造はテストケースファイルの構造とよく似ているので、作成するのは簡単です。
+
+*変数ファイル* は、変数を定義して共有するための強力なメカニズムを提供します。
+例えば、変数ファイルを使えば、文字列以外の値や、動的に生成した値を変数にできます。
+変数ファイルのフレキシビリティは、Python コードを使って変数を生成していることにありますが、その反面、 :ref:`変数テーブル <variable tables>` より若干複雑であることは否めません。
 
 .. contents::
    :depth: 2
@@ -19,24 +16,21 @@ them somewhat more complicated than `Variable tables`_.
 
 .. _Resource files:
 
-Resource files
---------------
+リソースファイル
+-------------------
 
-Taking resource files into use
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Taking resource files into use:
 
-Resource files are imported using the :setting:`Resource` setting in the
-Settings table. The path to the resource file is given in the cell
-after the setting name.
+リソースファイルを使う
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the path is given in an absolute format, it is used directly. In other
-cases, the resource file is first searched relatively to the directory
-where the importing file is located. If the file is not found there,
-it is then searched from the directories in Python's `module search path`_.
-The path can contain variables, and it is recommended to use them to make paths
-system-independent (for example, :file:`${RESOURCES}/login_resources.html` or
-:file:`${RESOURCE_PATH}`). Additionally, slashes (`/`) in the path
-are automatically changed to backslashes (:codesc:`\\`) on Windows.
+リソースファイルは設定テーブルで :setting:`Resource` を使ってインポートします。
+リソースファイルのパスは、 :setting:`Resource` の後のセルに指定します。
+
+パスが絶対パス表記になっていれば、そのパスをそのまま使います。
+それ以外の場合は、まず最初に、インポートを行っているファイルからの相対パスでリソースファイルを探します。ファイルがなければ、 Python の :ref:`モジュールサーチパス` 上のディレクトリの相対で探します。
+パスには変数を含めることができます。むしろ、変数を使って (:file:`${RESOURCES}/login_resources.html` や :file:`${RESOURCE_PATH}` のように) システムに依存しないパスにするよう勧めます。
+スラッシュ (`/`) は、 Windows ではバックスラッシュ (:codesc:`\\`) に動的に変換されます。
 
 .. sourcecode:: robotframework
 
@@ -45,33 +39,26 @@ are automatically changed to backslashes (:codesc:`\\`) on Windows.
    Resource    ../data/resources.html
    Resource    ${RESOURCES}/common.tsv
 
-The user keywords and variables defined in a resource file are
-available in the file that takes that resource file into
-use. Similarly available are also all keywords and variables from the
-libraries, resource files and variable files imported by the said
-resource file.
+リソースファイルにユーザーキーワードや変数を定義すると、リソースファイルをインポートしたファイルの中で利用できます。
+ライブラリをインポートすると、ライブラリ中の全てのキーワードや変数が使えるようになりますが、リソースファイルや、リソースファイルからインポートした変数ファイルの場合も同じく、全てのキーワードや変数を使えます。
 
-Resource file structure
+.. _Resource file structure:
+
+リソースファイルの構造
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The higher-level structure of resource files is the same as that of
-test case files otherwise, but, of course, they cannot contain Test
-Case tables. Additionally, the Setting table in resource files can
-contain only import settings (:setting:`Library`, :setting:`Resource`,
-:setting:`Variables`) and :setting:`Documentation`. The Variable table and
-Keyword table are used exactly the same way as in test case files.
+リソースファイルの大まかな構造は、テストケースファイルとほぼ同じです。
+ただし、当然のことながら、テストケーステーブルは入れられません。
+また、リソースファイルの設定テーブルには、インポート関連の設定 (:setting:`Library`, :setting:`Resource`, :setting:`Variables`) と :setting:`Documentation` しか設定できません。
+変数テーブルやキーワードテーブルはテストケースファイルと全く同じです。
 
-If several resource files have a user keyword with the same name, they
-must be used so that the `keyword name is prefixed with the resource
-file name`__ without the extension (for example, :name:`myresources.Some
-Keyword` and :name:`common.Some Keyword`). Moreover, if several resource
-files contain the same variable, the one that is imported first is
-taken into use.
+複数のリソースファイルで同じユーザキーワードを定義していた場合、それらを区別するには :ref:`キーワード名の前にリソースファイル名を付加 <Handling keywords with same names>` します (例えば、 :name:`myresources.Some Keyword` と :name:`common.Some Keyword` といった具合です)。
+複数のリソースが同じ変数を定義している場合には、先にインポートしたものが使われます。
 
-__ `Handling keywords with same names`_
+.. _Documenting resource files:
 
-Documenting resource files
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+リソースファイルのドキュメント
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Keywords created in a resource file can be documented__ using
 :setting:`[Documentation]` setting. The resource file itself can have
