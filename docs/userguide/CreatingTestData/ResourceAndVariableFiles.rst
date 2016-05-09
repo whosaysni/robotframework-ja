@@ -60,21 +60,17 @@
 リソースファイルのドキュメント
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Keywords created in a resource file can be documented__ using
-:setting:`[Documentation]` setting. The resource file itself can have
-:setting:`Documentation` in the Setting table similarly as
-`test suites`__.
+リソースファイルで定義したキーワードには、 :setting:`[Documentation]` で
+:ref:`ドキュメントを書けます <User keyword name and documentation>` 。
+リソースファイル自体も、 :ref:`テストスイートと同様 <Test suite name and documentation>` 、設定テーブルに :setting:`Documentation` を書けます。
 
-Both Libdoc_ and RIDE_ use these documentations, and they
-are naturally available for anyone opening resource files.  The
-first line of the documentation of a keyword is logged when it is run,
-but otherwise resource file documentations are ignored during the test
-execution.
+Libdoc_ や RIDE_ がこのドキュメントを使うほか、リソースファイルが開かれたときには、ドキュメントには普通にアクセスできます。
+ドキュメントの最初の行は、キーワードを実行するときにログに記録されます。
+それ以外のリソースファイルのドキュメントは、テストの実行時には無視されます。
 
-__ `User keyword name and documentation`_
-__ `Test suite name and documentation`_
+.. _Example resource file
 
-Example resource file
+リソースファイルの例
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. sourcecode:: robotframework
@@ -104,33 +100,30 @@ Example resource file
        [Arguments]    ${password}
        Input Text    password_field    ${password}
 
-Variable files
+.. _Variable files:
+
+変数ファイル
 --------------
 
-Variable files contain variables_ that can be used in the test
-data. Variables can also be created using variable tables or set from
-the command line, but variable files allow creating them dynamically
-and their variables can contain any objects.
+変数ファイルには、テストデータで使う :ref:`変数 <variables>` を定義できます。
+変数は変数テーブルで定義したり、コマンドライン上で指定したりできますが、変数ファイルを使うと、値を動的に生成したり、値を文字列以外の任意のオブジェクトにしたりできます。
 
-Variable files are typically implemented as Python modules and there are
-two different approaches for creating variables:
+変数ファイルは、通常は Python のモジュールとして定義します。
+変数の定義方法には、以下の二種類があります:
 
-`Creating variables directly`_
-   Variables are specified as module attributes. In simple cases, the
-   syntax is so simple that no real programming is needed. For example,
-   `MY_VAR = 'my value'` creates a variable
-   `${MY_VAR}` with the specified text as the value.
+:ref:`変数を直接定義する <Creating variables directly>`
+   変数をモジュールの属性として定義します。
+   書き方は単純で、プログラミングらしい作業は必要ありません。
+   例えば、 `MY_VAR = 'my value'` と書くと、指定したテキストで、変数 `${MY_VAR}` を生成します。
 
-`Getting variables from a special function`_
-   Variable files can have a special `get_variables`
-   (or `getVariables`) method that returns variables as a mapping.
-   Because the method can take arguments this approach is very flexible.
+:ref:`特別な関数で変数を得る <Getting variables from a special function>`
+   変数を `get_variables` (または `getVariables`) という特別な名前のメソッドで生成します。
+   このメソッドは、変数の値を辞書で返します。
+   メソッドには引数を渡せるので、このアプローチはとてもフレキシブルです。
 
-Alternatively variable files can be implemented as `Python or Java classes`__
-that the framework will instantiate. Also in this case it is possible to create
-variables as attributes or get them from a special method.
-
-__ `Implementing variable file as Python or Java class`_
+その他にも、変数ファイルを :ref:`Python や Java のクラス <Implementing variable file as Python or Java class>` で定義する方法があります。
+クラスのインスタンスはフレームワークが生成します。
+この方法では、変数をクラスインスタンスの属性として定義したり、特殊なメソッドから取り出したりできます。
 
 Taking variable files into use
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
