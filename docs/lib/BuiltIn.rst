@@ -171,11 +171,10 @@ Catenate
 
 :Arguments:  [\*items]
 
-Catenates the given items together and returns the resulted string.
+`items` の内容を結合してできた文字列を返します。
 
-By default, items are catenated with spaces, but if the first item
-contains the string ``SEPARATOR=<sep>``, the separator ``<sep>`` is
-used instead. Items are converted into strings when necessary.
+デフォルトの動作では、 `items` の各要素をスペースで結合します。
+最初の要素が ``SEPARATOR=<sep>`` の形式の場合、以降の各要素を  ``<sep>`` で結合します。要素が文字列でないときは、適宜文字列に変換されます。
 
 例::
 
@@ -192,13 +191,11 @@ Comment
 
 :Arguments:  [\*messages]
 
-Displays the given messages in the log file as keyword arguments.
+`messages` の内容をそのままログファイルに出力します。
 
-This keyword does nothing with the arguments it receives, but as they
-are visible in the log, this keyword can be used to display simple
-messages. Given arguments are ignored so thoroughly that they can even
-contain non-existing variables. If you are interested about variable
-values, you can use the `Log` or `Log Many` keywords.
+このキーワードは、引数に対して何もせず、ただログに出力します。
+引数はどんな記法であっても無視されるので、存在しない変数を参照するような内容を書いてもエラーになりません。
+変数の値を出力したいときは、 `Log` や `Log Many` を使ってください。
 
 Continue For Loop
 -----------------
