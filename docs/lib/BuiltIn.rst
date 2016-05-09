@@ -80,17 +80,13 @@ Robot Framework 2.9 からは、変数自体を評価ネームスペース (eval
 ブール型の引数
 ===================
 
-Some keywords accept arguments that are handled as Boolean values true or
-false. If such an argument is given as a string, it is considered false if
-it is either empty or case-insensitively equal to ``false`` or ``no``.
-Keywords verifying something that allow dropping actual and expected values
-from the possible error message also consider string ``no values`` as false.
-Other strings are considered true regardless their value, and other
-argument types are tested using same
-[http://docs.python.org/2/library/stdtypes.html#truth-value-testing|rules
-as in Python].
+キーワードの中には、値を true または false のブール型として扱うものがあります。
+そうしたキーワードの文字列を渡す場合、空文字と、 ``false`` または ``no`` (いずれも大小文字を区別しない) は False 扱いになります。
+また、キーワードの中には、値を比較して、条件に合わないとき、エラーメッセージに期待値と実際の値を出力するかどうかをスイッチする機能をもったものがありますが、そのようなキーワードでは、 ``no values`` も False 扱いです。
+それ以外の文字列は、値が何であっても True 扱いです。
+その他の引数タイプでは、 :ref:`Python の流儀 <http://docs.python.org/2/library/stdtypes.html#truth-value-testing>` で True/False を決めます。
 
-True examples:
+値が真になる例は以下の通りです:
 
 .. code:: robotframework
 
@@ -100,7 +96,7 @@ True examples:
    | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${42}   | # Numbers other than 0 are true. |
 
 
-False examples:
+一方、偽になる例は以下の通りです:
 
 .. code:: robotframework
 
@@ -110,19 +106,14 @@ False examples:
    | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${FALSE}  | # Python ``False`` is false.   |
    | `Should Be Equal` | ${x} | ${y}  | Custom error | values=no values | # ``no values`` works with ``values`` argument |
 
-Note that prior to Robot Framework 2.9 some keywords considered all
-non-empty strings, including ``false`` and ``no``, to be true.
-
+Robot Framework 2.9 以前では、原則、 ``false`` や ``no`` も含め、空文字列でないものは全て True 扱いとしていました。
 
 .. _Multiline string comparisons:
 
-Multiline string comparisons
+複数行からなる文字列の比較
 =============================
 
-`Should Be Equal` and `Should Be Equal As Strings` report the failures using
-[https://en.wikipedia.org/wiki/Diff_utility#Unified_format|unified diff
-format] if both strings have more than two lines. New in Robot Framework
-2.9.1.
+Robot Framework 2.9.1 からは、 `Should Be Equal` や `Should Be Equal As Strings` は、文字列が一致しないときに、 `unified diff形式 <https://en.wikipedia.org/wiki/Diff_utility#Unified_format>`_ でメッセージを出力します。
 
 例:
 
@@ -132,7 +123,7 @@ format] if both strings have more than two lines. New in Robot Framework
    | ${second} = | `Catenate` | SEPARATOR=\n | Same | Differs2 | Same | Not in first |
    | `Should Be Equal` | ${first} | ${second} |
 
-Results in the following error message:
+上の例は、以下のような結果を出力します:
 
 .. code:: robotframework
 
@@ -156,19 +147,14 @@ Results in the following error message:
 Call Method
 -----------
 
-
 :Arguments:  [object, method_name, \*args, \*\*kwargs]
 
-Calls the named method of the given object with the provided arguments.
+引数を指定して、 `object` のメソッドを呼び出します。
 
-The possible return value from the method is returned and can be
-assigned to a variable. Keyword fails both if the object does not have
-a method with the given name or if executing the method raises an
-exception.
+メソッドの戻り値がある場合、キーワードの戻り値として、変数に代入できます。
+`object` が指定した名前のメソッドをもたない場合や、メソッドの実行時に例外が送出された場合、キーワードは失敗します。
 
-Support for ``**kwargs`` is new in Robot Framework 2.9. Since that
-possible equal signs in other arguments must be escaped with a
-backslash like ``\=``.
+Robot Framework 2.9 からは、 ``**kwargs`` のサポートが追加され、 ``**kwargs`` 以外の引数で等号を使うときは、 ``\=`` のようにバックスラッシュによるエスケープが必要になりました。
 
 例::
 
