@@ -202,11 +202,10 @@ Continue For Loop
 
 :Arguments:  []
 
-Skips the current for loop iteration and continues from the next.
+現在の for ループ内の処理を飛ばして、次に移ります。
 
-Skips the remaining keywords in the current for loop iteration and
-continues from the next one. Can be used directly in a for loop or
-in a keyword that the loop uses.
+このキーワード以降のループ内のキーワードはスキップされます。
+ループ直下でも、ループから呼び出されたキーワード内でも使えます。
 
 例:
 
@@ -216,21 +215,19 @@ in a keyword that the loop uses.
   |      | Run Keyword If | '${var}' == 'CONTINUE' | Continue For Loop |
   |      | Do Something   | ${var}                 |
 
-See `Continue For Loop If` to conditionally continue a for loop without
-using `Run Keyword If` or other wrapper keywords.
+条件に応じてループを continue したいときは、 `Continue For Loop If` を使えば、 `Run Keyword If` や他のキーワードのラッパを使わずにすみます。
 
-New in Robot Framework 2.8.
+Robot Framework 2.8 で追加されました。
 
 Continue For Loop If
 --------------------
 
 :Arguments:  [condition]
 
-Skips the current for loop iteration if the ``condition`` is true.
+``condition`` が真ならば、現在のループ内の処理をスキップします。            
 
-A wrapper for `Continue For Loop` to continue a for loop based on
-the given condition. The condition is evaluated using the same
-semantics as with `Should Be True` keyword.
+`Continue For Loop` をラップして、条件に従ってループを continue します。
+``condition`` の値の評価方法は `Should Be True` キーワードと同じです。
 
 例:
 
@@ -240,24 +237,19 @@ semantics as with `Should Be True` keyword.
   |      | Continue For Loop If | '${var}' == 'CONTINUE' |
   |      | Do Something         | ${var}                 |
 
-New in Robot Framework 2.8.
+Robot Framework 2.8 で追加されました。
 
 Convert To Binary
 -----------------
 
 :Arguments:  [item, base=None, prefix=None, length=None]
 
-Converts the given item to a binary string.
+``item`` の値を2進数表記の文字列に変換します。
 
-The ``item``, with an optional ``base``, is first converted to an
-integer using `Convert To Integer` internally. After that it
-is converted to a binary number (base 2) represented as a
-string such as ``1011``.
+このキーワードは、 オプションの ``base`` パラメタに基づいて、 ``item`` の値を `Convert To Integer` で内部変換します。その後、 ``1011`` のような2進数 (基数2) 表記に変換します。
 
-The returned value can contain an optional ``prefix`` and can be
-required to be of minimum ``length`` (excluding the prefix and a
-possible minus sign). If the value is initially shorter than
-the required length, it is padded with zeros.
+戻り値には ``prefix`` オプションでプレフィクスを付加でき、 ``length`` で最小桁数 (プレフィクスと、符号がある場合はそれも除く) を指定できます。
+変換後の2進値の桁数が ``length`` よりも短い場合は、ゼロでパディングします。
 
 例::
 
@@ -265,19 +257,17 @@ the required length, it is padded with zeros.
   | ${result} = | Convert To Binary | F  | base=16 | prefix=0b | # Result is 0b1111 |
   | ${result} = | Convert To Binary | -2 | prefix=B | length=4 | # Result is -B0010 |
 
-See also `Convert To Integer`, `Convert To Octal` and `Convert To Hex`.
+`Convert To Integer`, `Convert To Octal`, `Convert To Hex` も参照してください。
 
 Convert To Boolean
 ------------------
 
 :Arguments:  [item]
 
-Converts the given item to Boolean true or false.
+指定値をブール型の True または False に変換します。
 
-Handles strings ``True`` and ``False`` (case-insensitive) as expected,
-otherwise returns item's
-[http://docs.python.org/2/library/stdtypes.html#truth|truth value]
-using Python's ``bool()`` method.
+``True`` や ``False`` (大小文字の区別なし) は期待通りの値に変換されます。
+それ以外の値に対しては、 Python の ``bool()`` メソッドによる `真偽値 <http://docs.python.org/2/library/stdtypes.html#truth>`_ を返します。
 
 Convert To Bytes
 ----------------
