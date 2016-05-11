@@ -274,35 +274,27 @@ Convert To Bytes
 
 :Arguments:  [input, input_type=text]
 
-Converts the given ``input`` to bytes according to the ``input_type``.
+``input`` を ``input_type`` に指定した型のリテラルとみなしあときのバイト列を返します
 
-Valid input types are listed below:
+指定できる ``input_type`` は以下の通りです:
 
-- ``text:`` Converts text to bytes character by character. All
-  characters with ordinal below 256 can be used and are converted to
-  bytes with same values. Many characters are easiest to represent
-  using escapes like ``\x00`` or ``\xff``. Supports both Unicode
-  strings and bytes.
+- ``text:`` テキストを一文字づつバイト列に変換します。
+  文字のコード値が 256 より低いものだけを利用でき、これらはコード値が同じのバイト文字に変換されます。大抵の文字は、 ``\x00`` や ``\xff`` のような形式でエスケープすると指定しやすいでしょう。引数には Unicode 型と bytes 型のどちらのデータでも指定できます。
 
-- ``int:`` Converts integers separated by spaces to bytes. Similarly as
-  with `Convert To Integer`, it is possible to use binary, octal, or
-  hex values by prefixing the values with ``0b``, ``0o``, or ``0x``,
-  respectively.
+- ``int:`` 整数1バイト分づつをスペースで区切ったものを変換します。
+  `Convert To Integer` と同様、先頭に ``0b``, ``0o``, ``0x`` をつければ、それぞれ2進、8進、16進数を入力できます。
 
-- ``hex:`` Converts hexadecimal values to bytes. Single byte is always
-  two characters long (e.g. ``01`` or ``FF``). Spaces are ignored and
-  can be used freely as a visual separator.
+- ``hex:`` 16進表記の値をバイト文字列に変換します。
+  1バイトは常に2桁 (e.g. ``01``, ``FF``) でなければなりません。
+  スペースは無視されるので、見栄えに合わせて適宜使えます。
 
-- ``bin:`` Converts binary values to bytes. Single byte is always eight
-  characters long (e.g. ``00001010``). Spaces are ignored and can be
-  used freely as a visual separator.
+- ``bin:`` 2進の値をバイト文字列に変換します。1バイトは通常 8 文字 (例: ``00001010``) です。スペースは無視されるので、見栄えに合わせて適宜使えます。
 
-In addition to giving the input as a string, it is possible to use
-lists or other iterables containing individual characters or numbers.
-In that case numbers do not need to be padded to certain length and
-they cannot contain extra spaces.
+入力には、文字列の他にリストや iterable も指定できます。
+その場合、要素ひとつひとつを1文字とみなして処理します。
+個々の入力文字の桁数を補う必要はなく、不要なスペースを入れてはなりません。
 
-Examples (last column shows returned bytes)::
+例 (末尾カラムに戻り値になるはずのバイト列をコメントしています)::
 
   | ${bytes} = | Convert To Bytes | hyvä    |     | # hyv\xe4        |
   | ${bytes} = | Convert To Bytes | \xff\x07 |     | # \xff\x07      |
@@ -315,10 +307,9 @@ Examples (last column shows returned bytes)::
   | ${bytes} = | Convert To Bytes | ${input}   | int | # \x01\x02\x0c |
   | ${bytes} = | Convert To Bytes | ${input}   | hex | # \x01\x02\x12 |
 
-Use `Encode String To Bytes` in ``String`` library if you need to
-convert text to bytes using a certain encoding.
+任意のテキストエンコーディング指定でバイト列に変換したければ、 ``String`` ライブラリの `Encode String To Bytes` を使ってください。
 
-New in Robot Framework 2.8.2.
+Robot Framework 2.8.2 で追加されました。
 
 Convert To Hex
 --------------
