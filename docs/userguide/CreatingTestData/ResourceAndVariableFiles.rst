@@ -125,25 +125,22 @@ Libdoc_ や RIDE_ がこのドキュメントを使うほか、リソースフ�
 クラスのインスタンスはフレームワークが生成します。
 この方法では、変数をクラスインスタンスの属性として定義したり、特殊なメソッドから取り出したりできます。
 
-Taking variable files into use
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Taking variable files into use:
 
-Setting table
+変数ファイルを使う
+~~~~~~~~~~~~~~~~~~~~
+
+.. _Setting table:
+
+設定テーブル
 '''''''''''''
 
-All test data files can import variables using the
-:setting:`Variables` setting in the Setting table, in the same way as
-`resource files are imported`__ using the :setting:`Resource`
-setting. Similarly to resource files, the path to the imported
-variable file is considered relative to the directory where the
-importing file is, and if not found, it is searched from the
-directories in the `module search path`_. The path can also contain variables,
-and slashes are converted to backslashes on Windows. If an `argument file takes
-arguments`__, they are specified in the cells after the path and also they
-can contain variables.
+テストデータに関するファイル全てが、設定テーブルの :setting:`Variables` 設定を使って変数ファイルを取り込めます。
+取り込み方は :setting:`Resource` を使って :ref:`リソースファイルを取り込む <Taking resource files into use>` ときと同じです。
+リソースファイルと同様、取り込む変数ファイルは、まず、取り込む側のファイルのあるディレクトリからの相対で探し、なければ、 :ref:`モジュールサーチパス <module search path>` から探します。
+パスに変数を含めることもでき、パス区切りのスラッシュは Windows ではバックスラッシュに変換されます。
+:ref:`引数ファイルが引数をとり <Getting variables from a special function>`, 引数に応じて変数が動的に生成される形になっている場合、引数はパスの後ろのセルに配置します。この引数には、変数を指定できます。
 
-__ `Taking resource files into use`_
-__ `Getting variables from a special function`_
 
 .. sourcecode:: robotframework
 
@@ -153,52 +150,42 @@ __ `Getting variables from a special function`_
    Variables    ${RESOURCES}/common.py
    Variables    taking_arguments.py    arg1    ${ARG2}
 
-All variables from a variable file are available in the test data file
-that imports it. If several variable files are imported and they
-contain a variable with the same name, the one in the earliest imported file is
-taken into use. Additionally, variables created in Variable tables and
-set from the command line override variables from variable files.
+変数ファイルをインポートすると、その変数ファイル由来の変数は、全てインポート側の、テストデータファイルで利用できます。
+複数の変数ファイルをインポートしたときに、同じ名前の変数が存在すると、最初にインポートしたファイルの変数定義が使われます。
+さらに、インポート側のテストデータファイルの変数テーブル上で定義したり、コマンドラインで指定した変数値は、常に変数ファイル由来の変数値を上書きします。
 
-Command line
-''''''''''''
+.. Command line:
+   
+コマンドライン
+''''''''''''''''
 
-Another way to take variable files into use is using the command line option
-:option:`--variablefile`. Variable files are referenced using a path to them,
-and possible arguments are joined to the path with a colon (`:`)::
+もう一つ、変数ファイルを使う方法として、 :option:`--variablefile` を使う方法があります。
+オプションに指定したパスの変数ファイルが参照され、引数があるときにはコロン (`:`) でつないで指定します::
 
    --variablefile myvariables.py
    --variablefile path/variables.py
    --variablefile /absolute/path/common.py
    --variablefile taking_arguments.py:arg1:arg2
 
-Starting from Robot Framework 2.8.2, variable files taken into use from the
-command line are also searched from the `module search path`_ similarly as
-variable files imported in the Setting table.
+Robot 2.8.2 からは、コマンドラインで指定したファイルを探すときにも :ref:`モジュールサーチパス <module search path>` を使うようになりました。
 
-If a variable file is given as an absolute Windows path, the colon after the
-drive letter is not considered a separator::
+変数ファイルを Windows の絶対パスとして指定する際、ドライブ文字とパスの間のコロンは、変数ファイルの引数とはみなしません::
 
    --variablefile C:\path\variables.py
 
-Starting from Robot Framework 2.8.7, it is also possible to use a semicolon
-(`;`) as an argument separator. This is useful if variable file arguments
-themselves contain colons, but requires surrounding the whole value with
-quotes on UNIX-like operating systems::
+Robot Framework 2.8.7 からは、引数の区切り文字にセミコロン (`;`)を使えるようになりました。
+この機能は、引数自体にセミコロンが含まれる場合に便利ですが、UNIX系の OS では、値をクオートで囲ってやる必要があります::
 
    --variablefile "myvariables.py;argument:with:colons"
    --variablefile C:\path\variables.py;D:\data.xls
 
-Variables in these variable files are globally available in all test data
-files, similarly as `individual variables`__ set with the
-:option:`--variable` option. If both :option:`--variablefile` and
-:option:`--variable` options are used and there are variables with same
-names, those that are set individually with
-:option:`--variable` option take precedence.
+:option:`--variablefile` コマンドラインで指定した変数ファイル中の変数は、全てのテストデータ中で利用可能になります。これは、 :option:`--variable` で個別の変数を指定していったときと同じような挙動です。
+:option:`--variablefile` と :option:`--variable` を同時に利用し、同名の変数が定義されていた場合は、 :option:`--variable` オプションの設定値が優先します。
 
-__ `Setting variables in command line`_
+.. _Creating variables directly:
 
-Creating variables directly
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+変数を直接生成する
+~~~~~~~~~~~~~~~~~~~~
 
 Basic syntax
 ''''''''''''
