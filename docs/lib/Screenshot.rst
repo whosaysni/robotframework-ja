@@ -1,5 +1,5 @@
-robot.libraries.Screenshot
-==========================
+Screenshot: スクリーンショットを撮る
+======================================
 Version:          3.0
 Scope:            test suite
 Named arguments:  supported

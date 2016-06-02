@@ -1,5 +1,5 @@
-robot.libraries.Dialogs
-=======================
+Dialogs: ユーザにダイアログを表示する
+========================================
 Version:          3.0
 Scope:            global
 Named arguments:  supported

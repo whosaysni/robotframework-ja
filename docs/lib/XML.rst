@@ -1,5 +1,5 @@
-robot.libraries.XML
-===================
+XML: XMLデータの操作
+========================
 Version:          3.0
 Scope:            global
 Named arguments:  supported

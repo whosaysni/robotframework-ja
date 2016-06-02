@@ -1,4 +1,4 @@
-robot.libraries.BuiltIn
+BuiltIn: 組み込み機能
 =======================
 Version:          3.0
 Scope:            global

@@ -1,4 +1,4 @@
-robot.libraries.OperatingSystem
+OperatingSystem: OS関連の操作
 ===============================
 Version:          3.0
 Scope:            global

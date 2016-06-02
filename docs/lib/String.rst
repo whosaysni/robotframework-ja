@@ -1,4 +1,4 @@
-robot.libraries.String
+String: 文字列操作
 ======================
 Version:          3.0
 Scope:            global

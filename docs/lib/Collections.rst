@@ -1,5 +1,5 @@
-robot.libraries.Collections
-===========================
+Collections: リストと辞書の操作
+====================================
 Version:          3.0
 Scope:            global
 Named arguments:  supported

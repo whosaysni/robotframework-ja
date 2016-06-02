@@ -1,4 +1,4 @@
-robot.libraries.Process
+Process: プロセスの実行
 =======================
 Version:          3.0
 Scope:            global

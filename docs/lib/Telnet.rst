@@ -1,5 +1,5 @@
-robot.libraries.Telnet
-======================
+Telnet: telnet を使った通信
+==============================
 Version:          3.0
 Scope:            test suite
 Named arguments:  supported
