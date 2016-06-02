@@ -143,8 +143,6 @@ Robot Framework 2.9.1 からは、 `Should Be Equal` や `Should Be Equal As Str
 キーワード
 ---------------------------------------------------
 
-.. contents::
-
 Call Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
