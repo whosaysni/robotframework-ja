@@ -8,9 +8,6 @@ Robot Framework 和訳・日本語ドキュメント集
 :Translation-ja-Version: |version|
 :Translator: Yasushi Masuda <whosaysni@gmail.com>
 
-.. include:: COPYRIGHT.txt
-   :literal:
-
 Robot Framework 標準ドキュメント
 ===================================
 
@@ -22,6 +19,9 @@ Robot Framework 標準ドキュメント
 
    :Copyright: |copy| 2008-2015 Nokia Solutions and Networks
    :License: Licensed under the `Creative Commons Attribution 3.0 Unported`__ license
+
+   .. include:: COPYRIGHT.txt
+      :literal:
 
 __ http://creativecommons.org/licenses/by/3.0/
 
