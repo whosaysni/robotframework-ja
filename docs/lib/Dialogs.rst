@@ -18,8 +18,11 @@ newlines using the ``\n`` character sequence.
 The library has a known limitation that it cannot be used with timeouts
 on Python. Support for IronPython was added in Robot Framework 2.9.2.
 
+Keywords
+--------------
+
 Execute Manual Step
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [message, default_error=]
 
 Pauses test execution until user sets the keyword status.
@@ -33,7 +36,7 @@ fails and an additional dialog is opened for defining the error message.
 dialog.
 
 Get Selection From User
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [message, *values]
 
 Pauses test execution and asks user to select a value.
@@ -48,7 +51,7 @@ Example:
 admin |
 
 Get Value From User
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [message, default_value=, hidden=False]
 
 Pauses test execution and asks user to input a value.
@@ -74,7 +77,7 @@ Possibility to hide the typed in value is new in Robot Framework 2.8.4.
 Considering strings ``false`` and ``no`` to be false is new in 2.9.
 
 Pause Execution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [message=Test execution paused. Press OK to continue.]
 
 Pauses test execution until user clicks ``Ok`` button.

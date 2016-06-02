@@ -24,6 +24,9 @@ Following keywords from ``BuiltIn`` library can also be used with strings:
 - `Convert To String`
 - `Convert To Bytes`
 
+Keywords
+--------------
+
 Convert To Lowercase
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [string]

@@ -22,7 +22,8 @@ The library has following main usages:
 
 This library is new in Robot Framework 2.8.
 
-== Table of contents ==
+Table of contents
+-----------------------
 
 - `Specifying command and arguments`
 - `Process configuration`
@@ -33,7 +34,8 @@ This library is new in Robot Framework 2.8.
 - `Shortcuts`
 - `Keywords`
 
-= Specifying command and arguments =
+Specifying command and arguments
+--------------------------------------------
 
 Both `Run Process` and `Start Process` accept the command to execute and
 all arguments passed to the command as separate arguments. This makes usage
@@ -55,7 +57,8 @@ Examples:
 Starting from Robot Framework 2.8.6, possible non-string arguments are
 converted to strings automatically.
 
-= Process configuration =
+Process configuration
+--------------------------------------------
 
 `Run Process` and `Start Process` keywords can be configured using
 optional ``**configuration`` keyword arguments. Configuration arguments
@@ -78,7 +81,8 @@ possible equal signs in other arguments passed to `Run Process` and
 `Start Process` must be escaped with a backslash like ``name\=value``.
 See `Run Process` for an example.
 
-== Running processes in shell ==
+Running processes in shell
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``shell`` argument specifies whether to run the process in a shell or
 not. By default shell is not used, which means that shell specific commands,
@@ -97,7 +101,8 @@ When using a shell it is possible to give the whole command to execute
 as a single string. See `Specifying command and arguments` section for
 examples and more details in general.
 
-== Current working directory ==
+Current working directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default the child process will be executed in the same directory
 as the parent process, the process running tests, is executed. This
@@ -112,7 +117,8 @@ the ``cwd`` argument.
 Example:
 | `Run Process` | prog.exe | cwd=${ROOT}/directory | stdout=stdout.txt |
 
-== Environment variables ==
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default the child process will get a copy of the parent process's
 environment variables. The ``env`` argument can be used to give the
@@ -127,7 +133,8 @@ Examples:
 env:PATH=%{PATH}${:}${PROGDIR} |
 | `Run Process` | program | env=${environ} | env:EXTRA=value |
 
-== Standard output and error streams ==
+Standard output and error streams
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default processes are run so that their standard output and standard
 error streams are kept in the memory. This works fine normally,
@@ -162,7 +169,8 @@ stderr=${TEMPDIR}/stderr.txt |
 Note that the created output files are not automatically removed after
 the test run. The user is responsible to remove them if needed.
 
-== Output encoding ==
+Output encoding
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Executed commands are, by default, expected to write outputs to the
 `standard output and error streams` using the encoding used by the
@@ -185,7 +193,8 @@ Examples:
 
 The support to set output encoding is new in Robot Framework 3.0.
 
-== Alias ==
+Alias
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A custom name given to the process that can be used when selecting the
 `active process`.
@@ -194,7 +203,8 @@ Examples:
 | `Start Process` | program | alias=example |
 | `Run Process`   | python  | -c | print 'hello' | alias=hello |
 
-= Active process =
+Active process
+--------------------------------------------
 
 The test library keeps record which of the started processes is currently
 active. By default it is latest process started with `Start Process`,
@@ -207,7 +217,8 @@ using the ``handle`` argument. The handle can be the identifier returned by
 `Start Process` or an ``alias`` explicitly given to `Start Process` or
 `Run Process`.
 
-= Result object =
+Result object
+--------------------------------------------
 
 `Run Process`, `Wait For Process` and `Terminate Process` keywords return a
 result object that contains information about the process execution as its
@@ -233,7 +244,8 @@ Example:
 | `Should Be Equal`      | ${stdout}             | ${result.stdout}      |
 | `File Should Be Empty` | ${result.stderr_path} |                       |
 
-= Boolean arguments =
+Boolean arguments
+--------------------------------------------
 
 Some keywords accept arguments that are handled as Boolean values true or
 false. If such an argument is given as a string, it is considered false if
@@ -259,7 +271,8 @@ Note that prior to Robot Framework 2.8 all non-empty strings, including
 ``false``, were considered true. Additionally, ``no`` is considered false
 only in Robot Framework 2.9 and newer.
 
-= Example =
+Example
+--------------------------------------------
 
 | ***** Settings *****
 | Library           Process
@@ -275,6 +288,10 @@ shell=True    cwd=/path
 |     `Terminate Process`    ${handle}
 |     ${result} =    `Wait For Process`    First
 |     `Should Be Equal As Integers`    ${result.rc}    0
+
+
+Keywords
+-------------
 
 Get Process Id
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

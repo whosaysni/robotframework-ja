@@ -23,7 +23,8 @@ The library has the following main usages:
 - Modifying XML and saving it (e.g. `Set Element Text`, `Add Element`
   and `Save XML`).
 
-== Table of contents ==
+Table of contents
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - `Parsing XML`
 - `Using lxml`
@@ -35,7 +36,8 @@ The library has the following main usages:
 - `Shortcuts`
 - `Keywords`
 
-= Parsing XML =
+Parsing XML
+--------------------------------------------
 
 XML can be parsed into an element structure using `Parse XML` keyword.
 It accepts both paths to XML files and strings that contain XML. The
@@ -64,7 +66,8 @@ On Windows also the backslash works, but it the test data it needs to be
 escaped by doubling it (``\\``). Using the built-in variable ``${/}``
 naturally works too.
 
-= Using lxml =
+Using lxml
+--------------------------------------------
 
 By default this library uses Python's standard
 [https://docs.python.org/2/library/xml.etree.elementtree.html|ElementTree]
@@ -79,7 +82,8 @@ It also preserves the doctype and possible namespace prefixes saving XML.
 
 The lxml support is new in Robot Framework 2.8.5.
 
-= Example =
+Example
+--------------------------------------------
 
 The following simple example demonstrates parsing XML and verifying its
 contents both using keywords in this library and in _BuiltIn_ and
@@ -126,7 +130,8 @@ If you only need to do one verification, using the last line alone would
 suffice. If more verifications are needed, parsing the XML with `Parse XML`
 only once would be more efficient.
 
-= Finding elements with xpath =
+Finding elements with xpath
+--------------------------------------------
 
 ElementTree, and thus also this library, supports finding elements using
 xpath expressions. ElementTree does not, however, support the full xpath
@@ -143,7 +148,8 @@ If lxml support is enabled when `importing` the library, the whole
 That includes everything listed below but also lot of other useful
 constructs.
 
-== Tag names ==
+Tag names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When just a single tag name is used, xpath matches all direct child
 elements that have that tag name.
@@ -153,7 +159,8 @@ elements that have that tag name.
 | @{children} =      | `Get Elements` | ${elem}     | child |
 | `Length Should Be` | ${children}    | 2           |       |
 
-== Paths ==
+Paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Paths are created by combining tag names with a forward slash (``/``). For
 example, ``parent/child`` matches all ``child`` elements under ``parent``
@@ -166,7 +173,8 @@ have ``child`` elements, ``parent/child`` xpath will match all these
 | ${elem} =         | `Get Element` | ${XML}     | third/child/grandchild  |
 | `Should Be Equal` | ${elem.tag}   | grandchild |                         |
 
-== Wildcards ==
+Wildcards
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An asterisk (``*``) can be used in paths instead of a tag name to denote
 any element.
@@ -174,12 +182,14 @@ any element.
 | @{children} =      | `Get Elements` | ${XML} | */child |
 | `Length Should Be` | ${children}    | 3      |         |
 
-== Current element ==
+Current element
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The current element is denoted with a dot (``.``). Normally the current
 element is implicit and does not need to be included in the xpath.
 
-== Parent element ==
+Parent element
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The parent element of another element is denoted with two dots (``..``).
 Notice that it is not possible to refer to the parent of the current
@@ -189,7 +199,8 @@ Python/Jython 2.7 and newer).
 | ${elem} =         | `Get Element` | ${XML} | */second/.. |
 | `Should Be Equal` | ${elem.tag}   | third  |             |
 
-== Search all sub elements ==
+Search all sub elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Two forward slashes (``//``) mean that all sub elements, not only the
 direct children, are searched. If the search is started from the current
@@ -200,7 +211,8 @@ element, an explicit dot is required.
 | ${b} =             | `Get Element`  | ${XML} | html//b   |
 | `Should Be Equal`  | ${b.text}      | bold   |           |
 
-== Predicates ==
+Predicates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Predicates allow selecting elements using also other criteria than tag
 names, for example, attributes or position. They are specified after the
@@ -224,7 +236,8 @@ third/child[grandchild] |
 Predicates can also be stacked like ``path[predicate1][predicate2]``.
 A limitation is that possible position predicate must always be first.
 
-= Element attributes =
+Element attributes
+--------------------------------------------
 
 All keywords returning elements, such as `Parse XML`, and `Get Element`,
 return ElementTree's
@@ -241,14 +254,16 @@ directly in the test data.
 
 The examples use the same ``${XML}`` structure as the earlier examples.
 
-== tag ==
+tag
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The tag of the element.
 
 | ${root} =         | `Parse XML` | ${XML}  |
 | `Should Be Equal` | ${root.tag} | example |
 
-== text ==
+text
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The text that the element contains or Python ``None`` if the element has no
 text. Notice that the text _does not_ contain texts of possible child
@@ -264,7 +279,8 @@ whitespace normalized, use `Get Element Text` keyword.
 | ${p} =            | `Get Element` | ${XML}  | html/p       |
 | `Should Be Equal` | ${p.text}     | \n${SPACE*6}Text with${SPACE} |
 
-== tail ==
+tail
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The text after the element before the next opening or closing tag. Python
 ``None`` if the element has no tail. Similarly as with ``text``, also
@@ -273,7 +289,8 @@ The text after the element before the next opening or closing tag. Python
 | ${b} =            | `Get Element` | ${XML}  | html/p/b  |
 | `Should Be Equal` | ${b.tail}     | ${SPACE}and${SPACE} |
 
-== attrib ==
+attrib
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A Python dictionary containing attributes of the element.
 
@@ -282,7 +299,8 @@ A Python dictionary containing attributes of the element.
 | ${3rd} =          | `Get Element`       | ${XML} | third  |
 | `Should Be Empty` | ${3rd.attrib}       |        |        |
 
-= Handling XML namespaces =
+Handling XML namespaces
+--------------------------------------------
 
 ElementTree and lxml handle possible namespaces in XML documents by adding
 the namespace URI to tag names in so called Clark Notation. That is
@@ -292,7 +310,8 @@ can be avoided by passing ``keep_clark_notation`` argument to `Parse XML`
 keyword. The pros and cons of both approaches are discussed in more detail
 below.
 
-== How ElementTree handles namespaces ==
+How ElementTree handles namespaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If an XML document has namespaces, ElementTree adds namespace information
 to tag names in [http://www.jclark.com/xml/xmlns.htm|Clark Notation]
@@ -332,7 +351,8 @@ The resulting output is semantically same as the original, but mangling
 prefixes like this may still not be desirable. Notice also that the actual
 output depends slightly on ElementTree version.
 
-== Default namespace handling ==
+Default namespace handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because the way ElementTree handles namespaces makes xpaths so complicated,
 this library, by default, strips namespaces from tag names and moves that
@@ -363,13 +383,15 @@ this case either:
 Also this output is semantically same as the original. If the original XML
 had only default namespaces, the output would also look identical.
 
-== Namespaces when using lxml ==
+Namespaces when using lxml
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Namespaces are handled the same way also when `using lxml`. The only
 difference is that lxml stores information about namespace prefixes and
 thus they are preserved if XML is saved.
 
-== Attribute namespaces ==
+Attribute namespaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Attributes in XML documents are, by default, in the same namespaces as
 the element they belong to. It is possible to use different namespaces
@@ -385,7 +407,8 @@ works the same way regardless how namespaces are handled.
 | `Element Attribute Should Be` | ${root} | id | 1 |
 | `Element Attribute Should Be` | ${root} | {http://my.ns}id | 2 |
 
-= Boolean arguments =
+Boolean arguments
+--------------------------------------------
 
 Some keywords accept arguments that are handled as Boolean values true or
 false. If such an argument is given as a string, it is considered false if

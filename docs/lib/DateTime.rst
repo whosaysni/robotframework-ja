@@ -15,7 +15,8 @@ also be used by other libraries programmatically.
 
 This library is new in Robot Framework 2.8.5.
 
-= Table of Contents =
+Table of Contents
+-------------------------------------------------------
 
 - `Terminology`
 - `Date formats`
@@ -25,7 +26,8 @@ This library is new in Robot Framework 2.8.5.
 - `Shortcuts`
 - `Keywords`
 
-= Terminology =
+Terminology
+-------------------------------------------------------
 
 In the context of this library, ``date`` and ``time`` generally have following
 meanings:
@@ -42,7 +44,8 @@ and
 [https://docs.python.org/2/library/datetime.html#timedelta-objects|timedelta]
 objects match ``date`` and ``time`` as defined by this library.
 
-= Date formats =
+Date formats
+-------------------------------------------------------
 
 Dates can given to and received from keywords in `timestamp`, `custom
 timestamp`, `Python datetime` and `epoch time` formats. These formats are
@@ -53,7 +56,8 @@ using custom timestamps, in which case it needs to be given using
 ``date_format`` argument. Default result format is timestamp, but it can
 be overridden using ``result_format`` argument.
 
-== Timestamp ==
+Timestamp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a date is given as a string, it is always considered to be a timestamp.
 If no custom formatting is given using ``date_format`` argument, the timestamp
@@ -75,7 +79,8 @@ Examples::
   | ${date} =       | Convert Date | 20140612 12:57          | exclude_millis=yes |
   | Should Be Equal | ${date}      | 2014-06-12 12:57:00     |
 
-== Custom timestamp ==
+Custom timestamp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is possible to use custom timestamps in both input and output.
 The custom format is same as accepted by Python's
@@ -94,7 +99,8 @@ Examples::
   | ${date} =       | Convert Date | ${date}                 | result_format=%d.%m.%Y |
   | Should Be Equal | ${date}      | 28.05.2014              |
 
-== Python datetime ==
+Python datetime
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Python's standard
 [https://docs.python.org/2/library/datetime.html#datetime.datetime|datetime]
@@ -116,7 +122,8 @@ Examples::
   | Should Be Equal As Integers | ${datetime.second}      | 42     |
   | Should Be Equal As Integers | ${datetime.microsecond} | 123000 |
 
-== Epoch time ==
+Epoch time
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Epoch time is the time in seconds since the
 [http://en.wikipedia.org/wiki/Unix_time|UNIX epoch] i.e. 00:00:00.000 (UTC)
@@ -136,7 +143,8 @@ Examples::
   | ${date} =       | Convert Date | 2014-06-12 13:27:59.279 | epoch |
   | Should Be Equal | ${date}      | ${1402568879.279}       |
 
-== Earliest supported date ==
+Earliest supported date
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The earliest date that is supported depends on the date format and to some
 extend on the platform:
@@ -149,7 +157,8 @@ extend on the platform:
 Prior to Robot Framework 2.9.2, all formats had same limitation as epoch time
 has nowadays.
 
-= Time formats =
+Time formats
+-------------------------------------------------------
 
 Similarly as dates, times can be given to and received from keywords in
 various different formats. Supported formats are `number`, `time string`
@@ -159,7 +168,8 @@ Input format for time is always determined automatically based on the input.
 Result format is number by default, but it can be customised using
 ``result_format`` argument.
 
-== Number ==
+Number
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Time given as a number is interpreted to be seconds. It can be given
 either as an integer or a float, or it can be a string that can be converted
@@ -174,7 +184,8 @@ Examples::
   | ${time} =       | Convert Time | ${time} | result_format=number |
   | Should Be Equal | ${time}      | ${3.14} |
 
-== Time string ==
+Time string
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Time strings are strings in format like ``1 minute 42 seconds`` or ``1min
 42s``.
@@ -206,7 +217,8 @@ Examples::
   | ${time} =       | Convert Time | - 1.5 hours         | compact |
   | Should Be Equal | ${time}      | - 1h 30min          |
 
-== Timer string ==
+Timer string
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Timer string is a string given in timer like format ``hh:mm:ss.mil``. In this
 format both hour and millisecond parts are optional, leading and trailing
@@ -229,7 +241,8 @@ Examples::
   | ${time} =       | Convert Time | -101.567     | timer | exclude_millis=yes |
   | Should Be Equal | ${time}      | -00:01:42    |
 
-== Python timedelta ==
+Python timedelta
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Python's standard
 [https://docs.python.org/2/library/datetime.html#datetime.timedelta|timedelta]
@@ -241,7 +254,8 @@ Examples::
   | ${timedelta} =  | Convert Time                 | 01:10:02.123 | timedelta |
   | Should Be Equal | ${timedelta.total_seconds()} | ${4202.123}  |
 
-= Millisecond handling =
+Millisecond handling
+-------------------------------------------------------
 
 This library handles dates and times internally using the precision of the
 given input. With `timestamp`, `time string`, and `timer string` result
@@ -277,7 +291,8 @@ Examples::
   | ${time} =       | Convert Time | 102.567      | timer | exclude_millis=true |
   | Should Be Equal | ${time}      | 00:01:43     |       |
 
-= Programmatic usage =
+Programmatic usage
+-------------------------------------------------------
 
 In addition to be used as normal library, this library is intended to
 provide a stable API for other libraries to use if they want to support
@@ -299,7 +314,7 @@ Additionally helper classes ``Date`` and ``Time`` can be used directly::
       # ...
 
 Add Time To Date
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [date, time, result_format=timestamp, exclude_millis=False, date_format=None]
 
 Adds time to date and returns the resulting date.
@@ -318,7 +333,7 @@ Examples::
   | Should Be Equal | ${date}          | 2014-05-28 13:07:06.115 |
 
 Add Time To Time
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time1, time2, result_format=number, exclude_millis=False]
 
 Adds time to another time and returns the resulting time.
@@ -337,7 +352,7 @@ Examples::
   | Should Be Equal | ${time}          | 04:07:03          |
 
 Convert Date
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [date, result_format=timestamp, exclude_millis=False, date_format=None]
 
 Converts between supported `date formats`.
@@ -358,7 +373,7 @@ Examples::
   | Should Be Equal | ${date}      | 2014-05-28 12:05:00     |
 
 Convert Time
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time, result_format=number, exclude_millis=False]
 
 Converts between supported `time formats`.
@@ -378,7 +393,7 @@ Examples::
   | Should Be Equal | ${time}       | 01:01:02          |
 
 Get Current Date
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time_zone=local, increment=0, result_format=timestamp,
             exclude_millis=False]
 
@@ -407,7 +422,7 @@ Examples::
   | Should Be Equal | ${date.month}    | ${6}                    |
 
 Subtract Date From Date
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [date1, date2, result_format=number, exclude_millis=False,
             date1_format=None, date2_format=None]
 
@@ -431,7 +446,7 @@ Examples::
   | Should Be Equal | ${time}                 | 1 day 42 seconds        |
 
 Subtract Time From Date
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [date, time, result_format=timestamp, exclude_millis=False, date_format=None]
 
 Subtracts time from date and returns the resulting date.
@@ -453,7 +468,7 @@ Examples::
   | Should Be Equal | ${date}                 | 2014-05-28 12:05:03.111 |
 
 Subtract Time From Time
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [time1, time2, result_format=number, exclude_millis=False]
 
 Subtracts time from another time and returns the resulting time.

@@ -9,7 +9,8 @@ A test library providing communication over Telnet connections.
 ``Telnet`` is Robot Framework's standard library that makes it possible to
 connect to Telnet servers and execute commands on the opened connections.
 
-== Table of contents ==
+Table of contents
+---------------------
 
 - `Connections`
 - `Writing and reading`
@@ -22,7 +23,8 @@ connect to Telnet servers and execute commands on the opened connections.
 - `Shortcuts`
 - `Keywords`
 
-= Connections =
+Connections
+--------------------------------------------
 
 The first step of using ``Telnet`` is opening a connection with `Open
 Connection` keyword. Typically the next step is logging in with `Login`
@@ -34,7 +36,8 @@ using `Switch Connection`. `Close All Connections` can be used to close
 all the connections, which is especially useful in suite teardowns to
 guarantee that all connections are always closed.
 
-= Writing and reading =
+Writing and reading
+--------------------------------------------
 
 After opening a connection and possibly logging in, commands can be
 executed or text written to the connection for other reasons using `Write`
@@ -61,7 +64,8 @@ in middle of a search pattern it may also prevent finding the searched
 string. `Terminal emulation` can be used to process these
 escape codes as they would be if a real terminal would be in use.
 
-= Configuration =
+Configuration
+--------------------------------------------
 
 Many aspects related the connections can be easily configured either
 globally or per connection basis. Global configuration is done when
@@ -73,13 +77,15 @@ connection by `Open Connection` or with setting specific keywords
 Values of ``environ_user``, ``window_size``, ``terminal_emulation``, and
 ``terminal_type`` can not be changed after opening the connection.
 
-== Timeout ==
+Timeout
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Timeout defines how long is the maximum time to wait when reading
 output. It is used internally by `Read Until`, `Read Until Regexp`,
 `Read Until Prompt`, and `Login` keywords. The default value is 3 seconds.
 
-== Connection Timeout ==
+Connection Timeout
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Connection Timeout defines how long is the maximum time to wait when
 opening the telnet connection. It is used internally by `Open Connection`.
@@ -87,7 +93,8 @@ The default value is the system global default timeout.
 
 New in Robot Framework 2.9.2.
 
-== Newline ==
+Newline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Newline defines which line separator `Write` keyword should use. The
 default value is ``CRLF`` that is typically used by Telnet connections.
@@ -99,7 +106,8 @@ Examples:
 | `Set Newline` | \n  |
 | `Set Newline` | CRLF |
 
-== Prompt ==
+Prompt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Often the easiest way to read the output of a command is reading all
 the output until the next prompt with `Read Until Prompt`. It also makes
@@ -115,7 +123,8 @@ Examples:
 | `Open Connection` | lolcathost | prompt=$              |
 | `Set Prompt`      | (> |# )    | prompt_is_regexp=true |
 
-== Encoding ==
+Encoding
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To ease handling text containing non-ASCII characters, all written text is
 encoded and read text decoded by default. The default encoding is UTF-8
@@ -150,7 +159,8 @@ was supported and encoding errors were silently ignored. Robot Framework
 default behavior back to ignoring encoding errors, and added the
 possibility to disable encoding.
 
-== Default log level ==
+Default log level
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default log level specifies the log level keywords use for `logging` unless
 they are given an explicit log level. The default value is ``INFO``, and
@@ -161,7 +171,8 @@ Configuring default log level in `importing` and with `Open Connection`
 are new features in Robot Framework 2.7.6. In earlier versions only
 `Set Default Log Level` could be used.
 
-== Terminal type ==
+Terminal type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default the Telnet library does not negotiate any specific terminal type
 with the server. If a specific terminal type, for example ``vt100``, is
@@ -170,14 +181,16 @@ desired, the terminal type can be configured in `importing` and with
 
 New in Robot Framework 2.8.2.
 
-== Window size ==
+Window size
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Window size for negotiation with the server can be configured when
 `importing` the library and with `Open Connection`.
 
 New in Robot Framework 2.8.2.
 
-== USER environment variable ==
+USER environment variable
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Telnet protocol allows the ``USER`` environment variable to be sent when
 connecting to the server. On some servers it may happen that there is no
@@ -187,7 +200,8 @@ to define the desired username. The option ``environ_user`` can be used in
 
 New in Robot Framework 2.8.2.
 
-= Terminal emulation =
+Terminal emulation
+--------------------------------------------
 
 Starting from Robot Framework 2.8.2, Telnet library supports terminal
 emulation with [https://github.com/selectel/pyte|Pyte]. Terminal emulation
@@ -217,7 +231,8 @@ Examples:
 | `Open Connection` | lolcathost | terminal_emulation=True |
 terminal_type=vt100 | window_size=400x100 |
 
-= Logging =
+Logging
+--------------------------------------------
 
 All keywords that read something log the output. These keywords take the
 log level to use as an optional argument, and if no log level is specified
@@ -236,7 +251,8 @@ to the `Open Connection` or by using the `Set Telnetlib Log Level`
 keyword to the active connection. Special level ``NONE`` con be used to
 disable the logging altogether.
 
-= Time string format =
+Time string format
+--------------------------------------------
 
 Timeouts and other times used must be given as a time string using format
 like ``15 seconds`` or ``1min 10s``. If the timeout is given as just
@@ -245,7 +261,8 @@ The time string format is described in more detail in an appendix of
 [http://robotframework.org/robotframework/#user-guide|Robot Framework User
 Guide].
 
-= Boolean arguments =
+Boolean arguments
+--------------------------------------------
 
 Some keywords accept arguments that are handled as Boolean values true or
 false. If such an argument is given as a string, it is considered false if
@@ -277,6 +294,10 @@ string is false.       |
 
 Note that prior to Robot Framework 2.9 some keywords considered all
 non-empty strings, including ``false`` and ``no``, to be true.
+
+
+Keywords
+--------------
 
 Importing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

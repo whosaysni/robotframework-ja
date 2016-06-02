@@ -15,7 +15,8 @@ whether files or directories exists or contain something
 (e.g. `File Should Exist`, `Directory Should Be Empty`) and
 manipulate environment variables (e.g. `Set Environment Variable`).
 
-== Table of contents ==
+Table of contents
+-----------------------
 
 - `Path separators`
 - `Pattern matching`
@@ -25,7 +26,8 @@ manipulate environment variables (e.g. `Set Environment Variable`).
 - `Shortcuts`
 - `Keywords`
 
-= Path separators =
+Path separators
+------------------------------------------------
 
 Because Robot Framework uses the backslash (``\``) as an escape character
 in the test data, using a literal backslash requires duplicating it like
@@ -40,7 +42,8 @@ the path is only a part of an argument like with `Run` and `Start Process`
 keywords. In these cases the built-in variable ``${/}`` that contains
 ``\`` or ``/``, depending on the operating system, can be used instead.
 
-= Pattern matching =
+Pattern matching
+------------------------------------------------
 
 Some keywords allow their arguments to be specified as _glob patterns_
 where:
@@ -58,7 +61,8 @@ matching is implemented using
 Starting from Robot Framework 2.9.1, globbing is not done if the given path
 matches an existing file even if it would contain a glob pattern.
 
-= Tilde expansion =
+Tilde expansion
+------------------------------------------------
 
 Paths beginning with ``~`` or ``~username`` are expanded to the current or
 specified user's home directory, respectively. The resulting path is
@@ -69,7 +73,8 @@ Unixes.
 Tilde expansion is a new feature in Robot Framework 2.8. The ``~username``
 form does not work on Jython
 
-= Boolean arguments =
+Boolean arguments
+------------------------------------------------
 
 Some keywords accept arguments that are handled as Boolean values true or
 false. If such an argument is given as a string, it is considered false if
@@ -102,7 +107,8 @@ false.   |
 Note that prior to Robot Framework 2.9, all non-empty strings, including
 ``false`` and ``no``, were considered true.
 
-= Example =
+Example
+------------------------------------------------
 
 |  =Setting=  |     =Value=     |
 | Library     | OperatingSystem |
@@ -115,6 +121,10 @@ Note that prior to Robot Framework 2.9, all non-empty strings, including
 |             | File Should Exist | ${PATH}    |                      |
 |             | Copy File         | ${PATH}    | ~/file.txt           |
 |             | ${output} =       | Run | ${TEMPDIR}${/}script.py arg |
+
+
+Keywords
+---------------------
 
 Append To Environment Variable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

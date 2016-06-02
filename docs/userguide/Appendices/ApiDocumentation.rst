@@ -1,9 +1,10 @@
-Internal API
+.. _Internal API:
+
+内部 API
 ============
 
-Starting from Robot Framework 2.7, `API documentation`_ is hosted separately
-at the excellent `Read the Docs`_ service. If you are unsure how to use
-certain API or is using them forward compatible, please send a question
-to `mailing list`_.
+Robot Framework 2.7 から、 `API ドキュメント`__ は `Read the Docs`__ サービス上でホストされています。
+特定の API の使い方がわからないときや、APIの互換性について質問があるときは `メーリングリスト`__ で質問してください。
 
-
+.. __Read the Docs: http://readthedocs.org
+.. __API documentation: http://robot-framework.readthedocs.org

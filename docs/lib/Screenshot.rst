@@ -9,7 +9,8 @@ Test library for taking screenshots on the machine where tests are run.
 Notice that successfully taking screenshots requires tests to be run with
 a physical or virtual display.
 
-= Using with Python =
+Using with Python
+--------------------------------------------
 
 How screenshots are taken when using Python depends on the operating
 system. On OSX screenshots are taken using the built-in ``screencapture``
@@ -31,13 +32,15 @@ Using ``screencapture`` on OSX and specifying explicit screenshot module
 are new in Robot Framework 2.9.2. The support for using ``scrot`` is new
 in Robot Framework 3.0.
 
-= Using with Jython and IronPython =
+Using with Jython and IronPython
+--------------------------------------------
 
 With Jython and IronPython this library uses APIs provided by JVM and .NET
 platforms, respectively. These APIs are always available and thus no
 external modules are needed.
 
-= Where screenshots are saved =
+Where screenshots are saved
+--------------------------------------------
 
 By default screenshots are saved into the same directory where the Robot
 Framework log file is written. If no log is created, screenshots are saved
@@ -47,6 +50,9 @@ It is possible to specify a custom location for screenshots using
 ``screenshot_directory`` argument when `importing` the library and
 using `Set Screenshot Directory` keyword during execution. It is also
 possible to save screenshots using an absolute path.
+
+Keywords
+---------------
 
 Importing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

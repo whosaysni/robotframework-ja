@@ -1,4 +1,3 @@
-=======================
 robot.libraries.BuiltIn
 =======================
 Version:          3.0
@@ -11,7 +10,7 @@ Named arguments:  supported
 
 
 目次
------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - `HTMLエラーメッセージ <HTML error messages>`_
 - `式の評価 <Evaluating expressions>`_
@@ -23,7 +22,7 @@ Named arguments:  supported
 .. _HTML error messages:
 
 HTMLエラーメッセージ
-=====================
+---------------------------------------------------
 
 キーワードの多くは、エラーメッセージのオプションを持っています。エラーメッセージは、キーワードの実行に失敗した際に使われます。 Robot Framework 2.8 からは、エラーメッセージの先頭に ``*HTML*`` を付けることで、 HTML 形式のエラーメッセージを使えるようになりました。使い方の例は `Fail` キーワードを参照してください。メッセージの HTML 化は、BuiltIn 以外のライブラリでも使えます。
 
@@ -31,7 +30,7 @@ HTMLエラーメッセージ
 .. _Evaluating expressions:
 
 式の評価
-=========
+---------------------------------------------------
 
 `Evaluate` や `Run Keyword If` 、 `Should Be True` といったキーワードは、引数に式を指定でき、式は Python の `eval <https://docs.python.org/2/library/functions.html#eval>`_ で評価されます。そのため、 ``len()`` や ``int`` といった Python の組み込み関数を使えます。
 `Evaluate` では、自作のモジュールや実行に使う名前空間を設定できます。
@@ -78,7 +77,7 @@ Robot Framework 2.9 からは、変数自体を評価ネームスペース (eval
 .. _Boolean arguments:
 
 ブール型の引数
-===================
+---------------------------------------------------
 
 キーワードの中には、値を true または false のブール型として扱うものがあります。
 そうしたキーワードの文字列を渡す場合、空文字と、 ``false`` または ``no`` (いずれも大小文字を区別しない) は False 扱いになります。
@@ -111,7 +110,7 @@ Robot Framework 2.9 以前では、原則、 ``false`` や ``no`` も含め、�
 .. _Multiline string comparisons:
 
 複数行からなる文字列の比較
-=============================
+---------------------------------------------------
 
 Robot Framework 2.9.1 からは、 `Should Be Equal` や `Should Be Equal As Strings` は、文字列が一致しないときに、 `unified diff形式 <https://en.wikipedia.org/wiki/Diff_utility#Unified_format>`_ でメッセージを出力します。
 
@@ -142,10 +141,10 @@ Robot Framework 2.9.1 からは、 `Should Be Equal` や `Should Be Equal As Str
 .. _Keywords:
 
 キーワード
-===========
+---------------------------------------------------
 
 Call Method
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [object, method_name, \*args, \*\*kwargs]
 
@@ -167,7 +166,7 @@ Robot Framework 2.9 からは、 ``**kwargs`` のサポートが追加され、 
   | Call Method      | ${object}    | positional   | escaped\=equals  |
 
 Catenate
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*items]
 
@@ -187,7 +186,7 @@ Catenate
   | ${str3} = 'Helloworld'
 
 Comment
--------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*messages]
 
@@ -198,7 +197,7 @@ Comment
 変数の値を出力したいときは、 `Log` や `Log Many` を使ってください。
 
 Continue For Loop
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  []
 
@@ -220,7 +219,7 @@ Continue For Loop
 Robot Framework 2.8 で追加されました。
 
 Continue For Loop If
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition]
 
@@ -240,7 +239,7 @@ Continue For Loop If
 Robot Framework 2.8 で追加されました。
 
 Convert To Binary
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None, prefix=None, length=None]
 
@@ -260,7 +259,7 @@ Convert To Binary
 `Convert To Integer`, `Convert To Octal`, `Convert To Hex` も参照してください。
 
 Convert To Boolean
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item]
 
@@ -270,11 +269,11 @@ Convert To Boolean
 それ以外の値に対しては、 Python の ``bool()`` メソッドによる `真偽値 <http://docs.python.org/2/library/stdtypes.html#truth>`_ を返します。
 
 Convert To Bytes
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [input, input_type=text]
 
-``input`` を ``input_type`` に指定した型のリテラルとみなしあときのバイト列を返します
+``input`` を ``input_type`` に指定した型のリテラルとみなしたときのバイト列を返します。
 
 指定できる ``input_type`` は以下の通りです:
 
@@ -312,10 +311,11 @@ Convert To Bytes
 Robot Framework 2.8.2 で追加されました。
 
 Convert To Hex
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None, prefix=None, length=None, lowercase=False]
 
+             
 Converts the given item to a hexadecimal string.
 
 The ``item``, with an optional ``base``, is first converted to an
@@ -341,7 +341,7 @@ the value (but not the given prefix) to lower case.
 See also `Convert To Integer`, `Convert To Binary` and `Convert To Octal`.
 
 Convert To Integer
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None]
 
@@ -372,7 +372,7 @@ See also `Convert To Number`, `Convert To Binary`, `Convert To Octal`,
 `Convert To Hex`, and `Convert To Bytes`.
 
 Convert To Number
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, precision=None]
 
@@ -402,7 +402,7 @@ these resources:
 If you need an integer number, use `Convert To Integer` instead.
 
 Convert To Octal
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None, prefix=None, length=None]
 
@@ -427,7 +427,7 @@ the required length, it is padded with zeros.
 See also `Convert To Integer`, `Convert To Binary` and `Convert To Hex`.
 
 Convert To String
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item]
 
@@ -442,7 +442,7 @@ strings using different encodings. Use `Convert To Bytes` if you just
 want to create byte strings.
 
 Create Dictionary
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*items]
 
@@ -475,7 +475,7 @@ This keyword was changed in Robot Framework 2.9 in many ways:
 - Returned dictionary is ordered and dot-accessible.
 
 Create List
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*items]
 
@@ -491,7 +491,7 @@ variables.
   | ${ints} =   | Create List | ${1} | ${2} | ${3} |
 
 Evaluate
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [expression, modules=None, namespace=None]
 
@@ -527,7 +527,7 @@ Examples (expecting ``${result}`` is 3.14)::
   | ${result} = 42
 
 Exit For Loop
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  []
 
@@ -548,7 +548,7 @@ See `Exit For Loop If` to conditionally exit a for loop without
 using `Run Keyword If` or other wrapper keywords.
 
 Exit For Loop If
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition]
 
@@ -569,7 +569,7 @@ semantics as with `Should Be True` keyword.
 New in Robot Framework 2.8.
 
 Fail
-----
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [msg=None, \*tags]
 
@@ -604,7 +604,7 @@ Support for modifying tags was added in Robot Framework 2.7.4 and
 HTML message support in 2.8.
 
 Fatal Error
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [msg=None]
 
@@ -617,7 +617,7 @@ Possible teardowns will nevertheless be executed.
 See `Fail` if you only want to stop one test case unconditionally.
 
 Get Count
----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item1, item2]
 
@@ -634,7 +634,7 @@ that either have ``count`` method or can be converted to Python lists.
   | Should Be True | 5 < ${count} < 10 |
 
 Get Length
-----------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item]
 
@@ -660,7 +660,7 @@ See also `Length Should Be`, `Should Be Empty` and `Should Not Be
 Empty`.
 
 Get Library Instance
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name=None, all=False]
 
@@ -695,7 +695,7 @@ This feature is new in Robot Framework 2.9.2.
   | &{all libs} = | Get library instance | all=True |
 
 Get Time
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [format=timestamp, time_=NOW]
 
@@ -787,7 +787,7 @@ Support for UTC time was added in Robot Framework 2.7.5 but it did not
 work correctly until 2.7.7.
 
 Get Variable Value
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, default=None]
 
@@ -810,7 +810,7 @@ that the former has some limitations explained in `Set Suite Variable`.
 See `Set Variable If` for another keyword to set variables dynamically.
 
 Get Variables
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [no_decoration=False]
 
@@ -847,7 +847,7 @@ Note: Prior to Robot Framework 2.7.4 variables were returned as
 a custom object that did not support all dictionary methods.
 
 Import Library
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -878,7 +878,7 @@ syntax can be used to give a custom name to the imported library.
   | Import Library | ${LIBRARIES}/Lib.java | arg | WITH NAME | JavaLib |
 
 Import Resource
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [path]
 
@@ -901,7 +901,7 @@ the operating system.
   | Import Resource | found_from_pythonpath.robot |
 
 Import Variables
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [path, \*args]
 
@@ -926,7 +926,7 @@ the operating system.
   | Import Variables | file_from_pythonpath.py  |      |      |
 
 Keyword Should Exist
---------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, msg=None]
 
@@ -941,7 +941,7 @@ The default error message can be overridden with the ``msg`` argument.
 See also `Variable Should Exist`.
 
 Length Should Be
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, length, msg=None]
 
@@ -951,7 +951,7 @@ The length of the item is got using the `Get Length` keyword. The
 default error message can be overridden with the ``msg`` argument.
 
 Log
----
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [message, level=INFO, html=False, console=False, repr=False]
 
@@ -1013,7 +1013,7 @@ and it was changed to drop the ``u`` prefix and add the ``b`` prefix
 in Robot Framework 2.9.
 
 Log Many
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*messages]
 
@@ -1030,7 +1030,7 @@ See `Log` and `Log To Console` keywords if you want to use alternative
 log levels, use HTML, or log to the console.
 
 Log To Console
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [message, stream=STDOUT, no_newline=False]
 
@@ -1057,21 +1057,21 @@ This keyword does not log the message to the normal log file. Use
 New in Robot Framework 2.8.2.
 
 Log Variables
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [level=INFO]
 
 Logs all variables in the current scope with given log level.
 
 No Operation
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  []
 
 Does absolutely nothing.
 
 Pass Execution
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [message, \*tags]
 
@@ -1121,7 +1121,7 @@ it is often safer to fail the test case and make it non-critical.
 New in Robot Framework 2.8.
 
 Pass Execution If
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, message, \*tags]
 
@@ -1147,7 +1147,7 @@ and ``*tags`` have same semantics as with `Pass Execution`.
 New in Robot Framework 2.8.
 
 Regexp Escape
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*patterns]
 
@@ -1164,7 +1164,7 @@ Escaping is done with Python's ``re.escape()`` function.
   | @{strings} = | Regexp Escape | @{strings}  |
 
 Reload Library
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name_or_instance]
 
@@ -1180,7 +1180,7 @@ calls this keyword as a method.
 New in Robot Framework 2.9.
 
 Remove Tags
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*tags]
 
@@ -1204,7 +1204,7 @@ See `Set Tags` if you want to add certain tags and `Fail` if you want
 to fail the test case after setting and/or removing tags.
 
 Repeat Keyword
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [repeat, name, \*args]
 
@@ -1237,7 +1237,7 @@ rounds fails.
 Specifying ``repeat`` as a timeout is new in Robot Framework 3.0.
 
 Replace Variables
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [text]
 
@@ -1250,8 +1250,6 @@ always returns a string.
 
 例:
 
-  
-
 The file ``template.txt`` contains ``Hello ${NAME}!`` and variable
 ``${NAME}`` has the value ``Robot``.
 
@@ -1262,7 +1260,7 @@ The file ``template.txt`` contains ``Hello ${NAME}!`` and variable
   | Should Be Equal | ${message}        | Hello Robot!           |
 
 Return From Keyword
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*return_values]
 
@@ -1313,7 +1311,7 @@ keywords are new in Robot Framework 2.8.
 See also `Run Keyword And Return` and `Run Keyword And Return If`.
 
 Return From Keyword If
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, \*return_values]
 
@@ -1340,7 +1338,7 @@ See also `Run Keyword And Return` and `Run Keyword And Return If`.
 New in Robot Framework 2.8.
 
 Run Keyword
------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1351,7 +1349,7 @@ can be a variable and thus set dynamically, e.g. from a return value of
 another keyword or from the command line.
 
 Run Keyword And Continue On Failure
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1371,7 +1369,7 @@ timeout, or fatal exception.
 Since Robot Framework 2.9, variable errors are caught by this keyword.
 
 Run Keyword And Expect Error
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [expected_error, name, \*args]
 
@@ -1398,7 +1396,7 @@ caught by this keyword.
 Since Robot Framework 2.9, variable errors are caught by this keyword.
 
 Run Keyword And Ignore Error
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1418,7 +1416,7 @@ caught by this keyword. Otherwise this keyword itself never fails.
 Since Robot Framework 2.9, variable errors are caught by this keyword.
 
 Run Keyword And Return
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1445,7 +1443,7 @@ based on a condition.
 New in Robot Framework 2.8.2.
 
 Run Keyword And Return If
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, name, \*args]
 
@@ -1469,7 +1467,7 @@ based on a condition.
 New in Robot Framework 2.8.2.
 
 Run Keyword And Return Status
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1497,7 +1495,7 @@ New in Robot Framework 2.7.6.
 
 
 Run Keyword If
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, name, \*args]
 
@@ -1573,7 +1571,7 @@ Attributes they contain can thus be used in the condition::
 
 
 Run Keyword If All Critical Tests Passed
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1587,7 +1585,7 @@ documentation for more details.
 
 
 Run Keyword If All Tests Passed
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1601,7 +1599,7 @@ documentation for more details.
 
 
 Run Keyword If Any Critical Tests Failed
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1615,7 +1613,7 @@ documentation for more details.
 
 
 Run Keyword If Any Tests Failed
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1629,7 +1627,7 @@ documentation for more details.
 
 
 Run Keyword If Test Failed
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1646,7 +1644,7 @@ not detected by this keyword.
 
 
 Run Keyword If Test Passed
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1663,7 +1661,7 @@ not detected by this keyword.
 
 
 Run Keyword If Timeout Occurred
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1677,7 +1675,7 @@ documentation for more details.
 
 
 Run Keyword Unless
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, name, \*args]
 
@@ -1687,7 +1685,7 @@ See `Run Keyword If` for more information and an example.
 
 
 Run Keywords
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*keywords]
 
@@ -1725,7 +1723,7 @@ a backslash like ``\AND``.
 
 
 Set Global Variable
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*values]
 
@@ -1741,7 +1739,7 @@ See `Set Suite Variable` for more information and examples.
 
 
 Set Library Search Order
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*search_order]
 
@@ -1783,7 +1781,7 @@ or extensions like::
 
 
 Set Log Level
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [level]
 
@@ -1798,7 +1796,7 @@ logging).
 
 
 Set Suite Documentation
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [doc, append=False, top=False]
 
@@ -1821,7 +1819,7 @@ added in 2.7.7.
 
 
 Set Suite Metadata
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, value, append=False, top=False]
 
@@ -1844,7 +1842,7 @@ added in 2.7.7.
 
 
 Set Suite Variable
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*values]
 
@@ -1905,7 +1903,7 @@ Variable`, `Variable Should Exist`, `Variable Should Not Exist` and
 
 
 Set Tags
---------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*tags]
 
@@ -1925,7 +1923,7 @@ you want to fail the test case after setting and/or removing tags.
 
 
 Set Test Documentation
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [doc, append=False]
 
@@ -1943,7 +1941,7 @@ New in Robot Framework 2.7. Support for ``append`` was added in 2.7.7.
 
 
 Set Test Message
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [message, append=False]
 
@@ -1975,7 +1973,7 @@ for HTML format in 2.8.
 
 
 Set Test Variable
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*values]
 
@@ -1991,7 +1989,7 @@ See `Set Suite Variable` for more information and examples.
 
 
 Set Variable
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*values]
 
@@ -2017,7 +2015,7 @@ set variables so that they are available also in a larger scope.
 
 
 Set Variable If
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, \*values]
 
@@ -2064,7 +2062,7 @@ dynamically based on whether a variable exist or not.
 
 
 Should Be Empty
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, msg=None]
 
@@ -2075,7 +2073,7 @@ default error message can be overridden with the ``msg`` argument.
 
 
 Should Be Equal
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
@@ -2099,7 +2097,7 @@ If both arguments are multiline strings, the comparison is done using
 
 
 Should Be Equal As Integers
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, base=None]
 
@@ -2119,7 +2117,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Be Equal As Numbers
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, precision=6]
 
@@ -2153,7 +2151,7 @@ the default error message with ``msg`` and ``values``.
 
 
 Should Be Equal As Strings
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
@@ -2167,7 +2165,7 @@ If both arguments are multiline strings, the comparison is done using
 
 
 Should Be True
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, msg=None]
 
@@ -2212,7 +2210,7 @@ several useful attributes::
 
 
 Should Contain
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [container, item, msg=None, values=True]
 
@@ -2229,7 +2227,7 @@ the default error message with ``msg`` and ``values``.
 
 
 Should Contain X Times
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item1, item2, count, msg=None]
 
@@ -2246,7 +2244,7 @@ the actual count is always logged.
 
 
 Should End With
----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
@@ -2257,7 +2255,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Match
-------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
@@ -2272,7 +2270,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Match Regexp
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
@@ -2331,7 +2329,7 @@ the default error message with the ``msg`` and ``values`` arguments.
 
 
 Should Not Be Empty
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, msg=None]
 
@@ -2342,7 +2340,7 @@ default error message can be overridden with the ``msg`` argument.
 
 
 Should Not Be Equal
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
@@ -2353,7 +2351,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Not Be Equal As Integers
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, base=None]
 
@@ -2369,7 +2367,7 @@ See `Should Be Equal As Integers` for some usage examples.
 
 
 Should Not Be Equal As Numbers
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, precision=6]
 
@@ -2385,7 +2383,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Not Be Equal As Strings
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
@@ -2396,7 +2394,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Not Be True
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, msg=None]
 
@@ -2407,7 +2405,7 @@ and how ``msg`` can be used to override the default error message.
 
 
 Should Not Contain
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [container, item, msg=None, values=True]
 
@@ -2426,7 +2424,7 @@ the default error message with ``msg`` and ``values``.
 
 
 Should Not End With
--------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
@@ -2437,7 +2435,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Not Match
-----------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
@@ -2452,7 +2450,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Not Match Regexp
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
@@ -2462,7 +2460,7 @@ See `Should Match Regexp` for more information about arguments.
 
 
 Should Not Start With
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
@@ -2473,7 +2471,7 @@ error message with ``msg`` and ``values``.
 
 
 Should Start With
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
@@ -2484,7 +2482,7 @@ error message with ``msg`` and ``values``.
 
 
 Sleep
------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [time\_, reason=None]
 
@@ -2507,7 +2505,7 @@ sleeping is necessary. Both the time slept and the reason are logged.
 
 
 Variable Should Exist
----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, msg=None]
 
@@ -2523,7 +2521,7 @@ See also `Variable Should Not Exist` and `Keyword Should Exist`.
 
 
 Variable Should Not Exist
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, msg=None]
 
@@ -2539,7 +2537,7 @@ See also `Variable Should Exist` and `Keyword Should Exist`.
 
 
 Wait Until Keyword Succeeds
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [retry, retry_interval, name, \*args]
 
