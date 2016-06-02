@@ -5,153 +5,155 @@ Robot Framework チートシート
 標準ライブラリ
 ======================
 
+
 BuiltIn
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
     * - Call Method
       - object, method_name, \*args, \*\*kwargs
-      - 
+      - Pythonオブジェクトのメソッドを呼び出す
     * - Catenate
       - \*items
-      - 
+      - 文字列を結合する
     * - Comment
       - \*messages
-      - 
+      - 引数を処理せずログに出力する
     * - Continue For Loop
-
       - 
+      - ループ処理をスキップする
     * - Continue For Loop If
       - condition
-      - 
+      - 条件付きでループをスキップする
     * - Convert To Binary
       - item, base=None, prefix=None, length=None
-      - 
+      - 2進表記に変換する
     * - Convert To Boolean
       - item
-      - 
+      - ブール型に変換する
     * - Convert To Bytes
       - input, input_type=text
-      - 
+      - バイト列に変換する
     * - Convert To Hex
       - item, base=None, prefix=None, length=None, lowercase=False
-      - 
+      - 16進表記に変換する
     * - Convert To Integer
       - item, base=None
-      - 
+      - 整数オブジェクトに変換する
     * - Convert To Number
       - item, precision=None
-      - 
+      - 数値オブジェクトに変換する
     * - Convert To Octal
       - item, base=None, prefix=None, length=None
-      - 
+      - 8進表記に変換する
     * - Convert To String
       - item
-      - 
+      - 文字列オブジェクトに変換する
     * - Create Dictionary
       - \*items
-      - 
+      - 辞書オブジェクトを生成する
     * - Create List
       - \*items
-      - 
+      - リストオブジェクトを生成する
     * - Evaluate
       - expression, modules=None, namespace=None
-      - 
+      - 式を評価する
     * - Exit For Loop
-
-      - 
+      -
+      - ループを抜ける
     * - Exit For Loop If
       - condition
-      - 
+      - 条件付きでループを抜ける
     * - Fail
       - msg=None, \*tags
-      - 
+      - テストを強制的に失敗させる
     * - Fatal Error
       - msg=None
-      - 
+      - テストを中断する
     * - Get Count
       - item1, item2
-      - 
+      - 配列の特定の要素の個数を数える
     * - Get Length
       - item
-      - 
+      - 配列要素の個数を数える
     * - Get Library Instance
       - name=None, all=False
-      - 
+      - 他のライブラリインスタンスを得る
     * - Get Time
       - format=timestamp, time_=NOW
-      - 
+      - 時刻を得る
     * - Get Variable Value
       - name, default=None
-      - 
+      - 変数の値を調べる
     * - Get Variables
       - no_decoration=False
-      - 
+      - スコープ中の変数リストを得る
     * - Import Library
       - name, \*args
-      - 
+      - ライブラリをインポートする
     * - Import Resource
       - path
-      - 
+      - リソースをインポートする
     * - Import Variables
       - path, \*args
-      - 
+      - 変数ファイルをインポートする
     * - Keyword Should Exist
       - name, msg=None
-      - 
+      - キーワードが定義されているか確かめる
     * - Length Should Be
       - item, length, msg=None
-      - 
+      - 配列の長さを検証する
     * - Log
       - message, level=INFO, html=False, console=False, repr=False
-      - 
+      - ログを出力する
     * - Log Many
       - \*messages
-      - 
+      - 長いログを出力する
     * - Log To Console
       - message, stream=STDOUT, no_newline=False
-      - 
+      - コンソールにログを出力する
     * - Log Variables
       - level=INFO
-      - 
+      - 変数をログに出力する
     * - No Operation
-
-      - 
+      -
+      - 何もしない
     * - Pass Execution
       - message, \*tags
-      - 
+      - テストの実行を飛ばして PASS マークを付ける
     * - Pass Execution If
       - condition, message, \*tags
-      - 
+      - 条件付きでテストの実行を飛ばす
     * - Regexp Escape
       - \*patterns
-      - 
+      - 正規表現エスケープ済みの文字列を得る
     * - Reload Library
       - name_or_instance
-      - 
+      - ライブラリをロードし直す
     * - Remove Tags
       - \*tags
-      - 
+      - タグを除去する
     * - Repeat Keyword
       - repeat, name, \*args
-      - 
+      - キーワードを指定回数繰り返す
     * - Replace Variables
       - text
-      - 
+      - 変数を置き換える
     * - Return From Keyword
       - \*return_values
-      - 
+      - キーワードの実行から抜ける
     * - Return From Keyword If
       - condition, \*return_values
-      - 
+      - 条件付きでキーワードの実行から抜ける
     * - Run Keyword
       - name, \*args
-      - 
+      - キーワードを実行する
     * - Run Keyword And Continue On Failure
       - name, \*args
-      - 
+      - キーワードを実行して、失敗しても継続する
     * - Run Keyword And Expect Error
       - expected_error, name, \*args
       - 
@@ -316,8 +318,9 @@ BuiltIn
       - 
 
 Collections
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -452,8 +455,9 @@ Collections
       - 
 
 DateTime
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -483,8 +487,9 @@ DateTime
       - 
 
 Dialogs
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -502,8 +507,9 @@ Dialogs
       - 
 
 Easter
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -512,8 +518,9 @@ Easter
       - 
 
 OperatingSystem
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -590,7 +597,7 @@ OperatingSystem
       - name, default=None
       - 
     * - Get Environment Variables
-
+      -
       - 
     * - Get File
       - path, encoding=UTF-8, encoding_errors=strict
@@ -687,8 +694,9 @@ OperatingSystem
       - 
 
 Process
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -739,14 +747,15 @@ Process
       - 
 
 Remote
--------------------------
+--------------------------
 Getting keyword names from library 'Remote' failed: Calling dynamic method 'get_keyword_names' failed: Connecting remote server at http://127.0.0.1:8270 failed: [Errno 61] Connection refused
 
 Try --help for usage information.
 
 Reserved
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -782,8 +791,9 @@ Reserved
       - 
 
 Screenshot
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -798,8 +808,9 @@ Screenshot
       - 
 
 String
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -895,13 +906,14 @@ String
       - 
 
 Telnet
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
     * - Close All Connections
-
+      -
       - 
     * - Close Connection
       - loglevel=None
@@ -962,8 +974,9 @@ Telnet
       - 
 
 XML
--------------------------
+--------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1080,12 +1093,13 @@ XML
       - 
 
 外部ライブラリ
-======================
+===========================
 
 
 AppiumLibrary
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1108,10 +1122,10 @@ AppiumLibrary
       - locator
       - 
     * - Close All Applications
-
+      -
       - 
     * - Close Application
-
+      -
       - 
     * - Element Attribute Should Match
       - locator, attr_name, match_pattern, regexp=False
@@ -1129,13 +1143,13 @@ AppiumLibrary
       - locator, expected
       - 
     * - Get Appium Timeout
-
+      -
       - 
     * - Get Contexts
-
+      -
       - 
     * - Get Current Context
-
+      -
       - 
     * - Get Element Attribute
       - locator, attribute
@@ -1150,13 +1164,13 @@ AppiumLibrary
       - locator, first_element_only=False, fail_on_error=True
       - 
     * - Get Network Connection Status
-
+      -
       - 
     * - Get Source
-
+      -
       - 
     * - Go Back
-
+      -
       - 
     * - Go To Url
       - url
@@ -1174,10 +1188,10 @@ AppiumLibrary
       - locator, text
       - 
     * - Landscape
-
+      -
       - 
     * - Lock
-
+      -
       - 
     * - Log Source
       - loglevel=INFO
@@ -1207,7 +1221,7 @@ AppiumLibrary
       - locator, percent=200%, steps=1
       - 
     * - Portrait
-
+      -
       - 
     * - Press Keycode
       - keycode, metastate=None
@@ -1228,7 +1242,7 @@ AppiumLibrary
       - application_id
       - 
     * - Reset Application
-
+      -
       - 
     * - Scroll
       - start_locator, end_locator
@@ -1243,7 +1257,7 @@ AppiumLibrary
       - connectionStatus
       - 
     * - Shake
-
+      -
       - 
     * - Swipe
       - start_x, start_y, end_x, end_y, duration=1000
@@ -1276,6 +1290,7 @@ AppiumLibrary
 ArchiveLibrary
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1298,6 +1313,7 @@ ArchiveLibrary
 DatabaseLibrary
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1320,7 +1336,7 @@ DatabaseLibrary
       - selectStatement
       - 
     * - Disconnect From Database
-
+      -
       - 
     * - Execute Sql Script
       - sqlScriptFileName
@@ -1353,6 +1369,7 @@ DatabaseLibrary
 FtpLibrary
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1375,7 +1392,7 @@ FtpLibrary
       - host, user=anonymous, password=anonymous@, port=21, timeout=30, connId=default
       - 
     * - Get All Ftp Connections
-
+      -
       - 
     * - Get Welcome
       - connId=default
@@ -1405,6 +1422,7 @@ FtpLibrary
 HttpLibrary
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1424,6 +1442,7 @@ HttpLibrary
 MQTTLibrary
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1431,7 +1450,7 @@ MQTTLibrary
       - broker, port=1883, client_id=, clean_session=True
       - 
     * - Disconnect
-
+      -
       - 
     * - Publish
       - topic, message=None, qos=0, retain=False
@@ -1458,6 +1477,7 @@ MQTTLibrary
 Rammbock
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1480,7 +1500,7 @@ Rammbock
       - length, name, value=None, terminator=None
       - 
     * - Clear Message Streams
-
+      -
       - 
     * - Client Receives Binary
       - name=None, timeout=None, label=None
@@ -1507,28 +1527,28 @@ Rammbock
       - name, length, type, \*parameters
       - 
     * - Embed Seqdiag Sequence
-
+      -
       - 
     * - End Bag
-
+      -
       - 
     * - End Binary Container
-
+      -
       - 
     * - End Conditional
-
+      -
       - 
     * - End Protocol
-
+      -
       - 
     * - End Struct
-
+      -
       - 
     * - End Tbcd Container
-
+      -
       - 
     * - End Union
-
+      -
       - 
     * - Get Client Protocol
       - name=None
@@ -1561,7 +1581,7 @@ Rammbock
       - name, \*parameters
       - 
     * - Log Handler Messages
-
+      -
       - 
     * - New Binary Container
       - name
@@ -1585,10 +1605,10 @@ Rammbock
       - length
       - 
     * - Reset Handler Messages
-
+      -
       - 
     * - Reset Rammbock
-
+      -
       - 
     * - Save Template
       - name, unlocked=False
@@ -1675,6 +1695,7 @@ Rammbock
 Selenium2Library
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
@@ -1700,7 +1721,7 @@ Selenium2Library
       - locator
       - 
     * - Choose Cancel On Next Confirmation
-
+      -
       - 
     * - Choose File
       - locator, file_path
@@ -1727,16 +1748,16 @@ Selenium2Library
       - locator
       - 
     * - Close All Browsers
-
+      -
       - 
     * - Close Browser
-
+      -
       - 
     * - Close Window
-
+      -
       - 
     * - Confirm Action
-
+      -
       - 
     * - Create Webdriver
       - driver_name, alias=None, kwargs={}, \*\*init_kwargs
@@ -1748,7 +1769,7 @@ Selenium2Library
       - text, loglevel=INFO
       - 
     * - Delete All Cookies
-
+      -
       - 
     * - Delete Cookie
       - name
@@ -1802,13 +1823,13 @@ Selenium2Library
       - dismiss=True
       - 
     * - Get All Links
-
+      -
       - 
     * - Get Cookie Value
       - name
       - 
     * - Get Cookies
-
+      -
       - 
     * - Get Element Attribute
       - attribute_locator
@@ -1820,7 +1841,7 @@ Selenium2Library
       - locator
       - 
     * - Get Location
-
+      -
       - 
     * - Get Matching Xpath Count
       - xpath
@@ -1838,16 +1859,16 @@ Selenium2Library
       - locator
       - 
     * - Get Selenium Implicit Wait
-
+      -
       - 
     * - Get Selenium Speed
-
+      -
       - 
     * - Get Selenium Timeout
-
+      -
       - 
     * - Get Source
-
+      -
       - 
     * - Get Table Cell
       - table_locator, row, column, loglevel=INFO
@@ -1856,7 +1877,7 @@ Selenium2Library
       - locator
       - 
     * - Get Title
-
+      -
       - 
     * - Get Value
       - locator
@@ -1871,22 +1892,22 @@ Selenium2Library
       - locator
       - 
     * - Get Window Identifiers
-
+      -
       - 
     * - Get Window Names
-
+      -
       - 
     * - Get Window Position
-
+      -
       - 
     * - Get Window Size
-
+      -
       - 
     * - Get Window Titles
-
+      -
       - 
     * - Go Back
-
+      -
       - 
     * - Go To
       - url
@@ -1907,7 +1928,7 @@ Selenium2Library
       - locator
       - 
     * - List Windows
-
+      -
       - 
     * - Location Should Be
       - url
@@ -1919,16 +1940,16 @@ Selenium2Library
       - locator, expected_locator_count, message=, loglevel=INFO
       - 
     * - Log Location
-
+      -
       - 
     * - Log Source
       - loglevel=INFO
       - 
     * - Log Title
-
+      -
       - 
     * - Maximize Browser Window
-
+      -
       - 
     * - Mouse Down
       - locator
@@ -2021,7 +2042,7 @@ Selenium2Library
       - keyword
       - 
     * - Reload Page
-
+      -
       - 
     * - Remove Location Strategy
       - strategy_name
@@ -2120,7 +2141,7 @@ Selenium2Library
       - locator
       - 
     * - Unselect Frame
-
+      -
       - 
     * - Unselect From List
       - locator, \*items
@@ -2171,14 +2192,15 @@ Selenium2Library
 SSHLibrary
 -------------------------
 .. list-table::
+
     * - キーワード
       - 引数
       - 説明
     * - Close All Connections
-
+      -
       - 
     * - Close Connection
-
+      -
       - 
     * - Directory Should Exist
       - path
@@ -2202,7 +2224,7 @@ SSHLibrary
       - index_or_alias=None, index=False, host=False, alias=False, port=False, timeout=False, newline=False, prompt=False, term_type=False, width=False, height=False, encoding=False
       - 
     * - Get Connections
-
+      -
       - 
     * - Get Directory
       - source, destination=., recursive=False

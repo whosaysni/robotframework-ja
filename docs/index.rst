@@ -35,10 +35,13 @@ __ http://creativecommons.org/licenses/by/3.0/
    schema/README
    
 
-サードパーティドキュメント
+チートシート
 ============================
 
-TBD
+.. toctree::
+   :maxdepth: 2
+
+   cheatsheet
 
 
 さくいん
