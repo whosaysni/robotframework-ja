@@ -1710,7 +1710,7 @@ Selenium2Library
       - locator, file_path
       - 
     * - Choose Ok On Next Confirmation
-
+      -
       - 
     * - Clear Element Text
       - locator
