@@ -1421,223 +1421,223 @@ MQTTLibrary
       - topic
       - 指定トピックの subscribe を終了する
 
-.. Rammbock
-  -------------------------
-  .. list-table::
+Rammbock
+-------------------------
+.. list-table::
 
     * - キーワード
       - 引数
       - 説明
     * - Accept Connection
       - name=None, alias=None
-      - 
+      - サーバへの接続を受け入れる
     * - Array
       - size, type, name, \*parameters
-      - 
+      - 新たなアレイタイプを定義する
     * - Bin
       - size, name, value=None
-      - 
+      - テンプレートに2進フィールドを追加する
     * - Bin To Hex
       - bin_value
-      - 
+      - 2進から16進に変換する
     * - Case
       - size, kw, \*parameters
-      - 
+      - バッグデータのエレメントを追加する
     * - Chars
       - length, name, value=None, terminator=None
-      - 
+      - テンプレートに文字列アレイを追加する
     * - Clear Message Streams
       -
-      - 
+      - 入力メッセージストリームをリセットする
     * - Client Receives Binary
       - name=None, timeout=None, label=None
-      - 
+      - バイナリメッセージを受信する
     * - Client Receives Message
       - \*parameters
-      - 
+      - テンプレートに従ってメッセージを受信し、検証する
     * - Client Receives Without Validation
       - \*parameters
-      - 
+      - テンプレートに従ってメッセージを受信する
     * - Client Sends Binary
       - message, name=None, label=None
-      - 
+      - バイナリメッセージを送信する
     * - Client Sends Message
       - \*parameters
-      - 
+      - メッセージを送信する
     * - Conditional
       - condition, name
-      - 
+      - 条件付きエレメントの定義を開始する
     * - Connect
       - host, port, name=None
-      - 
+      - クライアントに接続する
     * - Container
       - name, length, type, \*parameters
-      - 
+      - コンテナを定義する
     * - Embed Seqdiag Sequence
       -
-      - 
+      - シーケンスダイアグラムを生成してログファイルに保存する
     * - End Bag
       -
-      - 
+      - バッグデータの定義を終了する
     * - End Binary Container
       -
-      - 
+      - バイナリコンテナの定義を終了する
     * - End Conditional
       -
-      - 
+      - 条件付きエレメントの
     * - End Protocol
       -
-      - 
+      - プロトコルの定義を終了する
     * - End Struct
       -
-      - 
+      - ストラクトの定義を終了する
     * - End Tbcd Container
       -
-      - 
+      - TBCDコンテナの定義を終了する
     * - End Union
       -
-      - 
+      - ユニオンの定義を終了する
     * - Get Client Protocol
       - name=None
-      - 
+      - クライアントプロトコルを得る
     * - Get Client Unread Messages Count
       - client_name=None
-      - 
+      - クライアントから未受信のメッセージを数える
     * - Get Message
       - \*parameters
-      - 
+      - エンコード済みのメッセージを得る
     * - Get Server Unread Messages Count
       - server_name=None
-      - 
+      - サーバから未受信のメッセージを得る
     * - Hex To Bin
       - hex_value
-      - 
+      - 16進を2進に変換する
     * - I 32
       - name, value=None, align=None
-      - 
+      - テンプレートに32ビット整数フィールドを追加する
     * - I 8
       - name, value=None, align=None
-      - 
+      - テンプレートに8ビット整数フィールドを追加する
     * - Int
       - length, name, value=None, align=None
-      - 
+      - テンプレートに指定長の符号付き整数フィールドを追加する
     * - Load Copy Of Template
       - name, \*parameters
-      - 
+      - テンプレートのコピーをロードする
     * - Load Template
       - name, \*parameters
-      - 
+      - テンプレートをロードする
     * - Log Handler Messages
       -
-      - 
+      - ハンドラメッセージをログに記録する
     * - New Binary Container
       - name
-      - 
+      - 新たなバイナリコンテナを生成する
     * - New Message
       - message_name, protocol=None, \*parameters
-      - 
+      - 新たなメッセージを生成する
     * - New Protocol
       - protocol_name
-      - 
+      - 新たなプロトコルを生成する
     * - New Struct
       - type, name, \*parameters
-      - 
+      - 新たなストラクトを生成する
     * - New Tbcd Container
       - name
-      - 
+      - 新たなTBCDコンテナを生成する
     * - New Union
       - type, name
-      - 
+      - 新たなユニオンを生成する
     * - Pdu
       - length
-      - 
+      - PDUを定義する
     * - Reset Handler Messages
       -
-      - 
+      -
     * - Reset Rammbock
       -
-      - 
+      - Rammbock をリセットする
     * - Save Template
       - name, unlocked=False
-      - 
+      - テンプレートを保存する
     * - Server Receives Binary
       - name=None, timeout=None, connection=None, label=None
-      - 
+      - バイナリメッセージを受信する
     * - Server Receives Binary From
       - name=None, timeout=None, connection=None, label=None
-      - 
+      - バイナリメッセージをを受信し、IPとポート情報つきで返す
     * - Server Receives Message
       - \*parameters
-      - 
+      - メッセージを受信し、検証する
     * - Server Receives Without Validation
       - \*parameters
-      - 
+      - メッセージを受信する
     * - Server Sends Binary
       - message, name=None, connection=None, label=None
-      - 
+      - バイナリメッセージを送信する
     * - Server Sends Message
       - \*parameters
-      - 
+      - メッセージを送信する
     * - Set Client Handler
       - handler_func, name=None, header_filter=None, interval=0.5
-      - 
+      - クライアントアンドラを設定する
     * - Set Server Handler
       - handler_func, name=None, header_filter=None, alias=None, interval=0.5
-      - 
+      - サーバハンドラを設定する
     * - Start Bag
       - name
-      - 
+      - バッグの定義を開始する
     * - Start Sctp Client
       - ip=None, port=None, name=None, timeout=None, protocol=None, family=ipv4
-      - 
+      - SCTPクライアントを開始する
     * - Start Sctp Server
       - ip, port, name=None, timeout=None, protocol=None, family=ipv4
-      - 
+      - SCTPサーバを開始する
     * - Start Tcp Client
       - ip=None, port=None, name=None, timeout=None, protocol=None, family=ipv4
-      - 
+      - TCPクライアントを開始する
     * - Start Tcp Server
       - ip, port, name=None, timeout=None, protocol=None, family=ipv4
-      - 
+      - TCPサーバを開始する
     * - Start Udp Client
       - ip=None, port=None, name=None, timeout=None, protocol=None, family=ipv4
-      - 
+      - UDPクライアントを開始する
     * - Start Udp Server
       - ip, port, name=None, timeout=None, protocol=None, family=ipv4
-      - 
+      - UDPサーバを開始する
     * - Tbcd
       - size, name, value=None
-      - 
+      - TBCDコンテナ定義を開始する
     * - U 128
       - name, value=None, align=None
-      - 
+      - テンプレートに符号なし128ビット整数フィールドを追加する
     * - U 16
       - name, value=None, align=None
-      - 
+      - テンプレートに符号なし16ビット整数フィールドを追加する
     * - U 24
       - name, value=None, align=None
-      - 
+      - テンプレートに符号なしビット整数フィールドを追加する
     * - U 32
       - name, value=None, align=None
-      - 
+      - テンプレートに符号なし32ビット整数フィールドを追加する
     * - U 40
       - name, value=None, align=None
-      - 
+      - テンプレートに符号なし40ビット整数フィールドを追加する
     * - U 64
       - name, value=None, align=None
-      - 
+      - テンプレートに符号なし64ビット整数フィールドを追加する
     * - U 8
       - name, value=None, align=None
-      - 
+      - テンプレートに符号なし8ビット整数フィールドを追加する
     * - Uint
       - length, name, value=None, align=None
-      - 
+      - テンプレートに符号なし整数フィールドを追加する
     * - Validate Message
       - msg, \*parameters
-      - 
+      - メッセージを検証する
     * - Value
       - name, value
-      - 
+      - フィールドのデフォルト値を定義する
 
 Selenium2Library
 -------------------------
