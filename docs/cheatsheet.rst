@@ -1043,196 +1043,196 @@ XML
 ==============
 
 
-.. AppiumLibrary
-  ---------------
-  .. list-table::
+AppiumLibrary
+---------------
+.. list-table::
 
     * - キーワード
       - 引数
       - 説明
     * - Background App
       - seconds=5
-      - 
+      - アプリを指定時間の間バックグラウンドに回す
     * - Capture Page Screenshot
       - filename=None
-      - 
+      - スクリーンショットを撮る
     * - Clear Text
       - locator
-      - 
+      - テキストフィールドの入力内容を消去する
     * - Click A Point
       - x=0, y=0
-      - 
+      - 指定位置をクリックする
     * - Click Button
       - index_or_name
-      - 
+      - ボタンをクリックする
     * - Click Element
       - locator
-      - 
+      - エレメントをクリックする
     * - Close All Applications
       -
-      - 
+      - 全てのアプリを閉じる
     * - Close Application
       -
-      - 
+      - アプリを閉じる
     * - Element Attribute Should Match
       - locator, attr_name, match_pattern, regexp=False
-      - 
+      - エレメントの属性が一致することを確認する
     * - Element Name Should Be
       - locator, expected
-      - 
+      - エレメントの名前が指定値であることを確認する
     * - Element Should Be Disabled
       - locator, loglevel=INFO
-      - 
+      - エレメントが操作不可 (disabled) であることを確認する
     * - Element Should Be Enabled
       - locator, loglevel=INFO
-      - 
+      - エレメントが操作可 (enabled) であることを確認する
     * - Element Value Should Be
       - locator, expected
-      - 
+      - エレメントの値が指定値であることを確認する
     * - Get Appium Timeout
       -
-      - 
+      - Appium のタイムアウトを得る
     * - Get Contexts
       -
-      - 
+      - 利用可能なコンテキストを得る
     * - Get Current Context
       -
-      - 
+      - 現在のコンテキストを得る
     * - Get Element Attribute
       - locator, attribute
-      - 
+      - エレメントの属性値を得る
     * - Get Element Location
       - locator
-      - 
+      - エレメントの場所を得る
     * - Get Element Size
       - locator
-      - 
+      - エレメントのサイズを得る
     * - Get Elements
       - locator, first_element_only=False, fail_on_error=True
-      - 
+      - 指定条件に一致するエレメントを得る
     * - Get Network Connection Status
       -
-      - 
+      - ネットワークの接続状態を得る
     * - Get Source
       -
-      - 
+      - 表示中のページのソースを得る
     * - Go Back
       -
-      - 
+      - ブラウザ履歴を一つ戻る
     * - Go To Url
       - url
-      - 
+      - 指定URLを開く
     * - Hide Keyboard
       - key_name=None
-      - 
+      - キーボードを隠す
     * - Input Password
       - locator, text
-      - 
+      - パスワードを入力する
     * - Input Text
       - locator, text
-      - 
+      - テキストを入力する
     * - Input Value
       - locator, text
-      - 
+      - 値を入力する
     * - Landscape
       -
-      - 
+      - デバイスの表示をランドスケープにする
     * - Lock
       -
-      - 
+      - 画面をロックする
     * - Log Source
       - loglevel=INFO
-      - 
+      - ページのソースをログに出力する
     * - Long Press
       - locator
-      - 
+      - エレメントを長押しする
     * - Long Press Keycode
       - keycode, metastate=None
-      - 
+      - 指定キーコードを長押し入力する
     * - Open Application
       - remote_url, alias=None, \*\*kwargs
-      - 
+      - アプリを開く
     * - Page Should Contain Element
       - locator, loglevel=INFO
-      - 
+      - ページが指定エレメントを含むことを確認する
     * - Page Should Contain Text
       - text, loglevel=INFO
-      - 
+      - ページが指定テキストを含むことを確認する
     * - Page Should Not Contain Element
       - locator, loglevel=INFO
-      - 
+      - ページが指定エレメントを含まないことを確認する
     * - Page Should Not Contain Text
       - text, loglevel=INFO
-      - 
+      - ページが指定テキストを含まないことを確認する
     * - Pinch
       - locator, percent=200%, steps=1
-      - 
+      - 画面をピンチする
     * - Portrait
       -
-      - 
+      - 画面をポートレートモードにする
     * - Press Keycode
       - keycode, metastate=None
-      - 
+      - 指定キーコードを入力する
     * - Pull File
       - path, decode=False
-      - 
+      - 指定パスに保存されたファイルを取得する
     * - Pull Folder
       - path, decode=False
-      - 
+      - 指定パスに保存されたフォルダを取得する
     * - Push File
       - path, data, encode=False
-      - 
+      - ファイルを指定パスに置く
     * - Register Keyword To Run On Failure
       - keyword
-      - 
+      - キーワードの実行失敗時に実行するキーワードを登録する
     * - Remove Application
       - application_id
-      - 
+      - アプリを除去する
     * - Reset Application
       -
-      - 
+      - アプリをリセットする
     * - Scroll
       - start_locator, end_locator
-      - 
+      - 画面をスクロールする
     * - Scroll To
       - locator
-      - 
+      - 画面を指定エレメントまでスクロールする
     * - Set Appium Timeout
       - seconds
-      - 
+      - タイムアウトを設定する
     * - Set Network Connection Status
       - connectionStatus
-      - 
+      - ネットワークの接続状態を設定する
     * - Shake
       -
-      - 
+      - デバイスを振ったことにする
     * - Swipe
       - start_x, start_y, end_x, end_y, duration=1000
-      - 
+      - 画面をスワイプする
     * - Switch Application
       - index_or_alias
-      - 
+      - アプリを切り替える
     * - Switch To Context
       - context_name
-      - 
+      - コンテキストを切り替える
     * - Tap
       - locator
-      - 
+      - エレメントをタップする
     * - Wait Until Page Contains
       - text, timeout=None, error=None
-      - 
+      - ページが指定の内容を含むまで待機する
     * - Wait Until Page Contains Element
       - locator, timeout=None, error=None
-      - 
+      - ページが指定エレメントを含むまで待機する
     * - Wait Until Page Does Not Contain
       - text, timeout=None, error=None
-      - 
+      - ページが指定エレメントを含まなくなるまで待機する
     * - Wait Until Page Does Not Contain Element
       - locator, timeout=None, error=None
-      - 
+      - ページから指定エレメントがなくなるまで待機する
     * - Zoom
       - locator, percent=200%, steps=1
-      - 
+      - 画面をズームする
 
 ArchiveLibrary
 ----------------
