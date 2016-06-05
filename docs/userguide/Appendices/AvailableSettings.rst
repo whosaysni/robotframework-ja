@@ -1,110 +1,126 @@
-All available settings in test data
-===================================
+.. _All available settings in test data:
+
+テストデータで使える設定
+======================
 
 .. contents::
    :depth: 2
    :local:
 
-Setting table
--------------
+settings テーブル
+------------------
 
-The Setting table is used to import test libraries, resource files and
-variable files and to define metadata for test suites and test
-cases. It can be included in test case files and resource files. Note
-that in a resource file, a Setting table can only include settings for
-importing libraries, resources, and variables.
+settings テーブルは、テストライブラリやリソースファイル、変数ファイルなどのインポート、テストスイートやテストケースのメタデータの定義に使います。
+settings テーブルは、テストケースファイルとリソースファイルに書けます。
+ただし、リソースファイルの中では、 settings テーブルはライブラリ・リソース・変数のインポートにしか使えません。
 
-.. table:: Settings available in the Setting table
+.. table:: settings テーブルで使える設定
    :class: tabular
 
    +-----------------+--------------------------------------------------------+
-   |       Name      |                         Description                    |
+   |       名前      |                         説明                           |
    +=================+========================================================+
-   | Library         | Used for `importing libraries`_.                       |
+   | Library         | `ライブラリのインポート`__                             |
    +-----------------+--------------------------------------------------------+
-   | Resource        | Used for `taking resource files into use`_.            |
+   | Resource        | `リソースファイルの利用`__                             |
    +-----------------+--------------------------------------------------------+
-   | Variables       | Used for `taking variable files into use`_.            |
+   | Variables       | `変数ファイルの利用`__                                 |
    +-----------------+--------------------------------------------------------+
-   | Documentation   | Used for specifying a `test suite`__ or                |
-   |                 | `resource file`__ documentation.                       |
+   | Documentation   | `テストスイート`__ や `リソースファイル`__ の          |
+   |                 | ドキュメント                                           |
    +-----------------+--------------------------------------------------------+
-   | Metadata        | Used for setting `free test suite metadata`_.          |
+   | Metadata        | `任意のテストスイートメタデータ`__                     |
    +-----------------+--------------------------------------------------------+
-   | Suite Setup     | Used for specifying the `suite setup`_.                |
+   | Suite Setup     | `テストスイートのセットアップ`__                       |
    +-----------------+--------------------------------------------------------+
-   | Suite Teardown  | Used for specifying the `suite teardown`_.             |
+   | Suite Teardown  | `テストスイートのティアダウン`__                       |
    +-----------------+--------------------------------------------------------+
-   | Force Tags      | Used for specifying forced values for tags when        |
-   |                 | `tagging test cases`_.                                 |
+   | Force Tags      | `テストケースにタグを付ける`__ ときの強制タグ          |
    +-----------------+--------------------------------------------------------+
-   | Default Tags    | Used for specifying default values for tags when       |
-   |                 | `tagging test cases`_.                                 |
+   | Default Tags    | `テストケースにタグを付ける`__ ときのデフォルトタグ    |
    +-----------------+--------------------------------------------------------+
-   | Test Setup      | Used for specifying a default `test setup`_.           |
+   | Test Setup      | デフォルトの `テストセットアップ<test setup>`__        |
    +-----------------+--------------------------------------------------------+
-   | Test Teardown   | Used for specifying a default `test teardown`_.        |
+   | Test Teardown   | デフォルトの `テストティアダウンtest teardown`__       |
    +-----------------+--------------------------------------------------------+
-   | Test Template   | Used for specifying a default `template keyword`_      |
-   |                 | for test cases.                                        |
+   | Test Template   | テストケースのデフォルトの `テンプレートキーワード`__  |
    +-----------------+--------------------------------------------------------+
-   | Test Timeout    | Used for specifying a default `test case timeout`_.    |
+   | Test Timeout    | デフォルトの `テストケースタイムアウト`__              |
    +-----------------+--------------------------------------------------------+
 
-.. note:: All setting names can optionally include a colon at the end, for
-      example :setting:`Documentation:`. This can make reading the settings easier
-      especially when using the plain text format.
+.. note:: 設定の名前の末尾には、 :setting:`Documentation:` のようにコロンを付加できます。プレーンテキスト形式のときなどに、読みやすくなります。
 
+__ `importing libraries`_
+__ `taking resource files into use`_
+__ `taking variable files into use`_
 __ `Test suite documentation`_
 __ `Documenting resource files`_
+__ `free test suite metadata`_
+__ `suite setup`_
+__ `suite teardown`_
+__ `tagging test cases`_
+__ `tagging test cases`_
+__ `test setup`_
+__ `test teardown`_
+__ `template keyword`_
+__ `test case timeout`_
 
-Test Case table
----------------
+Test Case テーブル
+-------------------
 
-The settings in the Test Case table are always specific to the test
-case for which they are defined. Some of these settings override the
-default values defined in the Settings table.
+テストケーステーブルの設定は、設定の書かれたテストケース内で有効です。
+設定の中には、 settings テーブルで定義されたデフォルト値を上書きするものもあります。
 
-.. table:: Settings available in the Test Case table
+.. table:: テストケーステーブルで使える設定
    :class: tabular
 
    +-----------------+--------------------------------------------------------+
-   |      Name       |                         Description                    |
+   |      名前       |                         説明                           |
    +=================+========================================================+
-   | [Documentation] | Used for specifying a `test case documentation`_.      |
+   | [Documentation] | `テストケースのドキュメント`__ の指定                  |
    +-----------------+--------------------------------------------------------+
-   | [Tags]          | Used for `tagging test cases`_.                        |
+   | [Tags]          | `テストケースのタグ`__ の指定                          |
    +-----------------+--------------------------------------------------------+
-   | [Setup]         | Used for specifying a `test setup`_.                   |
+   | [Setup]         | `テストセットアップ`__ の指定                          |
    +-----------------+--------------------------------------------------------+
-   | [Teardown]      | Used for specifying a `test teardown`_.                |
+   | [Teardown]      | `テストティアダウン`__ の指定                          |
    +-----------------+--------------------------------------------------------+
-   | [Template]      | Used for specifying a `template keyword`_.             |
+   | [Template]      | `テンプレートキーワード`__ の指定                      |
    +-----------------+--------------------------------------------------------+
-   | [Timeout]       | Used for specifying a `test case timeout`_.            |
+   | [Timeout]       | `テストケースのタイムアウト`__ の指定                  |
    +-----------------+--------------------------------------------------------+
 
-Keyword table
--------------
+__ `test case documentation`_
+__ `tagging test cases`_
+__ `test setup`_
+__ `test teardown`_
+__ `template keyword`_
+__ `test case timeout`_
 
-Settings in the Keyword table are specific to the user keyword for
-which they are defined.
+キーワードテーブルの設定は、定義したユーザキーワードの中だけで有効です。
 
-.. table:: Settings available in the Keyword table
+.. table:: キーワードテーブルで使える設定
    :class: tabular
 
    +-----------------+--------------------------------------------------------+
-   |      Name       |                         Description                    |
+   |      名前       |                         説明                           |
    +=================+========================================================+
-   | [Documentation] | Used for specifying a `user keyword documentation`_.   |
+   | [Documentation] | `ユーザキーワードのドキュメント`__ の指定              |
    +-----------------+--------------------------------------------------------+
-   | [Tags]          | Used for specifying `user keyword tags`_.              |
+   | [Tags]          | `ユーザキーワードのタグ`__ の指定                      |
    +-----------------+--------------------------------------------------------+
-   | [Arguments]     | Used for specifying `user keyword arguments`_.         |
+   | [Arguments]     | `ユーザキーワードの引数`__ の指定                      |
    +-----------------+--------------------------------------------------------+
-   | [Return]        | Used for specifying `user keyword return values`_.     |
+   | [Return]        | `ユーザキーワードの戻り値`__ の指定                    |
    +-----------------+--------------------------------------------------------+
-   | [Teardown]      | Used for specifying `user keyword teardown`_.          |
+   | [Teardown]      | `ユーザキーワードのティアダウン`__ の指定              |
    +-----------------+--------------------------------------------------------+
-   | [Timeout]       | Used for specifying a `user keyword timeout`_.         |
+   | [Timeout]       | `ユーザキーワードのタイムアウト`__ の指定              |
    +-----------------+--------------------------------------------------------+
+
+__ `user keyword documentation`_
+__ `user keyword tags`_
+__ `user keyword arguments`_
+__ `user keyword return values`_
+__ `user keyword teardown`_
+__ `user keyword timeout`_
