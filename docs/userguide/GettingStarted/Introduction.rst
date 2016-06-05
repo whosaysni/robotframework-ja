@@ -84,8 +84,9 @@ Robot Framework を起動すると、フレームワークがテストデータ�
 Robot Framework プロジェクトのページ
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Robot Framework やそれをとりまくエコシステムの情報がまとまっている一番の場所は、なんといっても  http://robotframework.org です。フレームワーク自体のソースコードは `GitHub <https://github.com/robotframework/robotframework>`_ 上で管理されています。
+Robot Framework やそれをとりまくエコシステムの情報がまとまっている一番の場所は、なんといっても  http://robotframework.org です。フレームワーク自体のソースコードは `GitHub`__ 上で管理されています。
 
+__  https://github.com/robotframework/robotframework
 
 .. _mailing list:
 .. _Mailing lists:
@@ -97,16 +98,21 @@ Robot Framework 関連のメーリングリストは複数あり、詳しい情�
 メーリングリストのアーカイブは公開で、誰でも  (検索エンジンも) 閲覧できます。
 もちろん、参加も自由です。ただし、投稿できるのはメーリングリストのメンバーだけです。
 また、スパム対策のため、新規ユーザの投稿は、最初に投稿した記事が無事掲載されるまで、しばらくの間モデレーションの対象になります。メーリングリストへの投稿は歓迎ですが、
-`上手な質問の仕方 <http://www.catb.org/~esr/faqs/smart-questions.html>`__ を心がけましょう。
+`上手な質問の仕方`__ を心がけましょう。
 
-`robotframework-users <http://groups.google.com/group/robotframework-users>`_
+`robotframework-users`__
    Robot Framework に関する一般的な話題を扱うメーリングリストです。
    質問や問題点の議論はここに投稿しましょう。
    他のユーザに共有したい情報がある場合も、ここに投稿してください。
 
-`robotframework-announce <http://groups.google.com/group/robotframework-announce>`_
+`robotframework-announce`__
     アナウンスのみのメーリングリストで、モデレータしか投稿できません。
     ここに投稿されるアナウンスは robotframework-users にも投稿されるので、どちらかにだけ入っておけば大丈夫です。
 
-`robotframework-devel <http://groups.google.com/group/robotframework-devel>`_
+`robotframework-devel`__
    Robot Framework の開発に関する議論のメーリングリストです。
+
+__ http://www.catb.org/~esr/faqs/smart-questions.html
+__ http://groups.google.com/group/robotframework-users
+__ http://groups.google.com/group/robotframework-announce
+__ http://groups.google.com/group/robotframework-devel
