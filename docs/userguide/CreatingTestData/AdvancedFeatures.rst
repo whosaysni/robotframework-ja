@@ -1,54 +1,52 @@
-Advanced features
+.. _Advanced features:
+
+高度な機能
 =================
 
 .. contents::
    :depth: 2
    :local:
 
-Handling keywords with same names
----------------------------------
+.. _Handling keywords with same names:
 
-Keywords that are used with Robot Framework are either `library
-keywords`_ or `user keywords`_. The former come from `standard
-libraries`_ or `external libraries`_, and the latter are either
-created in the same file where they are used or then imported from
-`resource files`_. When many keywords are in use, it is quite common
-that some of them have the same name, and this section describes how to
-handle possible conflicts in these situations.
+同名のキーワードの扱いかた
+------------------------
 
-Keyword scopes
-~~~~~~~~~~~~~~
+Robot Framework で使われているキーワードは、 :ref:`ライブラリキーワード <library keywords>` か、 :ref:`ユーザキーワード <user keywords>` です。
+前者は :ref:`標準ライブラリ <standard libraries>` または :ref:`外部ライブラリ <external libraries>` で定義されています。
+後者は、キーワードが使われているのと同じファイルの中で定義されていることもあれば、 :ref:`リソースファイル <resource files>` からインポートされていることもあります。
+沢山のキーワードを使っていると、同じ名前をもつキーワードが出てくるのは避けられません。
+この節では、そうした状況で、キーワードの衝突を回避する方法を説明します。
 
-When only a keyword name is used and there are several keywords with
-that name, Robot Framework attempts to determine which keyword has the
-highest priority based on its scope. The keyword's scope is determined
-on the basis of how the keyword in question is created:
+.. _Keyword scopes:
 
-1. Created as a user keyword in the same file where it is used. These
-   keywords have the highest priority and they are always used, even
-   if there are other keywords with the same name elsewhere.
+キーワードのスコープ
+~~~~~~~~~~~~~~~~~~~~
 
-2. Created in a resource file and imported either directly or
-   indirectly from another resource file. This is the second-highest
-   priority.
+あるキーワード名を使ったとき、同名の複数のキーワードが存在すると、 Robot Framework は、現在のスコープに基づいて、最もプライオリティの高いキーワードを決定しようと試みます。
+キーワードのスコープは、件のキーワードがどのように作成されたかに基づいて決まります:
 
-3. Created in an external test library. These keywords are used, if
-   there are no user keywords with the same name. However, if there is
-   a keyword with the same name in the standard library, a warning is
-   displayed.
+1. キーワードが使われているのと同じファイルで定義されたユーザキーワード。
+   最も高いプライオリティをもち、他の場所で同名のキーワードが定義されていても、必ずこのキーワードが使われます。
 
-4. Created in a standard library. These keywords have the lowest
-   priority.
+2. リソースファイルで定義されていて、直接または間接的にインポートされたもの。
+   二番目に高いプライオリティを持ちます。
 
-Specifying a keyword explicitly
+3. 外部ライブラリで定義されているもの。
+   同名のユーザキーワードがないときに使われます。
+   ただし、標準ライブラリに同名のキーワードがあるときは、警告を表示します。
+
+4. 標準ライブラリで定義されているキーワード。もっとも低いプライオリティを持っています。
+
+.. _Specifying a keyword explicitly:
+
+キーワードを明示的に指定する。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Scopes alone are not a sufficient solution, because there can be
-keywords with the same name in several libraries or resources, and
-thus, they provide a mechanism to use only the keyword of the
-highest priority. In such cases, it is possible to use *the full name
-of the keyword*, where the keyword name is prefixed with the name of
-the resource or library and a dot is a delimiter.
+スコープだけでは、キーワードの名前解決機能は充分とはいえません。
+というのも、複数のライブラリやリソースで同名のキーワードが現れる場合がある一方で、スコープは単に最も高いプライオリティのキーワードを使うというメカニズムしか提供していないからです。
+そのため、 *完全な名前* を使ってキーワードを指定できます。
+キーワードの完全な名前とは、キーワードの前に、リソースやライブラリの名前を、ドットを区切りとしてつけた名前です。
 
 With library keywords, the long format means only using the format
 :name:`LibraryName.Keyword Name`. For example, the keyword :name:`Run`

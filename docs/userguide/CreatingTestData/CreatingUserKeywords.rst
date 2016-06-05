@@ -4,34 +4,32 @@
 .. _higher-level keywords:
 .. _Creating user keywords:
 
-Creating user keywords
-======================
+ユーザキーワードを定義する
+========================
 
-Keyword tables are used to create new higher-level keywords by
-combining existing keywords together. These keywords are called *user
-keywords* to differentiate them from lowest level *library keywords*
-that are implemented in test libraries. The syntax for creating user
-keywords is very close to the syntax for creating test cases, which
-makes it easy to learn.
+既存のキーワードを組み合わせて新しく高水準のキーワードを作るには、キーワードテーブルを使います。
+新しく定義したキーワードは、テストライブラリの中で定義している、より低水準の *ライブラリキーワード* と区別するため、  *ユーザキーワード* と呼びます。
+ユーザキーワードの作り方は、テストケースの作り方と非常によく似ているので、簡単に覚えられます。
 
 .. contents::
    :depth: 2
    :local:
 
-User keyword syntax
--------------------
+.. _User keyword syntax:
 
-Basic syntax
+ユーザキーワードの構文
+----------------------
+
+.. _Basic syntax:
+
+基本の構文
 ~~~~~~~~~~~~
 
-In many ways, the overall user keyword syntax is identical to the
-`test case syntax`_.  User keywords are created in keyword tables
-which differ from test case tables only by the name that is used to
-identify them. User keyword names are in the first column similarly as
-test cases names. Also user keywords are created from keywords, either
-from keywords in test libraries or other user keywords. Keyword names
-are normally in the second column, but when setting variables from
-keyword return values, they are in the subsequent columns.
+多くの部分で、ユーザキーワードの基本的な構文は、 :ref:`テストケースの構文 <test case syntax>` と同じです。
+ユーザキーワードはキーワードテーブルの中で定義します。テストケースはテストケーステーブルの中で定義し、二つを区別するのはテーブルの名前だけです。
+ユーザキーワードの名前は、テストケースの名前と同じく、最初のカラムに書きます。
+また、ユーザーキーワードも、テストケースと同じく、ライブラリ中のキーワードや他のユーザキーワードを組み合わせて定義します。
+ユーザキーワードを構成するキーワードは、通常は2カラム目に書きます。例外は、変数にキーワードをセットするときで、その場合は3カラム目以降に書きます。
 
 .. sourcecode:: robotframework
 
@@ -45,47 +43,42 @@ keyword return values, they are in the subsequent columns.
        ${title} =    Get Title
        Should Start With    ${title}    ${expected}
 
-Most user keywords take some arguments. This important feature is used
-already in the second example above, and it is explained in detail
-`later in this section`__, similarly as `user keyword return
-values`_.
+たいていのユーザキーワードには、引数があります。
+上の二つ目の例で、この重要な機能を使っています。
+詳しくは :ref:`この後の節  ＜User keyword arguments>` で説明します。
+:ref:`ユーザキーワードから値を返す <user keyword return values` 機能も同様です。
 
-__ `User keyword arguments`_
+ユーザキーワードは、 :ref:`テストケースファイル <test case files>`, :ref:`リソースファイル<resource files>`, :ref:`テストスイート初期化ファイル <test suite initialization files>` で定義できます。
+リソースファイルで定義したキーワードは、リソースファイルを取り込んだ別のファイルでも使えるようになります。
+その他のファイルで定義したキーワードは、そのファイルの中でしか使えません。
 
-User keywords can be created in `test case files`_, `resource files`_,
-and `test suite initialization files`_. Keywords created in resource
-files are available for files using them, whereas other keywords are
-only available in the files where they are created.
+.. _Settings in the Keyword table:
 
-Settings in the Keyword table
+キーワードテーブル内で使える設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-User keywords can have similar settings as `test cases`__, and they
-have the same square bracket syntax separating them from keyword
-names. All available settings are listed below and explained later in
-this section.
+ユーザキーワードは、 :ref:`テストケースの設定 <Settings in the test case table>` と似た設定を持たせられます。設定は、テストケースの場合と同様、角カッコを使った構文を使って、キーワードと区別します。
+使える設定は以下に挙げた通りで、それぞれの設定についてはこの後の節で解説します。
 
 `[Documentation]`:setting:
-   Used for setting a `user keyword documentation`_.
+   :ref:`ユーザキーワードのドキュメント <user keyword documentation>` の設定に使います。
 
 `[Tags]`:setting:
-   Sets `tags`__ for the keyword.
+   キーワードの :ref:`タグ <User keyword tags>` の設定に使います。
 
 `[Arguments]`:setting:
-   Specifies `user keyword arguments`_.
+   :ref:`ユーザキーワードの引数 <user keyword arguments>` の設定に使います。
 
 `[Return]`:setting:
-   Specifies `user keyword return values`_.
+   :ref:`ユーザキーワードの戻り値 <user keyword return values>` の設定に使います。
 
 `[Teardown]`:setting:
-   Specify `user keyword teardown`_.
+   :ref:`ユーザキーワードのティアダウン <user keyword teardown>` の設定に使います。
 
 `[Timeout]`:setting:
-   Sets the possible `user keyword timeout`_. Timeouts_ are discussed
-   in a section of their own.
+   :ref:`ユーザキーワードのタイムアウト <user keyword timeout>` の設定に使います。
+   :ref:`タイムアウト <Timeouts>` については、別の節で解説しています。
 
-__ `Settings in the test case table`_
-__ `User keyword tags`_
 
 .. _User keyword documentation:
 
@@ -544,14 +537,15 @@ __ https://docs.python.org/2/library/re.html
 __ `Errors and warnings during execution`_
 __ Escaping_
 
-Behavior-driven development example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Behavior-driven development example
 
-The biggest benefit of having arguments as part of the keyword name is that it
-makes it easier to use higher-level sentence-like keywords when writing test
-cases in `behavior-driven style`_. The example below illustrates this. Notice
-also that prefixes :name:`Given`, :name:`When` and :name:`Then` are `left out
-of the keyword definitions`__.
+ビヘイビアドリブンな開発の例
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+キーワード名の中に変数を持てることの最大のメリットは、 :ref:`ビヘイビアドリブン型 <behavior-driven style>` のテストを書くときに、高水準の、文章として読めるキーワードを使いやすいことです。
+以下に、その例を示しましょう。
+この例では、 :name:`Given`, :name:`When`, :name:`Then` という接頭辞が、
+:ref:`キーワードの定義では不要 <Ignoring Given/When/Then/And/But prefixes>` だということにも注意してください。
 
 .. sourcecode:: robotframework
 
@@ -580,37 +574,29 @@ of the keyword definitions`__.
        ${result} =    Get Result
        Should Be Equal    ${result}    ${expected}
 
-.. note:: Embedded arguments feature in Robot Framework is inspired by
-          how *step definitions* are created in a popular BDD tool Cucumber__.
+.. note:: Robot Framework の引数埋め込み機能は、有名な BDD ツール Cucumber__ の *ステップ定義 (step definition)* に着想を得ています。
 
-__ `Ignoring Given/When/Then/And/But prefixes`_
 __ http://cukes.info
 
 .. _User keyword return values:
 
-User keyword return values
---------------------------
+値を返すユーザキーワードを定義する
+-------------------------------
 
-Similarly as library keywords, also user keywords can return
-values. Typically return values are defined with the :setting:`[Return]`
-setting, but it is also possible to use BuiltIn_ keywords
-:name:`Return From Keyword` and :name:`Return From Keyword If`.
-Regardless how values are returned, they can be `assigned to variables`__
-in test cases and in other user keywords.
+ライブラリキーワードと同様、ユーザキーワードも値を返せます。
+通常、戻り値は :setting:`[Return]` で設定できますが、 :ref:`BuiltIn` ライブラリのキーワード、 :name:`Return From Keyword` や :name:`Return From Keyword If` でも返せます。
+どのやり方で返した戻り値も、テストケースや他のキーワードの中で、 :ref:`変数に代入<Return values from keywords>` して使えます。
 
-__ `Return values from keywords`_
+.. _Using :setting:`[Return]` setting:
 
-Using :setting:`[Return]` setting
+:setting:`[Return]` 設定の使い方
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The most common case is that  a user keyword returns one value and it is
-assigned to a scalar variable. When using the :setting:`[Return]` setting, this is
-done by having the return value in the next cell after the setting.
+ユーザキーワードの値の返し方のうちもっとも一般的なのは、ユーザキーワードが一つの値を返して、その値をスカラ値として代入する形式です。
+:setting:`[Return]` 設定を使う場合は、設定名の次のセルに返したい値を入れます。
 
-User keywords can also return several values, which can then be assigned into
-several scalar variables at once, to a list variable, or to scalar variables
-and a list variable. Several values can be returned simply by
-specifying those values in different cells after the :setting:`[Return]` setting.
+ユーザキーワードから複数の値を返すこともできます。その場合、複数のスカラ変数に一度に代入したり、リスト変数に代入したり、スカラ変数とリスト変数に組み合わせて代入したりできます。
+複数の値を返したいときは、単に :setting:`[Return]` 設定の隣のセルに、返したい値を並べていくだけです。
 
 .. sourcecode:: robotframework
 
@@ -634,17 +620,16 @@ specifying those values in different cells after the :setting:`[Return]` setting
    Return Three Values
        [Return]    foo    bar    zap
 
-Using special keywords to return
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Using special keywords to return:
 
-BuiltIn_ keywords :name:`Return From Keyword` and :name:`Return From Keyword If`
-allow returning from a user keyword conditionally in the middle of the keyword.
-Both of them also accept optional return values that are handled exactly like
-with the :setting:`[Return]` setting discussed above.
+特別なキーワードを使って戻り値を制御する
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The first example below is functionally identical to the previous
-:setting:`[Return]` setting example. The second, and more advanced, example
-demonstrates returning conditionally inside a `for loop`_.
+:ref:`BuiltIn` ライブラリのキーワード、 :name:`Return From Keyword` や :name:`Return From Keyword If` を使うと、条件に応じて、ユーザキーワードの処理の途中で値を返せます。
+これらのキーワードは、いずれも、戻り値をオプションの引数にもたせることができ、先の :setting:`[Return]` で返すのと同じように値を返せます。
+
+以下の例のうち、最初のものは、前節の :setting:`[Return]` を使った例と全く同じです。
+二つ目の例は、ちょっと高度なことをやっていて、 :ref:`for ループ <for loop>` の中から値を返しています。
 
 .. sourcecode:: robotframework
 
@@ -666,7 +651,7 @@ demonstrates returning conditionally inside a `for loop`_.
        Do Something    ${arg}
        ${value} =    Get Some Value
        Return From Keyword    ${value}
-       Fail    This is not executed
+       Fail    ここは実行されない
 
    Find Index
        [Arguments]    ${element}    @{items}
@@ -674,24 +659,21 @@ demonstrates returning conditionally inside a `for loop`_.
        :FOR    ${item}    IN    @{items}
        \    Return From Keyword If    '${item}' == '${element}'    ${index}
        \    ${index} =    Set Variable    ${index + 1}
-       Return From Keyword    ${-1}    # Could also use [Return]
+       Return From Keyword    ${-1}    # [Return] を使っても書ける
 
-.. note:: Both :name:`Return From Keyword` and :name:`Return From Keyword If`
-          are available since Robot Framework 2.8.
+.. note:: :name:`Return From Keyword` と :name:`Return From Keyword If` は、いずれも Robot Framework 2.8 から使えるようになりました。
 
-User keyword teardown
----------------------
+.. _User keyword teardown:
 
-User keywords may have a teardown defined using :setting:`[Teardown]` setting.
+ユーザキーワードのティアダウン
+------------------------------
 
-Keyword teardown works much in the same way as a `test case
-teardown`__.  Most importantly, the teardown is always a single
-keyword, although it can be another user keyword, and it gets executed
-also when the user keyword fails. In addition, all steps of the
-teardown are executed even if one of them fails. However, a failure in
-keyword teardown will fail the test case and subsequent steps in the
-test are not run. The name of the keyword to be executed as a teardown
-can also be a variable.
+:setting:`[Teardown]` を使えば、ユーザーキーワードにティアダウン処理を定義できます。
+
+キーワードのティアダウン処理は、 :ref:`テストケースのティアダウン <test setup and teardown>` と同じように働きます。
+いちばん重要な類似点は、ティアダウンに設定できるのは単一のキーワードであり、他のユーザキーワードを指定でき、キーワードが失敗したときに実行されるということです。
+さらに、ティアダウンに指定したキーワードの処理は、たとえその中で失敗が発生しても、全て実行されます。
+ただし、ティアダウンキーワードの実行中に失敗が発生すると、そのテストケースは失敗し、残りのテストのステップは実行されません。ティアダウン用に実行するキーワードは、変数にもできます。
 
 .. sourcecode:: robotframework
 
@@ -705,4 +687,3 @@ can also be a variable.
        Do Something
        [Teardown]    ${TEARDOWN}
 
-__ `test setup and teardown`_
