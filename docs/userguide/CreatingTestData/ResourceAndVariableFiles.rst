@@ -190,12 +190,9 @@ Robot Framework 2.8.7 からは、引数の区切り文字にセミコロン (`;
 Basic syntax
 ''''''''''''
 
-When variable files are taken into use, they are imported as Python
-modules and all their global attributes that do not start with an
-underscore (`_`) are considered to be variables. Because variable
-names are case-insensitive, both lower- and upper-case names are
-possible, but in general, capital letters are recommended for global
-variables and attributes.
+変数ファイルを使った場合、ファイルは Python モジュールとして import され、アンダースコア (`_`) で始まる名前を除く、全てのグローバルアトリビュートが変数とみなされます。
+変数名は大小文字を区別しないので、変数名は大文字でも小文字でもかまいません。
+ただし、一般的には、グローバルな変数やアトリビュートには大文字を勧めます。
 
 .. sourcecode:: python
 
@@ -206,17 +203,12 @@ variables and attributes.
    NUMBERS = [1, INTEGER, 3.14]
    MAPPING = {"one": 1, "two": 2, "three": 3}
 
-In the example above, variables `${VARIABLE}`, `${ANOTHER VARIABLE}`, and
-so on, are created. The first two variables are strings, the third one is
-an integer, then there are two lists, and the final value is a dictionary.
-All these variables can be used as a `scalar variable`_, lists and the
-dictionary also a `list variable`_ like `@{STRINGS}` (in the dictionary's case
-that variable would only contain keys), and the dictionary also as a
-`dictionary variable`_ like `&{MAPPING}`.
+上の例では、 `${VARIABLE}`, `${ANOTHER VARIABLE}` といった変数ができます。
+上の例の最初の二つは文字列、三つ目は整数、そして二つリストが続き、最後は辞書です。
+定義した変数は、全て :ref:`スカラ変数 <scalar variable>` として扱えるほか、リストや辞書は、
+`@{STRINGS}` のような :ref:`リスト変数 <list variable>` (辞書の場合は、キーのみの入ったリスト)、辞書の場合は `&{MAPPING}` のような :ref:`辞書変数 <dictionary variable>` として扱えます。
 
-To make creating a list variable or a dictionary variable more explicit,
-it is possible to prefix the variable name with `LIST__` or `DICT__`,
-respectively:
+リスト変数や辞書変数をより明示的に定義したければ、 `LIST__` や `DICT__` といったプレフィクスを変数名に付けられます:
 
 .. sourcecode:: python
 
@@ -225,17 +217,13 @@ respectively:
    LIST__ANIMALS = ["cat", "dog"]
    DICT__FINNISH = OrderedDict([("cat", "kissa"), ("dog", "koira")])
 
-These prefixes will not be part of the final variable name, but they cause
-Robot Framework to validate that the value actually is list-like or
-dictionary-like. With dictionaries the actual stored value is also turned
-into a special dictionary that is used also when `creating dictionary
-variables`_ in the Variable table. Values of these dictionaries are accessible
-as attributes like `${FINNISH.cat}`. These dictionaries are also ordered, but
-preserving the source order requires also the original dictionary to be
-ordered.
+プレフィクスをつけた場合、プレフィクス部分は最終的な変数名に入りません。
+Robot Framework は、変数が実際にリストや辞書と同様のオブジェクトであるか検証します。
+辞書の場合、実際に値を保存する辞書は、変数テーブルで :ref:`辞書変数を作成 <creating dictionary variable>` したときに使われる特殊な辞書になります。
+辞書中の値は、 `${FINNISH.cat}` のようなアトリビュートでアクセスできます。
+辞書中の値は順序つきで管理されていますが、辞書変数中のデータの並びを、元の辞書データ中の並びと同じにしたければ、もとの辞書も順序つき辞書にせねばなりません。
 
-The variables in both the examples above could be created also using the
-Variable table below.
+上で定義した二つの変数は、以下のように変数テーブルでも生成できます。
 
 .. sourcecode:: robotframework
 
@@ -249,20 +237,16 @@ Variable table below.
    @{ANIMALS}             cat          dog
    &{FINNISH}             cat=kissa    dog=koira
 
-.. note:: Variables are not replaced in strings got from variable files.
-          For example, `VAR = "an ${example}"` would create
-          variable `${VAR}` with a literal string value
-          `an ${example}` regardless would variable `${example}`
-          exist or not.
+.. note:: 変数ファイルから取得した文字列中に変数が書かれていても、値の置き換えは起きません。
+          例えば、変数ファイルで `VAR = "an ${example}"` と定義していた場合、変数 `${example}` が定義されているかどうかに関係なく、 `${VAR}` の値は、 `an ${example}` という文字列リテラルのままです。
 
-Using objects as values
-'''''''''''''''''''''''
+.. _Using objects as values:
 
-Variables in variable files are not limited to having only strings or
-other base types as values like variable tables. Instead, their
-variables can contain any objects. In the example below, the variable
-`${MAPPING}` contains a Java Hashtable with two values (this
-example works only when running tests on Jython).
+オブジェクトを値として使う
+''''''''''''''''''''''''''''
+
+変数テーブルで定義する変数の値の型は、文字列やその他の基本型ですが、変数ファイル中で定義される変数の値の型はそれにとどまりません。
+変数ファイルの変数には、任意のオブジェクトを定義できます。下の例では、変数 `${MAPPING}` に Java のハッシュテーブルが入っていて、二つの値が定義されています (このテストは Jython でしか動きません)。
 
 .. sourcecode:: python
 
@@ -272,9 +256,7 @@ example works only when running tests on Jython).
     MAPPING.put("one", 1)
     MAPPING.put("two", 2)
 
-The second example creates `${MAPPING}` as a Python dictionary
-and also has two variables created from a custom object implemented in
-the same file.
+二つ目の例では、 `${MAPPING}` を Python の辞書にして、加えて二つの変数を用意し、それらの値を、同じファイルで定義したカスタムオブジェクトにしています。
 
 .. sourcecode:: python
 
@@ -287,11 +269,12 @@ the same file.
     OBJ1 = MyObject('John')
     OBJ2 = MyObject('Jane')
 
-Creating variables dynamically
-''''''''''''''''''''''''''''''
+.. _Creating variables dynamically:
 
-Because variable files are created using a real programming language,
-they can have dynamic logic for setting variables.
+値を動的に生成する
+'''''''''''''''''''
+
+変数ファイルは実際のプログラミング言語で書かれるので、動的なロジックを使って変数を設定できます。
 
 .. sourcecode:: python
 
@@ -299,19 +282,16 @@ they can have dynamic logic for setting variables.
    import random
    import time
 
-   USER = os.getlogin()                # current login name
-   RANDOM_INT = random.randint(0, 10)  # random integer in range [0,10]
-   CURRENT_TIME = time.asctime()       # timestamp like 'Thu Apr  6 12:45:21 2006'
+   USER = os.getlogin()                # 現在のログイン名
+   RANDOM_INT = random.randint(0, 10)  # [0,10] の間の乱数
+   CURRENT_TIME = time.asctime()       # 'Thu Apr  6 12:45:21 2006' 形式の現在時刻
    if time.localtime()[3] > 12:
        AFTERNOON = True
    else:
        AFTERNOON = False
 
-The example above uses standard Python libraries to set different
-variables, but you can use your own code to construct the values. The
-example below illustrates the concept, but similarly, your code could
-read the data from a database, from an external file or even ask it from
-the user.
+上の例では、Python の標準ライブラリを使って色々な変数を設定していますが、実際は、自分のコードでいかようにでも値を作れます。
+以下の例で、そのコンセプトを例示していますが、他にも、データベースから値を呼んだり、外部ファイルを参照したり、ユーザに入力させたりできます。
 
 .. sourcecode:: python
 
@@ -325,21 +305,17 @@ the user.
     AREA1 = get_area(1)
     AREA2 = get_area(2)
 
-Selecting which variables to include
+.. _Selecting which variables to include:
+
+どの値を取り込ませるか選択する
 ''''''''''''''''''''''''''''''''''''
 
-When Robot Framework processes variable files, all their attributes
-that do not start with an underscore are expected to be
-variables. This means that even functions or classes created in the
-variable file or imported from elsewhere are considered variables. For
-example, the last example would contain the variables `${math}`
-and `${get_area}` in addition to `${AREA1}` and
-`${AREA2}`.
+Robot Framework が変数ファイルを処理する際、アンダースコアで始まるアトリビュート以外は、全て変数とみなします。
+そのため、変数ファイル内で定義した関数やクラス、他のモジュールからインポートした名前は、全て変数扱いになってしまいます。
+例えば、前節の例だと、 `${AREA1}` や `${AREA2}` の他に、 `${math}` や `${get_area}` が変数になってしまいます。
 
-Normally the extra variables do not cause problems, but they
-could override some other variables and cause hard-to-debug
-errors. One possibility to ignore other attributes is prefixing them
-with an underscore:
+こうした変数が問題になることは、通常はありません。ただ、他の変数を上書きしてしまい、デバッグの難しいエラーを引き起こさないともかぎりません。
+変数として取り込ませない方法の一つは、名前をアンダースコアから始めることです:
 
 .. sourcecode:: python
 
@@ -353,10 +329,8 @@ with an underscore:
     AREA1 = _get_area(1)
     AREA2 = _get_area(2)
 
-If there is a large number of other attributes, instead of prefixing
-them all, it is often easier to use a special attribute
-`__all__` and give it a list of attribute names to be processed
-as variables.
+不要なアトリビュートが沢山あるときは、一つ一つにアンダースコアを付けて回る代わりに、特殊なアトリビュート `__all__` を使うほうが簡単です。
+`__all__` には、変数として扱いたいアトリビュートの名前を列挙します。
 
 .. sourcecode:: python
 
@@ -372,23 +346,17 @@ as variables.
     AREA1 = get_area(1)
     AREA2 = get_area(2)
 
-.. Note:: The `__all__` attribute is also, and originally, used
-          by Python to decide which attributes to import
-          when using the syntax `from modulename import *`.
+.. Note:: `__all__` アトリビュートは、元々は、 Python で `from modulename import *` としたときに import されるアトリビュートを決めるための書き方でもあります。
 
-Getting variables from a special function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Getting variables from a special function:
 
-An alternative approach for getting variables is having a special
-`get_variables` function (also camelCase syntax
-`getVariables` is possible) in a variable file. If such a function
-exists, Robot Framework calls it and expects to receive variables as
-a Python dictionary or a Java `Map` with variable names as keys
-and variable values as values. Created variables can be used as scalars,
-lists, and dictionaries exactly like when `creating variables directly`_,
-and it is possible to use `LIST__` and `DICT__` prefixes to make creating
-list and dictionary variables more explicit. The example below is functionally
-identical to the first `creating variables directly`_ example.
+特殊な関数に変数を生成させる
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+変数を生成するもう一つの方法として、 `get_variables`  (キャメルケースの `getVariables` でも可) という名前の関数を定義する方法があります。
+この名前の関数があると、 Robot Framework は関数を呼び出し、戻り値を、 Python の辞書または Java の `Map` として受け取り、そのキーと値をそれぞれ変数名と変数値とします。
+変数の値は、 :ref:`直接定義した場合 <creating variables directly>` と同様、スカラー、リスト、辞書にでき、 `LIST__` や `DICT__` プレフィクスを使って、リストや辞書型の変数を明示できます。
+下の例は、 :ref:`直接定義した場合 <creating variables directly>` の例と機能的に同じです。
 
 .. sourcecode:: python
 
@@ -401,16 +369,13 @@ identical to the first `creating variables directly`_ example.
                      "MAPPING": {"one": 1, "two": 2, "three": 3}}
         return variables
 
-`get_variables` can also take arguments, which facilitates changing
-what variables actually are created. Arguments to the function are set just
-as any other arguments for a Python function. When `taking variable files
-into use`_ in the test data, arguments are specified in cells after the path
-to the variable file, and in the command line they are separated from the
-path with a colon or a semicolon.
+`get_variables` には引数を渡せて、引数に応じて生成される変数を変えられます。
+関数の引数は、Pythonの関数に引数を渡すときと同じように指定します。
+テストデータで :ref:`変数ファイルを使う <taking variable files into use>` 際、引数を変数ファイル名の後のセルに指定できます。
+また、コマンドラインでも、変数ファイルのパスの後に、コロンやセミコロンで区切って変数を渡せます。
 
-The dummy example below shows how to use arguments with variable files. In a
-more realistic example, the argument could be a path to an external text file
-or database where to read variables from.
+以下のダミーのサンプルは、引数付きの変数ファイルの例です。
+より現実的な例だと、引数は外部のテキストファイルへのパスだったり、値を参照する先のデータベースを示していたりするでしょう。
 
 .. sourcecode:: python
 
@@ -426,40 +391,38 @@ or database where to read variables from.
         else:
             return variables2
 
-Implementing variable file as Python or Java class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Implementing variable file as Python or Java class:
 
-Starting from Robot Framework 2.7, it is possible to implement variables files
-as Python or Java classes.
+変数ファイルを Python や Java のクラスとして実装する
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Implementation
-''''''''''''''
+Robot Framework 2.7 からは、変数ファイルを Python や Java のクラスで定義できます。
 
-Because variable files are always imported using a file system path, creating
-them as classes has some restrictions:
+.. Implementation:
 
-  - Python classes must have the same name as the module they are located.
-  - Java classes must live in the default package.
-  - Paths to Java classes must end with either :file:`.java` or :file:`.class`.
-    The class file must exists in both cases.
+実装方法
+''''''''''
 
-Regardless the implementation language, the framework will create an instance
-of the class using no arguments and variables will be gotten from the instance.
-Similarly as with modules, variables can be defined as attributes directly
-in the instance or gotten from a special `get_variables`
-(or `getVariables`) method.
+変数ファイルはファイルシステム上のパスを指定して import されるので、クラスで実装するときには、以下のような制約があります:
 
-When variables are defined directly in an instance, all attributes containing
-callable values are ignored to avoid creating variables from possible methods
-the instance has. If you would actually need callable variables, you need
-to use other approaches to create variable files.
+  - クラスの名前は、クラスの置かれたモジュールと同じ名前にせねばなりません。
+  - Java のクラスは、デフォルトパッケージ内に入っていなければなりません。
+  - Java のクラスは、 :file:`.java` または :file:`.class` で終わるファイル名にせねばならず、いずれのケースでも、クラスファイルは必ず必要です。
 
-Examples
-''''''''
+どの言語で実装した場合でも、フレームワークはクラスのインスタンスを引数なしで生成し、そのインスタンスから変数を得ます。
+モジュールのときと同様、変数は直接インスタンスのアトリビュートとして定義したり、 `get_variables`
+(や、 `getVariables`) といった特殊メソッドで定義したりできます。
 
-The first examples create variables from attributes using both Python and Java.
-Both of them create variables `${VARIABLE}` and `@{LIST}` from class
-attributes and `${ANOTHER VARIABLE}` from an instance attribute.
+変数をインスタンスのアトリビュートとして直接定義した場合、インスタンスのメソッドが何でもかんでも変数として生成されてしまわないように、呼び出し可能なアトリビュートは除外されます。
+呼び出し可能オブジェクトの変数が明に必要な場合は、変数ファイルを別のやり方で定義してください。
+
+.. Examples:
+
+例
+'''''
+
+最初の例では、 Python や Java を使って変数を生成しています。
+いずれも、クラスのアトリビュートから `${VARIABLE}` と `@{LIST}` を、インスタンスアトリビュートから `${ANOTHER VARIABLE}` を生成しています。
 
 .. sourcecode:: python
 
@@ -484,8 +447,8 @@ attributes and `${ANOTHER VARIABLE}` from an instance attribute.
         }
     }
 
-The second examples utilizes dynamic approach for getting variables. Both of
-them create only one variable `${DYNAMIC VARIABLE}`.
+次の例では、動的に変数を生成する機能を使っています。
+いずれの言語も、 `${DYNAMIC VARIABLE}` という変数を生成しています。
 
 .. sourcecode:: python
 
@@ -508,12 +471,14 @@ them create only one variable `${DYNAMIC VARIABLE}`.
         }
     }
 
-Variable file as YAML
-~~~~~~~~~~~~~~~~~~~~~
+.. _Variable file as YAML:
 
-Variable files can also be implemented as `YAML <http://yaml.org>`_ files.
-YAML is a data serialization language with a simple and human-friendly syntax.
-The following example demonstrates a simple YAML file:
+YAML 形式の変数ファイル
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+変数ファイルは `YAML <http://yaml.org>`_ 形式でも書けます。
+YAML はデータを永続化するための記述言語で、簡単で人間の理解しやすい構文を備えています。
+以下の例は、簡単な YAML ファイルの使い方です:
 
 .. sourcecode:: yaml
 
@@ -527,23 +492,16 @@ The following example demonstrates a simple YAML file:
       two: kaksi
       with spaces: kolme
 
-.. note:: Using YAML files with Robot Framework requires `PyYAML
-          <http://pyyaml.org>`_ module to be installed. If you have
-          pip_ installed, you can install it simply by running
-          `pip install pyyaml`.
+.. note:: Robot Framework で YAML を扱うには、 `PyYAML <http://pyyaml.org>`_ モジュールが必要です。
+          pip_ をインストールしているなら、 `pip install pyyaml` でインストールできます。
 
-          YAML support is new in Robot Framework 2.9. Starting from
-          version 2.9.2, the `standalone JAR distribution`_ has
-          PyYAML included by default.
+          YAML のサポートは Robot Framework 2.9 からです。
+          version 2.9.2 からは、 :ref:`スタンドアロン JAR <standalone JAR distribution>` にデフォルトで PyYAML が入っています。
 
-YAML variable files can be used exactly like normal variable files
-from the command line using :option:`--variablefile` option, in the settings
-table using :setting:`Variables` setting, and dynamically using the
-:name:`Import Variables` keyword. The only thing to remember is that paths to
-YAML files must always end with :file:`.yaml` extension.
+YAML の変数ファイルの扱い方は通常の変数ファイルと同じで、 :option:`--variablefile`  オプションや、設定ファイルの  :setting:`Variables`, :name:`Import Variables` キーワードで使えます。
+ただし、YAML ファイルのパスは、拡張子  :file:`.yaml` にせねばなりません。
 
-If the above YAML file is imported, it will create exactly the same
-variables as the following variable table:
+上の YAML ファイルを取り込んだ場合、以下の変数テーブルで生成するのと同じ変数が生成されます:
 
 .. sourcecode:: robotframework
 
@@ -553,17 +511,12 @@ variables as the following variable table:
    @{LIST}       one         two
    &{DICT}       one=yksi    two=kaksi
 
-YAML files used as variable files must always be mappings in the top level.
-As the above example demonstrates, keys and values in the mapping become
-variable names and values, respectively. Variable values can be any data
-types supported by YAML syntax. If names or values contain non-ASCII
-characters, YAML variables files must be UTF-8 encoded.
+変数の定義に使う YAML ファイルは、必ずトップレベルがマップの定義でなければなりません。
+上の例で示したように、マップのキーと値が、それぞれ変数の名前と値になります。
+変数の値は、 YAML がサポートする型ならなんでも構いません。
+名前や値に非ASCII文字を入れたければ、 YAML ファイルを UTF-8 でエンコードせねばなりません。
 
-Mappings used as values are automatically converted to special dictionaries
-that are used also when `creating dictionary variables`_ in the variable table.
-Most importantly, values of these dictionaries are accessible as attributes
-like `${DICT.one}`, assuming their names are valid as Python attribute names.
-If the name contains spaces or is otherwise not a valid attribute name, it is
-always possible to access dictionary values using syntax like
-`&{DICT}[with spaces]` syntax. The created dictionaries are also ordered, but
-unfortunately the original source order of in the YAML file is not preserved.
+値がマップのときは、自動的に、変数テーブルで :ref:`辞書変数を作成 <creating dictionary variable>` したときに使われる特殊な辞書になります。
+ここで大事なのは、辞書の値は、あたかも Python のアトリビュート名のように、 `${DICT.one}` のようなアトリビュートとしてアクセスできるということです。
+名前にスペースが入っていたり、Python のアトリビュート名として正しくない名前を使った場合には、辞書の値には `&{DICT}[with spaces]` のような記法でしかアクセスできません。
+生成された辞書は順序つき辞書にはなっていますが、残念ながら YAML ファイル中の記述順序は保存されません。
