@@ -1,0 +1,5 @@
+build:
+  image: webdevops/sphinx
+  commands:
+    - cd docs
+    - make html
