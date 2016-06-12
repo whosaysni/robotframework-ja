@@ -4,71 +4,67 @@ Screenshot: スクリーンショットを撮る
 :Scope:            test suite
 :Named arguments:  supported
 
-Test library for taking screenshots on the machine where tests are run.
+テストを実行しているマシン上で、スクリーンショットを撮るためのライブラリです。
 
-Notice that successfully taking screenshots requires tests to be run with
-a physical or virtual display.
+スクリーンショットをきちんと撮るには、テストを物理ないし仮想ディスプレイ上で実行する必要があります。
 
-Using with Python
---------------------------------------------
+.. Using with Python
 
-How screenshots are taken when using Python depends on the operating
-system. On OSX screenshots are taken using the built-in ``screencapture``
-utility. On other operating systems you need to have one of the following
-tools or Python modules installed. You can specify the tool/module to use
-when `importing` the library. If no tool or module is specified, the first
-one found will be used.
+Python での使い方
+------------------
 
-- wxPython :: http://wxpython.org :: Required also by RIDE so many Robot
-  Framework users already have this module installed.
-- PyGTK :: http://pygtk.org :: This module is available by default on most
-  Linux distributions.
-- Pillow :: https://python-pillow.github.io ::
-  Only works on Windows. Also the original PIL package is supported.
-- Scrot :: https://en.wikipedia.org/wiki/Scrot :: Not used on Windows.
-  Install with ``apt-get install scrot`` or similar.
+Python を使っている場合、スクリーンショットの撮り方は OS に依存します。
+OSX では、スクリーンショットは OS 組み込みの ``screencapture`` ユーティリティで撮ります。
+その他の OS では、以下のツールまたはモジュールをインストールしておく必要があります。
+ライブラリのインポート時に、どのツール・モジュールを使うかを指定できます。
+値を指定しない場合は、順番に各ツールを探索し、最初に見つかったものを使います。
 
-Using ``screencapture`` on OSX and specifying explicit screenshot module
-are new in Robot Framework 2.9.2. The support for using ``scrot`` is new
-in Robot Framework 3.0.
+- wxPython :: http://wxpython.org :: RIDE でも使うので、多くの Robot Framework ユーザが、このモジュールをインストール済みのはずです。
+- PyGTK :: http://pygtk.org :: ほとんどの Linux ディストリビューションでは、デフォルトでこのモジュールが使えるはずです。
+- Pillow :: https://python-pillow.github.io :: Windows でしか稼働しません。オリジナルの PIL パッケージもサポートしています。
+- Scrot :: https://en.wikipedia.org/wiki/Scrot :: Windows では使えません。 ``apt-get install scrot`` などでインストールします。
 
-Using with Jython and IronPython
---------------------------------------------
+Robot Framework 2.9.2 からは、OSX で ``screencapture`` を使うようになり、スクリーンショットモジュールを明示できるようになりました。
+``scrot`` のサポートは Robot Framework 3.0 からです。
 
-With Jython and IronPython this library uses APIs provided by JVM and .NET
-platforms, respectively. These APIs are always available and thus no
-external modules are needed.
+.. Using with Jython and IronPython
 
-Where screenshots are saved
---------------------------------------------
+Jython および IronPython での使い方
+-------------------------------------
 
-By default screenshots are saved into the same directory where the Robot
-Framework log file is written. If no log is created, screenshots are saved
-into the directory where the XML output file is written.
+Jython や IronPython では、このライブラリはそれぞれ JVM や .NET プラットフォームの API を使います。
+これらの API はいつでも使えるので、外部のモジュールが必要ありません。
 
-It is possible to specify a custom location for screenshots using
-``screenshot_directory`` argument when `importing` the library and
-using `Set Screenshot Directory` keyword during execution. It is also
-possible to save screenshots using an absolute path.
 
-Keywords
----------------
+.. Where screenshots are saved
 
-Importing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+スクリーンショットの保存先
+----------------------------
+
+デフォルトでは、スクリーンショットはログファイルの出力先と同じディレクトリに保存されます。
+ログを生成させない場合、スクリーンショットは、 XML 出力ファイルの出力先と同じディレクトリに保存されます。
+
+スクリーンショットの保存先は、ライブラリのインポート時に、 ``screenshot_directory`` 引数で決めたり、実行時に `Set Screenshot Directory` で決めたりできます。
+保存先の指定には絶対パスを使えます。
+
+
+キーワード
+------------
+
+
+インポート
+~~~~~~~~~~~
 Arguments:  [screenshot_directory=None, screenshot_module=None]
 
-Configure where screenshots are saved.
+スクリーンショットの保存先を設定します。
 
-If ``screenshot_directory`` is not given, screenshots are saved into
-same directory as the log file. The directory can also be set using
-`Set Screenshot Directory` keyword.
+``screenshot_directory`` を指定しなかった場合、スクリーンショットはログファイルの出力先と同じディレクトリに保存されます。
+このディレクトリは `Set Screenshot Directory` でも決められます。
 
-``screenshot_module`` specifies the module or tool to use when using
-this library on Python outside OSX. Possible values are ``wxPython``,
-``PyGTK``, ``PIL`` and ``scrot``, case-insensitively. If no value is
-given, the first module/tool found is used in that order. See `Using
-with Python` for more information.
+``screenshot_module`` は、 Mac OSX で、システムの Python 以外の Python から、このライブラリを使う際に利用するモジュールやツールです。
+指定できるのは、 ``wxPython``, ``PyGTK``, ``PIL``, ``scrot`` のいずれかで、大小文字を区別しません。
+値を指定しない場合は、上記の順番で各ツールを探索し、最初に見つかったものを使います。
+詳しくは `Using with Python` を参照してください。
 
 Examples (use only one of these):
 | =Setting= |  =Value=   |  =Value=   |
@@ -76,58 +72,52 @@ Examples (use only one of these):
 | Library   | Screenshot | ${TEMPDIR} |
 | Library   | Screenshot | screenshot_module=PyGTK |
 
-Specifying explicit screenshot module is new in Robot Framework 2.9.2.
+Robot Framework 2.9.2 から、スクリーンショットモジュールを明示して指定できるようになりました。
+
 
 Set Screenshot Directory
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
-Sets the directory where screenshots are saved.
+スクリーンショットの保存先ディレクトリをセットします。
 
-It is possible to use ``/`` as a path separator in all operating
-systems. Path to the old directory is returned.
+どの OS でも、 ``/`` をパス区切りに使えます。変更前のディレクトリを返します。
 
-The directory can also be set in `importing`.
+ディレクトリはライブラリのインポート時にも変更できます。
+
 
 Take Screenshot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 Arguments:  [name=screenshot, width=800px]
 
-Takes a screenshot in JPEG format and embeds it into the log file.
+スクリーンショットを JPEG 形式で撮り、ログファイルに埋め込みます。
 
-Name of the file where the screenshot is stored is derived from the
-given ``name``. If the ``name`` ends with extension ``.jpg`` or
-``.jpeg``, the screenshot will be stored with that exact name.
-Otherwise a unique name is created by adding an underscore, a running
-index and an extension to the ``name``.
+スクリーンショットのファイル名は、引数 ``name`` の指定値から決まります。
+``name`` が拡張子 ``.jpg`` や ``.jpeg`` で終わっている場合、指定した名前そのままでスクリーンショットを保存します。
+それ以外の場合は、 ``name`` にアンダースコアを付加して、ファイル名が一意となるように通し番号を振り、拡張子を付けて保存します。
 
-The name will be interpreted to be relative to the directory where
-the log file is written. It is also possible to use absolute paths.
-Using ``/`` as a path separator works in all operating systems.
+``name`` は、ログファイルの出力先からの相対ディレクトリを指しているものとみなします。
+絶対パスでの指定も可能です。どの OS でも、 ``/`` をパス区切りに使えます。
 
-``width`` specifies the size of the screenshot in the log file.
+``width`` は、ログファイルに埋め込むときのスクリーンショットのサイズを決めます。
 
-Examples: (LOGDIR is determined automatically by the library)
-| Take Screenshot |                  |     | # LOGDIR/screenshot_1.jpg (index
-automatically incremented) |
-| Take Screenshot | mypic            |     | # LOGDIR/mypic_1.jpg (index
-automatically incremented) |
-| Take Screenshot | ${TEMPDIR}/mypic |     | # /tmp/mypic_1.jpg (index
-automatically incremented) |
-| Take Screenshot | pic.jpg          |     | # LOGDIR/pic.jpg (always uses
-this file) |
-| Take Screenshot | images/login.jpg | 80% | # Specify both name and width. |
-| Take Screenshot | width=550px      |     | # Specify only width. |
+例: (LOGDIR はライブラリが自動的に決定します)::
 
-The path where the screenshot is saved is returned.
+  | Take Screenshot |                  |     | # LOGDIR/screenshot_1.jpg (通番は自動的に振られる) 
+  | Take Screenshot | mypic            |     | # LOGDIR/mypic_1.jpg (通番は自動的に振られる) 
+  | Take Screenshot | ${TEMPDIR}/mypic |     | # /tmp/mypic_1.jpg (通番は自動的に振られる) 
+  | Take Screenshot | pic.jpg          |     | # LOGDIR/pic.jpg (常にこの名前で保存) 
+  | Take Screenshot | images/login.jpg | 80% | # 名前と幅を指定 
+  | Take Screenshot | width=550px      |     | # 幅のみ指定 
+
+スクリーンショットを保存したパスを返します。
+
 
 Take Screenshot Without Embedding
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [name=screenshot]
 
-Takes a screenshot and links it from the log file.
+スクリーンショットを取り、ログファイルにリンクだけを出力します。
 
-This keyword is otherwise identical to `Take Screenshot` but the saved
-screenshot is not embedded into the log file. The screenshot is linked
-so it is nevertheless easily available.
+このキーワードは、 `Take Screenshot` とほとんど同じで、保存したスクリーンショットがログに埋め込まれない点が違います。ログには、アクセスできるように、リンクだけを出力します。
 
