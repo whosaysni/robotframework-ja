@@ -4,83 +4,81 @@ Version:          3.0
 Scope:            global
 Named arguments:  supported
 
-A test library providing dialogs for interacting with users.
+このテストライブラリは、ユーザと対話するためのダイアログ機能を提供します。
 
-``Dialogs`` is Robot Framework's standard library that provides means
-for pausing the test execution and getting input from users. The
-dialogs are slightly different depending on whether tests are run on
-Python, IronPython or Jython but they provide the same functionality.
+``Dialogs`` は Robot Framework の標準ライブラリで、テストを一時停止して、ユーザから入力を受け付ける手段を提供します。
 
-Long lines in the provided messages are wrapped automatically since
-Robot Framework 2.8. If you want to wrap lines manually, you can add
-newlines using the ``\n`` character sequence.
+テストを実行している環境が Python, IronPython, Jython のいずれかによって、表示されるダイアログは多少異なりますが、機能に違いはありません。
 
-The library has a known limitation that it cannot be used with timeouts
-on Python. Support for IronPython was added in Robot Framework 2.9.2.
+Robot Framework 2.8 からは、メッセージが長い場合、行を折り返すようになりました。
+自分で行を折り返したければ、文字列中に改行文字 ``\n`` を入れてください。
 
-Keywords
---------------
+このライブラリには、 Python ではタイムアウトと一緒に使えないという制限があります。
+IronPython のサポートは Robot Framework 2.9.2 で追加されました。
+
+キーワード
+-------------
 
 Execute Manual Step
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [message, default_error=]
 
-Pauses test execution until user sets the keyword status.
+テストの実行を一時停止して、ユーザがキーワードの実行状態を入力するまで待ちます。
 
-User can press either ``PASS`` or ``FAIL`` button. In the latter case
-execution
-fails and an additional dialog is opened for defining the error message.
+ユーザは、 ``PASS`` または ``FAIL`` ボタンを押せます。
+後者を押した場合、テストは失敗し、エラーメッセージを入力するためのダイアログが表示されます。
 
-``message`` is the instruction shown in the initial dialog and
-``default_error`` is the default value shown in the possible error message
-dialog.
+``message`` は、最初のダイアログに表示される説明です。
+``default_error`` は、エラーメッセージ入力ダイアログを表示する際の、デフォルトのエラーメッセージ内容です。
+
 
 Get Selection From User
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [message, *values]
 
-Pauses test execution and asks user to select a value.
+テストの実行を一時停止して、ユーザに値を選ばせます。
 
-The selected value is returned. Pressing ``Cancel`` fails the keyword.
+ユーザが選んだ値を返します。
+``Cancel`` ボタンを押すと、キーワードは失敗します。
 
-``message`` is the instruction shown in the dialog and ``values`` are
-the options given to the user.
+``message`` は、最初のダイアログに表示される説明です。
+``values`` は、ユーザに提示する選択肢です。
 
-Example:
-| ${username} = | Get Selection From User | Select user name | user1 | user2 |
-admin |
+例::
+  | ${username} = | Get Selection From User | Select user name | user1 | user2 | admin |
+
 
 Get Value From User
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 Arguments:  [message, default_value=, hidden=False]
 
-Pauses test execution and asks user to input a value.
+テストの実行を一時停止して、ユーザに値の入力を求めます。
 
-Value typed by the user, or the possible default value, is returned.
-Returning an empty value is fine, but pressing ``Cancel`` fails the keyword.
+ユーザが入力した値、またはデフォルト値を返します。
+空の値を返してもかまいませんが、 ``Cancel`` ボタンを押すとキーワードは失敗します。
 
-``message`` is the instruction shown in the dialog and ``default_value`` is
-the possible default value shown in the input field.
+``message`` は、最初のダイアログに表示される説明です。
+``default_value`` は、入力フィールドにデフォルト値として表示する値です。
 
-If ``hidden`` is given a true value, the value typed by the user is hidden.
-``hidden`` is considered true if it is a non-empty string not equal to
-``false`` or ``no``, case-insensitively. If it is not a string, its truth
-value is got directly using same
-[http://docs.python.org/2/library/stdtypes.html#truth-value-testing|rules
-as in Python].
+``hidden`` を真値にすると、ユーザが入力した値を隠蔽します。
+``hidden`` は、空でなく、かつ ``false`` や ``no`` でない文字列の場合に真になります。大小文字は区別しません。
+文字列でなければ、その真偽値を `Python の流儀で`__ 決めます。
 
-Example:
-| ${username} = | Get Value From User | Input user name | default    |
-| ${password} = | Get Value From User | Input password  | hidden=yes |
+__ http://docs.python.org/2/library/stdtypes.html#truth-value-testing
 
-Possibility to hide the typed in value is new in Robot Framework 2.8.4.
-Considering strings ``false`` and ``no`` to be false is new in 2.9.
+例::
+  | ${username} = | Get Value From User | Input user name | default    |
+  | ${password} = | Get Value From User | Input password  | hidden=yes |
+
+Robot Framework 2.8.4 から、値を隠せるようになりました。
+``false`` や ``no`` を偽値とみなすのは 2.9 からです。
+
 
 Pause Execution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 Arguments:  [message=Test execution paused. Press OK to continue.]
 
-Pauses test execution until user clicks ``Ok`` button.
+テストの実行を停止して、ユーザが ``Ok`` ボタンを押すまで待ちます。
 
-``message`` is the message shown in the dialog.
+``message`` は、ダイアログに表示されるメッセージです。
 
