@@ -156,10 +156,7 @@ Python ライブラリがパッケージのディレクトリの場合、パス�
        RemoteLib.Some Keyword    another arg    whatever
        LocalLib.Another Keyword
 
-カスタム名を
-:name:`Import Library`
-Setting a custom name to a test library works both when importing a
-library in the Setting table and when using the  keyword.
+テストライブラリの名前の付け替えは、設定テーブルでライブラリをインポートするときと、 :name:`Import Library` でインポートするときのどちらでもできます。
 
 .. Standard libraries
 
