@@ -434,17 +434,13 @@ Create Dictionary
 
 items をから辞書を生成して返します。
 
-Items are given using ``key=value`` syntax same way as ``&{dictionary}``
-variables are created in the Variable table. Both keys and values
-can contain variables, and possible equal sign in key can be escaped
-with a backslash like ``escaped\=key=value``. It is also possible to
-get items from existing dictionaries by simply using them like
-``&{dict}``.
+items は、変数テーブルで ``&{dictionary}`` 型の変数を定義するときと同様、  ``key=value`` の記法で指定します。
+キーと値にはいずれも変数を利用でき、キーに等号 (`=`) が含まれる場合には、バックスラッシュでエスケープできます。
+item を既存の辞書から得るには、引数に ``&{dict}`` を指定します。
 
-If same key is used multiple times, the last value has precedence.
-The returned dictionary is ordered, and values with strings as keys
-can also be accessed using convenient dot-access syntax like
-``${dict.key}``.
+同じキーを複数回指定した場合、後で指定した方を優先します。
+戻り値の辞書は、キーと値を順序つきで管理しています。
+キーが文字列の場合には、 ``${dict.key}`` のように、ドット付きで値にアクセスできます。
 
 例::
 
@@ -454,21 +450,22 @@ can also be accessed using convenient dot-access syntax like
   | Should Be True | ${dict} == {1: 2, 'key': 'value', 'foo': 'new'} |
   | Should Be Equal | ${dict.key} | value |
 
-This keyword was changed in Robot Framework 2.9 in many ways:
-- Moved from ``Collections`` library to ``BuiltIn``.
-- Support also non-string keys in ``key=value`` syntax.
-- Deprecated old syntax to give keys and values separately.
-- Returned dictionary is ordered and dot-accessible.
+このキーワードの仕様は、 Robot Framework 2.9 で色々変更されました:
+
+- ``Collections`` ライブラリから ``BuiltIn`` に移動しました。
+- ``key=value`` 形式で、文字列以外のキーもサポートしました。
+- キーと値を分けて書く古い記法が廃止されました。
+- 戻り値の辞書が、順序つき辞書になり、ドット記法でアクセスできます。
+
 
 Create List
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 :Arguments:  [\*items]
 
-Returns a list containing given items.
+items からなるリストを返します。
 
-The returned list can be assigned both to ``${scalar}`` and ``@{list}``
-variables.
+リストは ``${scalar}``, ``@{list}`` のいずれの変数にも入れられます。
 
 例::
 
@@ -477,33 +474,29 @@ variables.
   | ${ints} =   | Create List | ${1} | ${2} | ${3} |
 
 Evaluate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
 
 :Arguments:  [expression, modules=None, namespace=None]
 
-Evaluates the given expression in Python and returns the results.
+式を Python で評価して、その結果を返します。
 
-``expression`` is evaluated in Python as explained in `Evaluating
-expressions`.
+``expression`` は、 :ref:`式の評価 <evaluating expressions>` の解説の通りに Python で評価されます。
 
-``modules`` argument can be used to specify a comma separated
-list of Python modules to be imported and added to the evaluation
-namespace.
+``modules`` 引数は、カンマで区切ったリストで、Python モジュールを列挙します。
+このモジュールは、式を評価するときに import され、式評価の名前空間に入ります。
 
-``namespace`` argument can be used to pass a custom evaluation
-namespace as a dictionary. Possible ``modules`` are added to this
-namespace. This is a new feature in Robot Framework 2.8.4.
+``namespace`` は、式評価の名前空間を辞書で指定するときに使います。
+``modules`` を指定すると、この名前空間に組み込まれます。
+``namespace`` は Robot Framework 2.8.4 から使えるようになりました。
 
-Variables used like ``${variable}`` are replaced in the expression
-before evaluation. Variables are also available in the evaluation
-namespace and can be accessed using special syntax ``$variable``.
-This is a new feature in Robot Framework 2.9 and it is explained more
-thoroughly in `Evaluating expressions`.
+式中に ``${variable}`` のような変数が入っていると、式の評価前に置き換えられます。
+置き換えではなく、評価対象の式の中で変数を参照したいときは、特殊な記法 ``$variable`` を使います。
+この機能は Robot Framework 2.9 から登場し、  :ref:`式の評価 <evaluating expressions>` の節で詳しく説明しています。
 
-Examples (expecting ``${result}`` is 3.14)::
+例 (この例では ``${result}`` の初期値は 3.14 とします)::
 
-  | ${status} = | Evaluate | 0 < ${result} < 10 | # Would also work with string '3.14' |
-  | ${status} = | Evaluate | 0 < $result < 10   | # Using variable itself, not string representation |
+  | ${status} = | Evaluate | 0 < ${result} < 10 | # 変数の値が文字列 '3.14' でもうまく動作する |
+  | ${status} = | Evaluate | 0 < $result < 10   | # 文字列として置き換わるのではなく、変数値そのものが評価される |
   | ${random} = | Evaluate | random.randint(0, sys.maxint) | modules=random, sys   |
   | ${ns} =     | Create Dictionary | x=${4}    | y=${2}              |
   | ${result} = | Evaluate | x*10 + y           | namespace=${ns}     |
@@ -513,14 +506,14 @@ Examples (expecting ``${result}`` is 3.14)::
   | ${result} = 42
 
 Exit For Loop
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 :Arguments:  []
 
-Stops executing the enclosing for loop.
+実行中のforループを停止して抜けます。
 
-Exits the enclosing for loop and continues execution after it.
-Can be used directly in a for loop or in a keyword that the loop uses.
+実行中の for ループから抜けて、その後の処理に移ります。
+for ループの中でも使えますし、ループ中で使われているキーワードからでも使えます。
 
 例:
 
@@ -530,19 +523,17 @@ Can be used directly in a for loop or in a keyword that the loop uses.
   |      | Run Keyword If | '${var}' == 'EXIT' | Exit For Loop |
   |      | Do Something   | ${var} |
 
-See `Exit For Loop If` to conditionally exit a for loop without
-using `Run Keyword If` or other wrapper keywords.
+`Run Keyword If` などのラッパキーワードを使わずに、条件に応じてループから抜けたい場合には、 `Exit For Loop If` を使ってください。
 
 Exit For Loop If
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition]
 
-Stops executing the enclosing for loop if the ``condition`` is true.
+``condition`` の評価値が真のとき、実行中の for ループを停止して抜けます。
 
-A wrapper for `Exit For Loop` to exit a for loop based on
-the given condition. The condition is evaluated using the same
-semantics as with `Should Be True` keyword.
+条件に応じて、 `Exit For Loop` を実行するラッパです。
+``condition`` は `Should Be True` キーワードと同じ考え方で評価されます。
 
 例:
 
@@ -552,65 +543,59 @@ semantics as with `Should Be True` keyword.
   |      | Exit For Loop If | '${var}' == 'EXIT' |
   |      | Do Something     | ${var}             |
 
-New in Robot Framework 2.8.
+Robot Framework 2.8 で登場しました。
 
 Fail
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 :Arguments:  [msg=None, \*tags]
 
-Fails the test with the given message and optionally alters its tags.
+テストを失敗させ、指定のメッセージを出力し、必要に応じてタグを変更します。
 
-The error message is specified using the ``msg`` argument.
-It is possible to use HTML in the given error message, similarly
-as with any other keyword accepting an error message, by prefixing
-the error with ``*HTML*``.
+エラーメッセージは ``msg`` で指定します。
+エラーメッセージを引数にとる他のキーワードと同様、メッセージを ``*HTML*`` で始めると、エラーメッセージを HTML で指定できます。
 
-It is possible to modify tags of the current test case by passing tags
-after the message. Tags starting with a hyphen (e.g. ``-regression``)
-are removed and others added. Tags are modified using `Set Tags` and
-`Remove Tags` internally, and the semantics setting and removing them
-are the same as with these keywords.
+メッセージの後にタグを指定すると、現在のテストケースのタグを変更できます。
+タグ名の前にハイフンをつけた場合 (e.g. ``-regression``)、そのタグは除去されます。
+それ以外の場合は、指定したタグが付加されます。
+タグは内部的には `Set Tags` や `Remove Tags` で操作され、タグをセットしたときや除去したときのセマンティクスは、それぞれのキーワードの仕様に準じます。
 
 例::
 
-  | Fail | Test not ready   |             | | # Fails with the given message.
+  | Fail | Test not ready   |             | | # 指定メッセージを出力して失敗
   |
-  | Fail | *HTML*<b>Test not ready</b> | | | # Fails using HTML in the message.
+  | Fail | *HTML*<b>Test not ready</b> | | | # HTML でメッセージを出力して失敗
   | 
-  | Fail | Test not ready   | not-ready   | | # Fails and adds 'not-ready' tag.
+  | Fail | Test not ready   | not-ready   | | # 'not-ready' タグを付与して失敗
   |
-  | Fail | OS not supported | -regression | | # Removes tag 'regression'.
+  | Fail | OS not supported | -regression | | # 'regression' タグを除去する
   |
-  | Fail | My message       | tag    | -t*  | # Removes all tags starting with 't' except the newly added 'tag'. |
+  | Fail | My message       | tag    | -t*  | # tで始まる全てのタグを除去して、新たに 'tag' というタグを付与
 
-See `Fatal Error` if you need to stop the whole test execution.
+テスト全体の実行を停止したいときは `Fatal Error` を使ってください。
 
-Support for modifying tags was added in Robot Framework 2.7.4 and
-HTML message support in 2.8.
+タグの変更機能は、 Robot Framework 2.7.4 で、 HTML メッセージのサポートは 2.8 で追加されました。
 
 Fatal Error
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 :Arguments:  [msg=None]
 
-Stops the whole test execution.
+テスト全体の実行を停止します。
 
-The test or suite where this keyword is used fails with the provided
-message, and subsequent tests fail with a canned message.
-Possible teardowns will nevertheless be executed.
+このキーワードを使ったテストやテストスイートは、指定のメッセージとともにただちに失敗し、それ以後のテストは canned メッセージで失敗します。
+ティアダウンが指定されている場合は、テストの失敗に関係なく実行されます。
 
-See `Fail` if you only want to stop one test case unconditionally.
+単体のテストケースを失敗させたいときは `Fail` を使ってください。
 
 Get Count
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
 
 :Arguments:  [item1, item2]
 
-Returns and logs how many times ``item2`` is found from ``item1``.
+``item1`` 中に ``item2`` が何回出現するか返し、ログに記録します。
 
-This keyword works with Python strings and lists and all objects
-that either have ``count`` method or can be converted to Python lists.
+このキーワードは、 Python の文字列、リスト、その他 ``count`` メソッドを備えているか、 Python のリストに変換できるオブジェクト全てに使えます。
 
 例:
 
@@ -620,19 +605,17 @@ that either have ``count`` method or can be converted to Python lists.
   | Should Be True | 5 < ${count} < 10 |
 
 Get Length
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 :Arguments:  [item]
 
-Returns and logs the length of the given item as an integer.
+item の長さを返し、ログに記録します。
 
-The item can be anything that has a length, for example, a string,
-a list, or a mapping. The keyword first tries to get the length with
-the Python function ``len``, which calls the  item's ``__len__`` method
-internally. If that fails, the keyword tries to call the item's
-possible ``length`` and ``size`` methods directly. The final attempt is
-trying to get the value of the item's ``length`` attribute. If all
-these attempts are unsuccessful, the keyword fails.
+item は、長さを持つものなら何でもかまいません。例えば、文字列、リスト、マップ型です。
+このキーワードは、まず対象の長さを Python の ``len()`` 関数で調べ、内部では item の特殊メソッド ``__len__`` が呼ばれます。
+``len()`` に失敗した場合は、 item の ``length`` または ``size`` メソッドの呼び出しを試みます。
+うまく行かなければ、最後に item の ``length`` アトリビュートを取得しようとします。
+いずれも失敗した場合には、キーワードは失敗します。
 
 例::
 
@@ -642,19 +625,18 @@ these attempts are unsuccessful, the keyword fails.
   | ${length} = | Get Length    | ${list}       |        |
   | Should Be Equal As Integers | ${length}     | 2      |
 
-See also `Length Should Be`, `Should Be Empty` and `Should Not Be
-Empty`.
+`Length Should Be`, `Should Be Empty`, `Should Not Be Empty` も参照してください。
+
 
 Get Library Instance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name=None, all=False]
 
-Returns the currently active instance of the specified test library.
+指定のテストライブラリのアクティブなインスタンスを返します。
 
-This keyword makes it easy for test libraries to interact with
-other test libraries that have state. This is illustrated by
-the Python example below::
+このキーワードを使うと、あるライブラリを、内部状態を持った別のライブラリと簡単に連携できます。
+以下に Python の例を示します::
 
   | from robot.libraries.BuiltIn import BuiltIn
   |
@@ -665,14 +647,11 @@ the Python example below::
   |         raise AssertionError("Title '%s' did not start with '%s'"
   |                              % (title, expected))
 
-It is also possible to use this keyword in the test data and
-pass the returned library instance to another keyword. If a
-library is imported with a custom name, the ``name`` used to get
-the instance must be that name and not the original library name.
+このキーワードをテストデータ中で使って、返ってきたライブラリインスタンスを他のキーワードに渡すこともできます。
+ライブラリを別の名前でインポートしている場合、 ``name`` には、元のライブラリ名ではなく、新たにつけたライブラリ名を指定せねばなりません。
 
-If the optional argument ``all`` is given a true value, then a
-dictionary mapping all library names to instances will be returned.
-This feature is new in Robot Framework 2.9.2.
+オプションの引数 ``all`` を真値にすると、全てのライブラリ名をインスタンスにマップした辞書を返します。
+この機能は Robot Framework 2.9.2 で登場しました。
 
 例:
 
@@ -681,11 +660,11 @@ This feature is new in Robot Framework 2.9.2.
   | &{all libs} = | Get library instance | all=True |
 
 Get Time
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
 
 :Arguments:  [format=timestamp, time_=NOW]
 
-Returns the given time in the requested format.
+指定の時刻を、指定のフォーマットにして返します。
 
 *NOTE:* DateTime library added in Robot Framework 2.8.5 contains
 much more flexible keywords for getting the current date and time
