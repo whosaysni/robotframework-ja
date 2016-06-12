@@ -10,7 +10,7 @@ Named arguments:  supported
 
 
 目次
-~~~~~~
+------
 
 - `HTMLエラーメッセージ <HTML error messages>`_
 - `式の評価 <Evaluating expressions>`_
