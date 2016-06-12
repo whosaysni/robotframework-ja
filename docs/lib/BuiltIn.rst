@@ -1,8 +1,8 @@
 BuiltIn: 組み込み機能
 =======================
-Version:          3.0
-Scope:            global
-Named arguments:  supported
+:Version:          3.0
+:Scope:            global
+:Named arguments:  supported
 
 常に利用できる標準ライブラリです。よく使うキーワードが入っています。
 

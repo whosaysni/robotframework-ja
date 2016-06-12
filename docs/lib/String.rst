@@ -1,8 +1,8 @@
 String: 文字列操作
 ======================
-Version:          3.0
-Scope:            global
-Named arguments:  supported
+:Version:          3.0
+:Scope:            global
+:Named arguments:  supported
 
 A test library for string manipulation and verification.
 

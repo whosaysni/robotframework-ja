@@ -1,8 +1,8 @@
 XML: XMLデータの操作
 ========================
-Version:          3.0
-Scope:            global
-Named arguments:  supported
+:Version:          3.0
+:Scope:            global
+:Named arguments:  supported
 
 Robot Framework test library for verifying and modifying XML documents.
 

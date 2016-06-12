@@ -1,8 +1,8 @@
 Screenshot: スクリーンショットを撮る
 ======================================
-Version:          3.0
-Scope:            test suite
-Named arguments:  supported
+:Version:          3.0
+:Scope:            test suite
+:Named arguments:  supported
 
 Test library for taking screenshots on the machine where tests are run.
 

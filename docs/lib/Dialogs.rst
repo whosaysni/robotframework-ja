@@ -1,8 +1,8 @@
 Dialogs: ユーザにダイアログを表示する
 ========================================
-Version:          3.0
-Scope:            global
-Named arguments:  supported
+:Version:          3.0
+:Scope:            global
+:Named arguments:  supported
 
 このテストライブラリは、ユーザと対話するためのダイアログ機能を提供します。
 

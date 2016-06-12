@@ -1,8 +1,8 @@
 OperatingSystem: OS関連の操作
 ===============================
-Version:          3.0
-Scope:            global
-Named arguments:  supported
+:Version:          3.0
+:Scope:            global
+:Named arguments:  supported
 
 A test library providing keywords for OS related tasks.
 

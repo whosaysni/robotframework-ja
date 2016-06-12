@@ -1,8 +1,8 @@
 Process: プロセスの実行
 =======================
-Version:          3.0
-Scope:            global
-Named arguments:  supported
+:Version:          3.0
+:Scope:            global
+:Named arguments:  supported
 
 Robot Framework test library for running processes.
 
