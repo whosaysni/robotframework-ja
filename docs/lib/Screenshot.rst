@@ -66,11 +66,12 @@ Arguments:  [screenshot_directory=None, screenshot_module=None]
 値を指定しない場合は、上記の順番で各ツールを探索し、最初に見つかったものを使います。
 詳しくは `Using with Python` を参照してください。
 
-Examples (use only one of these):
-| =Setting= |  =Value=   |  =Value=   |
-| Library   | Screenshot |            |
-| Library   | Screenshot | ${TEMPDIR} |
-| Library   | Screenshot | screenshot_module=PyGTK |
+例 (以下のいずれかを使ってください)::
+
+  | =Setting= |  =Value=   |  =Value=   |
+  | Library   | Screenshot |            |
+  | Library   | Screenshot | ${TEMPDIR} |
+  | Library   | Screenshot | screenshot_module=PyGTK |
 
 Robot Framework 2.9.2 から、スクリーンショットモジュールを明示して指定できるようになりました。
 
