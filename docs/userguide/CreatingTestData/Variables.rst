@@ -1,21 +1,21 @@
 .. _Variables:
 
-Variables
+変数
 =========
 
 .. contents::
    :depth: 2
    :local:
 
-Introduction
+.. Introduction
+
+はじめに
 ------------
 
-Variables are an integral feature of Robot Framework, and they can be
-used in most places in test data. Most commonly, they are used in
-arguments for keywords in test case tables and keyword tables, but
-also all settings allow variables in their values. A normal keyword
-name *cannot* be specified with a variable, but the BuiltIn_ keyword
-:name:`Run Keyword` can be used to get the same effect.
+変数は Robot Framework の重要な機能の一つで、多くの場所で使われています。
+最もよく見かけるのは、テストケースやキーワードテーブル中のキーワードの引数でしょう。
+その他には、設定テーブルで変数が使えます。
+通常、キーワード自体は変数として指定 *できません* が、 BuiltIn ライブラリのキーワード、 :name:`Run Keyword` を使えば、同じような効果が得られます。
 
 Robot Framework has its own variables that can be used as scalars__, lists__
 or `dictionaries`__ using syntax `${SCALAR}`, `@{LIST}` and `&{DICT}`,

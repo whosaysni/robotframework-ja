@@ -10,7 +10,7 @@ Named arguments:  supported
 
 
 目次
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 - `HTMLエラーメッセージ <HTML error messages>`_
 - `式の評価 <Evaluating expressions>`_
@@ -22,7 +22,7 @@ Named arguments:  supported
 .. _HTML error messages:
 
 HTMLエラーメッセージ
----------------------------------------------------
+----------------------
 
 キーワードの多くは、エラーメッセージのオプションを持っています。エラーメッセージは、キーワードの実行に失敗した際に使われます。 Robot Framework 2.8 からは、エラーメッセージの先頭に ``*HTML*`` を付けることで、 HTML 形式のエラーメッセージを使えるようになりました。使い方の例は `Fail` キーワードを参照してください。メッセージの HTML 化は、BuiltIn 以外のライブラリでも使えます。
 
@@ -30,7 +30,7 @@ HTMLエラーメッセージ
 .. _Evaluating expressions:
 
 式の評価
----------------------------------------------------
+----------
 
 `Evaluate` や `Run Keyword If` 、 `Should Be True` といったキーワードは、引数に式を指定でき、式は Python の `eval <https://docs.python.org/2/library/functions.html#eval>`_ で評価されます。そのため、 ``len()`` や ``int`` といった Python の組み込み関数を使えます。
 `Evaluate` では、自作のモジュールや実行に使う名前空間を設定できます。
@@ -77,7 +77,7 @@ Robot Framework 2.9 からは、変数自体を評価ネームスペース (eval
 .. _Boolean arguments:
 
 ブール型の引数
----------------------------------------------------
+-----------------
 
 キーワードの中には、値を true または false のブール型として扱うものがあります。
 そうしたキーワードの文字列を渡す場合、空文字と、 ``false`` または ``no`` (いずれも大小文字を区別しない) は False 扱いになります。
@@ -110,7 +110,7 @@ Robot Framework 2.9 以前では、原則、 ``false`` や ``no`` も含め、�
 .. _Multiline string comparisons:
 
 複数行からなる文字列の比較
----------------------------------------------------
+---------------------------
 
 Robot Framework 2.9.1 からは、 `Should Be Equal` や `Should Be Equal As Strings` は、文字列が一致しないときに、 `unified diff形式 <https://en.wikipedia.org/wiki/Diff_utility#Unified_format>`_ でメッセージを出力します。
 
@@ -141,10 +141,10 @@ Robot Framework 2.9.1 からは、 `Should Be Equal` や `Should Be Equal As Str
 .. _Keywords:
 
 キーワード
----------------------------------------------------
+-----------
 
 Call Method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 :Arguments:  [object, method_name, \*args, \*\*kwargs]
 
@@ -166,7 +166,7 @@ Robot Framework 2.9 からは、 ``**kwargs`` のサポートが追加され、 
   | Call Method      | ${object}    | positional   | escaped\=equals  |
 
 Catenate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
 
 :Arguments:  [\*items]
 
@@ -186,7 +186,7 @@ Catenate
   | ${str3} = 'Helloworld'
 
 Comment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
 
 :Arguments:  [\*messages]
 
@@ -197,7 +197,7 @@ Comment
 変数の値を出力したいときは、 `Log` や `Log Many` を使ってください。
 
 Continue For Loop
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 :Arguments:  []
 
@@ -219,7 +219,7 @@ Continue For Loop
 Robot Framework 2.8 で追加されました。
 
 Continue For Loop If
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition]
 
@@ -239,7 +239,7 @@ Continue For Loop If
 Robot Framework 2.8 で追加されました。
 
 Convert To Binary
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None, prefix=None, length=None]
 
@@ -259,7 +259,7 @@ Convert To Binary
 `Convert To Integer`, `Convert To Octal`, `Convert To Hex` も参照してください。
 
 Convert To Boolean
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item]
 
@@ -269,7 +269,7 @@ Convert To Boolean
 それ以外の値に対しては、 Python の ``bool()`` メソッドによる `真偽値 <http://docs.python.org/2/library/stdtypes.html#truth>`_ を返します。
 
 Convert To Bytes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 :Arguments:  [input, input_type=text]
 
@@ -311,26 +311,20 @@ Convert To Bytes
 Robot Framework 2.8.2 で追加されました。
 
 Convert To Hex
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None, prefix=None, length=None, lowercase=False]
 
-             
-Converts the given item to a hexadecimal string.
 
-The ``item``, with an optional ``base``, is first converted to an
-integer using `Convert To Integer` internally. After that it
-is converted to a hexadecimal number (base 16) represented as
-a string such as ``FF0A``.
+item を整数値とみなして、16進表現の文字列に変換します。
 
-The returned value can contain an optional ``prefix`` and can be
-required to be of minimum ``length`` (excluding the prefix and a
-possible minus sign). If the value is initially shorter than
-the required length, it is padded with zeros.
+``item`` は、まずオプション ``base`` をもとに、内部的に `Convert To Integer` で整数に変換されます。
+その後、16進数 (基数16) の表現に変換され、 ``FF0A`` のような文字列になります。
 
-By default the value is returned as an upper case string, but the
-``lowercase`` argument a true value (see `Boolean arguments`) turns
-the value (but not the given prefix) to lower case.
+戻り値にはオプションの (0x...やH...のような) ``prefix``を付加できます。
+また、 ``length`` で (プレフィクスや符号を除いた) 最小の長さを指定でき、変換後の文字列が最小の長さに満たないときにゼロ詰めできます。
+
+デフォルトの設定では、値は大文字で表現されますが、引数 ``lowercase`` を真値 (:ref:`ブール型の引数 <boolean arguments>` 参照) にすると、(プレフィクス以外の) 文字を小文字にします。
 
 例::
 
@@ -338,26 +332,24 @@ the value (but not the given prefix) to lower case.
   | ${result} = | Convert To Hex | -10 | prefix=0x | length=2     | # Result is -0x0A |
   | ${result} = | Convert To Hex | 255 | prefix=X | lowercase=yes | # Result is Xff   |
 
-See also `Convert To Integer`, `Convert To Binary` and `Convert To Octal`.
+`Convert To Integer`, `Convert To Binary`, `Convert To Octal` も参照してください。
 
 Convert To Integer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None]
 
-Converts the given item to an integer number.
+item を整数に変換します。
 
-If the given item is a string, it is by default expected to be an
-integer in base 10. There are two ways to convert from other bases:
+item が文字列の場合は、通常は基数 10 の整数として変換します。
+以下のような場合は、基数が変わります:
 
-- Give base explicitly to the keyword as ``base`` argument.
+- 引数で ``base`` を明に指定した場合。
 
-- Prefix the given string with the base so that ``0b`` means binary
-  (base 2), ``0o`` means octal (base 8), and ``0x`` means hex (base 16).
-  The prefix is considered only when ``base`` argument is not given and
-  may itself be prefixed with a plus or minus sign.
+- 文字列の先頭に特定のプレフィクスが付いている場合。例えば、 ``0b`` は2進 (基数2), ``0o`` は8進 (基数 8), ``0x`` は 16 進 (基数 16) です。
+  プレフィクスを解釈するのは ``base`` を指定していないときだけで、プラス・マイナス符号はプレフィクスより前に付けます。
 
-The syntax is case-insensitive and possible spaces are ignored.
+大小文字の区別はせず、スペースを無視します。
 
 例::
 
@@ -368,21 +360,19 @@ The syntax is case-insensitive and possible spaces are ignored.
   | ${result} = | Convert To Integer | 0b100  |    | # Result is 4     |
   | ${result} = | Convert To Integer | -0x100 |    | # Result is -256  |
 
-See also `Convert To Number`, `Convert To Binary`, `Convert To Octal`,
-`Convert To Hex`, and `Convert To Bytes`.
+`Convert To Number`, `Convert To Binary`, `Convert To Octal`,
+`Convert To Hex`, `Convert To Bytes` も参照してください。
 
 Convert To Number
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, precision=None]
 
-Converts the given item to a floating point number.
+item を浮動小数点数に変換します。
 
-If the optional ``precision`` is positive or zero, the returned number
-is rounded to that number of decimal digits. Negative precision means
-that the number is rounded to the closest multiple of 10 to the power
-of the absolute precision. If a number is equally close to a certain
-precision, it is always rounded away from zero.
+オプションの ``precision`` が非負の整数の場合、戻り値は少数部が指定した桁数になるよう丸められます。
+負の整数を指定すると、その数の絶対値分の桁で値を丸めます。
+切り捨てと切り上げの丸め誤差が等しくなる場合には、常に、値がゼロから離れる方向に切り捨て・切り上げ処理します。
 
 例::
 
@@ -391,32 +381,29 @@ precision, it is always rounded away from zero.
   | ${result} = | Convert To Number | 42.512 | 0  | # Result is 43.0   |
   | ${result} = | Convert To Number | 42.512 | -1 | # Result is 40.0   |
 
-Notice that machines generally cannot store floating point numbers
-accurately. This may cause surprises with these numbers in general
-and also when they are rounded. For more information see, for example,
-these resources:
+一般的に、計算機は、浮動小数点を厳密に表現できません。
+そのため、変換後の値や、値丸めの結果が期待通りにならないことがあるので注意しましょう。
+詳しくは、以下の文献などを参照してください:
+
 
 - http://docs.python.org/2/tutorial/floatingpoint.html
 - http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition
 
-If you need an integer number, use `Convert To Integer` instead.
+整数への変換を行いたければ `Convert To Integer` を使ってください。
 
 Convert To Octal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, base=None, prefix=None, length=None]
 
-Converts the given item to an octal string.
+item を 8 進表現の文字列に変換します。
 
-The ``item``, with an optional ``base``, is first converted to an
-integer using `Convert To Integer` internally. After that it
-is converted to an octal number (base 8) represented as a
-string such as ``775``.
+``item`` は、まずオプション ``base`` をもとに、内部的に `Convert To Integer` で整数に変換されます。
+その後、8進数 (基数 8) の表現に変換され、 ``775`` のような文字列になります。
 
-The returned value can contain an optional ``prefix`` and can be
-required to be of minimum ``length`` (excluding the prefix and a
-possible minus sign). If the value is initially shorter than
-the required length, it is padded with zeros.
+戻り値にはオプションの (0o...やO...のような) ``prefix`` を付加できます。
+また、 ``length`` で (プレフィクスや符号を除いた) 最小の長さを指定でき、変換後の文字列が最小の長さに満たないときにゼロ詰めできます。
+
 
 例::
 
@@ -424,29 +411,28 @@ the required length, it is padded with zeros.
   | ${result} = | Convert To Octal | -F | base=16    | prefix=0 | # Result is -017    |
   | ${result} = | Convert To Octal | 16 | prefix=oct | length=4 | # Result is oct0020 |
 
-See also `Convert To Integer`, `Convert To Binary` and `Convert To Hex`.
+`Convert To Integer`, `Convert To Binary`, `Convert To Hex` も参照してください。
+
 
 Convert To String
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item]
 
-Converts the given item to a Unicode string.
+item を Unicode 文字列に変換します。
 
-Uses ``__unicode__`` or ``__str__`` method with Python objects and
-``toString`` with Java objects.
+Python オブジェクトに対しては ``__unicode__`` や ``__str__`` メソッドを、 Java オブジェクトに対しては ``toString`` を使います。
 
-Use `Encode String To Bytes` and `Decode Bytes To String` keywords
-in ``String`` library if you need to convert between Unicode and byte
-strings using different encodings. Use `Convert To Bytes` if you just
-want to create byte strings.
+Unicode と様々なエンコーディングのバイト文字列の間で変換したいときには、 ``String`` ライブラリの `Encode String To Bytes` や `Decode Bytes To String` を使ってください。
+単にバイト文字列を生成したいときには、 `Convert To Bytes` を使ってください。
+
 
 Create Dictionary
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*items]
 
-Creates and returns a dictionary based on given items.
+items をから辞書を生成して返します。
 
 Items are given using ``key=value`` syntax same way as ``&{dictionary}``
 variables are created in the Variable table. Both keys and values
@@ -2482,17 +2468,18 @@ error message with ``msg`` and ``values``.
 
 
 Sleep
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
 
 :Arguments:  [time\_, reason=None]
 
-Pauses the test executed for the given time.
+指定時間の間、テストの実行を停止します。
 
-``time`` may be either a number or a time string. Time strings are in
-a format such as ``1 day 2 hours 3 minutes 4 seconds 5milliseconds`` or
-``1d 2h 3m 4s 5ms``, and they are fully explained in an appendix of
-Robot Framework User Guide. Optional `reason` can be used to explain why
-sleeping is necessary. Both the time slept and the reason are logged.
+``time`` は、数または時間を表す文字列です。
+時間を表す文字列は、 ``1 day 2 hours 3 minutes 4 seconds 5milliseconds`` や ``1d 2h 3m 4s 5ms`` のような形式で表現します。
+使えるフォーマットは、ユーザーガイドの付録で詳しく説明しています。
+オプションの `reason` は、なぜスリープするかの説明です。
+スリープ時間と `reason` は、どちらもログに記録されます。
+
 
 例:
 
@@ -2505,33 +2492,33 @@ sleeping is necessary. Both the time slept and the reason are logged.
 
 
 Variable Should Exist
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, msg=None]
 
-Fails unless the given variable exists within the current scope.
+指定の変数がスコープ内に存在しない場合に失敗します。
 
-The name of the variable can be given either as a normal variable name
-(e.g. ``${NAME}``) or in escaped format (e.g. ``\${NAME}``). Notice
-that the former has some limitations explained in `Set Suite Variable`.
+変数の名前は、通常の変数名 (e.g. ``${NAME}``) またはエスケープした形式 (e.g. ``\${NAME}``) です。
+前者には、 `Set Suite Variable` で説明したような制限があります。
 
-The default error message can be overridden with the ``msg`` argument.
+デフォルトのエラーメッセージは、 ``msg`` 引数で上書きできます。
 
-See also `Variable Should Not Exist` and `Keyword Should Exist`.
+`Variable Should Not Exist` や `Keyword Should Exist` も参照してください。
 
 
 Variable Should Not Exist
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, msg=None]
 
-Fails if the given variable exists within the current scope.
+指定の変数がスコープ内に存在すると失敗します。
 
-The name of the variable can be given either as a normal variable name
-(e.g. ``${NAME}``) or in escaped format (e.g. ``\${NAME}``). Notice
-that the former has some limitations explained in `Set Suite Variable`.
+変数の名前は、通常の変数名 (e.g. ``${NAME}``) またはエスケープした形式 (e.g. ``\${NAME}``) です。
+前者には、 `Set Suite Variable` で説明したような制限があります。
 
-The default error message can be overridden with the ``msg`` argument.
+デフォルトのエラーメッセージは、 ``msg`` 引数で上書きできます。
+
+`Variable Should Exist` や `Keyword Should Exist` も参照してください。
 
 See also `Variable Should Exist` and `Keyword Should Exist`.
 
@@ -2541,40 +2528,31 @@ Wait Until Keyword Succeeds
 
 :Arguments:  [retry, retry_interval, name, \*args]
 
-Runs the specified keyword and retries if it fails.
+指定のキーワードを実行し、失敗した場合にはリトライします。
 
-``name`` and ``args`` define the keyword that is executed similarly
-as with `Run Keyword`. How long to retry running the keyword is
-defined using ``retry`` argument either as timeout or count.
-``retry_interval`` is the time to wait before trying to run the
-keyword again after the previous run has failed.
+``name`` および ``args`` で、実行するキーワードを定義します。 `Run Keyword` と同様です。
+何回リトライさせるかは、引数 ``retry`` で、タイムアウトまたは回数で指定します。
+``retry_interval`` には、キーワードの実行に失敗した際、次のリトライまでどれだけ待機するかを指定します。
 
-If ``retry`` is given as timeout, it must be in Robot Framework's
-time format (e.g. ``1 minute``, ``2 min 3 s``, ``4.5``) that is
-explained in an appendix of Robot Framework User Guide. If it is
-given as count, it must have ``times`` or ``x`` postfix (e.g.
-``5 times``, ``10 x``). ``retry_interval`` must always be given in
-Robot Framework's time format.
+``retry`` にタイムアウトを指定する場合は、 Robot Framework の時間フォーマット (e.g. ``1 minute``, ``2 min 3 s``, ``4.5``) を使います。
+使えるフォーマットは、ユーザーガイドの付録で詳しく説明しています。
+回数を指定する場合は、回数の後ろに ``times`` または ``x`` を付けねばなりません (e.g. ``5 times``, ``10 x``)。
+``retry_interval`` は、常に時間フォーマットで指定します。
 
-If the keyword does not succeed regardless of retries, this keyword
-fails. If the executed keyword passes, its return value is returned.
+指定条件のリトライを行ったにも関わらずキーワードが成功しなければ、このキーワード自体が失敗します。
+キーワードの実行に成功した場合は、その戻り値を返します。
 
 例::
 
   | Wait Until Keyword Succeeds | 2 min | 5 sec | My keyword | argument |
   | ${result} = | Wait Until Keyword Succeeds | 3x | 200ms | My keyword |
 
-All normal failures are caught by this keyword. Errors caused by
-invalid syntax, test or keyword timeouts, or fatal exceptions (caused
-e.g. by `Fatal Error`) are not caught.
+キーワードを実行した際、通常の失敗がおきたときだけを、キーワードの失敗とみなします。
+記法の誤りやテスト・キーワードのタイムアウト、致命的な例外の発生 (`Fatal Error` で起こしたエラーなど) は、キーワードの失敗とみなさず、リトライしません。
 
-Running the same keyword multiple times inside this keyword can create
-lots of output and considerably increase the size of the generated
-output files. Starting from Robot Framework 2.7, it is possible to
-remove unnecessary keywords from the outputs using
-``--RemoveKeywords WUKS`` command line option.
+このキーワードを使って、同じキーワードを何度も繰り返し実行すると、出力が大量に生成され、出力ファイルがかなり大きくなってしまうでしょう。
+Robot Framework 2.7 からは、コマンドラインオプション ``--RemoveKeywords WUKS`` を使って、不要なキーワードを出力から除去できます。
 
-Support for specifying ``retry`` as a number of times to retry is
-a new feature in Robot Framework 2.9.
-Since Robot Framework 2.9, variable errors are caught by this keyword.
+Robot Framework 2.9 からは、 ``retry`` にリトライ回数を指定できるようになりました。
+また、変数のエラーをキーワードの失敗として捕捉するようになりました。
 
