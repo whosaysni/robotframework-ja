@@ -2,43 +2,39 @@
 .. _test libraries:
 .. _Using test libraries:
 
-Using test libraries
-====================
+テストライブラリを使う
+===========================
 
-Test libraries contain those lowest-level keywords, often called
-*library keywords*, which actually interact with the system under
-test. All test cases always use keywords from some library, often
-through higher-level `user keywords`_. This section explains how to
-take test libraries into use and how to use the keywords they
-provide. `Creating test libraries`_ is described in a separate
-section.
+テストライブラリには、「 *ライブラリキーワード* 」と呼ばれる、テスト対象システムと実際にインタラクションするより低水準なキーワードが定義されています。
+テストケースは、ライブラリのキーワードや、より高水準な :ref:`ユーザキーワード <user keywords>` を使っています。
+この節では、テストライブラリの使い方と、その中のキーワードの扱い方を説明します。
+:ref:`テストライブラリの作り方 <creating test libraries>` は、別の節で解説します。
 
 .. contents::
    :depth: 2
    :local:
 
-Importing libraries
--------------------
+.. Importing libraries:
 
-Test libraries are typically imported using the :setting:`Library` setting,
-but it is also possible to use the :name:`Import Library` keyword.
+ライブラリのインポート
+------------------------
 
-Using `Library` setting
-~~~~~~~~~~~~~~~~~~~~~~~
+テストライブラリのインポートには、 :setting:`Library` 設定を使うのが普通ですが、 :name:`Import Library` キーワードでもインポートできます。
 
-Test libraries are normally imported using the :setting:`Library`
-setting in the Setting table and having the library name in the
-subsequent column. Unlike most of the other data, the library name
-is both case- and space-sensitive. If a library is in a package,
-the full name including the package name must be used.
 
-In those cases where the library needs arguments, they are listed in
-the columns after the library name. It is possible to use default
-values, variable number of arguments, and named arguments in test
-library imports similarly as with `arguments to keywords`__.  Both the
-library name and arguments can be set using variables.
+.. Using `Library` setting:
+   
+`Library` 設定
+~~~~~~~~~~~~~~~~~
 
-__ `Using arguments`_
+通常、テストライブラリをインポートするには、設定テーブルで :setting:`Library` を使います。
+インポートしたいライブラリの名前は、 :setting:`Library` の次のカラムに書きます。
+他のデータと違い、ライブラリ名は大小文字の区別があり、スペースを無視しません。
+ライブラリがパッケージの場合は、パッケージ名込みの完全な名前を指定せねばなりません。
+
+ライブラリに引数を指定する場合は、引数はライブラリ名の後のカラムに列挙します。
+:ref:`キーワードの引数 <using arguments>` と同じように、デフォルト値、可変個の引数、名前付き引数を指定できます。
+ライブラリ名と引数には変数を使えます。
 
 .. sourcecode:: robotframework
 
@@ -47,24 +43,20 @@ __ `Using arguments`_
    Library    my.package.TestLibrary
    Library    MyLibrary    arg1    arg2
    Library    ${LIBRARY}
-   
-It is possible to import test libraries in `test case files`_,
-`resource files`_ and `test suite initialization files`_. In all these
-cases, all the keywords in the imported library are available in that
-file. With resource files, those keywords are also available in other
-files using them.
 
-Using `Import Library` keyword
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+テストライブラリは :ref:`テストケースファイル<test case file>` や :ref:`リソースファイル <resource files>`,  :ref:`テストケース初期化ファイル<test suite initialization files>`  からインポートできます。どのケースでも、インポートしたライブラリの全てのキーワードを使えるようになります。
+リソースファイルからインポートした場合、インポートしたライブラリ上のキーワードは、そのリソースファイルをインポートしたファイル上でも使えるようになります。
 
-Another possibility to take a test library into use is using the
-keyword :name:`Import Library` from the BuiltIn_ library. This keyword
-takes the library name and possible arguments similarly as the
-:setting:`Library` setting. Keywords from the imported library are
-available in the test suite where the :name:`Import Library` keyword was
-used. This approach is useful in cases where the library is not
-available when the test execution starts and only some other keywords
-make it available.
+
+.. Using `Import Library` keyword:
+
+`Import Library` キーワード
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+テストライブラリを使うもう一つの方法は、 :ref:`BuiltIn` ライブラリの :name:`Import Library` キーワードです。
+このキーワードは、 :setting:`Library` と同じように、ライブラリ名と引数を指定できます。
+インポートしたライブラリ上のキーワードは、  :name:`Import Library` を呼び出したテストスイート上でのみ、利用できます。
+キーワードを使ったインポートは、対象のテストライブラリがテスト実行時になるまで使えない場合や、他のキーワードで使えるようにする必要がある場合に便利です。
 
 .. sourcecode:: robotframework
 
@@ -74,46 +66,38 @@ make it available.
        Import Library    MyLibrary    arg1    arg2
        KW From MyLibrary
 
-Specifying library to import
-----------------------------
+.. Specifying library to import:
 
-Libraries to import can be specified either by using the library name
-or the path to the library. These approaches work the same way regardless
-is the library imported using the :setting:`Library` setting or the
-:name:`Import Library` keyword.
+インポートするライブラリを指定する
+------------------------------------
 
-Using library name
-~~~~~~~~~~~~~~~~~~
+インポートするライブラリは、ライブラリ名か、ライブラリへのパスで指定します。
+どちらの指定方法も、 :setting:`Library` 設定と :name:`Import Library` キーワードの両方で使えます。
 
-The most common way to specify a test library to import is using its
-name, like it has been done in all the examples in this section. In
-these cases Robot Framework tries to find the class or module
-implementing the library from the `module search path`_. Libraries that
-are installed somehow ought to be in the module search path automatically,
-but with other libraries the search path may need to be configured separately.
+ライブラリ名を使う場合
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-The biggest benefit of this approach is that when the module search
-path has been configured, often using a custom `start-up script`_,
-normal users do not need to think where libraries actually are
-installed. The drawback is that getting your own, possible
-very simple, libraries into the search path may require some
-additional configuration.
+テストライブラリを指定する方法で最も一般的なのはライブラリ名で、この節のこれまでの例でも、全てライブラリ名を使ってきました。
+ライブラリ名を指定した場合、 Robot Framework は、ライブラリを実装しているクラスやモジュールを :ref:`モジュールサーチパス <module search path>` から探そうとします。
+何らかの手段でライブラリをインストールしていれば、モジュールサーチパス上に自動的に置かれているはずですが、そうでなければ、別途サーチパスを設定する必要があるかもしれません。
 
-Using physical path to library
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ライブラリ名指定のいちばんよいところは、 :ref:`スタートアップスクリプト<start-up script>` などでモジュールサーチパスを適切に設定している限り、普通のユーザは、どこにライブラリがインストールされているか気にしなくてよいという点です。
+その半面、自分のライブラリを置きたいときは、たとえばそれが単純なものでも、サーチパスに手をいれねばなりません。
 
-Another mechanism for specifying the library to import is using a
-path to it in the file system. This path is considered relative to the
-directory where current test data file is situated similarly as paths
-to `resource and variable files`_. The main benefit of this approach
-is that there is no need to configure the module search path.
+.. Using physical path to library
 
-If the library is a file, the path to it must contain extension. For
-Python libraries the extension is naturally :file:`.py` and for Java
-libraries it can either be :file:`.class` or :file:`.java`, but the
-class file must always be available. If Python library is implemented
-as a directory, the path to it must have a trailing forward slash (`/`).
-Following examples demonstrate these different usages.
+ライブラリのファイルパスを使う場合
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ライブラリ指定のもう一つのメカニズムは、ファイルシステム上のパスを使う仕組みです。
+パスは、ライブラリを使うテストデータファイルからの相対パスとみなされます。
+:ref:`リソースファイルや変数ファイル <resource and variable files>` と同じです。
+ファイルパス指定の恩恵は、モジュールサーチパスを設定しなくてよいところです。
+
+ライブラリがファイルであれば、パスには拡張子が必要です。例えば、 Python で書かれたライブラリであれば、拡張子は :file:`.py` ですし、 Java のライブラリなら :file:`.class` や :file:`.java` です。
+ただし、 :file:`.java` ファイルを指定する場合は、対応するクラスファイルにアクセスできねばなりません。
+Python ライブラリがパッケージのディレクトリの場合、パスをスラッシュ(`/`) で終えねばなりません。
+以下の例は、それぞれの指定方法を示しています。
 
 .. sourcecode:: robotframework
 
@@ -124,44 +108,32 @@ Following examples demonstrate these different usages.
    Library    ${RESOURCES}/Example.class
 
 
-A limitation of this approach is that libraries implemented as Python classes `must
-be in a module with the same name as the class`__. Additionally, importing
-libraries distributed in JAR or ZIP packages is not possible with this mechanism.
-
-__ `Test library names`_
+このアプローチの制約は、 Python のクラスでライブラリを実装する際、
+:ref:`クラス名とモジュールファイル名を同じにせねばならない <test library names>` 点です。
+さらに、このインポート機構では、JARやZIPパッケージで配布されているライブラリのインポートはできません。
 
 .. _With Name syntax:
 .. _Setting custom name to test library:
 
-Setting custom name to test library
------------------------------------
+.. Setting custom name to test library
 
-The library name is shown in test logs before keyword names, and if
-multiple keywords have the same name, they must be used so that the
-`keyword name is prefixed with the library name`__. The library name
-is got normally from the module or class name implementing it, but
-there are some situations where changing it is desirable:
+テストライブラリの名前を変更する
+--------------------------------------
 
-__ `Handling keywords with same names`_
+ライブラリ名は、テストログの中で、キーワード名の前に表示されます。
+また、複数のキーワードが同じ名前を持っている場合、区別のために、 :ref:`キーワード名の前にライブラリ名を付加 <Handling keywords with same names>` せねばなりません。
+ライブラリ名は、ライブラリを実装しているモジュールやクラス名から得られますが、その名前を一時的に変更したいというケースもあります。例えば:
 
-- There is a need to import the same library several times with
-  different arguments. This is not possible otherwise.
+- 同じライブラリを、引数を変えて複数回インポートして、それぞれを区別して使いたい場合。ライブラリの名前を再定義する以外、実現する方法がありません。
 
-- The library name is inconveniently long. This can happen, for
-  example, if a Java library has a long package name.
+- ライブラリ名が長すぎて不便な場合。 Java のライブラリが長いパッケージ名になっている場合などです。
 
-- You want to use variables to import different libraries in
-  different environments, but refer to them with the same name.
+- 変数を使って、環境によってインポートするライブラリを切り替えたいが、そのライブラリを同じ名前で参照したいとき。
 
-- The library name is misleading or otherwise poor. In this case,
-  changing the actual name is, of course, a better solution.
+- ライブラリ名がわかりにくい場合や情けない場合。もちろん、元のライブラリ名を変える方が良いのですが。
 
-
-The basic syntax for specifying the new name is having the text
-`WITH NAME` (case-sensitive) after the library name and then
-having the new name in the next cell. The specified name is shown in
-logs and must be used in the test data when using keywords' full name
-(:name:`LibraryName.Keyword Name`).
+ライブラリの名前を変更するには、ライブラリ名のあとのセルに `WITH NAME` (大文字です) を置き、その次に新しい名前を続けます。
+指定した名前はログに表示され、テストデータ中でライブラリ名を完全指定する場合には、新しい名前を使わねばなりません (:name:`LibraryName.Keyword Name`)。
 
 .. sourcecode:: robotframework
 
@@ -169,10 +141,8 @@ logs and must be used in the test data when using keywords' full name
    Library    com.company.TestLib    WITH NAME    TestLib
    Library    ${LIBRARY}             WITH NAME    MyName
 
-Possible arguments to the library are placed into cells between the
-original library name and the `WITH NAME` text. The following example
-illustrates how the same library can be imported several times with
-different arguments:
+ライブラリの引数を指定する場合は、もとのライブラリ名と  `WITH NAME` の間に置きます。
+以下では、同じライブラリを引数を変えてインポートしている例を示しています:
 
 .. sourcecode:: robotframework
 
@@ -186,75 +156,75 @@ different arguments:
        RemoteLib.Some Keyword    another arg    whatever
        LocalLib.Another Keyword
 
+カスタム名を
+:name:`Import Library`
 Setting a custom name to a test library works both when importing a
-library in the Setting table and when using the :name:`Import Library` keyword.
+library in the Setting table and when using the  keyword.
 
-Standard libraries
+.. Standard libraries
+
+標準ライブラリ
 ------------------
 
-Some test libraries are distributed with Robot Framework and these
-libraries are called *standard libraries*. The BuiltIn_ library is special,
-because it is taken into use automatically and thus its keywords are always
-available. Other standard libraries need to be imported in the same way
-as any other libraries, but there is no need to install them.
+テストライブラリの中には、 Robot Framework と一緒に配布されているものがあります。
+これらのライブラリは *標準 (standard) ライブラリ* といいます。
+中でも :ref:`BuiltIn` ライブラリは特別で、常に自動的にインポートされ、そのキーワードはいつでも使えます。
+他の標準ライブラリは、他のライブラリ全般と同じくインポート操作が必要ですが、インストールは必要ありません。
 
-Normal standard libraries
+.. Normal standard libraries
+
+通常使える標準ライブラリ
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The available normal standard libraries are listed below with links to their
-documentations:
+通常は、以下の標準ライブラリを利用可能です:
 
-  - BuiltIn_
-  - Collections_
-  - DateTime_
-  - Dialogs_
-  - OperatingSystem_
-  - Process_
-  - Screenshot_
-  - String_
-  - Telnet_
-  - XML_
+  - BuiltIn__
+  - Collections__
+  - DateTime__
+  - Dialogs__
+  - OperatingSystem__
+  - Process__
+  - Screenshot__
+  - String__
+  - Telnet__
+  - XML__
 
-.. _BuiltIn: ../libraries/BuiltIn.html
-.. _Collections: ../libraries/Collections.html
-.. _DateTime: ../libraries/DateTime.html
-.. _Dialogs: ../libraries/Dialogs.html
-.. _OperatingSystem: ../libraries/OperatingSystem.html
-.. _Process: ../libraries/Process.html
-.. _String: ../libraries/String.html
-.. _Screenshot: ../libraries/Screenshot.html
-.. _Telnet: ../libraries/Telnet.html
-.. _XML: ../libraries/XML.html
+__ ../../lib/BuiltIn.html
+__ ../../lib/Collections.html
+__ ../../lib/DateTime.html
+__ ../../lib/Dialogs.html
+__ ../../lib/OperatingSystem.html
+__ ../../lib/Process.html
+__ ../../lib/String.html
+__ ../../lib/Screenshot.html
+__ ../../lib/Telnet.html
+__ ../../lib/XML.html
 
-Remote library
-~~~~~~~~~~~~~~
+.. Remote library
 
-In addition to the normal standard libraries listed above, there is
-also :name:`Remote` library that is totally different than the other standard
-libraries. It does not have any keywords of its own but it works as a
-proxy between Robot Framework and actual test library implementations.
-These libraries can be running on other machines than the core
-framework and can even be implemented using languages not supported by
-Robot Framework natively.
+リモートライブラリ
+~~~~~~~~~~~~~~~~~~~
 
-See separate `Remote library interface`_ section for more information
-about this concept.
+上に挙げた標準ライブラリの他に、標準ライブラリとは全く違った性質の :name:`Remote` ライブラリがあります。
+このライブラリは、それ自体はキーワードを全く持たず、他の Robot Framework と実際のテストライブラリへの、いわばプロキシとして働きます。
+リモートライブラリ経由のライブラリは、フレームワークのコア部分と別のマシンで実行でき、 Robot Framework がネイティブでサポートしている言語以外でも実装できます。
 
-External libraries
+詳しくは、 :ref:`リモートライブラリインタフェース<Remote library interface>` の節を参照してください。
+
+
+.. External libraries
+
+外部ライブラリ
 ------------------
 
-Any test library that is not one of the standard libraries is, by
-definition, *an external library*. The Robot Framework open source community
-has implemented several generic libraries, such as Selenium2Library_ and
-SwingLibrary_, which are not packaged with the core framework. A list of
-publicly available libraries can be found from http://robotframework.org.
+標準ライブラリでないテストライブラリは、全て *外部 (external) ライブラリ* です。
+Robot Framework のオープンソースコミュニティは、 Selenium2Library_ や
+SwingLibrary_ のように、フレームワークのコア部分に入っていない、汎用のライブラリをいくつか提供しています。
+公開されていて使えるライブラリのリストは http://robotframework.org にあります。
 
-Generic and custom libraries can obviously also be implemented by teams using
-Robot Framework. See `Creating test libraries`_ section for more information
-about that topic.
+Robot Framework を使いこなせるチームなら、もちろん汎用のライブラリや、カスタムのライブラリを自作できます。
+詳しくは :ref:`テストライブラリを作成する <Creating test libraries>` を参照してください。
 
-Different external libraries can have a totally different mechanism
-for installing them and taking them into use. Sometimes they may also require
-some other dependencies to be installed separately. All libraries
-should have clear installation and usage documentation and they should
-preferably automate the installation process.
+外部ライブラリは、それぞれが独自のメカニズムを持っており、インストール方法や使い方が違います。
+ライブラリ自体とは別に、インストールが必要な依存もあります。
+ライブラリを提供するときは、わかりやすくインストールして使えるドキュメントを用意して、できるだけインストールを自動化してください。
