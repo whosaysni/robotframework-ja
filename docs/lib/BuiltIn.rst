@@ -666,55 +666,41 @@ Get Time
 
 指定の時刻を、指定のフォーマットにして返します。
 
-*NOTE:* DateTime library added in Robot Framework 2.8.5 contains
-much more flexible keywords for getting the current date and time
-and for date and time handling in general.
+*注意:* Robot Framework 2.8.5 で追加された DateTime ライブラリには、現在の日付や時刻の取得、日時情報の操作全般が可能な、より柔軟性の高いキーワードが定義されています。
 
-How time is returned is determined based on the given ``format``
-string as follows. Note that all checks are case-insensitive.
+日付時刻がどのように返されるかは、 ``format`` によって決まります。
+以下にその規則を説明します。
+文字列のチェックが行われる場合は、大小文字を区別しません。
 
-1) If ``format`` contains the word ``epoch``, the time is returned
-   in seconds after the UNIX epoch (1970-01-01 00:00:00 UTC).
-   The return value is always an integer.
+1) ``format`` に文字列 ``epoch`` が入っている場合、UNIX のエポック (1970-01-01 00:00:00 UTC)
+   からの経過時間を秒数で返します。戻り値は常に整数です。
 
-2) If ``format`` contains any of the words ``year``, ``month``,
-   ``day``, ``hour``, ``min``, or ``sec``, only the selected parts are
-   returned. The order of the returned parts is always the one
-   in the previous sentence and the order of words in ``format``
-   is not significant. The parts are returned as zero-padded
-   strings (e.g. May -> ``05``).
+2) ``format`` に文字列 ``year``, ``month``, ``day``, ``hour``, ``min``, ``sec`` のいずれかが入っている場合、指定した要素だけを返します。
+   戻り値中の要素の出力順は、要素を指定した順番となり、要素以外の文字列が ``format`` に入っていても無視されます。
+   値はゼロ詰めされた文字列で返ります (e.g. 5月 -> ``05``) 
 
-3) Otherwise (and by default) the time is returned as a
-   timestamp string in the format ``2006-02-24 15:08:31``.
+3) それ以外の場合 (あるいはデフォルトの設定では)、 ``2006-02-24 15:08:31`` 形式のタイムスタンプを返します。
 
-By default this keyword returns the current local time, but
-that can be altered using ``time`` argument as explained below.
-Note that all checks involving strings are case-insensitive.
+デフォルトの設定では、このキーワードは現在の現地時刻を返しますが、その挙動は、以下のように、 ``time`` 引数を使って変更できます。
+文字列のチェックが行われる場合は、大小文字を区別しません。
 
-1) If ``time`` is a number, or a string that can be converted to
-   a number, it is interpreted as seconds since the UNIX epoch.
-   This documentation was originally written about 1177654467
-   seconds after the epoch.
+1) ``time`` が数値の場合や、数値に変換可能な文字列の場合は、 UNIX エポックからの経過秒数として解釈されます。
+   ちなみに、このドキュメントの執筆時点で、エポックからの経過秒数は 1177654467 秒です。
 
-2) If ``time`` is a timestamp, that time will be used. Valid
-   timestamp formats are ``YYYY-MM-DD hh:mm:ss`` and
-   ``YYYYMMDD hhmmss``.
+2) ``time`` がタイムスタンプの場合、その値を使います。
+   有効なタイムスタンプフォーマットは ``YYYY-MM-DD hh:mm:ss`` と ``YYYYMMDD hhmmss`` です。
 
-3) If ``time`` is equal to ``NOW`` (default), the current local
-   time is used. This time is got using Python's ``time.time()``
+3) ``time`` が ``NOW`` の場合(デフォルトの設定)は、現在の現地時刻を使います。
+   この時刻は Python の ``time.time()`` 関数で取得します。
    function.
 
-4) If ``time`` is equal to ``UTC``, the current time in
-   [http://en.wikipedia.org/wiki/Coordinated_Universal_Time|UTC]
-   is used. This time is got using ``time.time() + time.altzone``
-   in Python.
+4) ``time`` が ``UTC`` の場合は、現在の [http://en.wikipedia.org/wiki/Coordinated_Universal_Time|UTC] 時刻を使います。
+   この時刻は Python の ``time.time() + time.altzone`` で計算します。
 
-5) If ``time`` is in the format like ``NOW - 1 day`` or ``UTC + 1 hour
-   30 min``, the current local/UTC time plus/minus the time
-   specified with the time string is used. The time string format
-   is described in an appendix of Robot Framework User Guide.
+5) ``time`` が ``NOW - 1 day`` や ``UTC + 1 hour 30 min`` などの文字列の場合、現在の現地時刻・UTC時刻に対して、文字列の表す時間を加減した日時を返します。
+   時刻を表す文字列のフォーマットは、ユーザガイドの付録の節で説明しています。
 
-Examples (expecting the current local time is 2006-03-29 15:06:21)::
+例 (現在の現地時刻を 2006-03-29 15:06:21 とした場合)::
 
   | ${time} = | Get Time |             |  |  |
   | ${secs} = | Get Time | epoch       |  |  |
@@ -731,8 +717,7 @@ Examples (expecting the current local time is 2006-03-29 15:06:21)::
   | ${y} = '2006'
   | ${s} = '21'
 
-Examples (expecting the current local time is 2006-03-29 15:06:21 and
-UTC time is 2006-03-29 12:06:21)::
+例 (現在の現地時刻が 2006-03-29 15:06:21 で、 UTC 時刻が 2006-03-29 12:06:21 の場合)::
 
   | ${time} = | Get Time |              | 1177654467          | # Time given as epoch seconds        |
   | ${secs} = | Get Time | sec          | 2007-04-27 09:14:27 | # Time given as a timestamp          |
@@ -748,19 +733,17 @@ UTC time is 2006-03-29 12:06:21)::
   | @{utc} = ['12', '06', '21']
   | ${hour} = '11'
 
-Support for UTC time was added in Robot Framework 2.7.5 but it did not
-work correctly until 2.7.7.
+UTC時刻のサポートは Robot Framework 2.7.5 で追加されましたが、 2.7.7 以前は正しく動作しません。
 
 Get Variable Value
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, default=None]
 
-Returns variable value or ``default`` if the variable does not exist.
+変数の値を取得します。変数がないときには ``default`` を返します。
 
-The name of the variable can be given either as a normal variable name
-(e.g. ``${NAME}``) or in escaped format (e.g. ``\${NAME}``). Notice
-that the former has some limitations explained in `Set Suite Variable`.
+変数の名前は、通常の変数名 (e.g. ``${NAME}``) またはエスケープした形式 (e.g. ``\${NAME}``) です。
+前者には、 `Set Suite Variable` で説明したような制限があります。
 
 例::
 
@@ -768,32 +751,25 @@ that the former has some limitations explained in `Set Suite Variable`.
   | ${y} = | Get Variable Value | ${a} | ${b}    |
   | ${z} = | Get Variable Value | ${z} |         |
   =>
-  | ${x} gets value of ${a} if ${a} exists and string 'default' otherwise
-  | ${y} gets value of ${a} if ${a} exists and value of ${b} otherwise
-  | ${z} is set to Python None if it does not exist previously
+  | ${x} は、 ${a} があれば ${a} の値、なければ 'default' という文字列
+  | ${y} は、 ${a} があれば ${a} の値、なければ ${b} の値
+  | ${z} は、まだ定義されていなければ Python の None になる
 
-See `Set Variable If` for another keyword to set variables dynamically.
+変数を動的にセットするキーワードには、他に `Set Variable If` があります。
 
 Get Variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 :Arguments:  [no_decoration=False]
 
-Returns a dictionary containing all variables in the current scope.
+現在のスコープ中の全ての変数の入った辞書を返します。
 
-Variables are returned as a special dictionary that allows accessing
-variables in space, case, and underscore insensitive manner similarly
-as accessing variables in the test data. This dictionary supports all
-same operations as normal Python dictionaries and, for example,
-Collections library can be used to access or modify it. Modifying the
-returned dictionary has no effect on the variables available in the
-current scope.
+変数は、特殊な辞書の形で返されます。この辞書は、テストデータ中の変数にアクセスするときと同様、スペースの有無、大小文字、アンダースコアの有無を区別しないで変数にアクセスできます。
+辞書は、通常の Python の辞書と全く同じ操作ができる他、 Collection ライブラリを使ってアクセスしたり変更したりできます。
+このキーワードが返す辞書の中身を変更しても、現在のスコープの変数の値には影響を及ぼしません。
 
-By default variables are returned with ``${}``, ``@{}`` or ``&{}``
-decoration based on variable types. Giving a true value (see `Boolean
-arguments`) to the optional argument ``no_decoration`` will return
-the variables without the decoration. This option is new in Robot
-Framework 2.9.
+デフォルトの設定では、変数は、変数のタイプに応じて、 ``${}``, ``@{}``, ``&{}`` で修飾されます。 ``no_decoration`` に真値を渡すと、戻り値の変数は修飾されません。
+このオプションは Robot Framework 2.9 で登場しました。
 
 例:
 
@@ -808,11 +784,11 @@ Framework 2.9.
   | ${no decoration} =            | Get Variables | no_decoration=Yes |
   | Dictionary Should Contain Key | ${no decoration} | example_variable |
 
-Note: Prior to Robot Framework 2.7.4 variables were returned as
-a custom object that did not support all dictionary methods.
+Note: Robot Framework 2.7.4 以前は、変数は独自のオブジェクトで返され、辞書メソッドの一部しかサポートしていません。
+
 
 Import Library
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
