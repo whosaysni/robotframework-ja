@@ -792,25 +792,18 @@ Import Library
 
 :Arguments:  [name, \*args]
 
-Imports a library with the given name and optional arguments.
+ライブラリ名を指定してインポートします。引数があれば指定できます。
 
-This functionality allows dynamic importing of libraries while tests
-are running. That may be necessary, if the library itself is dynamic
-and not yet available when test data is processed. In a normal case,
-libraries should be imported using the Library setting in the Setting
-table.
+このキーワードを使うと、テストの実行中に動的にライブラリをインポートできます。
+ライブラリ自体が動的な性質を持っていて、テストデータを処理しないと使えないような場合に必須のキーワードです。
+通常は、設定テーブルで Library 設定を使えばライブラリを使えます。
 
-This keyword supports importing libraries both using library
-names and physical paths. When paths are used, they must be
-given in absolute format or found from
-[http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html
-#pythonpath-jythonpath-and-ironpythonpath|
-search path]. Forward slashes can be used as path separators in all
-operating systems.
+このキーワードは、ライブラリを指定するときに、ライブラリ名と、ライブラリ実装へのパスのどちらも扱えます。
+パスを使う場合は、絶対パス形式にするか、 :ref:`モジュール検索パス <pythonpath-jythonpath-and-ironpythonpath>` からの相対にせねばなりません。
+どの OS でも、スラッシュをパス区切りに使えます。
 
-It is possible to pass arguments to the imported library and also
-named argument syntax works if the library supports it. ``WITH NAME``
-syntax can be used to give a custom name to the imported library.
+ライブラリがサポートしていれば、引数を渡してライブラリをインポートできます。
+``WITH NAME`` 記法で、インポートしたライブラリに別の名前をつけることもできます。
 
 例::
 
@@ -818,22 +811,18 @@ syntax can be used to give a custom name to the imported library.
   | Import Library | ${CURDIR}/../Library.py | arg1 | named=arg2 |
   | Import Library | ${LIBRARIES}/Lib.java | arg | WITH NAME | JavaLib |
 
+
 Import Resource
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 :Arguments:  [path]
 
-Imports a resource file with the given path.
+指定のパスからリソースファイルをインポートします。
 
-Resources imported with this keyword are set into the test suite scope
-similarly when importing them in the Setting table using the Resource
-setting.
+このキーワードでリソースをインポートすると、設定テーブルの Resource 設定でインポートしたときと同じく、リソースはテストスイートのスコープ中にセットされます。
 
-The given path must be absolute or found from
-[http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html
-#pythonpath-jythonpath-and-ironpythonpath|
-search path]. Forward slashes can be used as path separator regardless
-the operating system.
+パスを使う場合は、絶対パス形式にするか、 :ref:`モジュール検索パス <pythonpath-jythonpath-and-ironpythonpath>` からの相対にせねばなりません。
+どの OS でも、スラッシュをパス区切りに使えます。
 
 例::
 
@@ -841,24 +830,22 @@ the operating system.
   | Import Resource | ${CURDIR}/../resources/resource.html |
   | Import Resource | found_from_pythonpath.robot |
 
+
 Import Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [path, \*args]
 
-Imports a variable file with the given path and optional arguments.
+指定のパスから変数ファイルをインポートします。引数があれば指定できます。
 
-Variables imported with this keyword are set into the test suite scope
-similarly when importing them in the Setting table using the Variables
-setting. These variables override possible existing variables with
-the same names. This functionality can thus be used to import new
-variables, for example, for each test in a test suite.
+このキーワードで変数をインポートすると、設定テーブルの Variables 設定でインポートしたときと同じく、変数がテストスイートのスコープ中にセットされます。
 
-The given path must be absolute or found from
-[http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html
-#pythonpath-jythonpath-and-ironpythonpath|
-search path]. Forward slashes can be used as path separator regardless
-the operating system.
+インポートしたスコープに同じ名前の変数が存在した場合、その変数は変数ファイル上の値で上書きされます。
+この挙動は、例えば、テストスイートの中で、テストを実行するたびに新たに変数を取り込んで初期化するといったテクニックに使えます。
+
+パスを使う場合は、絶対パス形式にするか、 :ref:`モジュール検索パス <pythonpath-jythonpath-and-ironpythonpath>` からの相対にせねばなりません。
+どの OS でも、スラッシュをパス区切りに使えます。
+
 
 例::
 
@@ -866,33 +853,35 @@ the operating system.
   | Import Variables | ${CURDIR}/../vars/env.py | arg1 | arg2 |
   | Import Variables | file_from_pythonpath.py  |      |      |
 
+
 Keyword Should Exist
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, msg=None]
 
-Fails unless the given keyword exists in the current scope.
+キーワードが現在のスコープ上に存在しない場合失敗します。
 
-Fails also if there are more than one keywords with the same name.
-Works both with the short name (e.g. ``Log``) and the full name
-(e.g. ``BuiltIn.Log``).
+また、同じ名前のキーワードが複数存在する場合も失敗します。
+短い名前 (e.g. ``Log``) 、完全指定の名前 (e.g. ``BuiltIn.Log``) の両方を扱えます。
 
-The default error message can be overridden with the ``msg`` argument.
+引数 ``msg`` を指定すると、デフォルトのエラーメッセージをオーバライドできます。
 
-See also `Variable Should Exist`.
+`Variable Should Exist` も参照してください。
+
 
 Length Should Be
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, length, msg=None]
 
-Verifies that the length of the given item is correct.
+item の長さが指定通りであることを確認します。
 
-The length of the item is got using the `Get Length` keyword. The
-default error message can be overridden with the ``msg`` argument.
+item の長さは、 `Get Length` キーワードで調べます。
+引数 ``msg`` を指定すると、デフォルトのエラーメッセージをオーバライドできます。
+
 
 Log
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
 
 :Arguments:  [message, level=INFO, html=False, console=False, repr=False]
 
