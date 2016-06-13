@@ -22,81 +22,59 @@ or `dictionaries`__ using syntax `${SCALAR}`, `@{LIST}` and `&{DICT}`,
 respectively. In addition to this, `environment variables`_ can be used
 directly with syntax `%{ENV_VAR}`.
 
-Variables are useful, for example, in these cases:
+Robot Framework は独自の変数の仕組みを備えていて、 :ref:`スカラ型変数 <scalar variables>`, :ref:`リスト型変数 <list variables>`, :ref:`辞書型変数 <Dictionary variables>` といった変数を、それぞれ `${SCALAR}`, `@{LIST}`, `&{DICT}` といった記法で扱えます。
+そのほか、:ref:`環境変数 <environment variable>` を `%{ENV_VAR}` で表すこともできます。
 
-- When strings change often in the test data. With variables you only
-  need to make these changes in one place.
+変数は、例えば以下のようなケースで有用です:
 
-- When creating system-independent and operating-system-independent test
-  data. Using variables instead of hard-coded strings eases that considerably
-  (for example, `${RESOURCES}` instead of `c:\resources`, or `${HOST}`
-  instead of `10.0.0.1:8080`). Because variables can be `set from the
-  command line`__ when tests are started, changing system-specific
-  variables is easy (for example, `--variable HOST:10.0.0.2:1234
-  --variable RESOURCES:/opt/resources`). This also facilitates
-  localization testing, which often involves running the same tests
-  with different strings.
+- テストデータ中でよく変わる文字列を扱うとき。変数を使えば、一箇所で変更を行なうだけで済みます。
 
-- When there is a need to have objects other than strings as arguments
-  for keywords. This is not possible without variables.
+- システムや OS に依存しないテストデータを作成したいとき。
+  ハードコードする代わりに変数を使います (例えば、 `${RESOURCES}` を `c:\resources` の代わりに、 `${HOST}` を `10.0.0.1:8080` の代わりに)。
+  変数は、テストを開始するときに :ref:`コマンドラインでセット <setting variables in command line>` できるので、システム固有の変数を簡単に変更できます (`--variable HOST:10.0.0.2:1234 --variable RESOURCES:/opt/resources` といったように)。
+  変数を使えば、テストの同じテストを様々な文字列でテストできるので、ローカライズのテストを楽にします。
 
-- When different keywords, even in different test libraries, need to
-  communicate. You can assign a return value from one keyword to a
-  variable and pass it as an argument to another.
+- 文字列以外のオブジェクトを引数に渡す必要がある場合は、変数以外の手段がありません。
 
-- When values in the test data are long or otherwise complicated. For
-  example, `${URL}` is shorter than
-  `http://long.domain.name:8080/path/to/service?foo=1&bar=2&zap=42`.
+- 変数を使えば、たとえ別々のライブラリ上のキーワードであっても、キーワード間で情報を受け渡しできます。あるキーワードからの戻り値を変数に入れ、別のキーワードの引数にすればよいのです。
 
-If a non-existent variable is used in the test data, the keyword using
-it fails. If the same syntax that is used for variables is needed as a
-literal string, it must be `escaped with a backslash`__ as in `\${NAME}`.
+- テストデータ中の値が長大だったり、複雑すぎるとき。
+  例えば、 `http://long.domain.name:8080/path/to/service?foo=1&bar=2&zap=42` よりも `${URL}` の方が短く書けます。
 
-__ `Scalar variables`_
-__ `List variables`_
-__ `Dictionary variables`_
-__ `Setting variables in command line`_
-__ Escaping_
+テストデータ中で、存在しない変数を使おうとすると、その変数を参照したキーワードは失敗します。
+変数を使える場所で、変数のような書き方をした文字列をリテラルとして扱いたければ、 `\${NAME}` のように :ref:`バックスラッシュでエスケープ <escaping>` する必要があります。
 
-Variable types
---------------
 
-Different variable types are explained in this section. How variables
-can be created is discussed in subsequent sections.
+.. Variable types
 
-Robot Framework variables, similarly as keywords, are
-case-insensitive, and also spaces and underscores are
-ignored. However, it is recommended to use capital letters with
-global variables (for example, `${PATH}` or `${TWO WORDS}`)
-and small letters with variables that are only available in certain
-test cases or user keywords (for example, `${my var}` or
-`${myVar}`). Much more importantly, though, cases should be used
-consistently.
+変数タイプ
+-----------
 
-Variable name consists of the variable type identifier (`$`, `@`, `&`, `%`),
-curly braces (`{`, `}`) and actual variable name between the braces.
-Unlike in some programming languages where similar variable syntax is
-used, curly braces are always mandatory. Variable names can basically have
-any characters between the curly braces. However, using only alphabetic
-characters from a to z, numbers, underscore and space is recommended, and
-it is even a requirement for using the `extended variable syntax`_.
+この節では、様々なタイプの変数について説明します。
+変数の作り方は、その後の節で解説します。
+
+Robot Framework の変数は、キーワードと同じように、大小文字を区別せず、スペースやアンダースコアが入っていても無視します。
+ただし、グローバルな変数を定義するときは大文字 (`${PATH}` や `${TWO WORDS}`) を、特定のテストケースやユーザキーワードの中でのみ使う変数は小文字 (`${my var}` や
+`${myVar}`) を使うよう勧めます。
+加えるならば、もっと重要なのは、大小文字の使い分けには一貫性をもたせることです。
+
+変数名は、変数の型識別文字 (`$`, `@`, `&`, `%`)、波括弧 (`{`, `}`) 、そして、波括弧中に書いた変数名からなります。
+似たような変数の記法を持つ言語は他にもありますが、それらとは違い、波括弧は常に必須です。
+変数名は、波括弧の間に書きさえすれば、基本的に何にでもできます。ただし、aからzまでのアルファベット、数字、アンダースコアと数字だけにするよう勧めます。
+このルールは :ref:`拡張変数記法 <extended variable syntax>` で変数を使うときの変数名の必須のルールでもあります。
 
 .. _scalar variable:
 
-Scalar variables
-~~~~~~~~~~~~~~~~
+スカラ変数
+~~~~~~~~~~~~
 
-When scalar variables are used in the test data, they are replaced
-with the value they are assigned to. While scalar variables are most
-commonly used for simple strings, you can assign any objects,
-including lists, to them. The scalar variable syntax, for example
-`${NAME}`, should be familiar to most users, as it is also used,
-for example, in shell scripts and Perl programming language.
+テストデータ中でスカラ変数を使うと、変数は、その変数に結びついた値に置き換えられます。
+スカラ変数は、単純な文字列を扱うときによく使われますが、実際にはリストをはじめ任意のオブジェクトを入れておけます。
+スカラ変数の記法、 `${NAME}` は、シェルスクリプトや Perl などでも使われていて、大抵のユーザに馴染みのある形式でしょう。
 
-The example below illustrates the usage of scalar variables. Assuming
-that the variables `${GREET}` and `${NAME}` are available
-and assigned to strings `Hello` and `world`, respectively,
-both the example test cases are equivalent.
+以下の例では、スカラ変数の使い方を示しています。
+変数 `${GREET}` と `${NAME}` が定義済みで、それぞれの値が `Hello` と `world` だとしましょう。
+以下の二つのテストケースは同じ結果になります。
 
 .. sourcecode:: robotframework
 
@@ -109,24 +87,15 @@ both the example test cases are equivalent.
        Log    ${GREET}
        Log    ${GREET}, ${NAME}!!
 
-When a scalar variable is used as the only value in a test data cell,
-the scalar variable is replaced with the value it has. The value may
-be any object. When a scalar variable is used in a test data cell with
-anything else (constant strings or other variables), its value is
-first converted into a Unicode string and then catenated to whatever is in
-that cell. Converting the value into a string means that the object's
-method `__unicode__` (in Python, with `__str__` as a fallback)
-or `toString` (in Java) is called.
 
-.. note:: Variable values are used as-is without conversions also when
-          passing arguments to keywords using the `named arguments`_
-          syntax like `argname=${var}`.
+テストデータのあるセルにスカラ変数だけが入っていると、スカラ変数は、変数ｎ値そのものに置き換わります。その場合、値は任意のオブジェクトです。
+一方、あるセルに、スカラ変数以外に何か (文字列の定数や他の変数) が入っていると、その値は、まず Unicode 文字列に変換され、セルの他の要素と結合されます。
+オブジェクトから Unicode 文字列への変換は、 `__uinicode__` メソッド (Python の場合。 `__unicode__` がなければ `__str__` にフォールバックする) か、 `toString` (Javaの場合) を呼び出して行います。
 
-The example below demonstrates the difference between having a
-variable in a cell alone or with other content. First, let us assume
-that we have a variable `${STR}` set to a string `Hello,
-world!` and `${OBJ}` set to an instance of the following Java
-object:
+.. note:: キーワードに引数を渡す際、 `argname=${var}` のような :ref:`名前付き引数<named arguments>` にした場合も、変数の値は Unicode 文字列に変換されず、そのまま渡されます。
+
+以下の例は、セルに変数だけを入れた場合と、それ以外のコンテンツも入っている場合の違いを示しています。
+まず、変数 `${STR}` は `Hello, world!` にセットされていて、 `${OBJ}` は以下のような Java オブジェクトだとしましょう:
 
 .. sourcecode:: java
 
@@ -137,7 +106,7 @@ object:
      }
  }
 
-With these two variables set, we then have the following test data:
+それぞれの変数がセットされている状態で、以下のテストデータがあるとします:
 
 .. sourcecode:: robotframework
 
@@ -148,21 +117,16 @@ With these two variables set, we then have the following test data:
        KW 3    I said "${STR}"
        KW 4    You said "${OBJ}"
 
-Finally, when this test data is executed, different keywords receive
-the arguments as explained below:
+このテストデータを実行すると、各キーワードは、それぞれ以下のように引数を受け取ります:
 
-- :name:`KW 1` gets a string `Hello, world!`
-- :name:`KW 2` gets an object stored to variable `${OBJ}`
-- :name:`KW 3` gets a string `I said "Hello, world!"`
-- :name:`KW 4` gets a string `You said "Hi, tellus!"`
+- :name:`KW 1` 文字列 `Hello, world!` 
+- :name:`KW 2`  `${OBJ}` に設定したオブジェクト
+- :name:`KW 3` 文字列 `I said "Hello, world!"`
+- :name:`KW 4` 文字列 `You said "Hi, tellus!"`
 
-.. Note:: Converting variables to Unicode obviously fails if the variable
-          cannot be represented as Unicode. This can happen, for example,
-          if you try to use byte sequences as arguments to keywords so that
-          you catenate the values together like `${byte1}${byte2}`.
-          A workaround is creating a variable that contains the whole value
-          and using it alone in the cell (e.g. `${bytes}`) because then
-          the value is used as-is.
+.. Note:: 言うまでもなく、Unicode に変換できない変数を Unicode に変換しようとすると失敗します。
+          例えば、バイト列をキーワードの引数として渡したいときに、 `${byte1}${byte2}` のような書き方をすると、この落とし穴に落ちてしまいます。
+          回避するには、必要な値全体の入った変数を作っておき、一つのセルで渡します。 (e.g. `${bytes}`) そうすれば、値がそのままキーワード側に渡るからです。
 
 .. _list variable:
 
