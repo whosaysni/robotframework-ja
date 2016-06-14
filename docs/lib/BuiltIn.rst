@@ -563,13 +563,9 @@ Fail
 例::
 
   | Fail | Test not ready   |             | | # 指定メッセージを出力して失敗
-  |
   | Fail | *HTML*<b>Test not ready</b> | | | # HTML でメッセージを出力して失敗
-  | 
   | Fail | Test not ready   | not-ready   | | # 'not-ready' タグを付与して失敗
-  |
   | Fail | OS not supported | -regression | | # 'regression' タグを除去する
-  |
   | Fail | My message       | tag    | -t*  | # tで始まる全てのタグを除去して、新たに 'tag' というタグを付与
 
 テスト全体の実行を停止したいときは `Fatal Error` を使ってください。
@@ -885,94 +881,75 @@ Log
 
 :Arguments:  [message, level=INFO, html=False, console=False, repr=False]
 
-Logs the given message with the given level.
+指定のメッセージを指定のログレベルで記録します。
 
-Valid levels are TRACE, DEBUG, INFO (default), HTML, WARN, and ERROR.
-Messages below the current active log level are ignored. See
-`Set Log Level` keyword and ``--loglevel`` command line option
-for more details about setting the level.
+使えるレベルは TRACE, DEBUG, INFO (デフォルトのレベル), HTML, WARN, ERROR です。
+現在のログレベルよりも低いレベルのメッセージは無視されます。
+ログレベルの設定は、 `Set Log Level` キーワードや、コマンドラインオプション ``--loglevel`` を参照してください。
 
-Messages logged with the WARN or ERROR levels will be automatically
-visible also in the console and in the Test Execution Errors section
-in the log file.
+WARN や ERROR レベルのメッセージは、自動的にコンソールに表示される他、ログファイルの `Test Execution Errors` セクションに書き込まれます。
 
-Logging can be configured using optional ``html``, ``console`` and
-``repr`` arguments. They are off by default, but can be enabled
-by giving them a true value. See `Boolean arguments` section for more
-information about true and false values.
+ログ機能は、オプションの ``html``, ``console`` および ``repr`` 引数で設定できます。
+これらのオプションは、デフォルトではいずれもオフですが、引数に真値を指定すれば有効になります。
+値をどのように真偽値に変換するかは、 :ref:`ブール引数 <Boolean arguments>` の節を参照してください。
 
-If the ``html`` argument is given a true value, the message will be
-considered HTML and special characters such as ``<`` in it are not
-escaped. For example, logging ``<img src="image.png">`` creates an
-image when ``html`` is true, but otherwise the message is that exact
-string. An alternative to using the ``html`` argument is using the HTML
-pseudo log level. It logs the message as HTML using the INFO level.
+引数 ``html`` の値を真にした場合、メッセージは HTML とみなされ、  ``<`` のようなマークアップ用の特殊文字をエスケープしません。例えば、  ``<img src="image.png">`` は、  ``html`` を真にすれば画像を表示しますが、そうでなければ、この文字列がそのまま表示されます。
+``html`` 引数を設定する代わりに、ログレベル HTML で出力した場合も、メッセージをエスケープせず出力します。
+ログレベル HTML は、実際にはメッセージを INFO レベルで出力します。
 
-If the ``console`` argument is true, the message will be written to
-the console where test execution was started from in addition to
-the log file. This keyword always uses the standard output stream
-and adds a newline after the written message. Use `Log To Console`
-instead if either of these is undesirable,
+``console`` の値を真にすると、ログファイルの他に、テストの実行を行ったコンソールにもログメッセージを出力します。
+このキーワードは、メッセージの出力先として必ず標準出力ストリームを使い、出力したメッセージに改行を付加します。
+この挙動が望ましくないときは、 `Log To Console` を使ってください。
 
-If the ``repr`` argument is true, the given item will be passed through
-a custom version of Python's ``pprint.pformat()`` function before
-logging it. This is useful, for example, when working with strings or
-bytes containing invisible characters, or when working with nested data
-structures. The custom version differs from the standard one so that it
-omits the ``u`` prefix from Unicode strings and adds ``b`` prefix to
-byte strings.
+``repr`` 引数を真にすると、引数に渡した値を Python の ``pprint.pformat()`` に似た独自の関数で整形します。
+この機能は、文字列やバイト列に印字不可の文字が入っている場合や、入れ子のデータ構造を扱いたい場合に便利です。
+また、 Robot Framework 独自の機能として、Unicode 文字列の先頭から ``u`` を除去し、バイト文字列の先頭に ``b`` を付加します。
 
 例::
 
-  | Log | Hello, world!        |          |   | # Normal INFO message.   |
-  | Log | Warning, world!      | WARN     |   | # Warning.               |
-  | Log | <b>Hello</b>, world! | html=yes |   | # INFO message as HTML.  |
-  | Log | <b>Hello</b>, world! | HTML     |   | # Same as above.         |
-  | Log | <b>Hello</b>, world! | DEBUG    | html=true | # DEBUG as HTML. |
-  | Log | Hello, console!   | console=yes | | # Log also to the console. |
-  | Log | Hyvä \x00     | repr=yes    | | # Log ``'Hyv\xe4 \x00'``. |
+  | Log | Hello, world!        |          |   | # 通常の INFO メッセージ |
+  | Log | Warning, world!      | WARN     |   | # 警告                   |
+  | Log | <b>Hello</b>, world! | html=yes |   | # HTML のINFO メッセージ |
+  | Log | <b>Hello</b>, world! | HTML     |   | # 上と同じ               |
+  | Log | <b>Hello</b>, world! | DEBUG    | html=true | # DEBUG, HTML形式 |
+  | Log | Hello, console!   | console=yes | | # コンソールにも出力する   |
+  | Log | Hyvä \x00     | repr=yes    | | # ``'Hyv\xe4 \x00'`` を出力    |
 
-See `Log Many` if you want to log multiple messages in one go, and
-`Log To Console` if you only want to write to the console.
+複数のメッセージを一挙にログに出力したいときは `Log Many` を、コンソールにだけメッセージを出力したい場合は `Log To Console` を使ってください。
 
-Arguments ``html``, ``console``, and ``repr`` are new in Robot Framework
-2.8.2.
+引数 ``html``, ``console``, ``repr`` は Robot Framework 2.8.2 で登場しました。
 
-Pprint support when ``repr`` is used is new in Robot Framework 2.8.6,
-and it was changed to drop the ``u`` prefix and add the ``b`` prefix
-in Robot Framework 2.9.
+``repr`` で pprint する機能は Robot Framework 2.8.6 からです。
+また、 ``u`` を除去して ``b`` プレフィクスをつけるようになったのは Robot Framework 2.9 からです。
 
 Log Many
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
 
 :Arguments:  [\*messages]
 
-Logs the given messages as separate entries using the INFO level.
+メッセージの要素一つ一つを、それぞれ一行のログとして、ログレベル INFO で出力します。
 
-Supports also logging list and dictionary variable items individually.
+リストや辞書の値をひとつづつ出力する機能も備えています。
 
 例::
 
   | Log Many | Hello   | ${var}  |
   | Log Many | @{list} | &{dict} |
 
-See `Log` and `Log To Console` keywords if you want to use alternative
-log levels, use HTML, or log to the console.
+別のログレベルで出力したいとき、HTML を使いたいとき、コンソールに出力したいときは、 `Log` または `Log To Console` を使ってください。
 
 Log To Console
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [message, stream=STDOUT, no_newline=False]
 
-Logs the given message to the console.
+指定のメッセージをコンソールに記録します。
 
-By default uses the standard output stream. Using the standard error
-stream is possibly by giving the ``stream`` argument value ``STDERR``
-(case-insensitive).
+デフォルトの設定では、出力先は標準出力ストリームです。
+``stream`` を ``STDERR`` （小文字でも可）にすると、標準エラー出力に出力できます。
 
-By default appends a newline to the logged message. This can be
-disabled by giving the ``no_newline`` argument a true value (see
-`Boolean arguments`).
+また、デフォルトの設定では、メッセージの後ろに改行を付加します。
+この挙動は、 ``no_newline`` を真にするとオフにできます。
 
 例::
 
@@ -981,87 +958,78 @@ disabled by giving the ``no_newline`` argument a true value (see
   | Log To Console | Message starts here and is  | no_newline=true |
   | Log To Console | continued without newline.  |                 |
 
-This keyword does not log the message to the normal log file. Use
-`Log` keyword, possibly with argument ``console``, if that is desired.
+このキーワードは、メッセージをログファイルに記録しません。
+ログファイルにも記録したいときは、 `Log` キーワードに ``console`` 引数を指定して使ってください。
 
-New in Robot Framework 2.8.2.
+Robot Framework 2.8.2 で登場しました。
+
 
 Log Variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 :Arguments:  [level=INFO]
 
-Logs all variables in the current scope with given log level.
+スコープ中の全ての変数を、指定のログレベルで出力します。
+
 
 No Operation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 :Arguments:  []
 
-Does absolutely nothing.
+何もしません。
 
 Pass Execution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 :Arguments:  [message, \*tags]
 
-Skips rest of the current test, setup, or teardown with PASS status.
+テスト、セットアップ、ティアダウンなどで、このキーワード以降の処理をスキップし、 PASS させます。
 
-This keyword can be used anywhere in the test data, but the place where
-used affects the behavior:
+このキーワードは、テストデータのどこでも使えますが、使う場所によって振る舞いが多少異なります:
 
-- When used in any setup or teardown (suite, test or keyword), passes
-  that setup or teardown. Possible keyword teardowns of the started
-  keywords are executed. Does not affect execution or statuses
-  otherwise.
-- When used in a test outside setup or teardown, passes that particular
-  test case. Possible test and keyword teardowns are executed.
+- セットアップやティアダウンの中で使った場合 (テストスイート、テスト、キーワードのいずれのセットアップ・ティアダウンでも) そのセットアップやティアダウンの実行結果はパスになります。
+  `Pass Execution` を呼び出したキーワードに、さらにティアダウンが付与されていた場合、そのティアダウンは実行されます。
+  それ以外は、実行や実行結果に影響しません。
+- セットアップやティアダウンの外で使った場合は、そのテストケースだけをパスさせます。
+  テストケースやキーワードにティアダウンがあれば、実行します。
 
-Possible continuable failures before this keyword is used, as well as
-failures in executed teardowns, will fail the execution.
+このキーワードに到達した時点で、テスト失敗後の処理が行われている状態なら、そのテストの結果は失敗になります。
 
-It is mandatory to give a message explaining why execution was passed.
-By default the message is considered plain text, but starting it with
-``*HTML*`` allows using HTML formatting.
+``message`` は必須の引数で、なぜ実行をパスさせたかを説明を入れます。
+デフォルトの設定では、メッセージを平文とみなしますが、 ``*HTML*`` で文字列を開始した場合は HTML フォーマットとみなします。
 
-It is also possible to modify test tags passing tags after the message
-similarly as with `Fail` keyword. Tags starting with a hyphen
-(e.g. ``-regression``) are removed and others added. Tags are modified
-using `Set Tags` and `Remove Tags` internally, and the semantics
-setting and removing them are the same as with these keywords.
+`Fail` キーワードの場合と同様、 ``message`` の後に引数 ``tags`` を渡すと、テストタグを編集できます。
+タグ名の前にハイフンをつけた場合 (e.g. ``-regression``)、そのタグは除去されます。
+それ以外の場合は、指定したタグが付加されます。
+タグは内部的には `Set Tags` や `Remove Tags` で操作され、タグをセットしたときや除去したときのセマンティクスは、それぞれのキーワードの仕様に準じます。
 
 例::
 
   | Pass Execution | All features available in this version tested. |
   | Pass Execution | Deprecated test. | deprecated | -regression    |
 
-This keyword is typically wrapped to some other keyword, such as
-`Run Keyword If`, to pass based on a condition. The most common case
-can be handled also with `Pass Execution If`::
+このキーワードは、よく、 `Run Keyword If` のような、他のキーワードでラップして、条件付きで使います。
+ただし、このようなケースは `Pass Execution If` でも書けます::
 
   | Run Keyword If    | ${rc} < 0 | Pass Execution | Negative values are cool. |
   | Pass Execution If | ${rc} < 0 | Negative values are cool. |
 
-Passing execution in the middle of a test, setup or teardown should be
-used with care. In the worst case it leads to tests that skip all the
-parts that could actually uncover problems in the tested application.
-In cases where execution cannot continue do to external factors,
-it is often safer to fail the test case and make it non-critical.
+テストの実行中にテストをパスさせた場合でも、セットアップやティアダウンは実行されます。
+安易にテストをパスさせると、最悪の場合、テスト対象システムの不具合を明らかにできたはずの処理を全部飛ばしてしまったりするので注意してください。
+外部要因で時折テストを継続できないような場合には、パスさせるのではなく、一旦テストを失敗させておき、そのテストをクリティカルでないテストにしておくほうが安全です。
 
-New in Robot Framework 2.8.
+Robot Framework 2.8 で登場しました。
 
 Pass Execution If
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, message, \*tags]
 
-Conditionally skips rest of the current test, setup, or teardown with PASS
-status.
+テスト、セットアップ、ティアダウンなどで、条件に応じて、このキーワード以降の処理をスキップし、 PASS させます。
 
-A wrapper for `Pass Execution` to skip rest of the current test,
-setup or teardown based the given ``condition``. The condition is
-evaluated similarly as with `Should Be True` keyword, and ``message``
-and ``*tags`` have same semantics as with `Pass Execution`.
+`Pass Execution` をラップして、 ``condition`` に応じて処理をスキップします。
+``condition`` は `Should Be True` キーワードの引数と同じ方法で評価され、 ``message`` や ``*tags`` は `Pass Execution` の同名の引数と同じ意味をもちます。
 
 例:
 
@@ -1074,7 +1042,7 @@ and ``*tags`` have same semantics as with `Pass Execution`.
   |
   |      | Do Something      | ${var}                 |
 
-New in Robot Framework 2.8.
+Robot Framework 2.8 で登場しました。
 
 Regexp Escape
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
