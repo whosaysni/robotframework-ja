@@ -58,31 +58,23 @@ Different test library APIs
 
 Robot Framework has three different test library APIs.
 
-Static API
+静的 (static) API
 
-  The simplest approach is having a module (in Python) or a class
-  (in Python or Java) with methods which map directly to
-  `keyword names`_. Keywords also take the same `arguments`__ as
-  the methods implementing them.  Keywords `report failures`__ with
-  exceptions, `log`__ by writing to standard output and can `return
-  values`__ using the `return` statement.
+  最も簡単なアプローチは、 (Python の) モジュールか、 (Python か Javaの) クラスを作って、そのメソッドを直接 :ref:`キーワード名<keyword names>` に対応付ける方法です。
+  メソッドで実装した引数が、そのままキーワードの :ref:`引数<keyword arguments>` になります。
+  キーワードの失敗は例外で :ref:`通知<reporting keyword status` でき、標準出力への書き込みは :ref:`ログ<logging information>` になり、 `return` 文で値を返すとキーワードの :ref:`戻り値<returning values>` になります。
 
-Dynamic API
+動的 (dynamic) API
 
-  Dynamic libraries are classes that implement a method to get the names
-  of the keywords they implement, and another method to execute a named
-  keyword with given arguments. The names of the keywords to implement, as
-  well as how they are executed, can be determined dynamically at
-  runtime, but reporting the status, logging and returning values is done
-  similarly as in the static API.
+  動的ライブラリはクラスでできていて、ライブラリが提供するキーワードの名前を取得できるメソッドを備えています。また、指定のキーワードを指定の引数で実行するためのメソッドも備えます。
+  どんなキーワードをサポートするか、それをどのように実行するかは実行時に動的に変更できます。
+  ただし、ログと戻り値の扱いは、静的 API と同じです。
 
-Hybrid API
+ハイブリッド API
 
-  This is a hybrid between the static and the dynamic API. Libraries are
-  classes with a method telling what keywords they implement, but
-  those keywords must be available directly. Everything else except
-  discovering what keywords are implemented is similar as in the
-  static API.
+  静的・動的 API の中間に位置するライブラリです。
+  ライブラリが提供するキーワードのリストは、メソッドを介して取得できますが、キーワードは直接実装せねばなりません。
+  メソッドの検出まわり以外は、静的 API と全く同じです。
 
 All these APIs are described in this chapter. Everything is based on
 how the static API works, so its functions are discussed first. How
