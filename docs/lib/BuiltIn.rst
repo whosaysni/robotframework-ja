@@ -1044,53 +1044,51 @@ Pass Execution If
 
 Robot Framework 2.8 で登場しました。
 
+
 Regexp Escape
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 :Arguments:  [\*patterns]
 
-Returns each argument string escaped for use as a regular expression.
+引数の文字列を正規表現用にエスケープします。
 
-This keyword can be used to escape strings to be used with
-`Should Match Regexp` and `Should Not Match Regexp` keywords.
+このキーワードは、 `Should Match Regexp` や `Should Not Match Regexp` といったキーワード向けに文字列をエスケープするのに使います。
 
-Escaping is done with Python's ``re.escape()`` function.
+エスケープ処理には Python の ``re.escape()`` を使います。
 
 例::
 
   | ${escaped} = | Regexp Escape | ${original} |
   | @{strings} = | Regexp Escape | @{strings}  |
 
+
 Reload Library
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 :Arguments:  [name_or_instance]
 
-Rechecks what keywords the specified library provides.
+指定のライブラリがどんなキーワードを提供しているか再チェックします。
 
-Can be called explicitly in the test data or by a library itself
-when keywords it provides have changed.
+テストデータや、ライブラリの提供するキーワードが変更されたときに呼び出せます。
 
-The library can be specified by its name or as the active instance of
-the library. The latter is especially useful if the library itself
-calls this keyword as a method.
+ライブラリは、ライブラリの名前か、すでに読み込み済みのライブラリインスタンスで指定できます。
+後者は、ライブラリ自体がこのキーワードを（内部的に）メソッドとして呼ぶ場合などに特に便利です。
 
-New in Robot Framework 2.9.
+Robot Framework 2.9 で登場しました。
+
 
 Remove Tags
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 :Arguments:  [\*tags]
 
-Removes given ``tags`` from the current test or all tests in a suite.
+現在のテストや、スイート中の全テストから、 ``tags`` に指定したタグを除去します。
 
-Tags can be given exactly or using a pattern where ``*`` matches
-anything and ``?`` matches one character.
+タグは、厳密な名前でも、 ``*`` （任意の文字列）や ``?`` （任意の1字）を使ったワイルドカードマッチでも指定できます。
 
-This keyword can affect either one test case or all test cases in a
-test suite similarly as `Set Tags` keyword.
+このキーワードは、 `Set Tags` と同じく、使い方によって、単一のテストケース、あるいはテストスイート中の全テストに影響します。
 
-The current tags are available as a built-in variable ``@{TEST TAGS}``.
+現在の全タグを指定したければ、組み込み変数 ``@{TEST TAGS}`` があります。
 
 例:
 
@@ -1098,33 +1096,26 @@ The current tags are available as a built-in variable ``@{TEST TAGS}``.
   
   | Remove Tags | mytag | something-* | ?ython |
 
-See `Set Tags` if you want to add certain tags and `Fail` if you want
-to fail the test case after setting and/or removing tags.
+特定のタグを追加したい場合は `Set Tags` を、任意のタグを設定・削除した後にテストケースを失敗させたいときは `Fail` を参照してください。
+
 
 Repeat Keyword
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 :Arguments:  [repeat, name, \*args]
 
-Executes the specified keyword multiple times.
+指定のキーワードを複数回繰り返し実行します。
 
-``name`` and ``args`` define the keyword that is executed similarly as
-with `Run Keyword`. ``repeat`` specifies how many times (as a count) or
-how long time (as a timeout) the keyword should be executed.
+``name`` や ``args`` は、実行したいキーワードや引数で、 `Run Keyword` と同じです。
+``repeat`` には、キーワードを何度繰り返すか（回数）か、実行し続けたい長さ（タイムアウト）を指定します。
 
-If ``repeat`` is given as count, it specifies how many times the
-keyword should be executed. ``repeat`` can be given as an integer or
-as a string that can be converted to an integer. If it is a string,
-it can have postfix ``times`` or ``x`` (case and space insensitive)
-to make the expression more explicit.
+``repeat`` を回数で指定した場合は、その回数キーワードを反復実行します。
+``repeat`` は整数または文字列で指定でき、文字列の場合には、わかりやすさのために ``times`` や ``x`` という接尾辞をつけてかまいません（大小文字の区別はなく、スペースは無視します）。
 
-If ``repeat`` is given as timeout, it must be in Robot Framework's
-time format (e.g. ``1 minute``, ``2 min 3 s``). Using a number alone
-(e.g. ``1`` or ``1.5``) does not work in this context.
+``repeat`` をタイムアウトで指定するときは、Robot Framework 独自の時間フォーマット (e.g. ``1 minute``, ``2 min 3 s``) を使います。
+数字だけ (``1`` や ``1.5``) は、うまく使えません。
 
-If ``repeat`` is zero or negative, the keyword is not executed at
-all. This keyword fails immediately if any of the execution
-rounds fails.
+``repeat`` がゼロか負の数の場合、キーワードは一切実行されません。キーワードが失敗すると、何度目の繰り返しのときでも、テストはただちに失敗します。
 
 例::
 
@@ -1132,24 +1123,22 @@ rounds fails.
   | Repeat Keyword | ${var}    | Some Keyword | arg1 | arg2 |
   | Repeat Keyword | 2 minutes | Some Keyword | arg1 | arg2 |
 
-Specifying ``repeat`` as a timeout is new in Robot Framework 3.0.
+Robot Framework 3.0 から、 ``repeat`` をタイムアウトで指定できます。
+
 
 Replace Variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [text]
 
-Replaces variables in the given text with their current values.
+引数 ``text`` 中の変数を、現在の変数値で置き換えた文字列を返します。
 
-If the text contains undefined variables, this keyword fails.
-If the given ``text`` contains only a single variable, its value is
-returned as-is and it can be any object. Otherwise this keyword
-always returns a string.
+``text`` の内容が変数ひとつだけの場合は、戻り値は文字列変換をうけず、変数の値そのもので置き換わります。
+それ以外の場合は、常に文字列が返ります。
 
 例:
 
-The file ``template.txt`` contains ``Hello ${NAME}!`` and variable
-``${NAME}`` has the value ``Robot``.
+ファイル ``template.txt`` の内容は ``Hello ${NAME}!`` とし、変数 ``${NAME}`` は ``Robot`` とします。
 
 .. code:: robotframework
 
@@ -1157,31 +1146,26 @@ The file ``template.txt`` contains ``Hello ${NAME}!`` and variable
   | ${message} =    | Replace Variables | ${template}            |
   | Should Be Equal | ${message}        | Hello Robot!           |
 
+
 Return From Keyword
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*return_values]
 
-Returns from the enclosing user keyword.
+ユーザキーワード中から処理を戻します。
 
-This keyword can be used to return from a user keyword with PASS status
-without executing it fully. It is also possible to return values
-similarly as with the ``[Return]`` setting. For more detailed information
-about working with the return values, see the User Guide.
+ユーザキーワードから処理を戻し、残りの操作を飛ばして、テストをパスさせるのに使います。
+また、 ``[Return]`` 設定を使った時のように値を返すこともできます。
+戻り値の扱い方は、ユーザガイドを参照してください。
 
-This keyword is typically wrapped to some other keyword, such as
-`Run Keyword If` or `Run Keyword If Test Passed`, to return based
-on a condition::
+このキーワードのよくある使い方は、 `Run Keyword If` や `Run Keyword If Test Passed` でラップして、条件に応じて処理を戻すというものです::
 
   | Run Keyword If | ${rc} < 0 | Return From Keyword |
   | Run Keyword If Test Passed | Return From Keyword |
 
-It is possible to use this keyword to return from a keyword also inside
-a for loop. That, as well as returning values, is demonstrated by the
-`Find Index` keyword in the following somewhat advanced example.
-Notice that it is often a good idea to move this kind of complicated
-logic into a test library.
-::
+このキーワードを使えば、ループの中からも処理を戻せます。
+ループからのリターンと、戻り値の例が、以下の `Find Index` キーワードに示されています。
+とはいえ、この手の複雑なロジックは、テストライブラリで実装するのが賢明です::
 
   | ***** Variables *****
   | @{LIST} =    foo    baz
@@ -1202,14 +1186,14 @@ logic into a test library.
   |    \    ${index} =    Set Variable    ${index + 1}
   |    Return From Keyword    ${-1}    # Also [Return] would work here.
 
-The most common use case, returning based on an expression, can be
-accomplished directly with `Return From Keyword If`. Both of these
-keywords are new in Robot Framework 2.8.
+「式の評価結果に応じて処理を戻し、値を返す」というもっともよくある操作については、 `Return From Keyword If` キーワードで直接実現できます。
+これらのキーワードは、いずれも Robot Framework 2.8 で登場しました。
 
-See also `Run Keyword And Return` and `Run Keyword And Return If`.
+`Run Keyword And Return` や `Run Keyword And Return If` も参照してください。
+
 
 Return From Keyword If
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, \*return_values]
 
