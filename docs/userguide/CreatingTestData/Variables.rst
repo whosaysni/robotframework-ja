@@ -130,15 +130,13 @@ Robot Framework の変数は、キーワードと同じように、大小文字�
 
 .. _list variable:
 
-List variables
+リスト型変数
 ~~~~~~~~~~~~~~
 
-When a variable is used as a scalar like `${EXAMPLE}`, its value will be
-used as-is. If a variable value is a list or list-like, it is also possible
-to use as a list variable like `@{EXAMPLE}`. In this case individual list
-items are passed in as arguments separately. This is easiest to explain with
-an example. Assuming that a variable `@{USER}` has value `['robot', 'secret']`,
-the following two test cases are equivalent:
+変数を `${EXAMPLE}` のようにスカラーとして参照した場合、その変数はあるがままの値を表します。
+一方、値がリストやリストライクなオブジェクトの場合には、 `@{EXAMPLE}` のように書くことで、変数をリスト変数として使えます。
+キーワードの引数にリスト変数を指定すると、リストの各要素をそれぞれ個別の変数として渡せます。
+例えば、変数 `@{USER}` が `['robot', 'secret']` という値のとき、以下の二つのテストケースは同じです:
 
 .. sourcecode:: robotframework
 
@@ -149,22 +147,19 @@ the following two test cases are equivalent:
    List Variable
        Login    @{USER}
 
-Robot Framework stores its own variables in one internal storage and allows
-using them as scalars, lists or dictionaries. Using a variable as a list
-requires its value to be a Python list or list-like object. Robot Framework
-does not allow strings to be used as lists, but other iterable objects such
-as tuples or dictionaries are accepted.
+Robot Framework は、どの変数も、内部的には同じ仕組みで保存しており、一つの変数をスカラ型、リスト型、辞書型で扱えるようにしています。
+変数をリストとして扱いたいときは、その値は Python のリストか、リストライクなオブジェクトでなければなりません。
+Robot Framework では、文字列をリストとしては扱えませんが、タプルや辞書であればリストとして扱えます。
 
-Prior to Robot Framework 2.9, scalar and list variables were stored separately,
-but it was possible to use list variables as scalars and scalar variables as
-lists. This caused lot of confusion when there accidentally was a scalar
-variable and a list variable with same name but different value.
+Robot Framework 2.9 までは、スカラ変数とリスト変数は別々に保存されていましたが、リスト変数をスカラとして使ったり、スカラ変数をリストとして扱ったりできました。
+そのため、同じ名前のスカラ変数とリスト変数に別々の値が入ってしまうことがあり、よく混乱を招いていました。
 
-Using list variables with other data
-''''''''''''''''''''''''''''''''''''
+.. Using list variables with other data
 
-It is possible to use list variables with other arguments, including
-other list variables.
+リスト変数を他のデータと組み合わせる
+''''''''''''''''''''''''''''''''''''''
+
+リスト変数は他の引数と合わせて使えます。リスト同士でも組み合わせられます。
 
 .. sourcecode:: robotframework
 
@@ -174,21 +169,19 @@ other list variables.
        Keyword    ${SCALAR}    @{LIST}    constant
        Keyword    @{LIST}    @{ANOTHER}    @{ONE MORE}
 
-If a list variable is used in a cell with other data (constant strings or other
-variables), the final value will contain a string representation of the
-variable value. The end result is thus exactly the same as when using the
-variable as a scalar with other data in the same cell.
 
-Accessing individual list items
-'''''''''''''''''''''''''''''''
+リスト変数を、他のデータ（文字列定数や、他の変数）と一緒のセルに入れた場合、そのセルは最終的には各変数の値を文字列にした結果が入ります。
+結果は、変数をスカラとして他のデータと一緒のセルにいれたときと同じになります。
 
-It is possible to access a certain value of a list variable with the syntax
-`@{NAME}[index]`, where `index` is the index of the selected value. Indices
-start from zero, negative indices can be used to access items from the end,
-and trying to access a value with too large an index causes an error.
-Indices are automatically converted to integers, and it is also possible to
-use variables as indices. List items accessed in this manner can be used
-similarly as scalar variables.
+.. Accessing individual list items
+
+リストの個別の要素にアクセスする
+''''''''''''''''''''''''''''''''''
+
+リスト変数中の特定の要素にアクセスしたいときには、 `@{NAME}[index]` のように書きます。 `index` は、アクセスしたい要素のインデクスです。
+インデクスは 0 から数えます。負の数を指定すると、末尾からの順になり、インデクスがリストの要素数より大きい時にはエラーになります。
+インデクス部分の内容は値は自動的に整数変換されます。そのため、インデクスには変数も使えます。
+インデクスを指定してリストの要素にアクセスした場合、その変数はスカラ変数のように扱えます。
 
 .. sourcecode:: robotframework
 
@@ -203,34 +196,33 @@ similarly as scalar variables.
    Index As Variable
        Log    @{LIST}[${INDEX}]
 
-Using list variables with settings
-''''''''''''''''''''''''''''''''''
+.. Using list variables with settings
 
-List variables can be used only with some of the settings__. They can
-be used in arguments to imported libraries and variable files, but
-library and variable file names themselves cannot be list
-variables. Also with setups and teardowns list variable can not be used
-as the name of the keyword, but can be used in arguments. With tag related
-settings they can be used freely. Using scalar variables is possible in
-those places where list variables are not supported.
+リスト変数を設定テーブルで使う
+''''''''''''''''''''''''''''''''
+
+設定テーブルの :ref:`設定 <All available settings in test data>` の中には、リスト変数を渡せるものもあります。
+ライブラリや変数ファイルのインポート設定の場合、引数にはリスト変数を使えますが、ファイル名には使えません。
+同様に、セットアップやティアダウン設定でも、引数にはリスト変数を使えますが、ファイル名には使えません。
+タグ関連の設定では、リスト変数を自由に使えます。
+リスト変数が指定できない場所では、必ずスカラ変数を使えるようになっています。
 
 .. sourcecode:: robotframework
 
    *** Settings ***
-   Library         ExampleLibrary      @{LIB ARGS}    # This works
-   Library         ${LIBRARY}          @{LIB ARGS}    # This works
-   Library         @{NAME AND ARGS}                   # This does not work
-   Suite Setup     Some Keyword        @{KW ARGS}     # This works
-   Suite Setup     ${KEYWORD}          @{KW ARGS}     # This works
-   Suite Setup     @{KEYWORD}                         # This does not work
-   Default Tags    @{TAGS}                            # This works
+   Library         ExampleLibrary      @{LIB ARGS}    # OK
+   Library         ${LIBRARY}          @{LIB ARGS}    # OK
+   Library         @{NAME AND ARGS}                   # うまくいかない
+   Suite Setup     Some Keyword        @{KW ARGS}     # OK
+   Suite Setup     ${KEYWORD}          @{KW ARGS}     # OKThis works
+   Suite Setup     @{KEYWORD}                         # うまくいかない
+   Default Tags    @{TAGS}                            # OK
 
-__ `All available settings in test data`_
 
 .. _dictionary variable:
 
-Dictionary variables
-~~~~~~~~~~~~~~~~~~~~
+辞書変数
+~~~~~~~~~~
 
 As discussed above, a variable containing a list can be used as a `list
 variable`_ to pass list items to a keyword as individual arguments.
