@@ -1197,14 +1197,12 @@ Return From Keyword If
 
 :Arguments:  [condition, \*return_values]
 
-Returns from the enclosing user keyword if ``condition`` is true.
+``condition`` が真のとき、実行中のユーザキーワードから処理を戻します。
 
-A wrapper for `Return From Keyword` to return based on the given
-condition. The condition is evaluated using the same semantics as
-with `Should Be True` keyword.
+条件に応じて処理を戻す、 `Return From Keyword` のラッパです。
+``condition`` は `Should Be True` キーワードの引数と同じ方法で評価されます。
 
-Given the same example as in `Return From Keyword`, we can rewrite the
-`Find Index` keyword as follows::
+`Return From Keyword` のときと同じ例を使って、 `Find Index` キーワードを書き直すと以下のようになります::
 
   | ***** Keywords *****
   | Find Index
@@ -1215,12 +1213,12 @@ Given the same example as in `Return From Keyword`, we can rewrite the
   |    \    ${index} =    Set Variable    ${index + 1}
   |    Return From Keyword    ${-1}    # Also [Return] would work here.
 
-See also `Run Keyword And Return` and `Run Keyword And Return If`.
+`Run Keyword And Return` や `Run Keyword And Return If` も参照してください。
 
-New in Robot Framework 2.8.
+Robot Framework 2.8 で登場しました。
 
 Run Keyword
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1231,7 +1229,7 @@ can be a variable and thus set dynamically, e.g. from a return value of
 another keyword or from the command line.
 
 Run Keyword And Continue On Failure
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
@@ -1251,7 +1249,7 @@ timeout, or fatal exception.
 Since Robot Framework 2.9, variable errors are caught by this keyword.
 
 Run Keyword And Expect Error
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [expected_error, name, \*args]
 
@@ -1322,7 +1320,7 @@ semantics as with `Return From Keyword`.
 Use `Run Keyword And Return If` if you want to run keyword and return
 based on a condition.
 
-New in Robot Framework 2.8.2.
+Robot Framework 2.8.2 で登場しました。
 
 Run Keyword And Return If
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1346,7 +1344,7 @@ semantics as with `Should Be True` keyword.
 Use `Return From Keyword If` if you want to return a certain value
 based on a condition.
 
-New in Robot Framework 2.8.2.
+Robot Framework 2.8.2 で登場しました。
 
 Run Keyword And Return Status
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1373,7 +1371,7 @@ The keyword name and arguments work as in `Run Keyword`.
 Errors caused by invalid syntax, timeouts, or fatal exceptions are not
 caught by this keyword. Otherwise this keyword itself never fails.
 
-New in Robot Framework 2.7.6.
+Robot Framework 2.7.6 で登場しました。
 
 
 Run Keyword If
@@ -1567,7 +1565,7 @@ See `Run Keyword If` for more information and an example.
 
 
 Run Keywords
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 :Arguments:  [\*keywords]
 
@@ -1605,7 +1603,7 @@ a backslash like ``\AND``.
 
 
 Set Global Variable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*values]
 
@@ -1621,7 +1619,7 @@ See `Set Suite Variable` for more information and examples.
 
 
 Set Library Search Order
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [\*search_order]
 
@@ -1663,7 +1661,7 @@ or extensions like::
 
 
 Set Log Level
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 :Arguments:  [level]
 
@@ -1678,7 +1676,7 @@ logging).
 
 
 Set Suite Documentation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [doc, append=False, top=False]
 
@@ -1701,7 +1699,7 @@ added in 2.7.7.
 
 
 Set Suite Metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, value, append=False, top=False]
 
@@ -1719,12 +1717,12 @@ The metadata of the current suite is available as a built-in variable
 ``${SUITE METADATA}`` in a Python dictionary. Notice that modifying this
 variable directly has no effect on the actual metadata the suite has.
 
-New in Robot Framework 2.7.4. Support for ``append`` and ``top`` were
+Robot Framework 2.7.4 で登場しました。 Support for ``append`` and ``top`` were
 added in 2.7.7.
 
 
 Set Suite Variable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*values]
 
@@ -1785,7 +1783,7 @@ Variable`, `Variable Should Exist`, `Variable Should Not Exist` and
 
 
 Set Tags
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
 
 :Arguments:  [\*tags]
 
@@ -1805,7 +1803,7 @@ you want to fail the test case after setting and/or removing tags.
 
 
 Set Test Documentation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [doc, append=False]
 
@@ -1823,7 +1821,7 @@ New in Robot Framework 2.7. Support for ``append`` was added in 2.7.7.
 
 
 Set Test Message
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 :Arguments:  [message, append=False]
 
@@ -1855,7 +1853,7 @@ for HTML format in 2.8.
 
 
 Set Test Variable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*values]
 
@@ -1871,7 +1869,7 @@ See `Set Suite Variable` for more information and examples.
 
 
 Set Variable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 :Arguments:  [\*values]
 
@@ -1897,7 +1895,7 @@ set variables so that they are available also in a larger scope.
 
 
 Set Variable If
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, \*values]
 
@@ -1944,52 +1942,46 @@ dynamically based on whether a variable exist or not.
 
 
 Should Be Empty
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, msg=None]
 
-Verifies that the given item is empty.
+``item`` が空であることを確認します。
 
-The length of the item is got using the `Get Length` keyword. The
-default error message can be overridden with the ``msg`` argument.
+``item`` の長さは、 `Get Length` キーワードで取得します。
+デフォルトのエラーメッセージは、 ``msg`` 引数でオーバライドできます。
 
 
 Should Be Equal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
-Fails if the given objects are unequal.
+二つのオブジェクトが等しくないとき失敗します。
 
-Optional ``msg`` and ``values`` arguments specify how to construct
-the error message if this keyword fails:
+オプションの ``msg`` と ``values`` を使うと、キーワードが失敗したときのエラーメッセージを以下のように変更できます:
 
-- If ``msg`` is not given, the error message is ``<first> != <second>``.
-- If ``msg`` is given and ``values`` gets a true value, the error
-  message is ``<msg>: <first> != <second>``.
-- If ``msg`` is given and ``values`` gets a false value, the error
-  message is simply ``<msg>``.
+- ``msg`` を省略した場合、エラーメッセージは ``<first> != <second>`` の形式です。
+- ``msg`` を指定し、 ``values`` が真値のとき、エラーメッセージは ``<msg>: <first> != <second>`` の形式です。
+- ``msg`` を指定し、 ``values`` が偽値のときは、エラーメッセージは単に ``<msg>`` 形式です。
 
-``values`` is true by default, but can be turned to false by using,
-for example, string ``false`` or ``no values``. See `Boolean arguments`
-section for more details.
+``values`` のデフォルト値は True ですが、 ``false`` や ``no values`` を指定することで偽にできます。
+詳しくは :ref:`ブール型の引数<Boolean arguments>` の節を参照してください。
 
-If both arguments are multiline strings, the comparison is done using
-`multiline string comparisons`.
+引数が複数行にわたる文字列のときは、 :ref:`複数行の文字列の比較方法 <multiline string comparisons>` に基づいて文字列を比較します。
 
 
 Should Be Equal As Integers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, base=None]
 
-Fails if objects are unequal after converting them to integers.
+``first`` と ``second`` を整数に変換した後に比較し、等しくないときは失敗します。
 
-See `Convert To Integer` for information how to convert integers from
-other bases than 10 using ``base`` argument or ``0b/0o/0x`` prefixes.
+``base`` や ``0b/0o/0x`` プレフィクスを使って基数10以外で整数変換を行う方法は `Convert To Integer` を参照してください。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 例::
 
@@ -1999,14 +1991,13 @@ error message with ``msg`` and ``values``.
 
 
 Should Be Equal As Numbers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, precision=6]
 
-Fails if objects are unequal after converting them to real numbers.
+``first`` と ``second`` を実数に変換した後に比較し、等しくないときは失敗します。
 
-The conversion is done with `Convert To Number` keyword using the
-given ``precision``.
+値は ``precision`` に指定した精度で `Convert To Number` で変換されます。
 
 例::
 
@@ -2027,27 +2018,26 @@ comparison algorithm, see
 http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-
 numbers-2012-edition/.
 
-See `Should Not Be Equal As Numbers` for a negative version of this
-keyword and `Should Be Equal` for an explanation on how to override
-the default error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
+このキーワードの逆のバージョンが必要なら `Should Not Be Equal As Numbers` を参照してください。
 
 
 Should Be Equal As Strings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
-Fails if objects are unequal after converting them to strings.
+``first`` と ``second`` を文字列に変換した後に比較し、等しくないときは失敗します。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
-If both arguments are multiline strings, the comparison is done using
-`multiline string comparisons`.
+引数が複数行にわたる文字列のときは、 :ref:`複数行の文字列の比較方法 <multiline string comparisons>` に基づいて文字列を比較します。
 
 
 Should Be True
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, msg=None]
 
@@ -2092,15 +2082,15 @@ several useful attributes::
 
 
 Should Contain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 :Arguments:  [container, item, msg=None, values=True]
 
-Fails if ``container`` does not contain ``item`` one or more times.
+``container`` に ``item`` が全く出現しないとき失敗します。 
 
-Works with strings, lists, and anything that supports Python's ``in``
-operator. See `Should Be Equal` for an explanation on how to override
-the default error message with ``msg`` and ``values``.
+文字列、リスト、その他 Python の ``in`` 演算子を使える任意のオブジェクトに使えます。
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 例::
 
@@ -2109,15 +2099,15 @@ the default error message with ``msg`` and ``values``.
 
 
 Should Contain X Times
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item1, item2, count, msg=None]
 
-Fails if ``item1`` does not contain ``item2`` ``count`` times.
-
-Works with strings, lists and all objects that `Get Count` works
-with. The default error message can be overridden with ``msg`` and
-the actual count is always logged.
+``item1`` に ``item2`` が ``count`` 回以上出現しないとき失敗します。 
+             
+文字列、リスト、その他 `Get Count` で扱えるオブジェクトで使えます。
+デフォルトのエラーメッセージは ``msg`` でオーバライドできます。
+実際の出現回数をログに記録します。
 
 例::
 
@@ -2126,18 +2116,18 @@ the actual count is always logged.
 
 
 Should End With
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
-Fails if the string ``str1`` does not end with the string ``str2``.
+文字列 ``str1`` の末尾が文字列 ``str2`` でないとき失敗します。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Match
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
@@ -2147,12 +2137,12 @@ Pattern matching is similar as matching files in a shell, and it is
 always case-sensitive. In the pattern, ``*`` matches to anything and
 ``?`` matches to any single character.
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Match Regexp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
@@ -2189,17 +2179,15 @@ If this keyword passes, it returns the portion of the string that
 matched the pattern. Additionally, the possible captured groups are
 returned.
 
-See the `Should Be Equal` keyword for an explanation on how to override
-the default error message with the ``msg`` and ``values`` arguments.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 例:
 
 .. code:: robotframework
 
-   | Should Match Regexp | ${output} | \\d{6}   | # Output contains six numbers
-   |
-   | Should Match Regexp | ${output} | ^\\d{6}$ | # Six numbers and nothing more
-   |
+   | Should Match Regexp | ${output} | \\d{6}   | # 6桁の数字が含まれる
+   | Should Match Regexp | ${output} | ^\\d{6}$ | # 6桁の数字だけからなる
    | ${ret} = | Should Match Regexp | Foo: 42 | (?i)foo: \\d+ |
    | ${match} | ${group1} | ${group2} = |
    | ...      | Should Match Regexp | Bar: 43 | (Foo|Bar): (\\d+) |
@@ -2211,91 +2199,87 @@ the default error message with the ``msg`` and ``values`` arguments.
 
 
 Should Not Be Empty
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [item, msg=None]
 
-Verifies that the given item is not empty.
+``item`` が空でないことを確認します。
 
-The length of the item is got using the `Get Length` keyword. The
-default error message can be overridden with the ``msg`` argument.
+``item`` の長さは、 `Get Length` キーワードで取得します。
+デフォルトのエラーメッセージは、 ``msg`` 引数でオーバライドできます。
 
 
 Should Not Be Equal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
-Fails if the given objects are equal.
+二つのオブジェクトが等しいとき失敗します。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Not Be Equal As Integers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, base=None]
 
-Fails if objects are equal after converting them to integers.
+``first`` と ``second`` を整数に変換した後に比較し、等しいときは失敗します。
 
-See `Convert To Integer` for information how to convert integers from
-other bases than 10 using ``base`` argument or ``0b/0o/0x`` prefixes.
+``base`` や ``0b/0o/0x`` プレフィクスを使って基数10以外で整数変換を行う方法は `Convert To Integer` を参照してください。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
-See `Should Be Equal As Integers` for some usage examples.
+使い方は `Should Be Equal As Integers` の例を参考にしてください。
 
 
 Should Not Be Equal As Numbers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True, precision=6]
 
-Fails if objects are equal after converting them to real numbers.
+``first`` と ``second`` を実数に変換した後に比較し、等しいときは失敗します。
 
-The conversion is done with `Convert To Number` keyword using the
-given ``precision``.
+値は ``precision`` に指定した精度で `Convert To Number` で変換されます。
 
-See `Should Be Equal As Numbers` for examples on how to use
-``precision`` and why it does not always work as expected. See also
-`Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``precision`` の使い方や、評価がうまくいかないときの理由を考えたいときは、 `Should Be Equal As Numbers` のサンプルを参照してください。
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Not Be Equal As Strings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [first, second, msg=None, values=True]
 
-Fails if objects are equal after converting them to strings.
+``first`` と ``second`` を文字列に変換した後に比較し、等しいときは失敗します。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Not Be True
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, msg=None]
 
-Fails if the given condition is true.
+``conditiion`` が真のとき失敗します。
 
-See `Should Be True` for details about how ``condition`` is evaluated
-and how ``msg`` can be used to override the default error message.
+``condition`` の評価方法と、 ``msg`` でデフォルトエラーメッセージをオーバライドする方法は、 `Should Be True` を参照してください。
 
 
 Should Not Contain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [container, item, msg=None, values=True]
 
-Fails if ``container`` contains ``item`` one or more times.
+``container`` に ``item`` が一回以上出現するとき失敗します。 
 
-Works with strings, lists, and anything that supports Python's ``in``
-operator. See `Should Be Equal` for an explanation on how to override
-the default error message with ``msg`` and ``values``.
+文字列、リスト、その他 Python の ``in`` 演算子を使える任意のオブジェクトに使えます。
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 例:
 
@@ -2306,61 +2290,60 @@ the default error message with ``msg`` and ``values``.
 
 
 Should Not End With
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
-Fails if the string ``str1`` ends with the string ``str2``.
+文字列 ``str1`` の末尾が文字列 ``str2`` のとき失敗します。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Not Match
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
-Fails if the given ``string`` matches the given ``pattern``.
+``string`` がワイルドカードパターン ``pattern`` にマッチすると失敗します。
 
-Pattern matching is similar as matching files in a shell, and it is
-always case-sensitive. In the pattern ``*`` matches to anything and
-``?`` matches to any single character.
+パターンマッチは、ファイルやシェルの glob マッチと同様で、大小文字を区別します。
+``*`` は任意の文字列、 ``?`` は任意の1文字にマッチします。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Not Match Regexp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
-Fails if ``string`` matches ``pattern`` as a regular expression.
+``string`` が正規表現 ``pattern`` にマッチすると失敗します。
 
-See `Should Match Regexp` for more information about arguments.
+引数の詳細は `Should Match Regexp` を参照してください。
 
 
 Should Not Start With
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
-Fails if the string ``str1`` starts with the string ``str2``.
+文字列 ``str1`` の先頭が文字列 ``str2`` のとき失敗します。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Should Start With
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [str1, str2, msg=None, values=True]
 
-Fails if the string ``str1`` does not start with the string ``str2``.
+文字列 ``str1`` の先頭が文字列 ``str2`` でないとき失敗します。
 
-See `Should Be Equal` for an explanation on how to override the default
-error message with ``msg`` and ``values``.
+``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
+詳しくは `Should Be Equal` を参照してください。
 
 
 Sleep
@@ -2416,11 +2399,9 @@ Variable Should Not Exist
 
 `Variable Should Exist` や `Keyword Should Exist` も参照してください。
 
-See also `Variable Should Exist` and `Keyword Should Exist`.
-
 
 Wait Until Keyword Succeeds
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [retry, retry_interval, name, \*args]
 
