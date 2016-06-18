@@ -1211,7 +1211,7 @@ Return From Keyword If
   |    :FOR    ${item}    IN    @{items}
   |    \    Return From Keyword If    '${item}' == '${element}'    ${index}
   |    \    ${index} =    Set Variable    ${index + 1}
-  |    Return From Keyword    ${-1}    # Also [Return] would work here.
+  |    Return From Keyword    ${-1}    # ここは [Return] でもよい
 
 `Run Keyword And Return` や `Run Keyword And Return If` も参照してください。
 
@@ -1222,20 +1222,18 @@ Run Keyword
 
 :Arguments:  [name, \*args]
 
-Executes the given keyword with the given arguments.
+指定のキーワードを実行します。
 
-Because the name of the keyword to execute is given as an argument, it
-can be a variable and thus set dynamically, e.g. from a return value of
-another keyword or from the command line.
+実行するキーワードの名前を引数として渡せるので、変数、例えば、何らかのキーワードの戻り値や、コマンドラインから得た値など、動的な値を渡せます。
 
 Run Keyword And Continue On Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the keyword and continues execution even if a failure occurs.
+キーワードを実行し、何らかの失敗が起きても実行を継続します。
 
-The keyword name and arguments work as with `Run Keyword`.
+キーワード名や引数の扱いは `Run Keyword` と同じです。
 
 例:
 
@@ -1244,16 +1242,15 @@ The keyword name and arguments work as with `Run Keyword`.
   | Run Keyword And Continue On Failure | Fail | This is a stupid example |
   | Log | This keyword is executed |
 
-The execution is not continued if the failure is caused by invalid syntax,
-timeout, or fatal exception.
-Since Robot Framework 2.9, variable errors are caught by this keyword.
+記法の誤り、タイムアウト、致命的な例外の発生などで失敗した場合、実行を継続しません。
+Robot Framework 2.9 からは、変数にまつわるエラーも実行継続の対象となりました。
 
 Run Keyword And Expect Error
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [expected_error, name, \*args]
 
-Runs the keyword and checks that the expected error occurred.
+キーワードを実行し、期待通りのエラーが発生するか確認します。
 
 The expected error must be given in the same format as in
 Robot Framework reports. It can be a pattern containing

@@ -224,14 +224,10 @@ Robot Framework 2.9 までは、スカラ変数とリスト変数は別々に保
 辞書変数
 ~~~~~~~~~~
 
-As discussed above, a variable containing a list can be used as a `list
-variable`_ to pass list items to a keyword as individual arguments.
-Similarly a variable containing a Python dictionary or a dictionary-like
-object can be used as a dictionary variable like `&{EXAMPLE}`. In practice
-this means that individual items of the dictionary are passed as
-`named arguments`_ to the keyword. Assuming that a variable `&{USER}` has
-value `{'name': 'robot', 'password': 'secret'}`, the following two test cases
-are equivalent.
+上で考察したように、リストの保存されている変数は、 :ref:`リスト変数<list variable>` として使うことで、キーワードに引数を渡せます。
+同様に、 Python の辞書や、辞書ライクなオブジェクトを保存した変数は、 `&{EXAMPLE}` の形式で辞書変数として使えます。
+そして、この辞書の各値は、キーワードの :ref:`名前付き引数 <named arguments>` として渡せます。
+例えば、変数 `&{USER}` の値が `{'name': 'robot', 'password': 'secret'}` のとき、以下の二つの例は同じ結果になります:
 
 .. sourcecode:: robotframework
 
@@ -242,15 +238,16 @@ are equivalent.
    Dict Variable
        Login    &{USER}
 
-Dictionary variables are new in Robot Framework 2.9.
+辞書変数は  Robot Framework 2.9 で登場しました。
 
-Using dictionary variables with other data
-''''''''''''''''''''''''''''''''''''''''''
 
-It is possible to use dictionary variables with other arguments, including
-other dictionary variables. Because `named argument syntax`_ requires positional
-arguments to be before named argument, dictionaries can only be followed by
-named arguments or other dictionaries.
+.. Using dictionary variables with other data
+
+辞書変数を他のデータと組み合わせる
+''''''''''''''''''''''''''''''''''''
+
+辞書変数は、他の引数と組み合わせて使えます。辞書同士の組み合わせも可能です。
+仕様上、 :ref:`名前付き引数の記法<named argument syntax>` は、位置固定の引数を名前付き引数の前に持ってこなければならないので、辞書変数の後ろには、名前付き引数か、別の辞書変数しか指定できません。
 
 .. sourcecode:: robotframework
 
@@ -260,23 +257,21 @@ named arguments or other dictionaries.
        Keyword    positional    @{LIST}    &{DICT}
        Keyword    &{DICT}    &{ANOTHER}    &{ONE MORE}
 
-If a dictionary variable is used in a cell with other data (constant strings or
-other variables), the final value will contain a string representation of the
-variable value. The end result is thus exactly the same as when using the
-variable as a scalar with other data in the same cell.
 
-Accessing individual dictionary items
+一つのセル中に、他のデータ(文字列や他の変数)と一緒に辞書変数を使った場合、その値は、変数値を文字列に変換して結合した結果になります。
+結果的に、一つのセルに、他のデータと一緒にスカラ変数として指定したときと同じ値になります。
+
+.. Accessing individual dictionary items
+
+辞書変数の個々の要素にアクセスする
 '''''''''''''''''''''''''''''''''''''
 
-It is possible to access a certain value of a dictionary variable
-with the syntax `&{NAME}[key]`, where `key` is the name of the
-selected value. Keys are considered to be strings, but non-strings
-keys can be used as variables. Dictionary values accessed in this
-manner can be used similarly as scalar variables.
+辞書中の値は、参照したい値のキーを `key` としたとき、 `&{NAME}[key]` の形式で参照できます。
+キーは原則文字列ですが、変数を使えば、文字列でない値もキーにできます。
+`&{NAME}[key]` の形式でアクセスした値は、スカラ変数として扱えます。
 
-If a key is a string, it is possible to access its value also using
-attribute access syntax `${NAME.key}`. See `Creating dictionary variables`_
-for more details about this syntax.
+キーが文字列のとき、 `${NAME.key}` というアトリビュート的な記法でも、辞書の要素にアクセスできます。
+この記法については、 :ref:`辞書変数の構築 <Creating dictionary variables>` の節を参照してください。
 
 .. sourcecode:: robotframework
 
@@ -292,11 +287,13 @@ for more details about this syntax.
        Login    ${USER.name}    ${USER.password}
        Title Should Be    Welcome ${USER.name}!
 
-Using dictionary variables with settings
-''''''''''''''''''''''''''''''''''''''''
+.. Using dictionary variables with settings
 
-Dictionary variables cannot generally be used with settings. The only exception
-are imports, setups and teardowns where dictionaries can be used as arguments.
+辞書変数を設定で使う
+''''''''''''''''''''''
+
+通常、設定には辞書変数を使えません。
+例外はライブラリインポートとセットアップ・ティアダウンの引数に辞書を使う時です。
 
 .. sourcecode:: robotframework
 
@@ -306,21 +303,16 @@ are imports, setups and teardowns where dictionaries can be used as arguments.
 
 .. _environment variable:
 
-Environment variables
-~~~~~~~~~~~~~~~~~~~~~
+環境変数
+~~~~~~~~~~
 
-Robot Framework allows using environment variables in the test
-data using the syntax `%{ENV_VAR_NAME}`. They are limited to string
-values.
+Robot Framework では、 `%{ENV_VAR_NAME}` という記法で、テストデータの中で環境変数を参照できます。
+参照できる値は文字列に限られます。
 
-Environment variables set in the operating system before the test execution are
-available during it, and it is possible to create new ones with the keyword
-:name:`Set Environment Variable` or delete existing ones with the
-keyword :name:`Delete Environment Variable`, both available in the
-OperatingSystem_ library. Because environment variables are global,
-environment variables set in one test case can be used in other test
-cases executed after it. However, changes to environment variables are
-not effective after the test execution.
+環境変数は、テストの実行が可能になる前に、OS 側でセットされた値です。
+また、実行時に、 :ref:`OperatingSystem` ライブラリの :name:`Set Environment Variable` キーワードで新たに追加したり、 :name:`Delete Environment Variable` で削除したりできます。
+環境変数はグローバルな値なので、あるテストケースで環境変数をセットすると、他のテストケースでもその値を使うようになります。
+ただし、テスト中に環境変数を変更しても、その影響がテスト後まで残ることはありません。
 
 .. sourcecode:: robotframework
 
@@ -329,12 +321,14 @@ not effective after the test execution.
        Log    Current user: %{USER}
        Run    %{JAVA_HOME}${/}javac
 
-Java system properties
-~~~~~~~~~~~~~~~~~~~~~~
+.. Java system properties
 
-When running tests with Jython, it is possible to access `Java system properties`__
-using same syntax as `environment variables`_. If an environment variable and a
-system property with same name exist, the environment variable will be used.
+Java のシステムプロパティ
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+テストを Jython で実行している場合、 :ref:`環境変数<environment variables>` と同じ記法で
+`Java のシステムプロパティ`__ にアクセスできます。
+同じ名前の環境変数とシステムプロパティが存在する場合、環境変数の値が使われます。
 
 .. sourcecode:: robotframework
 
@@ -344,29 +338,32 @@ system property with same name exist, the environment variable will be used.
 
 __ http://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
 
-Creating variables
+.. Creating variables
+
+変数を定義する
 ------------------
 
-Variables can spring into existence from different sources.
+変数は、様々な方法でつくられます。
 
-Variable table
+.. Variable table
+
+変数テーブル
 ~~~~~~~~~~~~~~
 
-The most common source for variables are Variable tables in `test case
-files`_ and `resource files`_. Variable tables are convenient, because they
-allow creating variables in the same place as the rest of the test
-data, and the needed syntax is very simple. Their main disadvantages are
-that values are always strings and they cannot be created dynamically.
-If either of these is a problem, `variable files`_ can be used instead.
+よく使うのは、 :ref:`テストケースファイル <test case files>` や :ref:`リソースファイル<resource files>` の変数テーブルを使う方法です。
+変数テーブルの便利なところは、変数を、同じ場所に、テストデータと分けて定義でき、書き方も単純なところです。
+一方、短所は、変数の値が文字列になってしまうこと、動的に生成できないことです。
+これらの問題を解決したいときは、 :ref:`変数ファイル<variable files>` を使います。
 
-Creating scalar variables
-'''''''''''''''''''''''''
+.. Creating scalar variables
 
-The simplest possible variable assignment is setting a string into a
-scalar variable. This is done by giving the variable name (including
-`${}`) in the first column of the Variable table and the value in
-the second one. If the second column is empty, an empty string is set
-as a value. Also an already defined variable can be used in the value.
+スカラ変数の定義
+''''''''''''''''''
+
+変数の代入定義で最も簡単なのは、文字列をスカラ変数に代入するというものです。
+この代入文の書き方は、まず変数名を (`${}` つきで) 最初のセルに書き、第二セルに値を書きます。
+第二セルが空なら、値は空文字になります。
+値には、別の定義済みの変数も指定できます。
 
 .. sourcecode:: robotframework
 
@@ -375,9 +372,7 @@ as a value. Also an already defined variable can be used in the value.
    ${VERSION}      2.0
    ${ROBOT}        ${NAME} ${VERSION}
 
-It is also possible, but not obligatory,
-to use the equals sign `=` after the variable name to make assigning
-variables slightly more explicit.
+あまりお勧めではありませんが、変数名の直後に `=` を付けて、変数の代入であることをちょっぴり明確にできます。
 
 .. sourcecode:: robotframework
 
@@ -385,9 +380,8 @@ variables slightly more explicit.
    ${NAME} =       Robot Framework
    ${VERSION} =    2.0
 
-If a scalar variable has a long value, it can be split to multiple columns and
-rows__. By default cells are catenated together using a space, but this
-can be changed by having `SEPARATOR=<sep>` in the first cell.
+スカラ変数の値が長すぎて記述しづらいときは、複数のカラムや :ref:`行に分けて<Dividing test data to several rows>` 書けます。
+デフォルトの設定では、各セルの値の結合にはスペースを使いますが、最初のセルに `SEPARATOR=<sep>` を付ければ、セルを結合する文字を変えられます。
 
 .. sourcecode:: robotframework
 
@@ -396,23 +390,19 @@ can be changed by having `SEPARATOR=<sep>` in the first cell.
    ${MULTILINE}    SEPARATOR=\n    First line
    ...             Second line     Third line
 
-Joining long values like above is a new feature in Robot Framework 2.9.
-Creating a scalar variable with multiple values was a syntax error in
-Robot Framework 2.8 and with earlier versions it created a variable with
-a list value.
+このように長い文字列を結合できるのは Robot Framework 2.9 からです。
+Robot Framework 2.8 では、スカラ変数に複数回値を入れようとするとエラーになり、それ以前のバージョンでは、リストの値が入った変数が生成されていました。
 
-__ `Dividing test data to several rows`_
 
-Creating list variables
-'''''''''''''''''''''''
+.. Creating list variables
 
-Creating list variables is as easy as creating scalar variables. Again, the
-variable name is in the first column of the Variable table and
-values in the subsequent columns. A list variable can have any number
-of values, starting from zero, and if many values are needed, they
-can be `split into several rows`__.
+リスト変数の定義
+''''''''''''''''''
 
-__ `Dividing test data to several rows`_
+リスト変数の作成も、スカラ変数と同じくらい簡単です。
+変数名は変数テーブルの最初のカラムに指定し、変数の値を以降のカラムに指定します。
+リスト変数には、ゼロ個の場合も含め、任意の数の要素を入れられます。
+たくさんの値を入れる必要があるときは、 :ref:`複数の行に分割 <Dividing test data to several rows>` できます。
 
 .. sourcecode:: robotframework
 
@@ -423,14 +413,15 @@ __ `Dividing test data to several rows`_
    @{MANY}         one         two      three      four
    ...             five        six      seven
 
-Creating dictionary variables
-'''''''''''''''''''''''''''''
+.. Creating dictionary variables
+   
+辞書変数の定義
+''''''''''''''''
 
-Dictionary variables can be created in the variable table similarly as
-list variables. The difference is that items need to be created using
-`name=value` syntax or existing dictionary variables. If there are multiple
-items with same name, the last value has precedence. If a name contains
-a literal equal sign, it can be escaped__ with a backslash like `\=`.
+辞書変数は、リスト変数の定義に似た方法で定義します。
+違いは、値の各要素を、 `name=value`  の記法で書くか、または既存の辞書変数で定義するという点です。
+同じ名前の複数の要素を定義すると、最後に定義した値が優先します。
+キーの中にリテラルの等号を入れたいときは、  `\=` のようにバックスラッシュで :ref:`エスケープ<escaping>` します。
 
 .. sourcecode:: robotframework
 
@@ -441,35 +432,29 @@ a literal equal sign, it can be escaped__ with a backslash like `\=`.
    &{EVEN MORE}    &{MANY}       first=override      empty=
    ...             =empty        key\=here=value
 
-Dictionary variables have two extra properties
-compared to normal Python dictionaries. First of all, values of these
-dictionaries can be accessed like attributes, which means that it is possible
-to use `extended variable syntax`_ like `${VAR.key}`. This only works if the
-key is a valid attribute name and does not match any normal attribute
-Python dictionaries have. For example, individual value `&{USER}[name]` can
-also be accessed like `${USER.name}` (notice that `$` is needed in this
-context), but using `${MANY.3}` is not possible.
+Python の辞書型と比べて、辞書変数は二つの点で拡張されています。
+まず、辞書の値にアトリビュートとしてアクセスできます。
+つまり、 `${VAR.key}` のような、 :ref:`拡張変数記法<extended variable syntax>` が使えます。
+この記法は、キーがアトリビュート名として使える名前であって、かつ、 Python の辞書オブジェクトのアトリビュート名と被らないときにだけ使えます。例えば、 `&{USER}[name]` は `${USER.name}` でアクセス可能 (この記法では `$` が必要なことに注意) ですが、 `${MANY.3}` は使えません。
 
-Another special property of dictionary variables is
-that they are ordered. This means that if these dictionaries are iterated,
-their items always come in the order they are defined. This can be useful
-if dictionaries are used as `list variables`_ with `for loops`_ or otherwise.
-When a dictionary is used as a list variable, the actual value contains
-dictionary keys. For example, `@{MANY}` variable would have value `['first',
-'second', 3]`.
+辞書変数のもう一つの特徴は、要素が順序つきで管理されているということです。
+つまり、辞書の要素を順次取り出したとき、その並びは常に定義したときと同じ順になるということです。
+この振る舞いは、辞書を :ref:`forループ<for loops>` で :ref:`リスト変数<list valiables>` として使った場合などに便利です。
+辞書をリスト変数として使うと、その値には辞書のキーが入ります。
+例えば、上の例だと、 `@{MANY}` は `['first', 'second', 3]` という値になります。
 
-__ Escaping_
+.. Variable file
 
-Variable file
+変数ファイル
 ~~~~~~~~~~~~~
 
-Variable files are the most powerful mechanism for creating different
-kind of variables. It is possible to assign variables to any object
-using them, and they also enable creating variables dynamically. The
-variable file syntax and taking variable files into use is explained
-in section `Resource and variable files`_.
+変数ファイルは変数生成の最も強力なメカニズムで、様々な種類の変数を生成できます。
+変数ファイルを使えば、任意のオブジェクトを値に持つ変数を作成でき、かつ、動的に変数を生成できます。
+変数ファイルの書き方とその使い方は、 :ref:`リソースファイルと変数ファイル<Resource and variable files>` で解説しています。
 
-Setting variables in command line
+.. Setting variables in command line
+   
+コマンドラインから変数を設定する
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Variables can be set from the command line either individually with
