@@ -1252,15 +1252,12 @@ Run Keyword And Expect Error
 
 キーワードを実行し、期待通りのエラーが発生するか確認します。
 
-The expected error must be given in the same format as in
-Robot Framework reports. It can be a pattern containing
-characters ``?``, which matches to any single character and
-``*``, which matches to any number of any characters. ``name`` and
-``\*args`` have same semantics as with `Run Keyword`.
+「期待するエラー」は、 Robot Framework のレポートに出力されるのと同じ形式で書かねばなりません。
+パターンに ``?`` を含めた場合、任意の1文字に、 ``＊`` を含めた場合は任意の文字列にマッチします。
+``name`` や ``\*args`` の意味は `Run Keyword` と同じです。
 
-If the expected error occurs, the error message is returned and it can
-be further processed/tested, if needed. If there is no error, or the
-error does not match the expected error, this keyword fails.
+期待通りのエラーがおきた場合、発生したエラーのエラーメッセージを返し、必要ならばそのまま処理やテストを継続できます。
+エラーが発生しないときや、期待通りのエラーでなかった場合は失敗します。
 
 例::
 
@@ -1268,42 +1265,38 @@ error does not match the expected error, this keyword fails.
   | ${msg} = | Run Keyword And Expect Error | * | My KW |
   | Should Start With | ${msg} | Once upon a time in |
 
-Errors caused by invalid syntax, timeouts, or fatal exceptions are not
-caught by this keyword.
-Since Robot Framework 2.9, variable errors are caught by this keyword.
+記法の誤り、タイムアウト、致命的な例外の発生などで失敗した場合、実行を継続しません。
+Robot Framework 2.9 からは、変数にまつわるエラーも実行継続の対象となりました。
 
 Run Keyword And Ignore Error
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with the given arguments and ignores possible error.
+キーワードを実行し、エラーが発生しても無視します。
 
-This keyword returns two values, so that the first is either string
-``PASS`` or ``FAIL``, depending on the status of the executed keyword.
-The second value is either the return value of the keyword or the
-received error message. See `Run Keyword And Return Status` If you are
-only interested in the execution status.
+このキーワードは二つの値を返します。最初は ``PASS`` または ``FAIL`` で、実行したキーワードの状態によって変わります。
+二つ目の値は、キーワードの実行に成功したときには戻り値、失敗したときにはエラーメッセージです。
+キーワード実行の成否だけを知りたいときは、 `Run Keyword And Return Status` を使ってください。
 
-The keyword name and arguments work as in `Run Keyword`. See
-`Run Keyword If` for a usage example.
+``name`` や ``\*args`` の意味は `Run Keyword` と同じです。
+詳しくは `Run Keyword If` の例を参照してください。
 
-Errors caused by invalid syntax, timeouts, or fatal exceptions are not
-caught by this keyword. Otherwise this keyword itself never fails.
-Since Robot Framework 2.9, variable errors are caught by this keyword.
+記法の誤り、タイムアウト、致命的な例外の発生などで失敗した場合、実行を継続しません。
+それ以外のエラーでは、このキーワードは失敗しません。
+Robot Framework 2.9 からは、変数にまつわるエラーも実行継続の対象となりました。
 
 Run Keyword And Return
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the specified keyword and returns from the enclosing user keyword.
+指定のキーワードを実行した後、現在のキーワードから処理を戻します。
 
-The keyword to execute is defined with ``name`` and ``\*args`` exactly
-like with `Run Keyword`. After running the keyword, returns from the
-enclosing user keyword and passes possible return value from the
-executed keyword further. Returning from a keyword has exactly same
-semantics as with `Return From Keyword`.
+実行するキーワードは、 `Run Keyword` と同様、 ``name`` と ``\*args`` で指定します。
+キーワードの実行後、実行したキーワードの戻り値があれば、その戻り値を現在のキーワードの戻り値にセットして、処理を戻します。
+
+現在のキーワードからの処理の戻り方は、 `Return From Keyword` と同じです。
 
 例:
 
@@ -1314,49 +1307,44 @@ semantics as with `Return From Keyword`.
   | ${result} =               | `My Keyword` | arg1 | arg2 |
   | `Return From Keyword`     | ${result}    |      |      |
 
-Use `Run Keyword And Return If` if you want to run keyword and return
-based on a condition.
+キーワードを実行して、条件に応じて値を返したいときは、 `Run Keyword And Return If` を使ってください。
 
 Robot Framework 2.8.2 で登場しました。
 
 Run Keyword And Return If
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, name, \*args]
 
-Runs the specified keyword and returns from the enclosing user keyword.
+条件が真のとき、指定のキーワードを実行して、現在のキーワードから処理を戻します。
 
-A wrapper for `Run Keyword And Return` to run and return based on
-the given ``condition``. The condition is evaluated using the same
-semantics as with `Should Be True` keyword.
+`Run Keyword And Return` のラッパで、 ``condition`` の真偽にもとづいてキーワードを実行し、処理を戻します。
+``condition`` 真偽値の扱いは `Should Be True` と同じです。
 
 例:
 
 .. code:: robotframework
   
   | `Run Keyword And Return If` | ${rc} > 0 | `My Keyword` | arg1 | arg2 |
-  | # Above is equivalent to:   |
+  | # 上と以下は同じ:
   | `Run Keyword If`            | ${rc} > 0 | `Run Keyword And Return` | `My Keyword ` | arg1 | arg2 |
 
-Use `Return From Keyword If` if you want to return a certain value
-based on a condition.
+何らかの値を返したいときは `Return From Keyword If` を使ってください。
 
 Robot Framework 2.8.2 で登場しました。
 
 Run Keyword And Return Status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with given arguments and returns the status as a
-Boolean value.
+指定の引数でキーワードを実行して、その結果をブール値で返します。
 
-This keyword returns Boolean ``True`` if the keyword that is executed
-succeeds and ``False`` if it fails. This is useful, for example, in
-combination with `Run Keyword If`. If you are interested in the error
-message or return value, use `Run Keyword And Ignore Error` instead.
+キーワードの実行に成功したときは ``True`` を、失敗したときは ``False`` を返します。
+`Run Keyword If` などと組み合わせて使うと便利です。
+エラーメッセージや戻り値を扱いたいときは、 `Run Keyword And Ignore Error` を使ってください。
 
-The keyword name and arguments work as in `Run Keyword`.
+キーワード名や引数は `Run Keyword` と同じです。
 
 例:
 
@@ -1365,18 +1353,19 @@ The keyword name and arguments work as in `Run Keyword`.
   | ${passed} = | `Run Keyword And Return Status` | Keyword | args |
   | `Run Keyword If` | ${passed} | Another keyword |
 
-Errors caused by invalid syntax, timeouts, or fatal exceptions are not
-caught by this keyword. Otherwise this keyword itself never fails.
+  
+記法の誤り、タイムアウト、致命的な例外の発生などで失敗した場合、実行を継続しません。
+それ以外のエラーでは、このキーワードは失敗しません。
 
 Robot Framework 2.7.6 で登場しました。
 
 
 Run Keyword If
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, name, \*args]
 
-Runs the given keyword with the given arguments, if ``condition`` is true.
+条件が真のとき、指定のキーワードを実行します。
 
 The given ``condition`` is evaluated in Python as explained in
 `Evaluating expressions`, and ``name`` and ``\*args`` have same
@@ -1448,117 +1437,108 @@ Attributes they contain can thus be used in the condition::
 
 
 Run Keyword If All Critical Tests Passed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with the given arguments, if all critical tests passed.
+全てのクリティカルテストにパスしていれば、指定の引数でキーワードを実行します。
 
-This keyword can only be used in suite teardown. Trying to use it in
-any other place will result in an error.
+このキーワードは、テストスイートのティアダウンでしか使えません。
+それ以外の場所で使おうとするとエラーになります。
 
-Otherwise, this keyword works exactly like `Run Keyword`, see its
-documentation for more details.
+その他の点では、 `Run Keyword` と同じです。
 
 
 Run Keyword If All Tests Passed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with the given arguments, if all tests passed.
+全てのテストにパスしていれば、指定の引数でキーワードを実行します。
 
-This keyword can only be used in a suite teardown. Trying to use it
-anywhere else results in an error.
+このキーワードは、テストスイートのティアダウンでしか使えません。
+それ以外の場所で使おうとするとエラーになります。
 
-Otherwise, this keyword works exactly like `Run Keyword`, see its
-documentation for more details.
+その他の点では、 `Run Keyword` と同じです。
 
 
 Run Keyword If Any Critical Tests Failed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with the given arguments, if any critical tests failed.
+何らかのクリティカルテストに失敗していれば、指定の引数でキーワードを実行します。
 
-This keyword can only be used in a suite teardown. Trying to use it
-anywhere else results in an error.
+このキーワードは、テストスイートのティアダウンでしか使えません。
+それ以外の場所で使おうとするとエラーになります。
 
-Otherwise, this keyword works exactly like `Run Keyword`, see its
-documentation for more details.
+その他の点では、 `Run Keyword` と同じです。
 
 
 Run Keyword If Any Tests Failed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with the given arguments, if one or more tests failed.
+テストに失敗していれば、指定の引数でキーワードを実行します。
 
-This keyword can only be used in a suite teardown. Trying to use it
-anywhere else results in an error.
+このキーワードは、テストスイートのティアダウンでしか使えません。
+それ以外の場所で使おうとするとエラーになります。
 
-Otherwise, this keyword works exactly like `Run Keyword`, see its
-documentation for more details.
+その他の点では、 `Run Keyword` と同じです。
 
 
 Run Keyword If Test Failed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with the given arguments, if the test failed.
+テストに失敗していれば、指定の引数でキーワードを実行します。
 
-This keyword can only be used in a test teardown. Trying to use it
-anywhere else results in an error.
+このキーワードは、テストのティアダウンでしか使えません。
+それ以外の場所で使おうとするとエラーになります。
 
-Otherwise, this keyword works exactly like `Run Keyword`, see its
-documentation for more details.
+その他の点では、 `Run Keyword` と同じです。
 
-Prior to Robot Framework 2.9 failures in test teardown itself were
-not detected by this keyword.
+Robot Framework 2.9 以前では、このキーワードはテストティアダウン自体の失敗を拾いません。
 
 
 Run Keyword If Test Passed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword with the given arguments, if the test passed.
+テストに成功していれば、指定の引数でキーワードを実行します。
 
-This keyword can only be used in a test teardown. Trying to use it
-anywhere else results in an error.
+このキーワードは、テストのティアダウンでしか使えません。
+それ以外の場所で使おうとするとエラーになります。
 
-Otherwise, this keyword works exactly like `Run Keyword`, see its
-documentation for more details.
+その他の点では、 `Run Keyword` と同じです。
 
-Prior to Robot Framework 2.9 failures in test teardown itself were
-not detected by this keyword.
+Robot Framework 2.9 以前では、このキーワードはテストティアダウン自体の失敗を拾いません。
 
 
 Run Keyword If Timeout Occurred
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [name, \*args]
 
-Runs the given keyword if either a test or a keyword timeout has occurred.
+テストまたはテスト中のキーワードがタイムアウトした場合、指定の引数でキーワードを実行します。
 
-This keyword can only be used in a test teardown. Trying to use it
-anywhere else results in an error.
+このキーワードは、テストのティアダウンでしか使えません。
+それ以外の場所で使おうとするとエラーになります。
 
-Otherwise, this keyword works exactly like `Run Keyword`, see its
-documentation for more details.
+その他の点では、 `Run Keyword` と同じです。
 
 
 Run Keyword Unless
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 :Arguments:  [condition, name, \*args]
 
-Runs the given keyword with the given arguments, if ``condition`` is false.
+条件が偽のとき、指定のキーワードを実行します。
 
-See `Run Keyword If` for more information and an example.
+詳細や例は `Run Keyword If` を参照してください。
 
 
 Run Keywords
