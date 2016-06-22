@@ -919,7 +919,7 @@ The pattern matching syntax is explained in `introduction`.
 The default error message can be overridden with the ``msg`` argument.
 
 Split Extension
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 Arguments:  [path]
 
 Splits the extension from the given path.
@@ -948,15 +948,13 @@ Examples:
 - ${p6} = 'path/.file' & ${e6} = ''
 
 Split Path
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
 Arguments:  [path]
 
-Splits the given path from the last path separator (``/`` or ``\``).
+path を末尾に一番近いパス区切り文字 (``/`` か ``\``) で区切って返します。
 
-The given path is first normalized (e.g. a possible trailing
-path separator is removed, special directories ``..`` and ``.``
-removed). The parts that are split are returned as separate
-components.
+path はまず正規化されます (末尾のパス区切り文字は除去し、特殊なディレクトリ記号 ``..``, ``.`` は除去します)。
+区切ったパスを別々のコンポーネントとして返します。
 
 Examples:
 | ${path1} | ${dir} =  | Split Path | abc/def         |
@@ -968,52 +966,48 @@ Examples:
 - ${path3} = 'def' & ${d2} = 'ghi'
 
 Touch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
 Arguments:  [path]
 
-Emulates the UNIX touch command.
+UNIX の touch コマンドをエミュレートします。
 
-Creates a file, if it does not exist. Otherwise changes its access and
-modification times to the current time.
+ファイルが存在しなければ作成します。
+存在するときは、最終アクセス時刻と変更時刻を現在時刻に変更します。
 
-Fails if used with the directories or the parent directory of the given
-file does not exist.
+path がディレクトリを指しているときや、存在しないファイルを指定したときは失敗します。
+
 
 Wait Until Created
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, timeout=1 minute]
 
-Waits until the given file or directory is created.
+ファイルやディレクトリが生成されるまで待機します。
 
-The path can be given as an exact path or as a glob pattern.
-The pattern matching syntax is explained in `introduction`.
-If the path is a pattern, the keyword returns when an item matching
-it is created.
+path は、厳密一致でも、 glob パターンでも構いません。
+パターンマッチの記法は :ref:`はじめに<introduction>` で解説しています。
+path がパターンの場合、このキーワードは、パターンに一致する何らかのファイル・ディレクトリが生成されるまで待機します。
 
-The optional ``timeout`` can be used to control the maximum time of
-waiting. The timeout is given as a timeout string, e.g. in a format
-``15 seconds``, ``1min 10s`` or just ``10``. The time string format is
-described in an appendix of Robot Framework User Guide.
+オプションの ``timeout`` は最大待機時間の制御に使います。
+タイムアウトは、 ``15 seconds``, ``1min 10s``, あるいは単に ``10`` のように指定します。
+時間の表記法は、Robot Framework ユーザガイドの付録で説明しています。
 
-If the timeout is negative, the keyword is never timed-out. The keyword
-returns immediately, if the path already exists.
+時間を負の値にすると、タイムアウトしなくなります。
+一致するファイルが存在するときは、このキーワードは即座に処理を戻します。
 
 Wait Until Removed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Arguments:  [path, timeout=1 minute]
 
-Waits until the given file or directory is removed.
+ファイルやディレクトリが除去されるまで待機します。
 
-The path can be given as an exact path or as a glob pattern.
-The pattern matching syntax is explained in `introduction`.
-If the path is a pattern, the keyword waits until all matching
-items are removed.
+path は、厳密一致でも、 glob パターンでも構いません。
+パターンマッチの記法は :ref:`はじめに<introduction>` で解説しています。
+path がパターンの場合、このキーワードは、パターンに一致するすべてのファイル・ディレクトリが除去されるまで待機します。
 
-The optional ``timeout`` can be used to control the maximum time of
-waiting. The timeout is given as a timeout string, e.g. in a format
-``15 seconds``, ``1min 10s`` or just ``10``. The time string format is
-described in an appendix of Robot Framework User Guide.
+オプションの ``timeout`` は最大待機時間の制御に使います。
+タイムアウトは、 ``15 seconds``, ``1min 10s``, あるいは単に ``10`` のように指定します。
+時間の表記法は、Robot Framework ユーザガイドの付録で説明しています。
 
-If the timeout is negative, the keyword is never timed-out. The keyword
-returns immediately, if the path does not exist in the first place.
+時間を負の値にすると、タイムアウトしなくなります。
+最初から一致するファイルが存在しないときは、このキーワードは即座に処理を戻します。
 
