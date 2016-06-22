@@ -457,23 +457,15 @@ Python の辞書型と比べて、辞書変数は二つの点で拡張されて�
 コマンドラインから変数を設定する
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Variables can be set from the command line either individually with
-the :option:`--variable (-v)` option or using a variable file with the
-:option:`--variablefile (-V)` option. Variables set from the command line
-are globally available for all executed test data files, and they also
-override possible variables with the same names in the Variable table and in
-variable files imported in the test data.
+変数はコマンドラインからも設定できます。
+:option:`--variable (-v)` オプションで個別の変数を、 :option:`--variablefile (-V)` オプションで変数ファイルを指定できます。
+コマンドラインで設定した変数は、全てのテストデータファイルでグローバルに使えるほか、テストデータ中の変数テーブルで定義されている変数や、テストデータから取り込んだ他の変数ファイルで定義されている変数の設定値をオーバライドします。
 
-The syntax for setting individual variables is :option:`--variable
-name:value`, where `name` is the name of the variable without
-`${}` and `value` is its value. Several variables can be
-set by using this option several times. Only scalar variables can be
-set using this syntax and they can only get string values. Many
-special characters are difficult to represent in the
-command line, but they can be escaped__ with the :option:`--escape`
-option.
-
-__ `Escaping complicated characters`_
+個別の変数設定のオプションの記法は :option:`--variable name:value` です。
+`name` が `${}` を除いた変数名で、 `value` が値です。
+オプションを繰り返し指定して、複数の値を指定できます。
+指定できるのはスカラ値のみで、文字列の値しか指定できません。
+特殊文字の中にはコマンドラインで表現しにくいものもありますが、 :option:`--escape` オプションを使えば :ref:`エスケープ<Escaping complicated characters>` できます。
 
 .. sourcecode:: bash
 
@@ -481,45 +473,38 @@ __ `Escaping complicated characters`_
    --variable HOST:localhost:7272 --variable USER:robot
    --variable ESCAPED:Qquotes_and_spacesQ --escape quot:Q --escape space:_
 
-In the examples above, variables are set so that
+上の例では、変数は以下のように設定されます:
 
-- `${EXAMPLE}` gets the value `value`
-- `${HOST}` and `${USER}` get the values
+- `${EXAMPLE}` の値は `value` です。
+- `${HOST}` と `${USER}` が定義されます。
   `localhost:7272` and `robot`
-- `${ESCAPED}` gets the value `"quotes and spaces"`
+- `${ESCAPED}` の値は `"quotes and spaces"` になります。
 
-The basic syntax for taking `variable files`_ into use from the command line
-is :option:`--variablefile path/to/variables.py`, and `Taking variable files into
-use`_ section has more details. What variables actually are created depends on
-what variables there are in the referenced variable file.
+:ref:`変数ファイル<variable files>` の指定は :option:`--variablefile path/to/variables.py` のように書きます。
+変数ファイルについては :ref:`変数ファイルの利用<Taking variable files into use>` の節を参照してください。
+変数がどのように定義されるかは、変数ファイルでどのように変数使われているかによって変わります。
 
-If both variable files and individual variables are given from the command line,
-the latter have `higher priority`__.
+変数ファイルと個別の変数指定の両方で、同じ変数を定義した場合は、後者の方が :ref:`優先されます<variable properties and scopes` 。
 
-__ `Variable priorities and scopes`_
+.. Return values from keywords
 
-Return values from keywords
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+キーワードの戻り値
+~~~~~~~~~~~~~~~~~~~~
 
-Return values from keywords can also be set into variables. This
-allows communication between different keywords even in different test
-libraries.
+キーワードの返す値も、変数に代入できます。
+この機能を使えば、異なるテストライブラリのキーワード間であっても相互に情報をやりとりできます。
 
-Variables set in this manner are otherwise similar to any other
-variables, but they are available only in the `local scope`_
-where they are created. Thus it is not possible, for example, to set
-a variable like this in one test case and use it in another. This is
-because, in general, automated test cases should not depend on each
-other, and accidentally setting a variable that is used elsewhere
-could cause hard-to-debug errors. If there is a genuine need for
-setting a variable in one test case and using it in another, it is
-possible to use BuiltIn_ keywords as explained in the next section.
+キーワードの返す値の性質は他の変数とほぼ同じですが、 :ref:`ローカルスコープ<local scope>` でしか使えません。
+従って、例えば、あるテストケースの中で変数を定義しておいて、別のテストケースの中でそのまま参照はできません。なぜなら、一般に、自動テストのテストケースというものは相互に依存関係があってはならないし、別の場所でうっかり値を変更してしまうと、デバッグの困難なエラーを引き起こしてしまうからです。
+相応の理由があって、あるテストケースでセットした変数を他のテストケースで使いたいのであれば、後で解説する :ref:`BuiltIn` ライブラリのキーワードを使えます。
 
-Assigning scalar variables
-''''''''''''''''''''''''''
+.. Assigning scalar variables
 
-Any value returned by a keyword can be assigned to a `scalar variable`_.
-As illustrated by the example below, the required syntax is very simple:
+スカラ変数に代入する
+''''''''''''''''''''''
+
+キーワードの返す値は、 :ref:`スカラ変数<scalar variable>` に代入できます。
+以下の例のように、書き方はとても単純です:
 
 .. sourcecode:: robotframework
 
@@ -528,15 +513,11 @@ As illustrated by the example below, the required syntax is very simple:
        ${x} =    Get X    an argument
        Log    We got ${x}!
 
-In the above example the value returned by the :name:`Get X` keyword
-is first set into the variable `${x}` and then used by the :name:`Log`
-keyword. Having the equals sign `=` after the variable name is
-not obligatory, but it makes the assignment more explicit. Creating
-local variables like this works both in test case and user keyword level.
+上の例では、 :name:`Get X` キーワードの踊り値を変数 `${x}` にセットしてから、 :name:`Log` キーワードで使っています。
+変数名のあとの等号 `=` は (あまり推奨していませんが)、代入を明示するために使えます。
+このようなローカルな変数の作成は、テストケースやユーザキーワードで使えます。
 
-Notice that although a value is assigned to a scalar variable, it can
-be used as a `list variable`_ if it has a list-like value and as a `dictionary
-variable`_ if it has a dictionary-like value.
+値がリストライクな値だったり、 :ref:`辞書変数` の場合、値をスカラ変数に代入したあとでも、 :ref:`リスト変数<list variable>` として参照できます。
 
 .. sourcecode:: robotframework
 
@@ -546,11 +527,12 @@ variable`_ if it has a dictionary-like value.
        Length Should Be    ${list}    3
        Log Many    @{list}
 
-Assigning list variables
-''''''''''''''''''''''''
+.. Assigning list variables
 
-If a keyword returns a list or any list-like object, it is possible to
-assign it to a `list variable`_:
+リスト変数に代入する
+'''''''''''''''''''''''
+
+キーワードがリストやリストライクなオブジェクトの場合、 :ref:`リスト変数<list variable>` に代入できます:
 
 .. sourcecode:: robotframework
 
@@ -560,20 +542,18 @@ assign it to a `list variable`_:
        Length Should Be    ${list}    3
        Log Many    @{list}
 
-Because all Robot Framework variables are stored in the same namespace, there is
-not much difference between assigning a value to a scalar variable or a list
-variable. This can be seen by comparing the last two examples above. The main
-differences are that when creating a list variable, Robot Framework
-automatically verifies that the value is a list or list-like, and the stored
-variable value will be a new list created from the return value. When
-assigning to a scalar variable, the return value is not verified and the
-stored value will be the exact same object that was returned.
+Robot Framework の変数は、すべて同じ名前空間に保存されます。
+そのため、値を代入したのがスカラ変数であろうがリスト変数であろうが大した違いはありません。
+上の例と、ひとつ前の節の例からもそのことが分かります。
+大きな違いは、リスト変数を作成するときには、値がリストやリストラライクな性質を備えているか Robot Framework が自動的に検証すること、名前空間に値を保存するときには、もとの値から新たにリストオブジェクトを生成することです。
+スカラ値に代入したときには、代入値は検証されず、名前空間に保存されている値も、もとの値（オブジェクト）そのものになります。
 
-Assigning dictionary variables
-''''''''''''''''''''''''''''''
+.. Assigning dictionary variables
 
-If a keyword returns a dictionary or any dictionary-like object, it is possible
-to assign it to a `dictionary variable`_:
+辞書変数に代入する
+''''''''''''''''''''
+
+辞書や辞書ライクな値は、 :ref:`辞書変数<dictionary variable>` に代入できます:
 
 .. sourcecode:: robotframework
 
@@ -584,25 +564,21 @@ to assign it to a `dictionary variable`_:
        Do Something    &{dict}
        Log    ${dict.first}
 
-Because all Robot Framework variables are stored in the same namespace, it would
-also be possible to assign a dictionary into a scalar variable and use it
-later as a dictionary when needed. There are, however, some actual benefits
-in creating a dictionary variable explicitly. First of all, Robot Framework
-verifies that the returned value is a dictionary or dictionary-like similarly
-as it verifies that list variables can only get a list-like value.
+Robot Framework の変数は、すべて同じ名前空間に保存されます。
+そのため、スカラ変数に辞書を代入した場合でも、後で必要に応じて辞書として扱えます。
+とはいえ、明示的に辞書変数に代入するメリットはいくつかあります。
+一つは、リスト変数への代入のときと同様、辞書変数を作成するときには、値が辞書や辞書ライクな性質を備えているか Robot Framework が自動的に検証することです。
 
-A bigger benefit is that the value is converted into a special dictionary
-that it uses also when `creating dictionary variables`_ in the variable table.
-Values in these dictionaries can be accessed using attribute access like
-`${dict.first}` in the above example. These dictionaries are also ordered, but
-if the original dictionary was not ordered, the resulting order is arbitrary.
+より重要なメリットは、辞書変数に代入すると、変数テーブルで :ref:`辞書変数を定義<creating dictionary variables>` したときと同じく、値が特殊な辞書に変換され保存されるということです。
+この特殊な辞書に入っている値は、上の例のように、アトリビュート形式 `${dict.first}` でアクセスできます。
+辞書変数の値は順序つきで保存されていますが、代入元の辞書が順序つきでなかった場合、代入してできた辞書中の並び順は制御できません。
 
-Assigning multiple variables
-''''''''''''''''''''''''''''
+.. Assigning multiple variables
 
-If a keyword returns a list or a list-like object, it is possible to assign
-individual values into multiple scalar variables or into scalar variables and
-a list variable.
+複数の変数を代入する
+''''''''''''''''''''''
+
+キーワードがリストやリストライクなオブジェクトを返す場合、個別の値を複数のスカラ変数に代入したり、スカラ変数とリスト変数の組み合わせに代入したりできます。
 
 .. sourcecode:: robotframework
 
@@ -613,28 +589,25 @@ a list variable.
        @{before}    ${last} =    Get Three
        ${begin}    @{middle}    ${end} =    Get Three
 
-Assuming that the keyword :name:`Get Three` returns a list `[1, 2, 3]`,
-the following variables are created:
+上の例で、 :name:`Get Three` が `[1, 2, 3]` を返すとき、以下のことが起こります:
 
-- `${a}`, `${b}` and `${c}` with values `1`, `2`, and `3`, respectively.
-- `${first}` with value `1`, and `@{rest}` with value `[2, 3]`.
-- `@{before}` with value `[1, 2]` and `${last}` with value `3`.
-- `${begin}` with value `1`, `@{middle}` with value `[2]` and ${end} with
-  value `3`.
+- `${a}`, `${b}`, `${c}` の値は、それぞれ `1`, `2`, `3` です。
+- `${first}` は `1` に、 `@{rest}` は `[2, 3]` になります。
+- `@{before}` は `[1, 2]` に、 `${last}` は `3` になります。
+- `${begin}` の値は `1`, `@{middle}` の値は `[2]` で、 `${end}` は `3` です。
 
-It is an error if the returned list has more or less values than there are
-scalar variables to assign. Additionally, only one list variable is allowed
-and dictionary variables can only be assigned alone.
+戻り値の要素数が代入先のスカラ変数の個数と合わないときはエラーになります。
+また、複数代入の場合、使えるリスト変数は1個です。辞書は、複数代入に使えません。
 
-The support for assigning multiple variables was slightly changed in
-Robot Framework 2.9. Prior to it a list variable was only allowed as
-the last assigned variable, but nowadays it can be used anywhere.
-Additionally, it was possible to return more values than scalar variables.
-In that case the last scalar variable was magically turned into a list
-containing the extra values.
+複数代入の仕様は、 Robot Framework 2.9 で少しだけ変更されました。
+以前のバージョンは、代入先にリスト変数を置く場合、末尾にしか置けませんでした。
+また、以前は、スカラ変数の個数が戻り値の個数より少ない場合も代入ができ、その際、末尾のスカラ変数に、戻り値の残り部分がリストとして入っていました。
 
-Using :name:`Set Test/Suite/Global Variable` keywords
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. Using Set Test/Suite/Global Variable keywords
+
+:name:`Set Text/Suite/Global Variable` キーワードを使う
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The BuiltIn_ library has keywords :name:`Set Test Variable`,
 :name:`Set Suite Variable` and :name:`Set Global Variable` which can
@@ -674,24 +647,23 @@ __ `Variable scopes`_
 __ `Return values from keywords`_
 
 .. _built-in variable:
+.. _Built-in variables:
 
-Built-in variables
+組み込み変数
 ------------------
 
-Robot Framework provides some built-in variables that are available
-automatically.
+Robot Framework には、自動的に定義される組み込み変数があります。
 
-Operating-system variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+OS 関連の変数
+~~~~~~~~~~~~~~~
 
-Built-in variables related to the operating system ease making the test data
-operating-system-agnostic.
+OS 関連の変数は、テストデータを様々なシステムで使う際の、 OS 壁を乗り越えやすくします。
 
-.. table:: Available operating-system-related built-in variables
+.. table:: OS 関連の組み込み変数
    :class: tabular
 
    +------------+------------------------------------------------------------------+
-   |  Variable  |                      Explanation                                 |
+   | 変数名     |                      説明                                        |
    +============+==================================================================+
    | ${CURDIR}  | An absolute path to the directory where the test data            |
    |            | file is located. This variable is case-sensitive.                |
@@ -1209,8 +1181,10 @@ If, for example, an object assigned to a variable `${EXTENDED}` has
 an attribute `attribute` that contains a list as a value, it can be
 used as a list variable `@{EXTENDED.attribute}`.
 
-Extended variable assignment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Extended variable assignment
+
+拡張変数代入
+~~~~~~~~~~~~~~
 
 Starting from Robot Framework 2.7, it is possible to set attributes of
 objects stored to scalar variables using `keyword return values`__ and
@@ -1274,21 +1248,19 @@ following rules:
           state of an existing variable is changed, all tests and
           keywords that see that variable will also see the changes.
 
-Variables inside variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Variables inside variables
 
-Variables are allowed also inside variables, and when this syntax is
-used, variables are resolved from the inside out. For example, if you
-have a variable `${var${x}}`, then `${x}` is resolved
-first. If it has the value `name`, the final value is then the
-value of the variable `${varname}`. There can be several nested
-variables, but resolving the outermost fails, if any of them does not
-exist.
+変数中の変数
+~~~~~~~~~~~~~~
 
-In the example below, :name:`Do X` gets the value `${JOHN HOME}`
-or `${JANE HOME}`, depending on if :name:`Get Name` returns
-`john` or `jane`. If it returns something else, resolving
-`${${name} HOME}` fails.
+変数の中にも、変数を使えます。
+変数名が入れ子になっている場合、内側から順に変数を解決していきます。
+例えば、 `${var${x}}` という変数に対しては、まず `${x}` を解決します。
+仮に `${x}` の値が `name` だとすると、最終的に、この変数の値は `${varname}` の値となります。
+入れ子は何重にもでき、いくつでも入れ子にできますが、入れ子の内側のいずれか一つでも変数が存在しない場合、最も外側の変数解決も失敗します。
+
+以下の例では :name:`Do X` は、 :name:`Get Name` キーワードが `john` と `jane` のいずれかを返すとき、それぞれ `${JOHN HOME}` と `${JANE HOME}` を返します。
+ :name:`Get Name` キーワードがその他の値を返すと、 `${${name} HOME}` の解決に失敗します。
 
 .. sourcecode:: robotframework
 

@@ -1367,24 +1367,20 @@ Run Keyword If
 
 条件が真のとき、指定のキーワードを実行します。
 
-The given ``condition`` is evaluated in Python as explained in
-`Evaluating expressions`, and ``name`` and ``\*args`` have same
-semantics as with `Run Keyword`.
+``condition`` は、 :ref:`式の評価 <evaluating expressions>` の解説の通りに Python で評価されます。
+``name`` や ``args`` は、実行したいキーワードや引数で、 `Run Keyword` と同じです。
 
-Example, a simple if/else construct::
+簡単な if/else の例を示します::
   | ${status} | ${value} = | `Run Keyword And Ignore Error` | `My Keyword` |
   | `Run Keyword If`     | '${status}' == 'PASS' | `Some Action`    | arg |
   | `Run Keyword Unless` | '${status}' == 'PASS' | `Another Action` |
 
-In this example, only either `Some Action` or `Another Action` is
-executed, based on the status of `My Keyword`. Instead of `Run Keyword
-And Ignore Error` you can also use `Run Keyword And Return Status`.
+この例では、 `My Keyword` の戻り値に応じて `Some Action` または `Another Action` のいずれかが実行されます。
+`Run Keyword And Ignore Error` の代わりに、 `Run Keyword And Return Status` を使っても構いません。
 
-Variables used like ``${variable}``, as in the examples above, are
-replaced in the expression before evaluation. Variables are also
-available in the evaluation namespace and can be accessed using special
-syntax ``$variable``. This is a new feature in Robot Framework 2.9
-and it is explained more thoroughly in `Evaluating expressions`.
+式中に ``${variable}`` のような変数が入っていると、式の評価前に置き換えられます。
+置き換えではなく、評価対象の式の中で変数を参照したいときは、特殊な記法 ``$variable`` を使います。
+この機能は Robot Framework 2.9 から登場し、  :ref:`式の評価 <evaluating expressions>` の節で詳しく説明しています。
 
 例:
 
@@ -1392,25 +1388,20 @@ and it is explained more thoroughly in `Evaluating expressions`.
   
   | `Run Keyword If` | $result is None or $result == 'FAIL' | `Keyword` |
 
-Starting from Robot version 2.7.4, this keyword supports also optional
-ELSE and ELSE IF branches. Both of these are defined in ``\*args`` and
-must use exactly format ``ELSE`` or ``ELSE IF``, respectively. ELSE
-branches must contain first the name of the keyword to execute and then
-its possible arguments. ELSE IF branches must first contain a condition,
-like the first argument to this keyword, and then the keyword to execute
-and its possible arguments. It is possible to have ELSE branch after
-ELSE IF and to have multiple ELSE IF branches.
+Robot Framework 2.7.4 から、 `ELSE` および `ELSE IF` で分岐できるようになりました。
+`ELSE` や `ELSE IF` は ``\*args`` に指定し、厳密に ``ELSE``, ``ELSE IF`` と書かねばなりません。
+`ELSE` 分岐の後には、実行するキーワードの名前、その後に引数があれば引数を指定します。
+`ELSE IF` 分岐の後には、条件、キーワード名、引数を指定します。
+`ELSE` は `ELSE IF` の後に記述でき、複数の `ELSE IF` があってもかまいません。
 
-Given previous example, if/else construct can also be created like this::
+先ほどの例は、ELSE を使うと以下のように書けます::
   | ${status} | ${value} = | `Run Keyword And Ignore Error` | My Keyword |
   | `Run Keyword If` | '${status}' == 'PASS' | `Some Action` | arg | ELSE | `Another Action` |
 
-The return value is the one of the keyword that was executed or None if
-no keyword was executed (i.e. if ``condition`` was false). Hence, it is
-recommended to use ELSE and/or ELSE IF branches to conditionally assign
-return values from keyword to variables (to conditionally assign fixed
-values to variables, see `Set Variable If`). This is illustrated by the
-example below::
+このキーワードの戻り値は、キーワードの中で実行されたいずれかのキーワードの戻り値です。
+キーワードが実行されなかったとき (``condition`` が偽のとき) には None を返します。
+従って、このキーワードを使えば、 ELSE や ELSE IF 分岐を使って、条件に応じて実行するキーワードを切り替え、その戻り値を得られます (キーワードを使わず、静的な値を切り替えたいときは、 `Set Variable If` を使ってください)。
+以下に例を示します::
 
   | ${var1} =   | `Run Keyword If` | ${rc} == 0     | `Some keyword returning a value` |
   | ...         | ELSE IF          | 0 < ${rc} < 42 | `Another keyword` |
@@ -1418,22 +1409,19 @@ example below::
   | ...         | ELSE             | `Final keyword to handle abnormal cases` | ${rc} |
   | ${var2} =   | `Run Keyword If` | ${condition}  | `Some keyword` |
 
-In this example, ${var2} will be set to None if ${condition} is false.
+この例では、 ${condition} が偽のとき、 ${var2} は None になります。
 
-Notice that ``ELSE`` and ``ELSE IF`` control words must be used
-explicitly and thus cannot come from variables. If you need to use
-literal ``ELSE`` and ``ELSE IF`` strings as arguments, you can escape
-them with a backslash like ``\ELSE`` and ``\ELSE IF``.
+``ELSE`` や ``ELSE IF`` は明に指定せねばならず、変数にはできないので注意してください。
+文字列リテラルとして ``ELSE`` や ``ELSE IF`` を使いたいのなら、 ``\ELSE`` や ``\ELSE IF`` のようにバックスラッシュでエスケープしてください。
 
-Starting from Robot Framework 2.8, Python's
-[http://docs.python.org/2/library/os.html|os] and
-[http://docs.python.org/2/library/sys.html|sys] modules are
-automatically imported when evaluating the ``condition``.
-Attributes they contain can thus be used in the condition::
+Robot Framework 2.8 から、 ``condition`` の評価時に、 Python の `os`__ モジュールや `sys`__ モジュールを自動的に import するようになり、式の中でモジュールの属性を使えます::
 
   | `Run Keyword If` | os.sep == '/' | `Unix Keyword`        |
   | ...              | ELSE IF       | sys.platform.startswith('java') | `Jython Keyword` |
   | ...              | ELSE          | `Windows Keyword`     |
+
+__ http://docs.python.org/2/library/os.html
+__ http://docs.python.org/2/library/sys.html
 
 
 Run Keyword If All Critical Tests Passed
