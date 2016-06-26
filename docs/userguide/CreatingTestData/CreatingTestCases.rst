@@ -468,24 +468,24 @@ kwargs の最初の例として、 :ref:`Process` ライブラリの :name:`Run 
 
    *** Test Cases ***
    Simple
-       [Documentation]    Simple documentation
+       [Documentation]    簡単なドキュメント
        No Operation
 
    Formatting
-       [Documentation]    *This is bold*, _this is italic_  and here is a link: http://robotframework.org
+       [Documentation]    *ボールド*, _イタリック_  リンク: http://robotframework.org
        No Operation
 
    Variables
-       [Documentation]    Executed at ${HOST} by ${USER}
+       [Documentation]    ${HOST} の ${USER} さんがテストを実行
        No Operation
 
    Splitting
-       [Documentation]    This documentation    is split    into multiple columns
+       [Documentation]    複数の    カラムに    分割
        No Operation
 
    Many lines
-       [Documentation]    Here we have
-       ...                an automatic newline
+       [Documentation]    改行は
+       ...                自動的に入ります
        No Operation
 
 テストケースには、明解で意味の伝わる名前を与えることが重要で、そうであれば、原則、ドキュメントは不要です。
@@ -548,26 +548,26 @@ Robot Framework のタグは、テストケースを分類する上で、単純�
 
    *** Test Cases ***
    No own tags
-       [Documentation]    This test has tags owner-john, smoke and req-42.
+       [Documentation]    タグは owner-john, smoke, req-42 
        No Operation
 
    With own tags
-       [Documentation]    This test has tags not_ready, owner-mrx and req-42.
+       [Documentation]    タグは not_ready, owner-mrx, req-42
        [Tags]    owner-mrx    not_ready
        No Operation
 
    Own tags with variables
-       [Documentation]    This test has tags host-10.0.1.42 and req-42.
+       [Documentation]    タグは host-10.0.1.42 と req-42
        [Tags]    host-${HOST}
        No Operation
 
    Empty own tags
-       [Documentation]    This test has only tag req-42.
+       [Documentation]    タグは req-42 だけ
        [Tags]
        No Operation
 
    Set Tags and Remove Tags Keywords
-       [Documentation]    This test has tags mytag and owner-john.
+       [Documentation]    タグは mytag と owner-john
        Set Tags    mytag
        Remove Tags    smoke    req-*
 
@@ -619,26 +619,26 @@ Robot Framework のセットアップとティアダウンは普通のキーワ�
 
    *** Test Cases ***
    Default values
-       [Documentation]    Setup and teardown from setting table
+       [Documentation]    設定テーブルのセットアップとティアダウンを使う
        Do Something
 
    Overridden setup
-       [Documentation]    Own setup, teardown from setting table
+       [Documentation]    セットアップは下の設定値、設定テーブルのティアダウンを使う
        [Setup]    Open Application    App B
        Do Something
 
    No teardown
-       [Documentation]    Default setup, no teardown at all
+       [Documentation]    デフォルトのセットアップ、ティアダウンなし
        Do Something
        [Teardown]
 
    No teardown 2
-       [Documentation]    Setup and teardown can be disabled also with special value NONE
+       [Documentation]    特殊な値 NONE を指定してティアダウンを無効化
        Do Something
        [Teardown]    NONE
 
    Using variables
-       [Documentation]    Setup and teardown specified using variables
+       [Documentation]    セットアップとティアダウンを変数で指定
        [Setup]    ${SETUP}
        Do Something
        [Teardown]    ${TEARDOWN}
@@ -724,12 +724,12 @@ Robot Framework 2.8.2 からは、テンプレートでもキーワードの :re
        The result of 1 + 2 should be 3
 
    Template with embedded arguments
-       [Template]    The result of ${calculation} should be ${expected}
+       [Template]    「${calculation}」の結果は「${expected}」であること
        1 + 1    2
        1 + 2    3
 
    *** Keywords ***
-   The result of ${calculation} should be ${expected}
+   「${calculation}」の結果は「${expected}」であること
        ${result} =    Calculate    ${calculation}
        Should Be Equal    ${result}     ${expected}
 
@@ -740,17 +740,17 @@ Robot Framework 2.8.2 からは、テンプレートでもキーワードの :re
 
    *** Test Cases ***
    Different argument names
-       [Template]    The result of ${foo} should be ${bar}
+       [Template]    「${foo}」の結果は「${bar}」であること
        1 + 1    2
        1 + 2    3
 
    Only some arguments
-       [Template]    The result of ${calculation} should be 3
+       [Template]    「${calculation}」の結果は「3」であること
        1 + 2
        4 - 1
 
    New arguments
-       [Template]    The ${meaning} of ${life} should be 42
+       [Template]    「${life}」の${meaning}は「42」であること
        result    21 * 2
 
 引数埋め込みキーワードとテンプレートの組み合わせの最大の利点は、引数名をわかりやすく定義できるところです。
