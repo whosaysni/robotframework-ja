@@ -1534,13 +1534,11 @@ Run Keywords
 
 :Arguments:  [\*keywords]
 
-Executes all the given keywords in a sequence.
+指定のキーワードを順に実行します。
 
-This keyword is mainly useful in setups and teardowns when they need
-to take care of multiple actions and creating a new higher level user
-keyword would be an overkill.
+このキーワードは、セットアップやティアダウンで複数のアクションを実行したいが、そのためにわざわざ高水準のキーワードを定義するまでもない、といった状況で便利です。
 
-By default all arguments are expected to be keywords to be executed.
+デフォルトでは、全ての引数をキーワードとみなして実行します。
 
 例::
 
@@ -1548,12 +1546,8 @@ By default all arguments are expected to be keywords to be executed.
   | Run Keywords | ${KW 1} | ${KW 2} |
   | Run Keywords | @{KEYWORDS} |
 
-Starting from Robot Framework 2.7.6, keywords can also be run with
-arguments using upper case ``AND`` as a separator between keywords.
-The keywords are executed so that the first argument is the first
-keyword and proceeding arguments until the first ``AND`` are arguments
-to it. First argument after the first ``AND`` is the second keyword and
-proceeding arguments until the next ``AND`` are its arguments. And so on.
+Robot Framework 2.7.6 からは、大文字の ``AND`` という特殊な引数を使って、キーワードを分割できるようになりました。
+``AND`` を使った場合、 ``AND`` で区切られた引数は、それぞれ最初がキーワード名、それ以後が引数として扱われます。
 
 例::
 
@@ -1561,10 +1555,8 @@ proceeding arguments until the next ``AND`` are its arguments. And so on.
   | Run Keywords | Initialize database | ${DB NAME} | AND | Start servers | @{SERVERS} | AND | Clear logs |
   | Run Keywords | ${KW} | AND | @{KW WITH ARGS} |
 
-Notice that the ``AND`` control argument must be used explicitly and
-cannot itself come from a variable. If you need to use literal ``AND``
-string as argument, you can either use variables or escape it with
-a backslash like ``\AND``.
+``AND`` 自体は、引数の分割を制御していて、変数にできないので注意してください。
+リテラルの ``AND`` を引数に使いたい時は、変数を使うか、 ``\AND`` のようにバックスラッシュでエスケープしてください。
 
 
 Set Global Variable
@@ -1572,15 +1564,13 @@ Set Global Variable
 
 :Arguments:  [name, \*values]
 
-Makes a variable available globally in all tests and suites.
+全てのテストケースやテストスイートで使えるグローバルな変数を生成します。
 
-Variables set with this keyword are globally available in all test
-cases and suites executed after setting them. Setting variables with
-this keyword thus has the same effect as creating from the command line
-using the options ``--variable`` or ``--variablefile``. Because this
-keyword can change variables everywhere, it should be used with care.
+このキーワードで設定した変数は、キーワード実行以後の全てのテストケースとスイートで利用できます。
+このキーワードで設定した変数は、コマンドラインで ``--variable`` や ``--variablefile`` といったオプションで変数を設定したときと同じ効果を持ちます。
+このキーワードは、テスト中の全ての変数値を変えてしまうので、使う時は注意してください。
 
-See `Set Suite Variable` for more information and examples.
+`Set Suite Variable` も参照してください。
 
 
 Set Library Search Order
@@ -1822,15 +1812,13 @@ Set Test Variable
 
 :Arguments:  [name, \*values]
 
-Makes a variable available everywhere within the scope of the current test.
+現在実行中のテストのスコープ内で使える変数を作成します。
 
-Variables set with this keyword are available everywhere within the
-scope of the currently executed test case. For example, if you set a
-variable in a user keyword, it is available both in the test case level
-and also in all other user keywords used in the current test. Other
-test cases will not see variables set with this keyword.
+このキーワードで作成した変数は、現在実行中のテストケースのスコープ内のどこからでもアクセスできます。
+例えば、ユーザキーワードの中で変数の値をセットした場合、そのテストケースのレベルの他、テストから呼び出している別のユーザキーワード内でも、その変数にアクセスできます。
+このキーワードで作成した変数は、他のテストケースからは見えません。
 
-See `Set Suite Variable` for more information and examples.
+その他、詳細や例は `Set Suite Variable` を参照してください。
 
 
 Set Variable
@@ -2096,11 +2084,10 @@ Should Match
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
-Fails unless the given ``string`` matches the given ``pattern``.
+文字列 ``string`` が ``pattern`` とマッチしないとき失敗します。
 
-Pattern matching is similar as matching files in a shell, and it is
-always case-sensitive. In the pattern, ``*`` matches to anything and
-``?`` matches to any single character.
+パターンマッチは、シェルのファイル名マッチと同様で、大小文字を区別します。
+``*`` は任意の文字列、 ``?`` は任意の1文字にマッチします。
 
 ``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
 詳しくは `Should Be Equal` を参照してください。
@@ -2111,7 +2098,7 @@ Should Match Regexp
 
 :Arguments:  [string, pattern, msg=None, values=True]
 
-Fails if ``string`` does not match ``pattern`` as a regular expression.
+``string`` が正規表現 ``pattern`` にマッチしないとき失敗します。
 
 Regular expression check is implemented using the Python
 [http://docs.python.org/2/library/re.html|re module]. Python's regular
@@ -2272,7 +2259,7 @@ Should Not Match
 
 ``string`` がワイルドカードパターン ``pattern`` にマッチすると失敗します。
 
-パターンマッチは、ファイルやシェルの glob マッチと同様で、大小文字を区別します。
+パターンマッチは、シェルのファイル名マッチと同様で、大小文字を区別します。
 ``*`` は任意の文字列、 ``?`` は任意の1文字にマッチします。
 
 ``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
