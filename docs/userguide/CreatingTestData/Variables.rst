@@ -17,11 +17,6 @@
 その他には、設定テーブルで変数が使えます。
 通常、キーワード自体は変数として指定 *できません* が、 BuiltIn ライブラリのキーワード、 :name:`Run Keyword` を使えば、同じような効果が得られます。
 
-Robot Framework has its own variables that can be used as scalars__, lists__
-or `dictionaries`__ using syntax `${SCALAR}`, `@{LIST}` and `&{DICT}`,
-respectively. In addition to this, `environment variables`_ can be used
-directly with syntax `%{ENV_VAR}`.
-
 Robot Framework は独自の変数の仕組みを備えていて、 :ref:`スカラ型変数 <scalar variables>`, :ref:`リスト型変数 <list variables>`, :ref:`辞書型変数 <Dictionary variables>` といった変数を、それぞれ `${SCALAR}`, `@{LIST}`, `&{DICT}` といった記法で扱えます。
 そのほか、:ref:`環境変数 <environment variable>` を `%{ENV_VAR}` で表すこともできます。
 
@@ -119,7 +114,7 @@ Robot Framework の変数は、キーワードと同じように、大小文字�
 
 このテストデータを実行すると、各キーワードは、それぞれ以下のように引数を受け取ります:
 
-- :name:`KW 1` 文字列 `Hello, world!` 
+- :name:`KW 1` 文字列 `Hello, world!`
 - :name:`KW 2`  `${OBJ}` に設定したオブジェクト
 - :name:`KW 3` 文字列 `I said "Hello, world!"`
 - :name:`KW 4` 文字列 `You said "Hi, tellus!"`
@@ -414,7 +409,7 @@ Robot Framework 2.8 では、スカラ変数に複数回値を入れようとす
    ...             five        six      seven
 
 .. Creating dictionary variables
-   
+
 辞書変数の定義
 ''''''''''''''''
 
@@ -453,7 +448,7 @@ Python の辞書型と比べて、辞書変数は二つの点で拡張されて�
 変数ファイルの書き方とその使い方は、 :ref:`リソースファイルと変数ファイル<Resource and variable files>` で解説しています。
 
 .. Setting variables in command line
-   
+
 コマンドラインから変数を設定する
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -609,42 +604,23 @@ Robot Framework の変数は、すべて同じ名前空間に保存されます�
 :name:`Set Text/Suite/Global Variable` キーワードを使う
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The BuiltIn_ library has keywords :name:`Set Test Variable`,
-:name:`Set Suite Variable` and :name:`Set Global Variable` which can
-be used for setting variables dynamically during the test
-execution. If a variable already exists within the new scope, its
-value will be overwritten, and otherwise a new variable is created.
+:ref:`BuiltIn` ライブラリの :name:`Set Test Variable`, :name:`Set Suite Variable`, :name:`Set Global Variable` といったキーワードは、テスト実行中に変数を動的に設定できます。
 
-Variables set with :name:`Set Test Variable` keyword are available
-everywhere within the scope of the currently executed test case. For
-example, if you set a variable in a user keyword, it is available both
-in the test case level and also in all other user keywords used in the
-current test. Other test cases will not see variables set with this
-keyword.
+:name:`Set Test Variable` で設定した変数は、キーワードを呼び出したテストケースのスコープ内のどこからでも参照できます。
+ユーザキーワードの中で変数を設定した場合、そのキーワードを使っているテストケースや、同じテストケース内の別のキーワードからもアクセスできます。
+他のテストケースからはアクセスできません。
 
-Variables set with :name:`Set Suite Variable` keyword are available
-everywhere within the scope of the currently executed test
-suite. Setting variables with this keyword thus has the same effect as
-creating them using the `Variable table`_ in the test data file or
-importing them from `variable files`_. Other test suites, including
-possible child test suites, will not see variables set with this
-keyword.
+:name:`Set Suite Variable` で設定した変数は、現在実行中のテススイートのスコープ内のどこからでも参照できます。
+従って、このキーワードで定義した変数は、テストデータファイル中で :ref:`変数テーブル<variable table>` を使って定義した変数や、 :ref:`変数ファイル<variable files>` で取り込んだ変数と同じ効果があります。
+子となるテストスイートも含め、他のテストスイートには影響しません。
 
-Variables set with :name:`Set Global Variable` keyword are globally
-available in all test cases and suites executed after setting
-them. Setting variables with this keyword thus has the same effect as
-`creating from the command line`__ using the options :option:`--variable` or
-:option:`--variablefile`. Because this keyword can change variables
-everywhere, it should be used with care.
+:name:`Set Global Variable` で変数を設定すると、設定後の全てのテストケース・テストスイートで使えるようになります。
+このキーワードで設定した変数は、 :option:`--variable` や :option:`--variablefile` オプションを使って :ref:`コマンドラインで変数を指定<Setting variables in command line>` した場合と同じ効果を持ちます。
+このキーワードは、指定の変数の値をテスト全体で変更してしまうので、慎重に使ってください。
 
-.. note:: :name:`Set Test/Suite/Global Variable` keywords set named
-          variables directly into `test, suite or global variable scope`__
-          and return nothing. On the other hand, another BuiltIn_ keyword
-          :name:`Set Variable` sets local variables using `return values`__.
-
-__ `Setting variables in command line`_
-__ `Variable scopes`_
-__ `Return values from keywords`_
+.. note:: :name:`Set Test/Suite/Global Variable` キーワードは、指定の変数を
+          :ref:`テストケース・スイート・グローバル変数スコープ<variable scope>` 上で直接変更し、値を返しません。
+          一方、 :ref:`BuiltIn` のキーワード :name:`Set Variable` は、変数のローカルな値を :ref:`キーワードの戻り値<return values>` にセットします。
 
 .. _built-in variable:
 .. _Built-in variables:
@@ -665,24 +641,25 @@ OS 関連の変数は、テストデータを様々なシステムで使う際�
    +------------+------------------------------------------------------------------+
    | 変数名     |                      説明                                        |
    +============+==================================================================+
-   | ${CURDIR}  | An absolute path to the directory where the test data            |
-   |            | file is located. This variable is case-sensitive.                |
+   | ${CURDIR}  | テストデータファイルの置かれている場所への絶対パスです。         |
+   |            | この変数の値には大小文字の区別があります。                       |
    +------------+------------------------------------------------------------------+
-   | ${TEMPDIR} | An absolute path to the system temporary directory. In UNIX-like |
-   |            | systems this is typically :file:`/tmp`, and in Windows           |
-   |            | :file:`c:\\Documents and Settings\\<user>\\Local Settings\\Temp`.|
+   | ${TEMPDIR} | システム固有の一時ディレクトリへの絶対パスです。                 |
+   |            | UNIX 系のシステムでは :file:`/tmp`, Windows 系のシステムでは     |
+   |            | :file:`c:\\Documents and Settings\\<user>\\Local Settings\\Temp` |
+   |            | となるのが一般的です。                                           |
    +------------+------------------------------------------------------------------+
-   | ${EXECDIR} | An absolute path to the directory where test execution was       |
-   |            | started from.                                                    |
+   | ${EXECDIR} | テストの実行を開始したディレクトリへの絶対パスです。             |
    +------------+------------------------------------------------------------------+
-   | ${/}       | The system directory path separator. `/` in UNIX-like            |
-   |            | systems and :codesc:`\\` in Windows.                             |
+   | ${/}       | システム固有のディレクトリ区切り文字です。 UNIX 系のシステムでは |
+   |            |  `/` , Windows 系のシステムでは :codesc:`\\` です。              |
    +------------+------------------------------------------------------------------+
-   | ${:}       | The system path element separator. `:` in UNIX-like              |
-   |            | systems and `;` in Windows.                                      |
+   | ${:}       | システム固有のパス要素区切り文字です。 UNIX 系のシステムでは     |
+   |            |  `:`, Windows 系では  `;` です。                                 |
    +------------+------------------------------------------------------------------+
-   | ${\\n}     | The system line separator. :codesc:`\\n` in UNIX-like systems and|
-   |            | :codesc:`\\r\\n` in Windows. New in version 2.7.5.               |
+   | ${\\n}     | システム固有の改行文字です。                                     |
+   |            | UNIX 系のシステムでは :codesc:`\\n` で、Windows 系では           |
+   |            | :codesc:`\\r\\n` です。バージョン 2.7.5 で登場しました。         |
    +------------+------------------------------------------------------------------+
 
 .. sourcecode:: robotframework
@@ -692,29 +669,28 @@ OS 関連の変数は、テストデータを様々なシステムで使う際�
        Create Binary File    ${CURDIR}${/}input.data    Some text here${\n}on two lines
        Set Environment Variable    CLASSPATH    ${TEMPDIR}${:}${CURDIR}${/}foo.jar
 
-Number variables
-~~~~~~~~~~~~~~~~
+.. Number variables
 
-The variable syntax can be used for creating both integers and
-floating point numbers, as illustrated in the example below. This is
-useful when a keyword expects to get an actual number, and not a
-string that just looks like a number, as an argument.
+数値変数
+~~~~~~~~~~
+
+以下の例のように、変数の記法を使って、整数や浮動小数点数のオブジェクトを生成できます。
+この記法は、キーワードの引数に、「数値をあらわす文字列」ではなく「数値そのもの」を渡さねばならない場合に使います。
 
 .. sourcecode:: robotframework
 
    *** Test Cases ***
    Example 1A
-       Connect    example.com    80       # Connect gets two strings as arguments
+       Connect    example.com    80       # Connect の引数は二つの文字列になる
 
    Example 1B
-       Connect    example.com    ${80}    # Connect gets a string and an integer
+       Connect    example.com    ${80}    # Connect の引数は文字列と整数になる
 
    Example 2
-       Do X    ${3.14}    ${-1e-4}        # Do X gets floating point numbers 3.14 and -0.0001
+       Do X    ${3.14}    ${-1e-4}        # Do X の引数は数値 3.14 と数値 -0.0001 になる
 
-It is possible to create integers also from binary, octal, and
-hexadecimal values using `0b`, `0o` and `0x` prefixes, respectively.
-The syntax is case insensitive.
+       
+整数の数値変数を作成するときは、  `0b`, `0o`, `0x` プレフィクスを使って、それぞれ 2 進、8進、16進数を表せます。この記法では、大小文字を区別しません。
 
 .. sourcecode:: robotframework
 
@@ -725,43 +701,41 @@ The syntax is case insensitive.
        Should Be Equal    ${0xff}      ${255}
        Should Be Equal    ${0B1010}    ${0XA}
 
-Boolean and None/null variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Also Boolean values and Python `None` and Java `null` can
-be created using the variable syntax similarly as numbers.
+.. Boolean and None/null variables
+
+ブール値と None/null を表す変数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ブール型の値と Python の `None`, Java の `null` も、変数の記法で生成できます。
 
 .. sourcecode:: robotframework
 
    *** Test Cases ***
    Boolean
-       Set Status    ${true}               # Set Status gets Boolean true as an argument
-       Create Y    something   ${false}    # Create Y gets a string and Boolean false
+       Set Status    ${true}               # Set Status にはブール型の True が渡される
+       Create Y    something   ${false}    # Create Y には文字列とブールの False が渡される
 
    None
-       Do XYZ    ${None}                   # Do XYZ gets Python None as an argument
+       Do XYZ    ${None}                   # Do XYZ には Python の None が渡される
 
    Null
-       ${ret} =    Get Value    arg        # Checking that Get Value returns Java null
+       ${ret} =    Get Value    arg        # Get Value が Java の null を返すか確かめる
        Should Be Equal    ${ret}    ${null}
 
-These variables are case-insensitive, so for example `${True}` and
-`${true}` are equivalent. Additionally, `${None}` and
-`${null}` are synonyms, because when running tests on the Jython
-interpreter, Jython automatically converts `None` and
-`null` to the correct format when necessary.
+ブール値と None/null の変数記法には、大小文字の区別がないので、 `${True}` と `${true}` は同じです。
+また、Jython インタプリタでテストを実行する際、 Jython は自動的に `${None}` を `${null}` を相互に変換するため、  `${None}` と `${null}` は同義です。
 
-Space and empty variables
-~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It is possible to create spaces and empty strings using variables
-`${SPACE}` and `${EMPTY}`, respectively. These variables are
-useful, for example, when there would otherwise be a need to `escape
-spaces or empty cells`__ with a backslash. If more than one space is
-needed, it is possible to use the `extended variable syntax`_ like
-`${SPACE * 5}`.  In the following example, :name:`Should Be
-Equal` keyword gets identical arguments but those using variables are
-easier to understand than those using backslashes.
+.. Space and empty variables
+
+スペースと空の値を表す変数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+スペースと空の文字列を、それぞれ `${SPACE}` と `${EMPTY}` で表せます。
+これらの変数は、例えばバックスラッシュで :ref:`スペースや空のセルをエスケープ <escaping>` せねばならないような状況で便利です。
+複数のスペースかを表現したいときは、 `${SPACE * 5}` のような :ref:`拡張変数表記<extended variable syntax>` を使えます。
+以下の例の :name:`Should Be Equal` の二つの引数はどちらも同じ値になりますが、前者の変数を使った表記の方が、後者のバックスラッシュよりも分かりやすいはずです。
 
 .. sourcecode:: robotframework
 
@@ -784,12 +758,10 @@ easier to understand than those using backslashes.
    Empty
        Should Be Equal    ${EMPTY}          \
 
-There is also an empty `list variable`_ `@{EMPTY}` and an empty `dictionary
-variable`_ `&{EMPTY}`. Because they have no content, they basically
-vanish when used somewhere in the test data. They are useful, for example,
-with `test templates`_ when the `template keyword is used without
-arguments`__ or when overriding list or dictionary variables in different
-scopes. Modifying the value of `@{EMPTY}` or `&{EMPTY}` is not possible.
+この他にも、空の :ref:`リスト変数<list variable>` を表す `@{EMPTY}` や、空の :ref:`辞書変数<dictionary variable>` を表す `&{EMPTY}` があります。
+基本的に、これらの変数には中身がないので、テストデータ中で使っても消えてしまいます。
+空のリスト・辞書変数が意味をもつのは、 :ref:`テストテンプレート<test templates>` 中で、 `テンプレートキーワードを引数なしで使いたい`__ ときや、スコープ中のリスト変数や辞書変数をオーバライドしたいときです。
+`@{EMPTY}` や `&{EMPTY}` の中身は変更できません。
 
 .. sourcecode:: robotframework
 
@@ -802,265 +774,232 @@ scopes. Modifying the value of `@{EMPTY}` or `&{EMPTY}` is not possible.
        Set Global Variable    @{LIST}    @{EMPTY}
        Set Suite Variable     &{DICT}    &{EMPTY}
 
-.. note:: `@{EMPTY}` is new in Robot Framework 2.7.4 and `&{EMPTY}` in
-          Robot Framework 2.9.
+.. note:: `@{EMPTY}` は Robot Framework 2.7.4 で、 `&{EMPTY}` は 2.9 で登場しました。
 
-__ Escaping_
 __ https://groups.google.com/group/robotframework-users/browse_thread/thread/ccc9e1cd77870437/4577836fe946e7d5?lnk=gst&q=templates#4577836fe946e7d5
 
-Automatic variables
-~~~~~~~~~~~~~~~~~~~
+.. Automatic variables
 
-Some automatic variables can also be used in the test data. These
-variables can have different values during the test execution and some
-of them are not even available all the time. Altering the value of
-these variables does not affect the original values, but some values
-can be changed dynamically using keywords from the `BuiltIn`_ library.
+自動変数
+~~~~~~~~~~
 
-.. table:: Available automatic variables
+変数の中には、自動生成され、テストデータの中で使えるものがあります。
+この中には、テストの実行中に値が変わっていくものもあれば、状況によって使えないものもあります。
+通常、自動変数の値を変更しても、元の値には影響しません。
+ただし、一部の値は、 :ref:`BuiltIn` ライブラリのキーワードを使って動的に変更できます。
+
+.. table:: 利用可能な自動変数
    :class: tabular
 
-   +------------------------+-------------------------------------------------------+------------+
-   |        Variable        |                    Explanation                        | Available  |
-   +========================+=======================================================+============+
-   | ${TEST NAME}           | The name of the current test case.                    | Test case  |
-   +------------------------+-------------------------------------------------------+------------+
-   | @{TEST TAGS}           | Contains the tags of the current test case in         | Test case  |
-   |                        | alphabetical order. Can be modified dynamically using |            |
-   |                        | :name:`Set Tags` and :name:`Remove Tags` keywords.    |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${TEST DOCUMENTATION}  | The documentation of the current test case. Can be set| Test case  |
-   |                        | dynamically using using :name:`Set Test Documentation`|            |
-   |                        | keyword. New in Robot Framework 2.7.                  |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${TEST STATUS}         | The status of the current test case, either PASS or   | `Test      |
-   |                        | FAIL.                                                 | teardown`_ |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${TEST MESSAGE}        | The message of the current test case.                 | `Test      |
-   |                        |                                                       | teardown`_ |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${PREV TEST NAME}      | The name of the previous test case, or an empty string| Everywhere |
-   |                        | if no tests have been executed yet.                   |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${PREV TEST STATUS}    | The status of the previous test case: either PASS,    | Everywhere |
-   |                        | FAIL, or an empty string when no tests have been      |            |
-   |                        | executed.                                             |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${PREV TEST MESSAGE}   | The possible error message of the previous test case. | Everywhere |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${SUITE NAME}          | The full name of the current test suite.              | Everywhere |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${SUITE SOURCE}        | An absolute path to the suite file or directory.      | Everywhere |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${SUITE DOCUMENTATION} | The documentation of the current test suite. Can be   | Everywhere |
-   |                        | set dynamically using using :name:`Set Suite          |            |
-   |                        | Documentation` keyword. New in Robot Framework 2.7.   |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | &{SUITE METADATA}      | The free metadata of the current test suite. Can be   | Everywhere |
-   |                        | set using :name:`Set Suite Metadata` keyword.         |            |
-   |                        | New in Robot Framework 2.7.4.                         |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${SUITE STATUS}        | The status of the current test suite, either PASS or  | `Suite     |
-   |                        | FAIL.                                                 | teardown`_ |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${SUITE MESSAGE}       | The full message of the current test suite, including | `Suite     |
-   |                        | statistics.                                           | teardown`_ |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${KEYWORD STATUS}      | The status of the current keyword, either PASS or     | `User      |
-   |                        | FAIL. New in Robot Framework 2.7                      | keyword    |
-   |                        |                                                       | teardown`_ |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${KEYWORD MESSAGE}     | The possible error message of the current keyword.    | `User      |
-   |                        | New in Robot Framework 2.7.                           | keyword    |
-   |                        |                                                       | teardown`_ |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${LOG LEVEL}           | Current `log level`_. New in Robot Framework 2.8.     | Everywhere |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${OUTPUT FILE}         | An absolute path to the `output file`_.               | Everywhere |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${LOG FILE}            | An absolute path to the `log file`_ or string NONE    | Everywhere |
-   |                        | when no log file is created.                          |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${REPORT FILE}         | An absolute path to the `report file`_ or string NONE | Everywhere |
-   |                        | when no report is created.                            |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${DEBUG FILE}          | An absolute path to the `debug file`_ or string NONE  | Everywhere |
-   |                        | when no debug file is created.                        |            |
-   +------------------------+-------------------------------------------------------+------------+
-   | ${OUTPUT DIR}          | An absolute path to the `output directory`_.          | Everywhere |
-   +------------------------+-------------------------------------------------------+------------+
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   |        変数            |                    説明                               | 有効範囲                                                     |
+   +========================+=======================================================+==============================================================+
+   | ${TEST NAME}           | 現在実行中のテストケース名                            | テストケース                                                 |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | @{TEST TAGS}           | 現在実行中のテストケースのタグ、アルファベット順。    | テストケース                                                 |
+   |                        | :name:`Set Tags` や :name:`Remove Tags` で、動的に    |                                                              |
+   |                        |  変更可能。                                           |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${TEST DOCUMENTATION}  | 現在実行中のテストケースのドキュメント。              | テストケース                                                 |
+   |                        | :name:`Set Test Documentation` で動的に変更可。       |                                                              |
+   |                        | Robot Framework 2.7 以降。                            |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${TEST STATUS}         | 現在実行中のテストケースの状態、 PASS または FAIL 。  | :ref:`テストのティアダウン<test teardown>`                   |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${TEST MESSAGE}        | 現在実行中のテストケースのメッセージ。                | :ref:`テストのティアダウン<test teardown>`                   |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${PREV TEST NAME}      | 直前に実行したテストケースの名前。                    | どこでも                                                     |
+   |                        | まだ実行していなければ空文字列                        |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${PREV TEST STATUS}    | 直前に実行したテストケースの状態、 PASSまたはFAIL。   | どこでも                                                     |
+   |                        | まだ実行していなければ空文字列                        |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${PREV TEST MESSAGE}   | 直前のテストが失敗していた場合、そのエラーメッセージ  | どこでも                                                     |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${SUITE NAME}          | 現在実行中のテストスイートの完全な名前。              | どこでも                                                     |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${SUITE SOURCE}        | テストスイートのファイルまたはディレクトリの絶対パス  | どこでも                                                     |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${SUITE DOCUMENTATION} | 現在実行中のテストスイートのドキュメント。            | どこでも                                                     |
+   |                        | :name:`Set Suite Documentation` で動的に変更可能。    |                                                              |
+   |                        | Robot Framework 2.7 以降                              |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | &{SUITE METADATA}      | 現在実行中のテストスイートのメタデータ。              | どこでも                                                     |
+   |                        | :name:`Set Suite Metadata` で動的に変更可能。         |                                                              |
+   |                        | Robot Framework 2.7.4 以降                            |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${SUITE STATUS}        | 現在実行中のテストスイートの状態。                    | :ref:`スイートのティアダウン<suite teardown>`                |
+   |                        | PASS または FAIL。                                    |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${SUITE MESSAGE}       | 現在実行中のテストスイートの全メッセージ。            | :ref:`スイートのティアダウン<suite teardown>`                |
+   |                        | テスト結果統計も含む                                  |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${KEYWORD STATUS}      | 現在実行中のキーワードの状態。 PASS または FAIL。     | :ref:`ユーザキーワードのティアダウン<user keyword teardown>` |
+   |                        | Robot Framework 2.7 以降                              |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${KEYWORD MESSAGE}     | 現在実行中のキーワードのエラーメッセージ。            | :ref:`ユーザキーワードのティアダウン<user keyword teardown>` |
+   |                        | Robot Framework 2.7 以降                              |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${LOG LEVEL}           | 現在の :ref:`ログレベル<log level>` 。                | どこでも                                                     |
+   |                        | Robot Framework 2.8 以降                              |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${OUTPUT FILE}         | :ref:`テスト結果出力ファイル<output file>` の絶対パス | どこでも                                                     |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${LOG FILE}            | :ref:`ログファイル<log file>` の絶対パス。            | どこでも                                                     |
+   |                        | ログファイルを生成しないときは文字列 NONE             |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${REPORT FILE}         | :ref:`レポートファイル<report file>` の絶対パス。     | どこでも                                                     |
+   |                        | レポートファイルを生成しないときは文字列 NONE         |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${DEBUG FILE}          | :ref:`デバッグファイル<debug file>` の絶対パス。      | どこでも                                                     |
+   |                        | デバッグファイルを生成しないときは文字列 NONE         |                                                              |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   | ${OUTPUT DIR}          | :ref:`出力ディレクトリ<output directory>` の絶対パス  | どこでも                                                     |
+   +------------------------+-------------------------------------------------------+--------------------------------------------------------------+
+   
 
-Suite related variables `${SUITE SOURCE}`, `${SUITE NAME}`,
-`${SUITE DOCUMENTATION}` and `&{SUITE METADATA}` are
-available already when test libraries and variable files are imported,
-except to Robot Framework 2.8 and 2.8.1 where this support was broken.
-Possible variables in these automatic variables are not yet resolved
-at the import time, though.
+テストスイート関連の変数、 `${SUITE SOURCE}`, `${SUITE NAME}`, `${SUITE DOCUMENTATION}`, `&{SUITE METADATA}` は、テストライブラリや変数ファイルのインポートの時点で使えます。
+ただし、 Robot Framework 2.8 と 2.8.1 では、不具合があったため使えません。
+その他の変数は、 import 時に変数の解決ができません。
 
-Variable priorities and scopes
-------------------------------
 
-Variables coming from different sources have different priorities and
-are available in different scopes.
+.. Variable priorities and scopes
 
-Variable priorities
-~~~~~~~~~~~~~~~~~~~
-
-*Variables from the command line*
-
-   Variables `set in the command line`__ have the highest priority of all
-   variables that can be set before the actual test execution starts. They
-   override possible variables created in Variable tables in test case
-   files, as well as in resource and variable files imported in the
-   test data.
-
-   Individually set variables (:option:`--variable` option) override the
-   variables set using `variable files`_ (:option:`--variablefile` option).
-   If you specify same individual variable multiple times, the one specified
-   last will override earlier ones. This allows setting default values for
-   variables in a `start-up script`_ and overriding them from the command line.
-   Notice, though, that if multiple variable files have same variables, the
-   ones in the file specified first have the highest priority.
-
-__ `Setting variables in command line`_
-
-*Variable table in a test case file*
-
-   Variables created using the `Variable table`_ in a test case file
-   are available for all the test cases in that file. These variables
-   override possible variables with same names in imported resource and
-   variable files.
-
-   Variables created in the variable tables are available in all other tables
-   in the file where they are created. This means that they can be used also
-   in the Setting table, for example, for importing more variables from
-   resource and variable files.
-
-*Imported resource and variable files*
-
-   Variables imported from the `resource and variable files`_ have the
-   lowest priority of all variables created in the test data.
-   Variables from resource files and variable files have the same
-   priority. If several resource and/or variable file have same
-   variables, the ones in the file imported first are taken into use.
-
-   If a resource file imports resource files or variable files,
-   variables in its own Variable table have a higher priority than
-   variables it imports. All these variables are available for files that
-   import this resource file.
-
-   Note that variables imported from resource and variable files are not
-   available in the Variable table of the file that imports them. This
-   is due to the Variable table being processed before the Setting table
-   where the resource files and variable files are imported.
-
-*Variables set during test execution*
-
-   Variables set during the test execution either using `return values
-   from keywords`_ or `using Set Test/Suite/Global Variable keywords`_
-   always override possible existing
-   variables in the scope where they are set. In a sense they thus
-   have the highest priority, but on the other hand they do not affect
-   variables outside the scope they are defined.
-
-*Built-in variables*
-
-   `Built-in variables`_ like `${TEMPDIR}` and `${TEST_NAME}`
-   have the highest priority of all variables. They cannot be overridden
-   using Variable table or from command line, but even they can be reset during
-   the test execution. An exception to this rule are `number variables`_, which
-   are resolved dynamically if no variable is found otherwise. They can thus be
-   overridden, but that is generally a bad idea. Additionally `${CURDIR}`
-   is special because it is replaced already during the test data processing time.
-
-Variable scopes
-~~~~~~~~~~~~~~~
-
-Depending on where and how they are created, variables can have a
-global, test suite, test case or local scope.
-
-Global scope
-''''''''''''
-
-Global variables are available everywhere in the test data. These
-variables are normally `set from the command line`__ with the
-:option:`--variable` and :option:`--variablefile` options, but it is also
-possible to create new global variables or change the existing ones
-with the BuiltIn_ keyword :name:`Set Global Variable` anywhere in
-the test data. Additionally also `built-in variables`_ are global.
-
-It is recommended to use capital letters with all global variables.
-
-Test suite scope
-''''''''''''''''
-
-Variables with the test suite scope are available anywhere in the
-test suite where they are defined or imported. They can be created
-in Variable tables, imported from `resource and variable files`_,
-or set during the test execution using the BuiltIn_ keyword
-:name:`Set Suite Variable`.
-
-The test suite scope *is not recursive*, which means that variables
-available in a higher-level test suite *are not available* in
-lower-level suites. If necessary, `resource and variable files`_ can
-be used for sharing variables.
-
-Since these variables can be considered global in the test suite where
-they are used, it is recommended to use capital letters also with them.
-
-Test case scope
-'''''''''''''''
-
-Variables with the test case scope are visible in a test case and in
-all user keywords the test uses. Initially there are no variables in
-this scope, but it is possible to create them by using the BuiltIn_
-keyword :name:`Set Test Variable` anywhere in a test case.
-
-Also variables in the test case scope are to some extend global. It is
-thus generally recommended to use capital letters with them too.
-
-Local scope
-'''''''''''
-
-Test cases and user keywords have a local variable scope that is not
-seen by other tests or keywords. Local variables can be created using
-`return values`__ from executed keywords and user keywords also get
-them as arguments__.
-
-It is recommended to use lower-case letters with local variables.
-
-.. note:: Prior to Robot Framework 2.9 variables in the local scope
-          `leaked to lower level user keywords`__. This was never an
-          intended feature, and variables should be set or passed
-          explicitly also with earlier versions.
-
-__ `Setting variables in command line`_
-__ `Return values from keywords`_
-__ `User keyword arguments`_
-__ https://github.com/robotframework/robotframework/issues/532
-
-Advanced variable features
+変数の優先順位とスコープ
 --------------------------
 
-Extended variable syntax
-~~~~~~~~~~~~~~~~~~~~~~~~
+変数は、どこで定義されたかによって、優先順位が異なります。
+また、利用できるスコープも変わります。
 
-Extended variable syntax allows accessing attributes of an object assigned
-to a variable (for example, `${object.attribute}`) and even calling
-its methods (for example, `${obj.getName()}`). It works both with
-scalar and list variables, but is mainly useful with the former
+.. Variable priorities
 
-Extended variable syntax is a powerful feature, but it should
-be used with care. Accessing attributes is normally not a problem, on
-the contrary, because one variable containing an object with several
-attributes is often better than having several variables. On the
-other hand, calling methods, especially when they are used with
-arguments, can make the test data pretty complicated to understand.
-If that happens, it is recommended to move the code into a test library.
+変数の優先順位
+~~~~~~~~~~~~~~~
 
-The most common usages of extended variable syntax are illustrated
-in the example below. First assume that we have the following `variable file`_
-and test case:
+*コマンドラインで設定した変数*
+
+   :ref:`コマンドラインで設定した引数<setting variables in command line>` は、全ての変数の中で最も高い優先順位をもち、テストの実行前に設定されます。
+   コマンドラインで設定した値は、テストケースファイルの変数テーブル上の変数や、テストデータ中でインポートしたリソース・変数ファイル上の変数の設定値を上書きします。
+
+   個別の変数を設定するオプション (:option:`--variable`) は、 :ref:`変数ファイル<variable files>` を設定するオプション (:option:`--variablefile`) による設定を上書きします。
+   同じ変数の設定を複数回繰り返した場合、最後に指定した値を優先します。
+   この機能を使えば、デフォルトの値を :ref:`スタートアップスクリプト<start-up script>` に書いておき、コマンドラインからオプションを指定してオーバライドできます。
+   ただし、複数の変数ファイルに同じ名前の変数が指定されていた場合、ファイル間では、最初に定義した内容が最も高い優先順位を持つので注意してください。
+
+*テストケースファイルの変数テーブル*
+
+   テストケースファイルの :ref:`変数テーブル<variable table>` で作成した変数は、そのファイル上の全てのテストケースで使えます。
+   変数テーブル上の変数は、他からインポートしたリソースや変数ファイルの変数をオーバライドします。
+
+   変数テーブルで作成した変数は、そのテーブルがあるファイルの他の全てのテーブルで使えます。
+   つまり、設定テーブルに変数を使うことができ、例えば、他のリソースファイルや変数ファイルをインポートしたいときに、それらを変数で表すことさえできます。
+
+*リソースファイルや変数ファイルからインポートした変数*
+
+   :ref:`リソースファイルや変数ファイル<resource and variable files>` からインポートした変数は、テストデータ上で作成した変数の中ではもっとも低いの優先度を持ちます。
+   リソースファイルと変数ファイルのとの間には、優先順位の上下はありません。
+   リソースファイルや変数ファイルが同じ変数を定義していた場合、最初にインポートしたファイルの定義を使います。
+
+   リソースファイルが別のリソースファイルや変数ファイルをインポートしている場合、インポート元の変数の定義が優先されます。
+   インポート先のリソースファイルがさらに別のファイルをインポートしている場合、インポート先も含む全ての変数を使えるようになります。
+
+   リソースファイルや変数ファイルでインポートした変数の値を使って、インポート元の変数テーブルを定義することはできません。
+   これは、変数テーブルが、設定テーブルよりも先に処理され、その後で、リソースファイルや変数ファイルがインポートされるからです。
+
+*テスト実行中に設定される変数*
+
+   :ref:`キーワードの戻り値<return values from keywords>` や :ref:`Set Test/Suite/Global Variable<using Set Test/Suite/Global Variable keywords>` で実行中にセットした変数は、スコープの中では常に変数の値をオーバライドします。
+   その意味では、最も高い優先度ともいえますが、スコープから出れば、既存の変数に対して何ら影響力を保ちません。
+
+*組み込み変数*
+
+   `${TEMPDIR}` や `${TEST_NAME}` のような :ref:`組み込み変数<Built-in variables>` は、他の全ての変数よりも高い優先順位を持ちます。
+   これらの変数は、変数テーブルやコマンドラインでオーバライドできない上に、テストの実行中にリセットされることもあります。
+   :ref:`数値変数` は例外で、その値は、他で予めセットされていない限り動的に解決されます。
+   数値変数の値はオーバライドできますが、そうすべきではありません。
+   また、 `${CURDIR}` は、テストデータの処理中に随時変更されるという点で特殊です。
+
+.. Variable scopes
+
+変数のスコープ
+~~~~~~~~~~~~~~~
+
+変数は、どこで作成したかによって、グローバル・テストスイート・テストケース・ローカルのいずれかのスコープをもちます。
+
+.. Global scope
+
+グローバルスコープ
+'''''''''''''''''''''
+
+グローバルな変数は、テストデータのどこからでも参照できます。
+グローバルな変数は、 :option:`--variable` オプションや :option:`--variablefile` オプションで :ref:`コマンドラインで変数を設定<Setting variables in command line>` してできますが、テストデータ中で :ref:`BuiltIn` キーワードの :name:`Set Global Variable` を使うことでも生成できます。
+また、 :ref:`組み込み変数<built-in variables>` もグローバルな変数です。
+
+グローバルな変数の名前には、大文字を使うよう推奨します。
+
+.. Test suite scope
+
+テストスイートスコープ
+'''''''''''''''''''''''''
+
+テストスイートスコープの変数は、その変数を定義したり、インポートしたテストスイート内のどこからでも参照できます。
+テストスイートの変数は、変数テーブルや、 :ref:`リソースファイルや変数ファイル<resource and variable files>` からインポートできるほか、テストの実行時に、 :ref:`BuiltIn` キーワードの :name:`Set Suite Variable` を使うことでも生成できます。
+
+テストスイートの変数は、 *再帰性がない* 、すなわち、上位のテストスイートで定義した変数は、より下位のテストスイートで *使えない* という特徴があります。
+テストスイートをまたいで変数を共有したいときは、 :ref:`リソースファイルや変数ファイル<resource and variable files>` を介する必要があります。
+
+テストスイートの変数は、テストスイート内ではグローバルな変数のようにみなせるので、名前には大文字を使うよう推奨します。
+
+
+.. Test case scope
+
+テストケーススコープ
+''''''''''''''''''''''
+
+テストケーススコープの変数は、テストケースと、そのテストケースから呼び出したキーワードの中でしか参照できません。
+初期状態では、テストケースのスコープには、何の変数もありませんが、 :ref:`BuiltIn` キーワードの :name:`Set Test Variable` を使うことで生成できます。
+
+テストケーススコープの変数もまた、テストケース内ではグローバルな変数のようにみなせるので、名前には大文字を使うよう推奨します。
+
+
+.. Local scope
+
+ローカルスコープ
+'''''''''''''''''
+
+テストケースやユーザキーワードには、ローカルな変数スコープがあります。
+このスコープの変数は、他のテストやキーワードからは見えません。
+ローカルな変数は、キーワードを実行したときの :ref:`戻り値<Return values from keywords>` や、ユーザキーワードが :ref:`引数<arguments>` を受け取った時に生成されます。
+
+ローカルな変数には、小文字の名前を使うよう推奨します。
+
+.. note:: Robot Framework 2.9 までは、ローカルスコープの変数が、 `より下位のユーザキーワードから見えてしまう`__ という問題がありました。
+          これは設計意図に反した挙動なので、以前のバージョンでも、値を下位のキーワードに渡したいときは、引数などで明に渡すようにしてください。
+
+__ https://github.com/robotframework/robotframework/issues/532
+
+
+.. Advanced variable features
+
+変数の高度な使い方
+--------------------
+
+.. Extended variable syntax
+
+拡張変数記法
+~~~~~~~~~~~~~~
+
+拡張変数記法は、 `${object.attribute}` のような書き方で、変数に代入されたオブジェクトのアトリビュートにアクセスするための記法です。
+この書き方は、スカラ変数でもリスト変数でも使えますが、主に前者の場合に便利です。
+
+拡張変数記法は強力な機能ですが、注意深く使ってください。
+とはいえ、アトリビュートへのアクセス自体はさほど問題ではありません。
+それに、一つの変数に一つのオブジェクトが入っていて、そのオブジェクトが複数のアトリビュートを備えている方が、たくさんの変数をもたねばならないよりベターです。
+一方で、メソッドの呼び出しは、とりわけ引数と組み合わせてつかった場合などに、テストデータを複雑にし、理解を妨げます。
+メソッドの呼び出しのためにテストが複雑になりそうなときは、コードをテストライブラリに移すよう勧めます。
+
+以下の例では、拡張変数記法のよくある使い方を示しています。
+まず、以下のような :ref:`変数ファイル<variable file>` とテストケースがあるとしましょう:
 
 .. sourcecode:: python
 
@@ -1086,45 +1025,34 @@ and test case:
        KW 2    ${OBJECT.eat('Cucumber')}
        KW 3    ${DICTIONARY[2]}
 
-When this test data is executed, the keywords get the arguments as
-explained below:
+このテストデータを実行すると、各々のキーワードは:
 
-- :name:`KW 1` gets string `Robot`
-- :name:`KW 2` gets string `Robot eats Cucumber`
-- :name:`KW 3` gets string `two`
+- :name:`KW 1` は `Robot` という文字列
+- :name:`KW 2` は `Robot eats Cucumber` という文字列
+- :name:`KW 3` は `two` という文字列
 
-The extended variable syntax is evaluated in the following order:
+を受け取ります。
 
-1. The variable is searched using the full variable name. The extended
-   variable syntax is evaluated only if no matching variable
-   is found.
+拡張変数記法の値は、以下の順番に評価されます:
 
-2. The name of the base variable is created. The body of the name
-   consists of all the characters after the opening `{` until
-   the first occurrence of a character that is not an alphanumeric character
-   or a space. For example, base variables of `${OBJECT.name}`
-   and `${DICTIONARY[2]}`) are `OBJECT` and `DICTIONARY`,
-   respectively.
+1. 変数名を、拡張変数記法ではなく、普通の変数として、完全な変数名が一致するものが定義されていないか探します。
+   一致する変数がないときにのみ、拡張変数記法として評価します。
 
-3. A variable matching the body is searched. If there is no match, an
-   exception is raised and the test case fails.
+2. 拡張記法のベースとなる変数名を生成します。変数名本体は、変数の `{` の後から、最初の非英数文字までの文字列です。
+   例えば、 `${OBJECT.name}` のベース変数名は `OBJECT`, `${DICTIONARY[2]}`) なら `DICTIONARY` です。
 
-4. The expression inside the curly brackets is evaluated as a Python
-   expression, so that the base variable name is replaced with its
-   value. If the evaluation fails because of an invalid syntax or that
-   the queried attribute does not exist, an exception is raised and
-   the test fails.
+3. ベース変数名に対応する変数を探します。
+   一致する変数名がなければ、例外が送出され、テストケースは失敗します。
 
-5. The whole extended variable is replaced with the value returned
-   from the evaluation.
+4. 波括弧中の式を、 Python の式として評価します。
+   このとき、ベース変数名は、実際の値に置き換わります。
+   記法の誤りや、アトリビュートが存在しないなどの理由で式の評価に失敗すると、例外が送出され、テストケースは失敗します。
 
-If the object that is used is implemented with Java, the extended
-variable syntax allows you to access attributes using so-called bean
-properties. In essence, this means that if you have an object with the
-`getName`  method set into a variable `${OBJ}`, then the
-syntax `${OBJ.name}` is equivalent to but clearer than
-`${OBJ.getName()}`. The Python object used in the previous example
-could thus be replaced with the following Java implementation:
+5. 評価の結果で変数全体を置き換えます。
+
+Java で実装したオブジェクトの場合、拡張変数記法を使って、いわゆる bean プロパティにアクセスできます。
+例えば、 `getName` というメソッドを備えたオブジェクトが変数 `${OBJ}` に入っている場合、 `${OBJ.name}` は、 `${OBJ.getName()}` と同じです。
+先の例で使った Python オブジェクトの Java 版を書くと、以下のようになります:
 
 .. sourcecode:: java
 
@@ -1149,12 +1077,9 @@ could thus be replaced with the following Java implementation:
      }
  }
 
-Many standard Python objects, including strings and numbers, have
-methods that can be used with the extended variable syntax either
-explicitly or implicitly. Sometimes this can be really useful and
-reduce the need for setting temporary variables, but it is also easy
-to overuse it and create really cryptic test data. Following examples
-show few pretty good usages.
+文字列や数値型を始め、Python の標準データ型には様々なメソッドがあり、拡張変数記法で明示的・非明示的に扱えます。
+効果的に使えば、一時変数を生成する手間を省けるのでとても便利なのですが、濫用した結果、暗号のようなテストデータを書いてしまうこともあるので注意してください。
+以下はよい使い方の例です。
 
 .. sourcecode:: robotframework
 
@@ -1169,30 +1094,20 @@ show few pretty good usages.
        Log    ${number * 10}         # Logs -20
        Log    ${number.__abs__()}    # Logs 2
 
-Note that even though `abs(number)` is recommended over
-`number.__abs__()` in normal Python code, using
-`${abs(number)}` does not work. This is because the variable name
-must be in the beginning of the extended syntax. Using `__xxx__`
-methods in the test data like this is already a bit questionable, and
-it is normally better to move this kind of logic into test libraries.
+通常の Python のコードだと、 `number.__abs__()` と書くより `abs(number)` と書くのが適切ですが、後者は拡張変数記法では使えません。
+拡張変数記法では、変数名を先頭に置かねばならないからです。
+テストデータの中に `__xxx__` メソッドを使うこと自体すでに微妙で、こうしたロジックはテストライブラリに移すのがベターです。
 
-Extended variable syntax works also in `list variable`_ context.
-If, for example, an object assigned to a variable `${EXTENDED}` has
-an attribute `attribute` that contains a list as a value, it can be
-used as a list variable `@{EXTENDED.attribute}`.
+拡張変数記法は、 :ref:`リスト変数<list variable>` でも使えます。
+例えば、変数 `${EXTENDED}` に入っているオブジェクトが `attribute` というアトリビュートを持ち、このアトリビュートの値がリストであるような場合は、 `@{EXTENDED.attribute}` のようにリスト変数で扱えます。
 
 .. Extended variable assignment
 
-拡張変数代入
-~~~~~~~~~~~~~~
+拡張変数記法の代入
+~~~~~~~~~~~~~~~~~~~~
 
-Starting from Robot Framework 2.7, it is possible to set attributes of
-objects stored to scalar variables using `keyword return values`__ and
-a variation of the `extended variable syntax`_. Assuming we have
-variable `${OBJECT}` from the previous examples, attributes could
-be set to it like in the example below.
-
-__ `Return values from keywords`_
+Robot Framework 2.7 からは、スカラ変数に保存されたオブジェクトのアトリビュートを、 :ref:`キーワードの戻り値<Return values from keywords>` や :ref:`拡張変数記法<extended variable syntax>` のバリエーションを使ってセットできるようになりました。
+前節で示した変数 `${OBJECT}` を例にとると、そのアトリビュートは以下の例のようにしてセットできます。
 
 .. sourcecode:: robotframework
 
@@ -1201,52 +1116,35 @@ __ `Return values from keywords`_
        ${OBJECT.name} =    Set Variable    New name
        ${OBJECT.new_attr} =    Set Variable    New attribute
 
-The extended variable assignment syntax is evaluated using the
-following rules:
+拡張変数記法の代入は、以下のルールに従って評価されます:
 
-1. The assigned variable must be a scalar variable and have at least
-   one dot. Otherwise the extended assignment syntax is not used and
-   the variable is assigned normally.
+1. 代入先の値はスカラー変数でなければならず、変数中に少なくとも一つのドットが必要です。
+   それ以外の場合は、拡張変数記法の代入は行われず、普通の変数代入が行われます。
 
-2. If there exists a variable with the full name
-   (e.g. `${OBJECT.name}` in the example above) that variable
-   will be assigned a new value and the extended syntax is not used.
+2. 代入先の変数名と完全に一致する変数名 (上の例だと `OBJECT.name` という変数名) の変数が存在する場合、その変数への代入を行い、拡張変数記法の代入は行いません。
 
-3. The name of the base variable is created. The body of the name
-   consists of all the characters between the opening `${` and
-   the last dot, for example, `OBJECT` in `${OBJECT.name}`
-   and `foo.bar` in `${foo.bar.zap}`. As the second example
-   illustrates, the base name may contain normal extended variable
-   syntax.
+3. ベースの変数名を生成します。変数名の本体部分は、 `${` の後から最後のドット出現位置までの全ての文字かららなります。
+   例えば、 `${OBJECT.name}` の場合は `OBJECT`, `${foo.bar.zap}` なら `foo.bar` です。
+   後者の例からわかるように、ベース変数名自体が拡張変数表記のときもあります。
 
-4. The name of the attribute to set is created by taking all the
-   characters between the last dot and the closing `}`, for
-   example, `name` in `${OBJECT.name}`. If the name does not
-   start with a letter or underscore and contain only these characters
-   and numbers, the attribute is considered invalid and the extended
-   syntax is not used. A new variable with the full name is created
-   instead.
+4. アトリビュートの名前を、最後のドットから閉じ括弧  `}` までの文字で構成します。
+   例えば、 `${OBJECT.name}` のアトリビュート名部分は `name` です。
+   アトリビュート名部分が、アルファベットまたはアンダースコアで開始しておらず、かつ英数文字以外の文字を含む場合、無効なアトリビュート名とみなし、拡張変数記法の代入を行いません。
+   その場合、アトリビュート部分も含めた全体を変数名として、新たな変数を生成します。
 
-5. A variable matching the base name is searched. If no variable is
-   found, the extended syntax is not used and, instead, a new variable
-   is created using the full variable name.
+5. ベース変数名に対応する変数を探します。
+   該当する変数がみつからない場合、拡張変数記法の代入を行いません。
+   その場合、アトリビュート部分も含めた全体を変数名として、新たな変数を生成します。
 
-6. If the found variable is a string or a number, the extended syntax
-   is ignored and a new variable created using the full name. This is
-   done because you cannot add new attributes to Python strings or
-   numbers, and this way the new syntax is also less
-   backwards-incompatible.
+6. 見つかった変数の値が文字列型や数値型だった場合、拡張変数記法の代入を行いません。
+   その場合、アトリビュート部分も含めた全体を変数名として、新たな変数を生成します。
+   Python の文字列型や数値型にはあらたなアトリビュートを代入できないからです。
 
-7. If all the previous rules match, the attribute is set to the base
-   variable. If setting fails for any reason, an exception is raised
-   and the test fails.
+7. 上記のルールに全て合致していれば、ベースの変数にアトリビュートを設定します。
+   何らかの理由でアトリビュートを設定できなければ、例外を送出し、テストは失敗します。
 
-.. note:: Unlike when assigning variables normally using `return
-          values from keywords`_, changes to variables done using the
-          extended assign syntax are not limited to the current
-          scope. Because no new variable is created but instead the
-          state of an existing variable is changed, all tests and
-          keywords that see that variable will also see the changes.
+.. note:: 変数を :ref:`キーワードの戻り値<Return values from keywords>` で代入したときと違い、拡張変数代入で変更した値は、現在のスコープ外でも有効です。
+          新たな変数は生成されませんが、既存の変数の内部状態が変わるので、その変数を参照しているテストやキーワードにも影響が及びます。
 
 .. Variables inside variables
 
@@ -1272,3 +1170,5 @@ following rules:
    Example
        ${name} =    Get Name
        Do X    ${${name} HOME}
+
+
