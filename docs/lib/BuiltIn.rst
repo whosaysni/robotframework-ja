@@ -1811,16 +1811,13 @@ Set Variable If
 
 :Arguments:  [condition, \*values]
 
-Sets variable based on the given condition.
+``condition`` の結果に応じて変数の値をセットします。
 
-The basic usage is giving a condition and two values. The
-given condition is first evaluated the same way as with the
-`Should Be True` keyword. If the condition is true, then the
-first value is returned, and otherwise the second value is
-returned. The second value can also be omitted, in which case
-it has a default value None. This usage is illustrated in the
-examples below, where ``${rc}`` is assumed to be zero.
-::
+このキーワードの基本的な使い方は、条件式と二つの値を渡す方法です。
+条件式 ``condition`` は、 `Should Be True` と同じ方法で評価されます。
+条件式の結果が True なら二つの値のうち前者を、 False なら後者を返します。
+二つ目の値は省略でき、その場合はデフォルト値 None になります。
+以下に示す例では、 ``${rc}`` の値をゼロとします::
 
   | ${var1} = | Set Variable If | ${rc} == 0 | zero     | nonzero |
   | ${var2} = | Set Variable If | ${rc} > 0  | value1   | value2  |
@@ -1830,12 +1827,9 @@ examples below, where ``${rc}`` is assumed to be zero.
   | ${var2} = 'value2'
   | ${var3} = None
 
-It is also possible to have 'else if' support by replacing the
-second value with another condition, and having two new values
-after it. If the first condition is not true, the second is
-evaluated and one of the values after it is returned based on
-its truth value. This can be continued by adding more
-conditions without a limit.
+二つ目の値にも条件式を指定すると、 'else if' のような効果を得られ、さらに二つの値を後ろに追加できます。
+その場合、最初の条件式が真でないときのみ、第二の条件を評価し、その真偽値に応じて、第二の条件の後の値のいずれかを返します。
+この条件式の連鎖は、無制限に連続できます。
 
 .. code:: robotframework
 
@@ -1849,8 +1843,7 @@ conditions without a limit.
   | ...      | ${rc} > 2       | greater than two  |
   | ...      | ${rc} < 0       | less than zero    |
 
-Use `Get Variable Value` if you need to set variables
-dynamically based on whether a variable exist or not.
+変数が存在するかどうかに応じて値をセットしたいときは `Get Variable Value` を使ってください。
 
 
 Should Be Empty
@@ -1918,17 +1911,11 @@ Should Be Equal As Numbers
   | Should Be Equal As Numbers | 1.123 | 1.4 | precision=0  | # Passes |
   | Should Be Equal As Numbers | 112.3 | 75  | precision=-2 | # Passes |
 
-As discussed in the documentation of `Convert To Number`, machines
-generally cannot store floating point numbers accurately. Because of
-this limitation, comparing floats for equality is problematic and
-a correct approach to use depends on the context. This keyword uses
-a very naive approach of rounding the numbers before comparing them,
-which is both prone to rounding errors and does not work very well if
-numbers are really big or small. For more information about comparing
-floats, and ideas on how to implement your own context specific
-comparison algorithm, see
-http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-
-numbers-2012-edition/.
+`Convert To Number` で考察したように、一般に計算機は浮動小数点数を厳密に保持できません。
+その制限のため、浮動小数点間で等値比較を行おうとすると問題が起き、回避の方法は状況によって様々です。
+このキーワードは、値を比較する前に丸めを行なうというきわめてナイーブなアプローチをとっており、それゆえに、丸め誤差を生じたり、極端に大きい・小さい値に対してうまく動作しなかったりします。
+浮動小数点の比較と、状況に合った比較アルゴリズムの実装方法については、
+http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/ などを参照してください。
 
 ``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
 詳しくは `Should Be Equal` を参照してください。
@@ -1953,29 +1940,26 @@ Should Be True
 
 :Arguments:  [condition, msg=None]
 
-Fails if the given condition is not true.
+指定の ``condition`` が真でないとき失敗します。
 
-If ``condition`` is a string (e.g. ``${rc} < 10``), it is evaluated as
-a Python expression as explained in `Evaluating expressions` and the
-keyword status is decided based on the result. If a non-string item is
-given, the status is got directly from its
-[http://docs.python.org/2/library/stdtypes.html#truth|truth value].
+``condition`` が文字列の場合 (例えば ``${rc} < 10`` のような文字列のとき)、 :ref:`式の評価<Evaluating expressions>` で解説したように、 Python の式として評価され、その結果に基づいてキーワードの状態を決定します。
+文字列でない要素を指定した場合は、 `Python における真偽値`__ から直接判定します。
 
-The default error message (``<condition> should be true``) is not very
-informative, but it can be overridden with the ``msg`` argument.
+__ http://docs.python.org/2/library/stdtypes.html#truth
+
+デフォルトのエラーメッセージ (``<condition> should be true``) はお世辞にも親切とはいえませんが、 ``msg`` で変更できます。
 
 例::
 
   | Should Be True | ${rc} < 10            |
-  | Should Be True | '${status}' == 'PASS' | # Strings must be quoted |
-  | Should Be True | ${number}   | # Passes if ${number} is not zero |
-  | Should Be True | ${list}     | # Passes if ${list} is not empty  |
+  | Should Be True | '${status}' == 'PASS' | # 文字列はクオートが必要 |
+  | Should Be True | ${number}   | # ${number} がゼロでないとき PASS |
+  | Should Be True | ${list}     | # ${list} が空でないとき PASS |
 
-Variables used like ``${variable}``, as in the examples above, are
-replaced in the expression before evaluation. Variables are also
-available in the evaluation namespace and can be accessed using special
-syntax ``$variable``. This is a new feature in Robot Framework 2.9
-and it is explained more thoroughly in `Evaluating expressions`.
+上のように、変数を ``${variable}`` の記法で使うと、その値を文字列に置き換えてから式を評価します。
+変数を特殊な記法 ``$variable`` で使えば、評価式の中の変数として使えます。
+この機能は Robot Framework 2.9 で登場しました。
+詳しくは :ref:`式の評価<Evaluating expressions>` で説明しています。
 
 例::
 
@@ -2059,36 +2043,28 @@ Should Match Regexp
 
 ``string`` が正規表現 ``pattern`` にマッチしないとき失敗します。
 
-Regular expression check is implemented using the Python
-[http://docs.python.org/2/library/re.html|re module]. Python's regular
-expression syntax is derived from Perl, and it is thus also very
-similar to the syntax used, for example, in Java, Ruby and .NET.
+正規表現のチェックは Python の `re モジュール`__ で実装されています。
+Python の正規表現の記法は Perl から導出したもので、 Java, Ruby, .NET などで使われているものともよく似ています。
 
-Things to note about the regexp syntax in Robot Framework test data:
+__ http://docs.python.org/2/library/re.html
 
-1) Backslash is an escape character in the test data, and possible
-backslashes in the pattern must thus be escaped with another backslash
-(e.g. ``\\d\\w+``).
+Robot Framework で正規表現記法を使うときは、以下に注意してください:
 
-2) Strings that may contain special characters, but should be handled
-as literal strings, can be escaped with the `Regexp Escape` keyword.
+1) テストデータ中では、バックスラッシュをエスケープ文字として使っています。
+   そのため、正規表現のパターン中にバックスラッシュを使いたい時は、さらにバックスラッシュを入れてエスケープせねばなりません (e.g. ``\\d\\w+``)。
 
-3) The given pattern does not need to match the whole string. For
-example, the pattern ``ello`` matches the string ``Hello world!``. If
-a full match is needed, the ``^`` and ``$`` characters can be used to
-denote the beginning and end of the string, respectively. For example,
-``^ello$`` only matches the exact string ``ello``.
+2) 特殊文字を含むリテラル文字列を扱いたいときは `Regexp Escape` キーワードを使います。
 
-4) Possible flags altering how the expression is parsed (e.g.
-``re.IGNORECASE``, ``re.MULTILINE``) can be set by prefixing the
-pattern with the ``(?iLmsux)`` group like ``(?im)pattern``. The
-available flags are ``i`` (case-insensitive), ``m`` (multiline mode),
-``s`` (dotall mode), ``x`` (verbose), ``u`` (Unicode dependent) and
-``L`` (locale dependent).
+3) パターンは文字列全体にマッチしなくてもかまいません。
+   例えば、パターン ``ello`` は ``Hello world!`` にマッチします。
+   全体一致が必要なときは ``^`` や ``$`` を使って文字列の先頭や末尾を表してください。
+   例えば、 ``^ello$`` は ``ello`` にしかマッチしません。
 
-If this keyword passes, it returns the portion of the string that
-matched the pattern. Additionally, the possible captured groups are
-returned.
+4) 正規表現の解釈方法を制御するフラグ (``re.IGNORECASE``, ``re.MULTILINE`` など) を、 ``(?im)pattern`` のように、パターンのプレフィクスグループ (``(?iLmsux)``) で指定できます。
+   使えるフラグは、 ``i`` (大小文字を区別しない), ``m`` (複数行モード), ``s`` (``.`` が全ての文字にマッチする), ``x`` (冗長記法), ``u`` (Unicode プロパティ依存), ``L`` (ロケール依存) です。
+
+キーワードの実行に成功した場合、パターンにマッチした部分の文字列を返します。
+また、グループを定義した場合は、キャプチャしたグループも返します。
 
 ``msg`` と ``values`` でデフォルトのエラーメッセージをオーバライドできます。
 詳しくは `Should Be Equal` を参照してください。
