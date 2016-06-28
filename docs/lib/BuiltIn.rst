@@ -1578,41 +1578,36 @@ Set Library Search Order
 
 :Arguments:  [\*search_order]
 
-Sets the resolution order to use when a name matches multiple keywords.
+ライブラリの検索順序を指定して、複数のライブラリ上に同じ名前のキーワードがあるときに、どのキーワードを優先して使うかを決めます。
 
-The library search order is used to resolve conflicts when a keyword
-name in the test data matches multiple keywords. The first library
-(or resource, see below) containing the keyword is selected and that
-keyword implementation used. If the keyword is not found from any library
-(or resource), test executing fails the same way as when the search
-order is not set.
+ライブラリの検索順序は、テストデータ中で、あるキーワード名に対して、複数のキーワード実装があるときに、名前の衝突の解決に使います。
+このキーワードで順番を指定すると、キーワードを探す際、指定した順番にライブラリやリソースを検索し、最初に見つかったキーワード実装を使います。
+該当するキーワードがないときには、このキーワードを使わなかったときと同様、テストは失敗します。
 
-When this keyword is used, there is no need to use the long
-``LibraryName.Keyword Name`` notation.  For example, instead of
-having::
+このキーワードを使った場合、 ``LibraryName.Keyword Name`` のような完全指定の形式は不用になります。
+例えば、以下のように書く代わりに::
 
   | MyLibrary.Keyword | arg |
   | MyLibrary.Another Keyword |
   | MyLibrary.Keyword | xxx |
 
-you can have::
+以下のように書けます::
 
   | Set Library Search Order | MyLibrary |
   | Keyword | arg |
   | Another Keyword |
   | Keyword | xxx |
 
-This keyword can be used also to set the order of keywords in different
-resource files. In this case resource names must be given without paths
-or extensions like::
+このキーワードは、複数のリソースファイルに同じ名前のキーワードがあるときに、その優先順位を決めるのにも使えます。
+その場合、パス部分と拡張子を除いたリソースファイルの名前を順に並べます::
 
   | Set Library Search Order | resource | another_resource |
 
-*NOTE:*
-- The search order is valid only in the suite where this keywords is used.
-- Keywords in resources always have higher priority than keywords in libraries regardless the search order.
-- The old order is returned and can be used to reset the search order later.
-- Library and resource names in the search order are both case and space insensitive.
+.. note::
+   - 設定した優先順位は、このキーワードを使ったテストスイート内でのみ有効です。
+   - どのように優先順位を設定しても、必ず、ライブラリよりもリソースファイル上のキーワードが優先されます。
+   - このキーワードは設定前の解決順を返します。あとでそれを使って順番をリセットできます。
+   - ライブラリおよびリソース名は、大小文字を区別せず、スペースを無視します。
 
 
 Set Log Level
@@ -1620,14 +1615,12 @@ Set Log Level
 
 :Arguments:  [level]
 
-Sets the log threshold to the specified level and returns the old level.
+ログの表示閾値を指定レベルにセットし、以前のレベルを返します。
 
-Messages below the level will not logged. The default logging level is
-INFO, but it can be overridden with the command line option
-``--loglevel``.
+閾値以下のメッセージはログに記録されません。
+デフォルトのログレベルは INFO ですが、コマンドラインオプション ``--loglevel`` で設定できます。
 
-The available levels: TRACE, DEBUG, INFO (default), WARN, ERROR and NONE (no
-logging).
+指定できるログレベルは、 TRACE, DEBUG, INFO (デフォルト), WARN, ERROR, NONE (ログしない) です。
 
 
 Set Suite Documentation
@@ -1635,22 +1628,17 @@ Set Suite Documentation
 
 :Arguments:  [doc, append=False, top=False]
 
-Sets documentation for the current test suite.
+現在のテストスイートのドキュメントを設定します。
 
-By default the possible existing documentation is overwritten, but
-this can be changed using the optional ``append`` argument similarly
-as with `Set Test Message` keyword.
+デフォルトの動作では、既存のドキュメントがあった場合上書きします。
+`Set Test Message` と同様、オプションの  ``append`` 引数を指定すると、既存のドキュメントの後に ``doc`` を追加します。
 
-This keyword sets the documentation of the current suite by default.
-If the optional ``top`` argument is given a true value (see `Boolean
-arguments`), the documentation of the top level suite is altered
-instead.
+デフォルトの動作では、このキーワードは現在のスイートのドキュメントを変更します。
+``top`` 引数を真値にすると、トップレベルスイートのドキュメントを変更します。
 
-The documentation of the current suite is available as a built-in
-variable ``${SUITE DOCUMENTATION}``.
+現在のスイートのドキュメントは、組み込み変数 ``${SUITE DOCUMENTATION}`` で参照できます。
 
-New in Robot Framework 2.7. Support for ``append`` and ``top`` were
-added in 2.7.7.
+Robot Framework 2.7 で登場しました。 ``append`` と ``top`` は 2.7.7 で追加されました。
 
 
 Set Suite Metadata
@@ -1658,22 +1646,18 @@ Set Suite Metadata
 
 :Arguments:  [name, value, append=False, top=False]
 
-Sets metadata for the current test suite.
+現在のテストスイートのメタデータをセットします。
 
-By default possible existing metadata values are overwritten, but
-this can be changed using the optional ``append`` argument similarly
-as with `Set Test Message` keyword.
+デフォルトの動作では、既存のメタデータがあった場合上書きします。
+`Set Test Message` と同様、オプションの  ``append`` 引数を指定すると、既存のメタデータの後に ``doc`` を追加します。
 
-This keyword sets the metadata of the current suite by default.
-If the optional ``top`` argument is given a true value (see `Boolean
-arguments`), the metadata of the top level suite is altered instead.
+デフォルトの動作では、このキーワードは現在のスイートのメタデータを変更します。
+``top`` 引数を真値にすると、トップレベルスイートのメタデータを変更します。
 
-The metadata of the current suite is available as a built-in variable
-``${SUITE METADATA}`` in a Python dictionary. Notice that modifying this
-variable directly has no effect on the actual metadata the suite has.
+現在のスイートのメタデータは、組み込み変数 ``${SUITE METADATA}`` で参照できます。
+``${SUITE METADATA}`` を変更しても、実際のスイートのメタデータには影響しないので注意してください。
 
-Robot Framework 2.7.4 で登場しました。 Support for ``append`` and ``top`` were
-added in 2.7.7.
+Robot Framework 2.7.4 で登場しました。 ``append`` と ``top`` は 2.7.7 で追加されました。
 
 
 Set Suite Variable
@@ -1681,29 +1665,22 @@ Set Suite Variable
 
 :Arguments:  [name, \*values]
 
-Makes a variable available everywhere within the scope of the current suite.
+スイートのスコープ内のどこからでも使える変数を作成します。
 
-Variables set with this keyword are available everywhere within the
-scope of the currently executed test suite. Setting variables with this
-keyword thus has the same effect as creating them using the Variable
-table in the test data file or importing them from variable files.
+このキーワードで変数をセットすると、現在実行中のテストスイートのスコープ内のどこからでもその変数にアクセスできます。
+従って、このキーワードで作った変数は、テストデータファイルの変数テーブルで定義した変数や、変数ファイルからインポートした変数と同じ効果を持ちます。
 
-Possible child test suites do not see variables set with this keyword
-by default. Starting from Robot Framework 2.9, that can be controlled
-by using ``children=<option>`` as the last argument. If the specified
-``<option>`` is a non-empty string or any other value considered true
-in Python, the variable is set also to the child suites. Parent and
-sibling suites will never see variables set with this keyword.
+デフォルトの動作では、このキーワードで設定した変数は、子のテストスイートからは見えません。
+Robot Framework 2.9 からは、引数の最後に ``children=<option>`` を指定することで制御できるようになりました。
+``<option>`` が空でない文字列か、 Python で True として扱われる値の場合、子のテストスイートからも変数にアクセスできます。
+親のテストスイートと、兄弟のテストスイートからは、このキーワードによる変数は見えません。
 
-The name of the variable can be given either as a normal variable name
-(e.g. ``${NAME}``) or in escaped format as ``\${NAME}`` or ``$NAME``.
-Variable value can be given using the same syntax as when variables
-are created in the Variable table.
+変数の名前は、通常の変数名 (e.g. ``${NAME}``) か、 ``\${NAME}`` や ``$NAME`` のようなエスケープ形式にできます。
+変数の値は、変数テーブルで変数を定義するときと同じ記法で定義できます。
 
-If a variable already exists within the new scope, its value will be
-overwritten. Otherwise a new variable is created. If a variable already
-exists within the current scope, the value can be left empty and the
-variable within the new scope gets the value within the current scope.
+同名の変数が新たなスコープ上にある場合、その値は上書きされます。
+それ以外の場合は、新たに変数が生成されます。
+同名の変数が現在のスコープ上にある場合、値を空にすると、変数は現在のスコープの値を引き継ぎます。
 
 例::
 
@@ -1714,17 +1691,13 @@ variable within the new scope gets the value within the current scope.
   | ${ID} =            | Get ID    |
   | Set Suite Variable | ${ID}     |
 
-To override an existing value with an empty value, use built-in
-variables ``${EMPTY}``, ``@{EMPTY}`` or ``&{EMPTY}``::
+既存の値を空の値で上書きしたければ、組み込み変数 ``${EMPTY}``, ``@{EMPTY}``, ``&{EMPTY}`` を使います::
 
   | Set Suite Variable | ${SCALAR} | ${EMPTY} |
   | Set Suite Variable | @{LIST}   | @{EMPTY} | # New in RF 2.7.4 |
   | Set Suite Variable | &{DICT}   | &{EMPTY} | # New in RF 2.9   |
 
-*NOTE:* If the variable has value which itself is a variable (escaped
-or not), you must always use the escaped format to set the variable:
-
-例:
+.. note:: 変数の値を別の変数としたいときは、変数をセットするときにエスケープ記法を使います:
 
 .. code:: robotframework
   
@@ -1732,9 +1705,8 @@ or not), you must always use the escaped format to set the variable:
   | Set Suite Variable | ${NAME}      | value | # Sets variable ${var}  |
   | Set Suite Variable | \${NAME}    | value | # Sets variable ${NAME} |
 
-This limitation applies also to `Set Test Variable`, `Set Global
-Variable`, `Variable Should Exist`, `Variable Should Not Exist` and
-`Get Variable Value` keywords.
+`Set Test Variable`, `Set Global Variable`, `Variable Should Exist`, `Variable Should Not Exist`, `Get Variable Value` にも、同じ制約があります。
+
 
 
 Set Tags
@@ -1742,19 +1714,16 @@ Set Tags
 
 :Arguments:  [\*tags]
 
-Adds given ``tags`` for the current test or all tests in a suite.
+現在のテスト、またはスイート中の全てのテストに ``tags`` に指定したタグを追加します。
 
-When this keyword is used inside a test case, that test gets
-the specified tags and other tests are not affected.
+このキーワードをテストケースの中で使うと、そのテストだけに指定のタグを付与し、他のテストには影響を与えません。
 
-If this keyword is used in a suite setup, all test cases in
-that suite, recursively, gets the given tags. It is a failure
-to use this keyword in a suite teardown.
+キーワードをスイートセットアップ中で使うと、そのスイート以下のテスト全てに再帰的にタグを付与します。
+スイートのティアダウンにこのキーワードを使うと失敗します。
 
-The current tags are available as a built-in variable ``@{TEST TAGS}``.
+現在のタグは組み込み変数 ``@{TEST TAGS}`` で取得できます。
 
-See `Remove Tags` if you want to remove certain tags and `Fail` if
-you want to fail the test case after setting and/or removing tags.
+特定のタグを除去したい場合は `Remove Tags` を、タグを追加・削除した後にテストを失敗させたいときは `Fail` を使ってください。
 
 
 Set Test Documentation
@@ -1762,17 +1731,15 @@ Set Test Documentation
 
 :Arguments:  [doc, append=False]
 
-Sets documentation for the current test case.
+現在実行中のテストケースのドキュメントをセットします。
 
-By default the possible existing documentation is overwritten, but
-this can be changed using the optional ``append`` argument similarly
-as with `Set Test Message` keyword.
+デフォルトの動作では、既存のドキュメントがあった場合上書きします。
+`Set Test Message` と同様、オプションの  ``append`` 引数を指定すると、既存のドキュメントの後に ``doc`` を追加します。
 
-The current test documentation is available as a built-in variable
-``${TEST DOCUMENTATION}``. This keyword can not be used in suite
-setup or suite teardown.
+現在のテストのドキュメントは、組み込み変数 ``${SUITE DOCUMENTATION}`` で参照できます。
+このキーワードは、スイートのセットアップやティアダウン中では使えません。
 
-New in Robot Framework 2.7. Support for ``append`` was added in 2.7.7.
+Robot Framework 2.7 で登場しました。 ``append`` は 2.7.7 で追加されました。
 
 
 Set Test Message
@@ -1780,19 +1747,15 @@ Set Test Message
 
 :Arguments:  [message, append=False]
 
-Sets message for the current test case.
+現在のテストケースのメッセージをセットします。
 
-If the optional ``append`` argument is given a true value (see `Boolean
-arguments`), the given ``message`` is added after the possible earlier
-message by joining the messages with a space.
+オプションの  ``append`` 引数を指定すると、既存のドキュメントがある場合、既存のドキュメントの後にスペースを挟んで ``doc`` を追加します。
 
-In test teardown this keyword can alter the possible failure message,
-but otherwise failures override messages set by this keyword. Notice
-that in teardown the message is available as a built-in variable
-``${TEST MESSAGE}``.
+テストティアダウンでこのキーワードを使ったときに限り、失敗時のメッセージを置き換えられます。
+それ以外の使い方では、このキーワードでメッセージを設定しても、テストが失敗したときにメッセージが上書きされてしまいます。
+ティアダウン中では、メッセージは組み込み変数 ``${TEST MESSAGE}`` で取得できます。
 
-It is possible to use HTML format in the message by starting the message
-with ``*HTML*``.
+メッセージの先頭を ``*HTML*`` にすると、HTML 形式のメッセージにできます。
 
 例::
 
@@ -1801,10 +1764,9 @@ with ``*HTML*``.
   | Should Be Equal  | ${TEST MESSAGE}      | My message is continued. |
   | Set Test Message | `*`HTML`*` <b>Hello!</b> |                      |
 
-This keyword can not be used in suite setup or suite teardown.
+このキーワードは、スイートのセットアップやティアダウン中では使えません。
 
-Support for ``append`` was added in Robot Framework 2.7.7 and support
-for HTML format in 2.8.
+``append`` のサポートは 2.7.7 で追加されました。 HTML は 2.8 からです。
 
 
 Set Test Variable
@@ -1826,12 +1788,11 @@ Set Variable
 
 :Arguments:  [\*values]
 
-Returns the given values which can then be assigned to a variables.
+指定の値を、変数に代入できる値にして返します。
 
-This keyword is mainly used for setting scalar variables.
-Additionally it can be used for converting a scalar variable
-containing a list to a list variable or to multiple scalar variables.
-It is recommended to use `Create List` when creating new lists.
+このキーワードは、主にスカラ変数のセットに使います。
+その他にも、リスト値の入ったスカラ変数をリスト変数や複数のスカラ変数に変換できます。
+ただし、新たなリストを作成したいときは `Create List` を推奨します。
 
 例::
 
@@ -1841,10 +1802,8 @@ It is recommended to use `Create List` when creating new lists.
   | @{list} = | Set Variable | ${list with some items} |
   | ${item1}  | ${item2} =   | Set Variable  | ${list with 2 items} |
 
-Variables created with this keyword are available only in the
-scope where they are created. See `Set Global Variable`,
-`Set Test Variable` and `Set Suite Variable` for information on how to
-set variables so that they are available also in a larger scope.
+このキーワードで生成した変数は、キーワードを使ったスコープでしか利用できません。
+より広いスコープで使える変数をセットしたいときは、 `Set Global Variable`, `Set Test Variable`, `Set Suite Variable` を使ってください。
 
 
 Set Variable If
