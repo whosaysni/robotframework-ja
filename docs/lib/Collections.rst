@@ -4,107 +4,110 @@ Collections: リストと辞書の操作
 :Scope:            global
 :Named arguments:  supported
 
-A test library providing keywords for handling lists and dictionaries.
 
-``Collections`` is Robot Framework's standard library that provides a
-set of keywords for handling Python lists and dictionaries. This
-library has keywords, for example, for modifying and getting
-values from lists and dictionaries (e.g. `Append To List`, `Get
-From Dictionary`) and for verifying their contents (e.g. `Lists
-Should Be Equal`, `Dictionary Should Contain Value`).
+``Collections`` は、Robot Framework の標準ライブラリの一つで、リストや辞書を扱うためのキーワードを定義しています。
+このライブラリには、例えば、リストや辞書の値を変更したり、値を取り出したりするキーワード
+(e.g. `Append To List`, `Get From Dictionary`) のほか、値を検証するためのキーワード (e.g. `Lists
+Should Be Equal`, `Dictionary Should Contain Value`) が定義されています。
 
 .. _`Related keywords in BuiltIn`:
 
-Related keywords in BuiltIn
+BuiltIn の関連キーワード
 ----------------------------
 
-Following keywords in the BuiltIn library can also be used with
-lists and dictionaries::
+BuilIn ライブラリの以下のキーワードも、リストや辞書を扱えます::
+::
 
-  | = Keyword Name =             | = Applicable With = | = Comment = |
-  | `Create List`                | lists |
-  | `Create Dictionary`          | dicts | Was in Collections until RF 2.9. |
-  | `Get Length`                 | both  |
-  | `Length Should Be`           | both  |
-  | `Should Be Empty`            | both  |
-  | `Should Not Be Empty`        | both  |
-  | `Should Contain`             | both  |
-  | `Should Not Contain`         | both  |
-  | `Should Contain X Times`     | lists |
-  | `Should Not Contain X Times` | lists |
-  | `Get Count`                  | lists |
+    =============================  =======  =====================================
+    キーワード名                   対象     コメント                        
+    =============================  =======  =====================================
+    `Create List`                  リスト                                  
+    `Create Dictionary`            辞書      RFW 2.9 まで Collections に収録
+    `Get Length`                   両方   
+    `Length Should Be`             両方   
+    `Should Be Empty`              両方   
+    `Should Not Be Empty`          両方   
+    `Should Contain`               両方   
+    `Should Not Contain`           両方   
+    `Should Contain X Times`       リスト 
+    `Should Not Contain X Times`   リスト 
+    `Get Count`                    リスト 
+    =============================  =======  =====================================
+
 
 .. _`Using with list-like and dictionary-like objects`:
 
-Using with list-like and dictionary-like objects
---------------------------------------------------
+リスト／辞書ライクなオブジェクトを扱う
+----------------------------------------
 
-List keywords that do not alter the given list can also be used
-with tuples, and to some extend also with other iterables.
-`Convert To List` can be used to convert tuples and other iterables
-to Python ``list`` objects.
+リストを対象とするキーワードのうち、リストの中身を変更しないものは、タプルや、他の iterable にも使えます。
+タプルや iterable を Python の ``list`` オブジェクトに変換するには、 `Convert To List` を使います。
 
-Similarly dictionary keywords can, for most parts, be used with other
-mappings. `Convert To Dictionary` can be used if real Python ``dict``
-objects are needed.
+同様に、辞書を扱うキーワードも、ほとんどが他のマップ型を扱えます。
+Python の ``dict`` オブジェクトに変換が必要なときは `Convert To Dictionary` を使ってください。
 
 .. _`Boolean arguments`:
 
-Boolean arguments
+ブール型の引数
 --------------------
 
-Some keywords accept arguments that are handled as Boolean values true or
-false. If such an argument is given as a string, it is considered false if
-it is either empty or case-insensitively equal to ``false`` or ``no``.
-Keywords verifying something that allow dropping actual and expected values
-from the possible error message also consider string ``no values`` as false.
-Other strings are considered true regardless their value, and other
-argument types are tested using same
-[http://docs.python.org/2/library/stdtypes.html#truth-value-testing|rules
-as in Python].
+キーワードの中には、値を true または false のブール型として扱うものがあります。
+そうしたキーワードの文字列を渡す場合、空文字と、 ``false`` または ``no`` (いずれも大小文字を区別しない) は False 扱いになります。
+また、キーワードの中には、値を比較して、条件に合わないとき、エラーメッセージに期待値と実際の値を出力するかどうかをスイッチする機能をもったものがありますが、そのようなキーワードでは、 ``no values`` も False 扱いです。
+それ以外の文字列は、値が何であっても True 扱いです。
+その他の引数タイプでは、 :ref:`Python の流儀 <http://docs.python.org/2/library/stdtypes.html#truth-value-testing>` で True/False を決めます。
 
-True examples::
+値が真になる例は以下の通りです:
 
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=True    | # Strings are generally true.    |
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=yes     | # Same as the above.             |
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${TRUE} | # Python ``True`` is true.       |
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${42}   | # Numbers other than 0 are true. |
+.. code:: robotframework
 
-False examples::
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=True     # 空でない文字列は「基本的に」真
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=yes      # 上と同じ
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${TRUE}  # Python の ``True`` は当然真
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${42}    # 0 でない数も真
 
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=False    | # String ``false`` is false.   |
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=no       | # Also string ``no`` is false. |
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${EMPTY} | # Empty string is false.       |
-  | `Should Contain Match` | ${list} | ${pattern} | case_insensitive=${FALSE} | # Python ``False`` is false.   |
-  | `Lists Should Be Equal` | ${x}   | ${y} | Custom error | values=no values | # ``no values`` works with ``values`` argument |
 
-Note that prior to Robot Framework 2.9 some keywords considered all
-non-empty strings, including ``False``, to be true.
+一方、偽になる例は以下の通りです:
+
+.. code:: robotframework
+
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=False      # 文字列 ``false`` は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=no         # 文字列 ``no`` は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${EMPTY}   # 空文字列は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${FALSE}   # Python の ``False`` は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=no values  # 引数 ``values`` に限り ``no values`` は偽
+
+Robot Framework 2.9 以前では、原則、 ``false`` や ``no`` も含め、空文字列でないものは全て True 扱いとしていました。
+
 
 .. _`Data in examples`:
 
 Data in examples
 ------------------
 
-List related keywords use variables in format ``${Lx}`` in their examples.
-They mean lists with as many alphabetic characters as specified by ``x``.
-For example, ``${L1}`` means ``['a']`` and ``${L3}`` means
-``['a', 'b', 'c']``.
+このドキュメントでは、リスト関連のキーワードの例に ``${Lx}`` のような変数を使うことがあります。
+そのとき、 ``${Lx}`` は ``x`` 個のアルファベットからなるリストを仮定しています。
+例えば、リスト ``${L1}`` は ``['a']`` で、 ``${L3}`` は ``['a', 'b', 'c']`` です。
 
-Dictionary keywords use similar ``${Dx}`` variables. For example, ``${D1}``
-means ``{'a': 1}`` and ``${D3}`` means ``{'a': 1, 'b': 2, 'c': 3}``.
+辞書を扱うキーワードの例でも、同様に、 ``${Dx}`` のような変数を使います。
+このとき、 ``${D1}`` は ``{'a': 1}`` 、 ``${D3}`` は ``{'a': 1, 'b': 2, 'c': 3}`` です。
 
 
-Keywords
---------------
+.. _`collection-Keywords`:
+   
+キーワード
+-----------
 
 Append To List
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , \*values]
+~~~~~~~~~~~~~~~~
 
-Adds ``values`` to the end of ``list``.
 
-Example::
+引数:  [ :ref:`list` , \*values]
+
+``list`` の末尾に ``values`` を追加します。
+
+例::
+
   | Append To List | ${L1} | xxx |   |   |
   | Append To List | ${L2} | x   | y | z |
   =>
@@ -112,15 +115,16 @@ Example::
   | ${L2} = ['a', 'b', 'x', 'y', 'z']
 
 Combine Lists
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
-Arguments:  [\*lists]
+引数:  [\*lists]
 
-Combines the given ``lists`` together and returns the result.
+``lists`` に指定した複数のリストを結合した結果を返します。
 
-The given lists are not altered by this keyword.
+引数に指定した元のリストは変更しません。
 
-Example::
+例::
+
   | ${x} = | Combine List | ${L1} | ${L2} |       |
   | ${y} = | Combine List | ${L1} | ${L2} | ${L1} |
   =>
@@ -129,201 +133,220 @@ Example::
   | ${L1} and ${L2} are not changed.
 
 Convert To Dictionary
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [item]
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Converts the given ``item`` to a Python ``dict`` type.
+引数:  [item]
 
-Mainly useful for converting other mappings to dictionaries. Use
-`Create Dictionary` from the BuiltIn library for constructing new
-dictionaries.
+``item`` を Python の ``dict`` 型に変換します。
 
-New in Robot Framework 2.9.
+他のマップ型から辞書へ変換するときに便利です。
+新たな辞書オブジェクトを生成したいときは BuiltIn ライブラリの  `Create Dictionary` を使ってください。
+
+Robot Framework 2.9 で登場しました。
 
 Convert To List
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [item]
+~~~~~~~~~~~~~~~~
 
-Converts the given ``item`` to a Python ``list`` type.
+引数:  [item]
 
-Mainly useful for converting tuples and other iterable to lists.
-Use `Create List` from the BuiltIn library for constructing new lists.
+``item`` を Python の ``list`` 型に変換します。
+
+タプルやその他 iterable をリストに変換するときに便利です。
+新たなリストオブジェクトを生成したいときは BuiltIn ライブラリの `Create List` を使ってください。
 
 Copy Dictionary
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary]
+~~~~~~~~~~~~~~~~
 
-Returns a copy of the given dictionary.
+引数:  [dictionary]
 
-The given dictionary is never altered by this keyword.
+辞書をコピーして返します。
+
+このキーワードは引数に渡した辞書を変更しません。
 
 Copy List
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` ]
+~~~~~~~~~~~
 
-Returns a copy of the given list.
+引数:  [ :ref:`list` ]
 
-The given list is never altered by this keyword.
+リストをコピーして返します。
+
+このキーワードは引数に渡したリストを変更しません。
 
 Count Values In List
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , value, start=0, end=None]
+~~~~~~~~~~~~~~~~~~~~~~
 
-Returns the number of occurrences of the given ``value`` in ``list``.
+引数:  [ :ref:`list` , value, start=0, end=None]
 
-The search can be narrowed to the selected sublist by the ``start`` and
-``end`` indexes having the same semantics as with `Get Slice From List`
-keyword. The given list is never altered by this keyword.
+``list`` 中に ``value`` が何回出現するか数えます。
 
-Example::
+`Get Slice From List` と同様、 ``start`` と ``end`` にインデクスを指定すると、検索の範囲を狭められます。
+このキーワードは引数に渡したリストを変更しません。
+
+例::
+
   | ${x} = | Count Values In List | ${L3} | b |
   =>
   | ${x} = 1
   | ${L3} is not changed
 
 Dictionaries Should Be Equal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dict1, dict2, msg=None, values=True]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fails if the given dictionaries are not equal.
+引数:  [dict1, dict2, msg=None, values=True]
 
-First the equality of dictionaries' keys is checked and after that all
-the key value pairs. If there are differences between the values, those
-are listed in the error message. The types of the dictionaries do not
-need to be same.
+指定の二つの辞書が同じでないとき失敗します。
 
-See `Lists Should Be Equal` for more information about configuring
-the error message with ``msg`` and ``values`` arguments.
+比較の際は、まず二つの辞書のキーが同じかを調べ、その後でキーと値のペアが全て同じかどうかを調べます。
+値の違いがあれば、エラーメッセージに表示します。
+辞書の型は同じでなくてもかまいません。
 
-The given dictionaries are never altered by this keyword.
+エラーメッセージの出力方法を ``msg`` や ``values`` で設定する方法は、 `Lists Should Be Equal` を参照してください。
+
+このキーワードは引数に渡した辞書を変更しません。
 
 Dictionary Should Contain Item
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, key, value, msg=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An item of ``key``/``value`` must be found in a `dictionary`.
+引数:  [dictionary, key, value, msg=None]
 
-Value is converted to unicode for comparison.
+指定の ``key`` と ``value`` のペアが `dictionary` 中にないとき失敗します。
 
-See `Lists Should Be Equal` for an explanation of ``msg``.
-The given dictionary is never altered by this keyword.
+比較の際、値を unicode 型に変換します。
+
+``msg`` の説明は `Lists Should Be Equal` を参照してください。
+
+このキーワードは引数に渡した辞書を変更しません。
 
 Dictionary Should Contain Key
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, key, msg=None]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fails if ``key`` is not found from ``dictionary``.
+引数:  [dictionary, key, msg=None]
 
-See `List Should Contain Value` for an explanation of ``msg``.
+指定の ``key`` が `dictionary` 中にないとき失敗します。
 
-The given dictionary is never altered by this keyword.
+``msg`` の説明は `Lists Should Contain Value` を参照してください。
+
+このキーワードは引数に渡した辞書を変更しません。
 
 Dictionary Should Contain Sub Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dict1, dict2, msg=None, values=True]
+
+引数:  [dict1, dict2, msg=None, values=True]
 
 Fails unless all items in ``dict2`` are found from ``dict1``.
 
 See `Lists Should Be Equal` for more information about configuring
 the error message with ``msg`` and ``values`` arguments.
 
-The given dictionaries are never altered by this keyword.
+このキーワードは引数に渡した辞書を変更しません。
 
 Dictionary Should Contain Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, value, msg=None]
+
+引数:  [dictionary, value, msg=None]
 
 Fails if ``value`` is not found from ``dictionary``.
 
 See `List Should Contain Value` for an explanation of ``msg``.
 
-The given dictionary is never altered by this keyword.
+このキーワードは引数に渡した辞書を変更しません。
 
 Dictionary Should Not Contain Key
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, key, msg=None]
+
+引数:  [dictionary, key, msg=None]
 
 Fails if ``key`` is found from ``dictionary``.
 
 See `List Should Contain Value` for an explanation of ``msg``.
 
-The given dictionary is never altered by this keyword.
+このキーワードは引数に渡した辞書を変更しません。
 
 Dictionary Should Not Contain Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, value, msg=None]
+
+引数:  [dictionary, value, msg=None]
 
 Fails if ``value`` is found from ``dictionary``.
 
 See `List Should Contain Value` for an explanation of ``msg``.
 
-The given dictionary is never altered by this keyword.
+このキーワードは引数に渡した辞書を変更しません。
 
 Get Dictionary Items
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary]
+
+引数:  [dictionary]
 
 Returns items of the given ``dictionary``.
 
 Items are returned sorted by keys. The given ``dictionary`` is not
 altered by this keyword.
 
-Example::
+例::
+
   | ${items} = | Get Dictionary Items | ${D3} |
   =>
   | ${items} = ['a', 1, 'b', 2, 'c', 3]
 
 Get Dictionary Keys
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary]
+
+引数:  [dictionary]
 
 Returns keys of the given ``dictionary``.
 
 If keys are sortable, they are returned in sorted order. The given
 ``dictionary`` is never altered by this keyword.
 
-Example::
+例::
+
   | ${keys} = | Get Dictionary Keys | ${D3} |
   =>
   | ${keys} = ['a', 'b', 'c']
 
 Get Dictionary Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary]
+
+引数:  [dictionary]
 
 Returns values of the given dictionary.
 
 Values are returned sorted according to keys. The given dictionary is
 never altered by this keyword.
 
-Example::
+例::
+
   | ${values} = | Get Dictionary Values | ${D3} |
   =>
   | ${values} = [1, 2, 3]
 
 Get From Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, key]
+
+引数:  [dictionary, key]
 
 Returns a value from the given ``dictionary`` based on the given ``key``.
 
 If the given ``key`` cannot be found from the ``dictionary``, this
 keyword fails.
 
-The given dictionary is never altered by this keyword.
+このキーワードは引数に渡した辞書を変更しません。
 
-Example::
+例::
+
   | ${value} = | Get From Dictionary | ${D3} | b |
   =>
   | ${value} = 2
 
 Get From List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , index]
+
+引数:  [ :ref:`list` , index]
 
 Returns the value specified with an ``index`` from ``list``.
 
-The given list is never altered by this keyword.
+このキーワードは引数に渡したリストを変更しません。
 
 Index ``0`` means the first position, ``1`` the second, and so on.
 Similarly, ``-1`` is the last position, ``-2`` the second last, and so on.
@@ -341,7 +364,8 @@ Examples (including Python equivalents in comments)::
 
 Get Index From List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , value, start=0, end=None]
+
+引数:  [ :ref:`list` , value, start=0, end=None]
 
 Returns the index of the first occurrence of the ``value`` on the list.
 
@@ -350,7 +374,8 @@ The search can be narrowed to the selected sublist by the ``start`` and
 keyword. In case the value is not found, -1 is returned. The given list
 is never altered by this keyword.
 
-Example::
+例::
+
   | ${x} = | Get Index From List | ${L5} | d |
   =>
   | ${x} = 3
@@ -358,7 +383,8 @@ Example::
 
 Get Match Count
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [list, pattern, case_insensitive=False,
+
+引数:  [list, pattern, case_insensitive=False,
             whitespace_insensitive=False]
 
 Returns the count of matches to ``pattern`` in ``list``.
@@ -371,11 +397,12 @@ Examples::
   | ${count}= | Get Match Count | ${list} | regexp=a.* | # ${matches} will be the count of strings beginning with 'a' (regexp version) |
   | ${count}= | Get Match Count | ${list} | a* | case_insensitive=${True} | # ${matches} will be the count of strings beginning with 'a' or 'A' |
 
-New in Robot Framework 2.8.6.
+Robot Framework 2.8.6 で登場しました。
 
 Get Matches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [list, pattern, case_insensitive=False,
+
+引数:  [list, pattern, case_insensitive=False,
             whitespace_insensitive=False]
 
 Returns a list of matches to ``pattern`` in ``list``.
@@ -388,15 +415,16 @@ Examples::
   | ${matches}= | Get Matches | ${list} | regexp=a.* | # ${matches} will contain any string beginning with 'a' (regexp version) |
   | ${matches}= | Get Matches | ${list} | a* | case_insensitive=${True} | # ${matches} will contain any string beginning with 'a' or 'A' |
 
-New in Robot Framework 2.8.6.
+Robot Framework 2.8.6 で登場しました。
 
 Get Slice From List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , start=0, end=None]
+
+引数:  [ :ref:`list` , start=0, end=None]
 
 Returns a slice of the given list between ``start`` and ``end`` indexes.
 
-The given list is never altered by this keyword.
+このキーワードは引数に渡したリストを変更しません。
 
 If both ``start`` and ``end`` are given, a sublist containing values
 from ``start`` to ``end`` is returned. This is the same as
@@ -419,7 +447,8 @@ Examples (incl. Python equivalents in comments)::
 
 Insert Into List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , index, value]
+
+引数:  [ :ref:`list` , index, value]
 
 Inserts ``value`` into ``list`` to the position specified with ``index``.
 
@@ -434,7 +463,8 @@ the length of the list, the value is added at the end
 can be given either as an integer or a string that can be
 converted to an integer.
 
-Example::
+例::
+
   | Insert Into List | ${L1} | 0     | xxx |
   | Insert Into List | ${L2} | ${-1} | xxx |
   =>
@@ -444,21 +474,24 @@ Example::
 Keep In Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Arguments:  [dictionary, \*keys]
+
+引数:  [dictionary, \*keys]
 
 Keeps the given ``keys`` in the ``dictionary`` and removes all other.
 
 If the given ``key`` cannot be found from the ``dictionary``, it
 is ignored.
 
-Example::
+例::
+
   | Keep In Dictionary | ${D5} | b | x | d |
   =>
   | ${D5} = {'b': 2, 'd': 4}
 
 List Should Contain Sub List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [list1, list2, msg=None, values=True]
+
+引数:  [list1, list2, msg=None, values=True]
 
 Fails if not all of the elements in ``list2`` are found in ``list1``.
 
@@ -470,7 +503,8 @@ the error message with ``msg`` and ``values`` arguments.
 
 List Should Contain Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , value, msg=None]
+
+引数:  [ :ref:`list` , value, msg=None]
 
 Fails if the ``value`` is not found from ``list``.
 
@@ -480,7 +514,8 @@ the ``msg`` argument.
 
 List Should Not Contain Duplicates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , msg=None]
+
+引数:  [ :ref:`list` , msg=None]
 
 Fails if any element in the ``list`` is found from it more than once.
 
@@ -494,7 +529,8 @@ The original iterable is never altered.
 
 List Should Not Contain Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , value, msg=None]
+
+引数:  [ :ref:`list` , value, msg=None]
 
 Fails if the ``value`` is not found from ``list``.
 
@@ -502,7 +538,8 @@ See `List Should Contain Value` for an explanation of ``msg``.
 
 Lists Should Be Equal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [list1, list2, msg=None, values=True, names=None]
+
+引数:  [list1, list2, msg=None, values=True, names=None]
 
 Fails if given lists are unequal.
 
@@ -538,7 +575,8 @@ name@bar.com``.
 
 Log Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, level=INFO]
+
+引数:  [dictionary, level=INFO]
 
 Logs the size and contents of the ``dictionary`` using given ``level``.
 
@@ -549,7 +587,8 @@ the BuiltIn library.
 
 Log List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , level=INFO]
+
+引数:  [ :ref:`list` , level=INFO]
 
 Logs the length and contents of the ``list`` using given ``level``.
 
@@ -560,7 +599,8 @@ the BuiltIn library.
 
 Pop From Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, key, default=]
+
+引数:  [dictionary, key, default=]
 
 Pops the given ``key`` from the ``dictionary`` and returns its value.
 
@@ -568,17 +608,19 @@ By default the keyword fails if the given ``key`` cannot be found from
 the ``dictionary``. If optional ``default`` value is given, it will be
 returned instead of failing.
 
-Example::
+例::
+
   | ${val}= | Pop From Dictionary | ${D3} | b |
   =>
   | ${val} = 2
   | ${D3} = {'a': 1, 'c': 3}
 
-New in Robot Framework 2.9.2.
+Robot Framework 2.9.2 で登場しました。
 
 Remove Duplicates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` ]
+
+引数:  [ :ref:`list` ]
 
 Returns a list without duplicates based on the given ``list``.
 
@@ -587,25 +629,28 @@ list so that one item can appear only once. Order of the items in
 the new list is the same as in the original except for missing
 duplicates. Number of the removed duplicates is logged.
 
-New in Robot Framework 2.7.5.
+Robot Framework 2.7.5 で登場しました。
 
 Remove From Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, \*keys]
+
+引数:  [dictionary, \*keys]
 
 Removes the given ``keys`` from the ``dictionary``.
 
 If the given ``key`` cannot be found from the ``dictionary``, it
 is ignored.
 
-Example::
+例::
+
   | Remove From Dictionary | ${D3} | b | x | y |
   =>
   | ${D3} = {'a': 1, 'c': 3}
 
 Remove From List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , index]
+
+引数:  [ :ref:`list` , index]
 
 Removes and returns the value specified with an ``index`` from ``list``.
 
@@ -615,7 +660,8 @@ Using an index that does not exist on the list causes an error.
 The index can be either an integer or a string that can be converted
 to an integer.
 
-Example::
+例::
+
   | ${x} = | Remove From List | ${L2} | 0 |
   =>
   | ${x} = 'a'
@@ -623,20 +669,23 @@ Example::
 
 Remove Values From List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , \*values]
+
+引数:  [ :ref:`list` , \*values]
 
 Removes all occurrences of given ``values`` from ``list``.
 
 It is not an error if a value does not exist in the list at all.
 
-Example::
+例::
+
   | Remove Values From List | ${L4} | a | c | e | f |
   =>
   | ${L4} = ['b', 'd']
 
 Reverse List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` ]
+
+引数:  [ :ref:`list` ]
 
 Reverses the given list in place.
 
@@ -650,7 +699,8 @@ Note that the given list is changed and nothing is returned. Use
 
 Set List Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` , index, value]
+
+引数:  [ :ref:`list` , index, value]
 
 Sets the value of ``list`` specified by ``index`` to the given ``value``.
 
@@ -660,7 +710,8 @@ Using an index that does not exist on the list causes an error.
 The index can be either an integer or a string that can be converted to
 an integer.
 
-Example::
+例::
+
   | Set List Value | ${L3} | 1  | xxx |
   | Set List Value | ${L3} | -1 | yyy |
   =>
@@ -668,7 +719,8 @@ Example::
 
 Set To Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [dictionary, \*key_value_pairs, \*\*items]
+
+引数:  [dictionary, \*key_value_pairs, \*\*items]
 
 Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.
 
@@ -691,7 +743,8 @@ If given keys already exist in the dictionary, their values are updated.
 
 Should Contain Match
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [list, pattern, msg=None, case_insensitive=False,
+
+引数:  [list, pattern, msg=None, case_insensitive=False,
             whitespace_insensitive=False]
 
 Fails if ``pattern`` is not found in ``list``.
@@ -719,7 +772,7 @@ arguments`), the pattern matching will ignore whitespace.
 
 Non-string values in lists are ignored when matching patterns.
 
-The given list is never altered by this keyword.
+このキーワードは引数に渡したリストを変更しません。
 
 See also ``Should Not Contain Match``.
 
@@ -731,11 +784,12 @@ Examples::
   | Should Contain Match | ${list} | ab* | whitespace_insensitive=yes  | | # Match strings beginning with 'ab' with possible whitespace ignored. |
   | Should Contain Match | ${list} | ab* | whitespace_insensitive=true | case_insensitive=true | # Same as the above but also ignore case. |
 
-New in Robot Framework 2.8.6.
+Robot Framework 2.8.6 で登場しました。
 
 Should Not Contain Match
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [list, pattern, msg=None, case_insensitive=False,
+
+引数:  [list, pattern, msg=None, case_insensitive=False,
             whitespace_insensitive=False]
 
 Fails if ``pattern`` is found in ``list``.
@@ -743,11 +797,12 @@ Fails if ``pattern`` is found in ``list``.
 Exact opposite of `Should Contain Match` keyword. See that keyword
 for information about arguments and usage in general.
 
-New in Robot Framework 2.8.6.
+Robot Framework 2.8.6 で登場しました。
 
 Sort List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arguments:  [ :ref:`list` ]
+
+引数:  [ :ref:`list` ]
 
 Sorts the given list in place.
 
