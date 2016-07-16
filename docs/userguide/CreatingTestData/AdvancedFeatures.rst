@@ -1,7 +1,7 @@
 .. _Advanced features:
 
 高度な機能
-=================
+============
 
 .. contents::
    :depth: 2
@@ -10,7 +10,7 @@
 .. _Handling keywords with same names:
 
 同名のキーワードの扱いかた
-------------------------
+-----------------------------
 
 Robot Framework で使われているキーワードは、 :ref:`ライブラリキーワード <library keywords>` か、 :ref:`ユーザキーワード <user keywords>` です。
 前者は :ref:`標準ライブラリ <standard libraries>` または :ref:`外部ライブラリ <external libraries>` で定義されています。
@@ -21,7 +21,7 @@ Robot Framework で使われているキーワードは、 :ref:`ライブラリ
 .. _Keyword scopes:
 
 キーワードのスコープ
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 あるキーワード名を使ったとき、同名の複数のキーワードが存在すると、 Robot Framework は、現在のスコープに基づいて、最もプライオリティの高いキーワードを決定しようと試みます。
 キーワードのスコープは、件のキーワードがどのように作成されたかに基づいて決まります:
@@ -40,7 +40,7 @@ Robot Framework で使われているキーワードは、 :ref:`ライブラリ
 
 .. _Specifying a keyword explicitly:
 
-キーワードを明示的に指定する。
+キーワードを明示的に指定する
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 スコープだけでは、キーワードの名前解決機能は充分とはいえません。
@@ -581,50 +581,38 @@ to make the syntax easier to read.
        Repeat Keyword    42 times    My Keyword
        Repeat Keyword    ${var}    Another Keyword    argument
 
-Conditional execution
----------------------
+.. _Conditional execution:
 
-In general, it is not recommended to have conditional logic in test
-cases, or even in user keywords, because it can make them hard to
-understand and maintain. Instead, this kind of logic should be in test
-libraries, where it can be implemented using natural programming
-language constructs. However, some conditional logic can be useful at
-times, and even though Robot Framework does not have an actual if/else
-construct, there are several ways to get the same effect.
+条件付き実行
+--------------
 
-- The name of the keyword used as a setup or a teardown of both `test
-  cases`__ and `test suites`__ can be specified using a
-  variable. This facilitates changing them, for example, from
-  the command line.
+一般に、テストケースやユーザキーワードの中に条件分岐のロジックを持たせるのはお勧めしません。
+処理がわかりづらくなり、メンテナンスを困難にするからです。
+その代わり、テストライブラリを書いて、この手のロジックを普通のプログラム言語の構文で書きましょう。
+とはいえ、状況によっては、条件付き実行のロジックを書けたほうがよいのは確かです。
+Robot Framework には、 if/else 文そのものはありませんが、同じような効果を得る方法がいくつかあります。
 
-- The BuiltIn_ keyword :name:`Run Keyword` takes a keyword to actually
-  execute as an argument, and it can thus be a variable. The value of
-  the variable can, for example, be got dynamically from an earlier
-  keyword or given from the command line.
+- :ref:`テストケース <test cases>` や :ref:`テストスイート<test suites>` に指定するキーワード名は、変数にできます。
+  このことを利用すれば、コマンドラインから変数を指定することで、動作を切り替えられます。
+  
+- BuiltIn ライブラリのキーワード :name:`Run Keyword` は、実行するキーワードを引数で受け取り、これは変数にできます。
+  変数の値は、別のキーワードで動的に生成したり、コマンドラインから指定したりできます。
 
-- The BuiltIn_ keywords :name:`Run Keyword If` and :name:`Run Keyword
-  Unless` execute a named keyword only if a certain expression is
-  true or false, respectively. They are ideally suited to creating
-  simple if/else constructs. For an example, see the documentation of
-  the former.
+- BuiltIn ライブラリのキーワード :name:`Run Keyword If` や :name:`Run Keyword Unless` は、指定の式の値が True または False のとき、指定のキーワードを実行します。
+  これらのキーワードは、簡単な if/else 構造をつくるのにぴったりです。
+  使い方の例は :name:`Run Keyword If` のドキュメントを参照してください。
 
-- Another BuiltIn_ keyword, :name:`Set Variable If`, can be used to set
-  variables dynamically based on a given expression.
+- BuiltIn ライブラリの別のキーワード、 :name:`Set Variable If` を使えば、指定の式の値に従って動的に値を設定できます。
 
-- There are several BuiltIn_ keywords that allow executing a named
-  keyword only if a test case or test suite has failed or passed.
+- その他にも、テストケースやテストスイートが成功したとき、あるいは失敗したときに、指定のキーワードを実行するためのキーワードがあります。
 
-__ `Test setup and teardown`_
-__ `Suite setup and teardown`_
+.. _Parallel execution of keywords:
 
+キーワードの並列実行
+----------------------
 
-Parallel execution of keywords
-------------------------------
-
-When parallel execution is needed, it must be implemented in test library
-level so that the library executes the code on background. Typically this
-means that the library needs a keyword like :name:`Start Something` that
-starts the execution and returns immediately, and another keyword like
-:name:`Get Results From Something` that waits until the result is available
-and returns it. See OperatingSystem_ library keywords :name:`Start Process`
-and :name:`Read Process Output` for an example.
+キーワードを並列で実行したい場合は、テストライブラリレベルで、コードをバックグラウンド実行する形で実装してください。
+その場合、典型的なインタフェースとして、まず :name:`Start Something` のようなキーワードで実行を開始します。
+このキーワードはすぐに処理を戻します。
+そして、 :name:`Get Results From Something` のような別のキーワードで、実行結果を取得できるまで待機させてください。
+:ref:`OperatingSystem` ライブラリのキーワード、 :name:`Start Process` や :name:`Read Process Output` を参照してください。
