@@ -89,21 +89,21 @@ Robot Framework 2.9 からは、変数自体を評価ネームスペース (eval
 
 .. code:: robotframework
 
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=True    | # Strings are generally true.    |
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=yes     | # Same as the above.             |
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${TRUE} | # Python ``True`` is true.       |
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${42}   | # Numbers other than 0 are true. |
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=True     # 空でない文字列は「基本的に」真
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=yes      # 上と同じ
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${TRUE}  # Python の ``True`` は当然真
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${42}    # 0 でない数も真
 
 
 一方、偽になる例は以下の通りです:
 
 .. code:: robotframework
 
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=False     | # String ``false`` is false.   |
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=no        | # Also string ``no`` is false. |
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${EMPTY}  | # Empty string is false.       |
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=${FALSE}  | # Python ``False`` is false.   |
-   | `Should Be Equal` | ${x} | ${y}  | Custom error | values=no values | # ``no values`` works with ``values`` argument |
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=False      # 文字列 ``false`` は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=no         # 文字列 ``no`` は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${EMPTY}   # 空文字列は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=${FALSE}   # Python の ``False`` は偽
+    `Should Be Equal`  ${x}  ${y}   Custom error  values=no values  # 引数 ``values`` に限り ``no values`` は偽
 
 Robot Framework 2.9 以前では、原則、 ``false`` や ``no`` も含め、空文字列でないものは全て True 扱いとしていました。
 
