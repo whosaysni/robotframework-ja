@@ -48,48 +48,35 @@ Robot Framework で使われているキーワードは、 :ref:`ライブラリ
 そのため、 *完全な名前* を使ってキーワードを指定できます。
 キーワードの完全な名前とは、キーワードの前に、リソースやライブラリの名前を、ドットを区切りとしてつけた名前です。
 
-With library keywords, the long format means only using the format
-:name:`LibraryName.Keyword Name`. For example, the keyword :name:`Run`
-from the OperatingSystem_ library could be used as
-:name:`OperatingSystem.Run`, even if there was another :name:`Run`
-keyword somewhere else. If the library is in a module or package, the
-full module or package name must be used (for example,
-:name:`com.company.Library.Some Keyword`). If a custom name is given
-to a library using the `WITH NAME syntax`_, the specified name must be
-used also in the full keyword name.
+ライブラリキーワードの場合、 :name:`LibraryName.Keyword Name` のような形式になります。
+例えば、 OperatingSystem ライブラリの :name:`Run` キーワードは、他に :name:`Run` キーワードが定義されていても、 :name:`OperatingSystem.Run` で呼び出せます。
+ライブラリがモジュールやパッケージの場合は、完全なモジュール名・パッケージ名を使わねばなりません (例: :name:`com.company.Library.Some Keyword`)。
+:ref:`WITH NAME 構文<WITH NAME syntax>` を使って、ライブラリに別名をつけた場合は、完全な名前で指定するときに、新たにつけた別名を使わねばなりません。
 
-Resource files are specified in the full keyword name, similarly as
-library names. The name of the resource is derived from the basename
-of the resource file without the file extension. For example, the
-keyword :name:`Example` in a resource file :file:`myresources.html` can
-be used as :name:`myresources.Example`. Note that this syntax does not
-work, if several resource files have the same basename. In such
-cases, either the files or the keywords must be renamed. The full name
-of the keyword is case-, space- and underscore-insensitive, similarly
-as normal keyword names.
+リソースファイルも、ライブラリ名と同じように、「完全な名前」で指定できます。
+リソースの名前は、ファイル拡張子とパスを除いたファイル本体の名前です。
+例えば、リソースファイル :file:`myresources.html` で定義されているキーワード :name:`Example` は、 :name:`myresources.Example` で呼び出せます。
+ただし、同じファイル名のリソースファイルが複数あると、この方法では区別できないので注意してください。
+完全指定の名前においても、大小文字の区別はなく、スペースやアンダースコアは無視されます。
 
-Specifying explicit priority between libraries and resources
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If there are multiple conflicts between keywords, specifying all the keywords
-in the long format can be quite a lot work. Using the long format also makes it
-impossible to create dynamic test cases or user keywords that work differently
-depending on which libraries or resources are available. A solution to both of
-these problems is specifying the keyword priorities explicitly using the keyword
-:name:`Set Library Search Order` from the BuiltIn_ library.
+.. _Specifying explicit priority between libraries and resources:
 
- .. note:: Although the keyword has the word *library* in its name, it works
-           also with resource files. As discussed above, keywords in resources
-           always have higher priority than keywords in libraries, though.
+ライブラリやリソースの優先順位を明示する
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :name:`Set Library Search Order` accepts an ordered list or libraries and
-resources as arguments. When a keyword name in the test data matches multiple
-keywords, the first library or resource containing the keyword is selected and
-that keyword implementation used. If the keyword is not found from any of the
-specified libraries or resources, execution fails for conflict the same way as
-when the search order is not set.
+キーワードの衝突がいくつもある場合、全てのキーワードについていちいち完全な名前で指定していくのは大変です。
+また、長い名前を使うと、利用できるライブラリやリソースに応じて動作を切り替えるような動的なテストケースやユーザキーワードを作れなくなってしまいます。
+こうした問題を解決する一つの方法として、 BuiltIn ライブラリの :name:`Set Library Search Order` キーワードを使って、キーワードの優先順位を明示する方法があります。
 
-For more information and examples, see the documentation of the keyword.
+.. note:: このキーワードには「Library」という単語が入っていますが、実際にはリソースファイルに対しても使えます。
+          ただし、以前解説した通り、リソースファイル中のキーワードは、常にライブラリのキーワードより優先されます。
+
+:name:`Set Library Search Order` は、ライブラリやリソースを順番に並べたリストを引数に取ります。
+テストデータ中のキーワード名が複数のキーワードにマッチした場合、リスト中のライブラリやリソースで同名のキーワードを持つものの先頭のものが選ばれ、そのキーワードの定義を使います。
+キーワード名に対応するキーワードがリスト中にない場合は、キーワードの検索順が指定されていないときと同様、キーワード名の衝突による失敗となります。
+
+詳細や例は、 :name:`Set Library Search Order`  のドキュメントを参照してください。
 
 .. _Timeouts:
 
@@ -552,26 +539,23 @@ documentation in the BuiltIn_ library.
 .. note::  Both :name:`Continue For Loop` and :name:`Continue For Loop If`
            were added in Robot Framework 2.8.
 
-Removing unnecessary keywords from outputs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Removing unnecessary keywords from outputs:
 
-For loops with multiple iterations often create lots of output and
-considerably increase the size of the generated output_ and log_ files.
-Starting from Robot Framework 2.7, it is possible to `remove unnecessary
-keywords`__ from the outputs using :option:`--RemoveKeywords FOR` command line
-option.
+出力ファイルから不要なキーワードを除去する
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-__ `Removing and flattening keywords`_
+for ループで何度も繰り返し実行を行なうと、大量の出力が生成され、 output ファイルやログファイルのサイズが相当大きくなってしまいます。
+Robot Framework 2.7 からは、コマンドラインオプションに :option:`--RemoveKeywords FOR` を指定することで、 :ref:`不要なキーワードを除去 <removing and flattening keywords>` できます。
 
-Repeating single keyword
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Repeating single keyword:
 
-For loops can be excessive in situations where there is only a need to
-repeat a single keyword. In these cases it is often easier to use
-BuiltIn_ keyword :name:`Repeat Keyword`.  This keyword takes a
-keyword and how many times to repeat it as arguments. The times to
-repeat the keyword can have an optional postfix `times` or `x`
-to make the syntax easier to read.
+一つのキーワードを反復実行する
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+単に一つのキーワードを反復実行したいだけのときは、for ループを使うまでもありません。
+BuiltIn ライブラリのキーワード :name:`Repeat Keyword` を使うほうが簡単です。
+このキーワードは、繰り返し実行したいキーワードと繰り返したい回数を引数に取ります。
+記法を見やすくするために、回数には `times` や `x` を付けられます。
 
 .. sourcecode:: robotframework
 
