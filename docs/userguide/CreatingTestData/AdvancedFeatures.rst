@@ -80,58 +80,38 @@ Robot Framework で使われているキーワードは、 :ref:`ライブラリ
 
 .. _Timeouts:
 
-Timeouts
---------
+タイムアウト
+--------------
 
-Keywords may be problematic in situations where they take
-exceptionally long to execute or just hang endlessly. Robot Framework
-allows you to set timeouts both for `test cases`_ and `user
-keywords`_, and if a test or keyword is not finished within the
-specified time, the keyword that is currently being executed is
-forcefully stopped. Stopping keywords in this manner may leave the
-library or system under test to an unstable state, and timeouts are
-recommended only when there is no safer option available. In general,
-libraries should be implemented so that keywords cannot hang or that
-they have their own timeout mechanism, if necessary.
+実行にとても長い時間がかかったり、たまに永遠にハングアップしてしまったりするようなキーワードは問題を引き起こします。
+Robot Framework では、テストケースとユーザーキーワードの両方に対してタイムアウトを設定できます。
+指定時間内にキーワードの実行が終了しない場合、実行中のキーワードは強制的に停止させられます。
+こうしてキーワードを強制停止すると、テスト対象のシステムは不安定な状態になることがあるので、タイムアウトを設定するのは、他に安全な選択肢がないときだけにしましょう。
+一般的に、テストライブラリは通常ハングしないように作られているか、必要に応じて独自のタイムアウトメカニズムを持っているはずです。
+
 
 .. _Test case timeout:
 
-Test case timeout
-~~~~~~~~~~~~~~~~~
+テストケースのタイムアウト
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The test case timeout can be set either by using the :setting:`Test
-Timeout` setting in the Setting table or the :setting:`[Timeout]`
-setting in the Test Case table. :setting:`Test Timeout` in the Setting
-table defines a default test timeout value for all the test cases in
-the test suite, whereas :setting:`[Timeout]` in the Test Case table
-applies a timeout to an individual test case and overrides the
-possible default value.
+テストケースのタイムアウトは、設定テーブルで  :setting:`Test Timeout` を使うか、テストケーステーブルで :setting:`[Timeout]` を使って設定できます。
+:setting:`Test Timeout` はテストスイート全てのデフォルトのタイムアウトを定義し、 :setting:`[Timeout]` はデフォルト値を上書きする形で、個別のテストケースのタイムアウトを設定します。
 
-Using an empty :setting:`[Timeout]` means that the test has no
-timeout even when :setting:`Test Timeout` is used. It is also possible
-to use value `NONE` for this purpose.
+空の値で :setting:`[Timeout]` を使うと、タイムアウトしないことを示します。
+これは :setting:`Test Timeout` が設定されていても有効です。
+`NONE` を値として使うことも可能です。
 
-Regardless of where the test timeout is defined, the first cell after
-the setting name contains the duration of the timeout. The duration
-must be given in Robot Framework's `time format`_, that is,
-either directly in seconds or in a format like `1 minute
-30 seconds`. It must be noted that there is always some overhead by the
-framework, and timeouts shorter than one second are thus not
-recommended.
+テストのタイムアウトをどちらで設定するにせよ、設定名の直後のセルにはタイムアウトの期間の指定が入ります。この期間の設定には Robot Framework の :ref:`時間表現<time format>` 、すなわち秒表記か、 `1 minute 30 seconds` のような形式を使います。
+フレームワーク自体に若干のオーバヘッドがあるため、1秒以内のタイムアウトは推奨しないので、時間を指定するときには注意して下さい。
 
-The default error message displayed when a test timeout occurs is
-`Test timeout <time> exceeded`. It is also possible to use custom
-error messages, and these messages are written into the cells
-after the timeout duration. The message can be split into multiple
-cells, similarly as documentations. Both the timeout value and the
-error message may contain variables.
+タイムアウト超過によって表示されるエラーメッセージのデフォルト値は
+`Test timeout <time> exceeded` です。
+カスタムエラーメッセージを利用したいときは、タイムアウト値の次のセルに書きます。
+タイムアウト値とエラーメッセージのどちらにも変数を使えます。
 
-If there is a timeout, the keyword running is stopped at the
-expiration of the timeout and the test case fails. However, keywords
-executed as `test teardown`_ are not interrupted if a test timeout
-occurs, because they are normally engaged in important clean-up
-activities. If necessary, it is possible to interrupt also these
-keywords with `user keyword timeouts`_.
+タイムアウトを指定している場合、指定時間を超過したキーワードの実行は中断し、テストケースは失敗します。ただし、 :ref:`ティアダウン<test teardown>` 中のキーワードは割り込まれません。ティアダウンは通常重要なクリーンアップ処理を行っているからです。
+どうしてもティアダウン中のタイムアウトが必要なら、 :ref:`ユーザキーワードのタイムアウト<user keyword timeouts>` を使って実現できます。
 
 .. sourcecode:: robotframework
 
@@ -140,47 +120,44 @@ keywords with `user keyword timeouts`_.
 
    *** Test Cases ***
    Default Timeout
-       [Documentation]    Timeout from the Setting table is used
+       [Documentation]    設定テーブルのタイムアウトが使われる
        Some Keyword    argument
 
    Override
-       [Documentation]    Override default, use 10 seconds timeout
+       [Documentation]    デフォルト値をオーバライドし、タイムアウトは10秒
        [Timeout]    10
        Some Keyword    argument
 
    Custom Message
-       [Documentation]    Override default and use custom message
+       [Documentation]    デフォルト値とエラーメッセージをオーバライド
        [Timeout]    1min 10s    This is my custom error
        Some Keyword    argument
 
    Variables
-       [Documentation]    It is possible to use variables too
+       [Documentation]    タイムアウト値に変数を使う
        [Timeout]    ${TIMEOUT}
        Some Keyword    argument
 
    No Timeout
-       [Documentation]    Empty timeout means no timeout even when Test Timeout has been used
+       [Documentation]    タイムアウト値を空にすると、Test Timeout が設定されていてもタイムアウトなし扱い
        [Timeout]
        Some Keyword    argument
 
    No Timeout 2
-       [Documentation]    Disabling timeout with NONE works too and is more explicit.
+       [Documentation]    NONEでもタイムアウト無効にできる。この方がより明示的
        [Timeout]    NONE
        Some Keyword    argument
 
-User keyword timeout
-~~~~~~~~~~~~~~~~~~~~
 
-A timeout can be set for a user keyword using the :setting:`[Timeout]`
-setting in the Keyword table. The syntax for setting it, including how
-timeout values and possible custom messages are given, is
-identical to the syntax used with `test case timeouts`_. If no custom
-message is provided, the default error message `Keyword timeout
-<time> exceeded` is used if a timeout occurs.
+.. _User keyword timeout:
 
-Starting from Robot Framework 3.0, timeout can be specified as a variable
-so that the variable value is given as an argument. Using global variables
-works already with previous versions.
+ユーザキーワードのタイムアウト
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:setting:`[Timeout]` を使えば、キーワードテーブル中のユーザキーワードに対してもによるタイムアウトを設定できます。
+タイムアウト設定の書き方は、 :ref:`テストケースのタイムアウト<test case timeouts>` と同じです。カスタムのエラーメッセージを指定しない場合に使われるデフォルトのエラーメッセージは `Keyword timeout <time> exceeded` です。
+
+Robot Framework 3.0 からは、引き数で渡された変数をタイムアウトを制御できるようになりました。なお、グローバル変数を使った制御は以前のバージョンでも可能です。
 
 .. sourcecode:: robotframework
 
@@ -203,15 +180,9 @@ works already with previous versions.
        [Timeout]    ${timeout}
        Original Keyword    @{args}
 
-A user keyword timeout is applicable during the execution of that user
-keyword. If the total time of the whole keyword is longer than the
-timeout value, the currently executed keyword is stopped. User keyword
-timeouts are applicable also during a test case teardown, whereas test
-timeouts are not.
+ユーザキーワードのタイムアウトが有効なのは、該当ユーザーキーワードの実行中だけです。ユーザキーワード全体の実行時間がタイムアウト値を超えると、実行中のキーワードを中断します。通常のタイムアウトはティアダウン中は無効ですが、ユーザキーワードのタイムアウトはテストケースのティアダウン中でも有効です。
 
-If both the test case and some of its keywords (or several nested
-keywords) have a timeout, the active timeout is the one with the least
-time left.
+テストケースと、その中で使っているキーワード (あるいは、入れ子になっている別のキーワードなど）の両方にタイムアウトが設定されている場合、関連するキーワードのタイムアウトのうち最小のものがアクティブなタイムアウト値として使われます。
 
 .. _for loop:
 
