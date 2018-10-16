@@ -4,26 +4,22 @@ XML: XMLデータの操作
 :Scope:            global
 :Named arguments:  supported
 
-Robot Framework test library for verifying and modifying XML documents.
+XML ドキュメントの検証や変更に使える Robot Framework テストライブラリです
 
-As the name implies, _XML_ is a test library for verifying contents of XML
-files. In practice it is a pretty thin wrapper on top of Python's
-[https://docs.python.org/2/library/xml.etree.elementtree.html|ElementTree XML
-API].
+名前から判るように、 _XML_ は XML ファイルの内容を検証に使えるテストライブラリです。
+実際には、このライブラリは [https://docs.python.org/2/library/xml.etree.elementtree.html|ElementTree XML API] の薄いラッパです。
 
-The library has the following main usages:
+このライブラリの主な用途は:
 
-- Parsing an XML file, or a string containing XML, into an XML element
-  structure and finding certain elements from it for for further analysis
-  (e.g. `Parse XML` and `Get Element` keywords).
-- Getting text or attributes of elements
-  (e.g. `Get Element Text` and `Get Element Attribute`).
-- Directly verifying text, attributes, or whole elements
-  (e.g `Element Text Should Be` and `Elements Should Be Equal`).
-- Modifying XML and saving it (e.g. `Set Element Text`, `Add Element`
-  and `Save XML`).
+- XML ファイルや XML 文書の入った文字列を解析し、 XML エレメント構造に変換して、文書中のエレメントを解析用に取り出します。  (`Parse XML` や `Get Element` キーワード)
+- エレメントのテキストやアトリビュートを取り出します
+  (`Get Element Text` や `Get Element Attribute`)
+- テキスト、アトリビュート、エレメント群全体に対する検証を実行します
+  (`Element Text Should Be` や `Elements Should Be Equal`)
+- XML を変更したり、ファイルに保存したりします (`Set Element Text`, `Add Element`, `Save XML`)
 
-Table of contents
+  
+さくいん
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - `Parsing XML`

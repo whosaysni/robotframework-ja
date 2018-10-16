@@ -1,10 +1,11 @@
 String: 文字列操作
 ======================
+
 :Version:          3.0
 :Scope:            global
 :Named arguments:  supported
 
-A test library for string manipulation and verification.
+文字列の操作や検証のためのテストライブラリです。
 
 ``String`` is Robot Framework's standard library for manipulating
 strings (e.g. `Replace String Using Regexp`, `Split To Lines`) and

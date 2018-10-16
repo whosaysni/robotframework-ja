@@ -1,33 +1,34 @@
-Time format
-===========
+.. _Time format:
 
-Robot Framework has its own time format that is both flexible to use and easy
-to understand. It is used by several keywords (for example, BuiltIn_ keywords
-:name:`Sleep` and :name:`Wait Until Keyword Succeeds`), DateTime_ library, and
-`timeouts`_.
+時刻のフォーマット
+====================
 
-Time as number
---------------
+Robot Framework では、時刻を表現するための、わかりやすく柔軟性のある独自のフォーマットを持っています。
+このフォーマットは一部のキーワード (例えば BuiltIn_ ライブラリの :name:`Sleep` や
+:name:`Wait Until Keyword Succeeds`), DateTime_ ライブラリ、そして `タイムアウト <timeouts>`_
+の表現に使われます。
 
-The time can always be given as a plain number, in which case it is
-interpreted to be seconds. Both integers and floating point numbers
-work, and it is possible to use either real numbers or strings
-containing numerical values.
+.. _Time as number:
 
-Time as time string
+時間の数値表現
+----------------
+
+時間を数値で表した場合は、秒数とみなされます。整数でも浮動小数点でも使えます。
+また、実際の数値オブジェクトでも、数を表す文字列でも表せます。
+
+
+.. _Time as time string:
+
+時間の文字列表現
 -------------------
 
-Representing the time as a time string means using a format such as
-`2 minutes 42 seconds`, which is normally easier to understand than
-just having the value as seconds. It is, for example, not so easy to
-understand how long a time `4200` is in seconds, but
-`1 hour 10 minutes` is clear immediately.
+時間の文字列表現とは、 `2 minutes 42 seconds` のような形式の文字列で時間を表すことです。
+この表現だと、秒で表すよりも時間がわかりやすいときがあります。例えば、秒で `4200` と表すより、
+`1 hour 10 minutes` のほうが、どのくらいの長さか理解しやすいはずです。
 
-The basic idea of this format is having first a number and then a text
-specifying what time that number represents. Numbers can be either
-integers or floating point numbers, the whole format is case and space
-insensitive, and it is possible to add `-` prefix to specify negative
-times. The available time specifiers are:
+この表現方法の基本的な考え方は、まず数値、そしてその後ろに数値の表す時間単位がくるというものです。
+数値は整数でも浮動小数点でもよく、大小文字やスペースの数を区別しません。負の値を表したいときには
+先頭に `-` をつけられます。時間の単位として使えるのは以下です:
 
 * days, day, d
 * hours, hour, h
@@ -35,7 +36,7 @@ times. The available time specifiers are:
 * seconds, second, secs, sec, s
 * milliseconds, millisecond, millis, ms
 
-Examples::
+例::
 
    1 min 30 secs
    1.5 minutes
@@ -44,16 +45,17 @@ Examples::
    1d 2h 3m 4s 5ms
    - 10 seconds
 
-Time as "timer" string
-----------------------
+.. _Time as "timer" string:
 
-Starting from Robot Framework 2.8.5, time can also be given in timer like
-format `hh:mm:ss.mil`. In this format  both hour and millisecond parts
-are optional, leading and trailing zeros can be left out when they are not
-meaningful, and negative times can be represented by adding the `-`
-prefix. For example, following timer and time string values are identical:
+「タイマー」形式の文字列
+--------------------------
 
-.. table:: Timer and time string examples
+Robot Framework 2.8.5 から、時間を `hh:mm:ss.mil` 形式で表せるようになりました。
+この形式では、時部分とミリ秒部分は省略できます。先頭と末尾のゼロは、意味を
+もたないときは無視され、負の値は `-` をつけることで表せます。
+例えば、以下の表のように、タイマー形式と文字列の時間表現が対応しています:
+
+.. table:: タイマー形式と時間文字列の対応例
    :class: tabular
 
    ============  ======================================

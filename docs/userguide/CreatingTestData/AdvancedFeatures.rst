@@ -184,26 +184,23 @@ Robot Framework 3.0 からは、引き数で渡された変数をタイムアウ
 
 テストケースと、その中で使っているキーワード (あるいは、入れ子になっている別のキーワードなど）の両方にタイムアウトが設定されている場合、関連するキーワードのタイムアウトのうち最小のものがアクティブなタイムアウト値として使われます。
 
-.. _for loop:
+.. _for loops:
 
-For loops
----------
+for ループ
+--------------
 
-Repeating same actions several times is quite a common need in test
-automation. With Robot Framework, test libraries can have any kind of
-loop constructs, and most of the time loops should be implemented in
-them. Robot Framework also has its own for loop syntax, which is
-useful, for example, when there is a need to repeat keywords from
-different libraries.
+テストの自動化では、同じ動作を何度も繰り返すことがよくあります。
+Robot Framework でも、テストライブラリにはどんなループ構文でも書けますし、多くの場合、繰り返し処理を書きたければテストライブラリに書くべきです。
+Robot Framework 独自のループ構文もあり、複数のライブラリのキーワードを組み合わせて反復実行したい場合に使えます。
 
-For loops can be used with both test cases and user keywords. Except for
-really simple cases, user keywords are better, because they hide the
-complexity introduced by for loops. The basic for loop syntax,
-`FOR item IN sequence`, is derived from Python, but similar
-syntax is possible also in shell scripts or Perl.
+For ループはテストケースとユーザキーワードの両方で使えます。
+とはいえ、よほど単純なループでないかぎり、ループ処理のもたらす複雑さを隠蔽してくれるキーワード側に実装すべきです。
+基本のループ構文 `FOR item IN sequence` の由来は Python ですが、シェルスクリプトや Perl にも同じような構文があります。
 
-Normal for loop
-~~~~~~~~~~~~~~~
+.. _Normal for loop:
+
+通常の for ループ
+~~~~~~~~~~~~~~~~~~~~~
 
 In a normal for loop, one variable is assigned from a list of values,
 one value per iteration. The syntax starts with `:FOR`, where
